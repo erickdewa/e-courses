@@ -12,4 +12,20 @@ const mix = require('laravel-mix');
  */
 
 mix.js('resources/js/app.js', 'public/js')
-    .sass('resources/sass/app.scss', 'public/css');
+	.js('resources/js/bootstrap.js', 'public/js')
+	.sass('resources/sass/app.scss', 'public/css')
+	.webpackConfig({
+	    node: {
+	    	console: false,
+	    	fs: 'empty',
+	    	net: 'empty',
+	    	tls: 'empty'
+	    },
+	    module: {
+	    	rules: [{
+	        	test: /\.s[ac]ss$/,
+	        	include: /node_modules/,
+	        	loaders: ['style-loader', 'css-loader', 'sass-loader']
+	    	}]
+	    }
+	});
