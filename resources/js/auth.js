@@ -17,9 +17,9 @@ const config = {
 	},
 	
 	loginData: {
-		url: 'v1/login',
+		url: 'v1/auth/login',
 		method: 'POST',
-		redirect: '/superuser/dashboard',
+		redirect: '/admin/dashboard',
 		fetchUser: true
 	},
 

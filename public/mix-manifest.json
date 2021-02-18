@@ -2,5 +2,19 @@
     "/js/app.js": "/js/app.js",
     "/css/app.css": "/css/app.css",
     "/js/bootstrap.js": "/js/bootstrap.js",
-    "/home.js": "/home.js"
+    "/js/index.js": "/js/index.js",
+    "/admin.js": "/admin.js",
+    "/admin.dashboard.js": "/admin.dashboard.js",
+    "/admin.login.js": "/admin.login.js",
+    "/admin.master.js": "/admin.master.js",
+    "/admin.master.kategori.js": "/admin.master.kategori.js",
+    "/admin.master.level.js": "/admin.master.level.js",
+    "/admin.master.skill.js": "/admin.master.skill.js",
+    "/admin.master.tool.js": "/admin.master.tool.js",
+    "/admin.setting.js": "/admin.setting.js",
+    "/admin.setting.user.js": "/admin.setting.user.js",
+    "/admin.setting.webconfig.js": "/admin.setting.webconfig.js",
+    "/vendors~admin.js": "/vendors~admin.js",
+    "/user.home.js": "/user.home.js",
+    "/login.js": "/login.js"
 }

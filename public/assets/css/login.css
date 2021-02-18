@@ -1,0 +1,97 @@
+.aro-login-one{
+	background-color: #FFFFFF;
+	display: inline-block;
+	height: 100%;
+	position: fixed;
+	z-index: 99;
+}
+.aro-login-one > .aro-login-body{
+	width: 350px;
+	margin: 50px 0px;
+}
+.aro-login-one > .aro-login-body > .aro-one-title{
+	text-align: center;
+	padding: 25px 0px;
+}
+.aro-login-one > .aro-login-body > .aro-one-title > .title{
+	color: #515151;
+	font-size: 30px;
+	font-weight: 600;
+	letter-spacing: 1.5px;
+}
+.aro-login-one > .aro-login-body > .aro-one-title > .desc{
+	color: #787878;
+	font-size: 15px;
+	line-height: 20px;
+}
+.aro-login-one > .aro-login-body > .aro-one-form{
+	padding: 50px 25px;
+}
+.aro-login-one .form-group{
+	margin: 0px 0px 20px 0px;
+}
+.aro-input-group{
+	background-color: #F7F7F7;
+	display: inline-block;
+	width: 100%;
+	padding: 5px;
+	border-radius: 5px;
+}
+.aro-input-group > .aro-input-icon{
+	color: #54819C;
+	font-size: 20px;
+    padding: 0px 10px;
+    text-align: center;
+}
+.aro-input-group > .aro-input-icon > i{
+	width: 15px;
+	text-align: center;
+}
+.aro-input-group > input{
+	background-color: transparent;
+	width: 85%;
+	height: 35px;
+	border: none;
+}
+.aro-input-group > input:focus{
+	outline: none;
+}
+.aro-check-group{
+	width: 100%;
+}
+.btn-login{
+	letter-spacing: 1px;
+	border-radius: 20px;
+	padding: 3px 20px;
+	margin: 5px;
+}
+.forgot{
+	text-align: right;
+	margin-bottom: 10px;
+}
+.forgot a{
+	color: #000000;
+	font-size: 14px;
+	text-decoration: none;
+}
+@media screen and (max-width: 720px) {
+	.aro-login-one{
+		width: 100%;
+		padding: 0% 10%;
+		text-align: center;
+		justify-content: center;
+	}
+	.aro-login-one > .aro-login-body{
+		width: auto;
+	}
+}
+@media screen and (min-width: 720px) and (max-width: 980px) {
+	.aro-login-one{
+		width: 100%;
+		padding: 0% 25%;
+		justify-content: center;
+	}
+	.aro-login-one > .aro-login-body{
+		width: auto;
+	}
+}

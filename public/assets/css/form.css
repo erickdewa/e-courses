@@ -1,0 +1,15 @@
+.aro-restraint_title{
+	display: flex;
+	justify-content: space-between;
+}
+form.form{
+	position: relative;
+	min-height: 25px;
+}
+.form-group{
+    margin-bottom: 25px;
+}
+.form-control:focus{
+	outline: none;
+	box-shadow: none;
+}

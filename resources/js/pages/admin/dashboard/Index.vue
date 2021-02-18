@@ -1,6 +1,6 @@
 <template>
 	<div>
-		admin
+		Dashboard
 	</div>
 </template>
 
@@ -11,5 +11,11 @@
 	        	// data
 	        }
 	    },
+	    methods: {
+
+	    },
+	    mounted(){
+
+	    }
     }
 </script>

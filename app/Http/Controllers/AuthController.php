@@ -11,56 +11,36 @@ class AuthController extends Controller
 {
     public function login(Request $request)
     {  
+        $credentials = $request->only('username', 'password');
         $validator = Validator::make($request->all(), [
-			'email' => 'required|string',
-			'password' => 'required|string',
+			'username' => 'required|string',
+			'password' => 'required|string|min:8',
         ]);
 
         if($validator->fails()) {
             return response()->json([
-            	'status'=> false,
-            	'message'=> $validator->messages()->first(),
+                'status' => false,
+                'message' => $validator->messages()->first()
             ], 400);
         }
 
-        if(!$request->password){
-            return response()->json([
-                'status' => false, 
-                'message' => 'Maaf, Password Tidak Boleh Kosong!',
-            ], 500);
-        }
-
-        $user = User::where([
-        	'email' => $request->email,
-        	'confirm' => 'Yes',
-        ])->first();
-
-        if($user) {
-            $token = JWTAuth::attempt($request->only('email', 'password'));
-        }else{
-            return response()->json([
-                'status' => false, 
-                'message' => 'Maaf, Email tidak terdaftar!',
-            ], 500);
-        }
-
         try{
-            if(!$token) {
+            if(!$token = JWTAuth::attempt($credentials)) {
                 return response()->json([
-                	'status' => false,
-                	'message' => 'Email/Password salah!'
-                ], 500);
+                    'status' => false,
+                    'message' => 'Username/Password salah!',
+                ], 404);
             }
         }catch (JWTException $e) {
             return response()->json([
-            	'status' => false,
-            	'message' => 'Sesuatu error terjadi.'
+                'status' => false,
+                'message' => 'Sesuatu error terjadi.'
             ], 500);
         }
 
         return response()->json([
-        	'status' => true,
-        	'message' => 'Anda berhasil login!',
+            'status' => true,
+            'message' => 'Berhasil login'
         ], 200)->header('Authorization', $token);
     }
 

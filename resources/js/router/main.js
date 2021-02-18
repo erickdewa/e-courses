@@ -1,8 +1,10 @@
 import VueRouter from 'vue-router'
-import admin from './admin'
+import adminRouter from './admin'
+import userRouter from './user'
 
 const routes = [
-    ... admin
+    ... adminRouter,
+    ... userRouter,
 ];
 
 const router = new VueRouter({

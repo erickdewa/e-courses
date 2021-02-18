@@ -1,0 +1,179 @@
+/* Table Button */
+td > .btn{
+	background: transparent;
+	color: #5488A5;
+}
+td > .btn:hover{
+	background: #EDF3F6;
+}
+.btn.active,
+.btn:active {
+	outline: none;
+}
+.btn.active.focus,
+.btn.active:focus,
+.btn.active:hover,
+.btn:active.focus,
+.btn:active:focus,
+.btn:active:hover {
+	outline: none;
+	box-shadow: none;
+}
+
+/* Table Form */
+.aropex-teble  select.form-control{
+	background: #F9F9F9;
+	color: #787C81;
+	font-size: 13px;
+	width: 100%;
+	padding: 8px 10px;
+	border: 2px solid #F9F9F9;
+	border-radius: 5px;
+}
+.aropex-teble .form-append{
+	background: #F9F9F9;
+    width: 100%;
+    display: flex;
+    padding: 3px;
+	margin-left: auto;
+	border: 2px solid #F9F9F9;
+    border-radius: 5px;
+}
+.aropex-teble .form-append input.form-control{
+	background: transparent;
+	font-size: 13px;
+	width: 100%;
+	padding: 5px 10px;
+	border: none;
+}
+.aropex-teble .form-append .icon{
+	color: #787C81;
+	display: inline-block;
+	text-align: center;
+	width: 30px;
+	padding: 5px;
+	margin: 0px;
+	cursor: pointer;
+}
+
+.aro-table-responsive{
+	width: 100%;
+	overflow-x: auto;
+}
+.aropex-teble .row{
+	justify-content: space-between;
+}
+/* Table Default */
+.table{
+	margin: 0px;
+}
+th{
+	font-weight: 600;
+}
+th, td{
+	color: #7F7F92;
+	font-size: 13px;
+	vertical-align: middle!important;
+	text-align: center;
+}
+td span.aro-label, td div.aro-label{
+	font-size: 13px;
+	border-radius: 100px;
+	padding: 1.5px 15px;
+}
+
+/* Table Rowed*/
+.table-rowed{
+	border: none;
+	border-collapse: separate;
+    border-spacing: 0 5px;
+}
+.table-rowed thead th, .table-rowed tbody td{
+	height: 60px;
+	padding: 12px;
+	border: none;
+}
+.table-rowed thead tr{
+	background-color: rgb(246, 246, 246, 0.6);
+}
+.table-rowed tbody tr{
+	background-color: rgb(246, 246, 246, 0.6);
+}
+.table-rowed tr td:first-child, .table-rowed tr th:first-child{
+    border-radius: 5px 0px 0px 5px;
+}
+.table-rowed tr td:last-child, .table-rowed tr th:last-child{
+	border-radius: 0px 5px 5px 0px;
+}
+
+/* Table Bordered */
+.table-bordered{
+	border: 2px solid #F9F9F9;
+	border-collapse: collapse;
+}
+.table-bordered thead th, .table-bordered tbody td{
+	border: 2px solid #F9F9F9;
+}
+
+/* Table Borderles */
+.table-borderles{
+	border: 2px solid #F9F9F9;
+	border-collapse: collapse;
+}
+.table-borderles th, .table-borderles td{
+	border: none!important;
+}
+
+/* Table Striped */
+.table-striped{
+	border: 2px solid #F9F9F9;
+	border-collapse: collapse;
+}
+.table-striped thead th{
+	border-top: 2px solid #F9F9F9;
+	border-bottom: none;
+}
+.table-striped tbody td{
+	border-top: 2px solid #F9F9F9;
+}
+.table-striped tbody tr:nth-of-type(odd) {
+    background-color: #F9F9F9;
+}
+
+/* Pagination */
+.aro-paginate{
+	display: flex;
+	justify-content: space-between;
+	padding-top: 10px;
+}
+.paginate-info{
+	background-color: #F9F9F9;
+	padding: 5px 10px;
+	margin: 0px;
+	border-radius: 5px;
+}
+.paginate-source span{
+	color: #5488A5;
+	font-size: 13px;
+	font-weight: 300;
+}
+.paginate-source .paginate-ul{
+	background-color: #F9F9F9;
+	padding: 5px;
+	margin: 0px;
+	border-radius: 5px;
+}
+.paginate-source .paginate-li{
+	margin: 0px 2px;
+	padding: 5px 12px;
+	text-align: center;
+	min-width: 35px;
+	display: inline-block;
+	list-style: none;
+	border-radius: 5px;
+	cursor: pointer;
+}
+.paginate-source .paginate-li:hover,
+.paginate-source .paginate-li.active{
+	background-color: #FFFFFF;
+}
