@@ -360,9 +360,17 @@ __webpack_require__.r(__webpack_exports__);
   methods: {
     callback: function callback() {
       var vm = this;
+    },
+    dataSubmit: function dataSubmit() {
+      var vm = this;
+      $('.test').click(function () {
+        Aropex.btnLoad(this, true);
+      });
     }
   },
-  mounted: function mounted() {}
+  mounted: function mounted() {
+    this.dataSubmit();
+  }
 });
 
 /***/ }),

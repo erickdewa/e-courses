@@ -1,5 +1,14 @@
 $(document).ready(function(){
 	function aropex(){
+		this.btnLoad = function(el, s){
+			var i = $(el).children('i');
+			var c = i.attr('class');
+			if(s){
+				i.removeClass(c).addClass('fa fa-spinner fa-spin').attr('data-classx', c);
+			}else{
+				i.removeClass('fa fa-spinner fa-spin').addClass(i.data('classx'));
+			}
+		};
 		this.outside = function(el, tg, c){
 			$(document).mouseup(function(e){
 			    if($(el).hasClass(c)){
@@ -27,7 +36,7 @@ $(document).ready(function(){
 		};
 	}
 
-	let Aropex = new aropex();
+	window.Aropex = new aropex();
 	$('.aro-menu').on('click', function(){
 		if($(window).width() <= 980){
 			Aropex.event(this, true);

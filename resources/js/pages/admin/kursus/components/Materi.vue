@@ -68,9 +68,16 @@
 	    	callback(){
 	    		var vm = this;
 	    	},
+	    	dataSubmit(){
+	    		var vm = this;
+
+	    		$('.test').click(function(){
+		    		Aropex.btnLoad(this, true);
+	    		});
+	    	}
 	    },
 	    mounted(){
-
+	    	this.dataSubmit();
 	    }
 	}
 </script>
