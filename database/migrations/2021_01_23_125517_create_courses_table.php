@@ -23,7 +23,7 @@ class CreateCoursesTable extends Migration
             $table->string('color')->default('FFFFFF');
             $table->string('description')->nullable();
             $table->integer('price')->default(0);
-            $table->integer('access', ['lifetime', 'annual', 'month', 'weekly'])->default(0);
+            $table->enum('access', ['lifetime', 'annual', 'month', 'weekly'])->default('lifetime');
             $table->enum('status', ['draft', 'active', 'remove'])->default('active');
 
             $table->integer('user_id')->unsigned();

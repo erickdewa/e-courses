@@ -27,7 +27,9 @@
 						<div class="forgot">
 							<a href="">Lupa Passord ?</a>
 						</div>
-						<button type="submit" form="form-login-one" class="btn btn-info btn-md btn-login">MASUK</button>
+						<button type="submit" form="form-login-one" class="btn btn-info btn-md btn-login">
+							<i class="fa fa-sign-in"></i> MASUK
+						</button>
 					</form>
 				</div>
 			</div>
@@ -49,14 +51,16 @@
 			inLogin(){
 				var vm = this;
 
+				Aropex.btnLoad('.btn-login', true);
 				vm.$auth.login({
                     data: vm.formData,
                     rememberMe: false,
                     fetchUser: true,
                 }).then((res)=>{
-                	console.log(res.data.message);
+                	Aropex.btnLoad('.btn-login', false);
                 	toastr.success(res.data.message, 'Success');
                 }).catch((err)=>{
+                	Aropex.btnLoad('.btn-login', false);
                 	toastr.error(err.response.data.message, 'Error');
                 });
 			}

@@ -14,7 +14,7 @@
 					</div>
 				</div>
 				<div class="aro-restraint_body">
-					<form v-if="showForm" class="form" id="FormTambah" enctype="multipart/form-data" @submit.prevent="simpanData(formData.uuid)" autocomplete="off">
+					<form v-if="showForm" class="form" id="FormMateriGroup" enctype="multipart/form-data" @submit.prevent="simpanData(formData.uuid)" autocomplete="off">
 						<div class="form-body">
 							<div class="row">
 								<div class="col-md-12">
@@ -27,13 +27,13 @@
 						</div>
 						<hr>
 						<div class="form-action" align="right">
-							<button type="submit" form="FormTambah" class="btn btn-sm btn-success btn-submit">
+							<button type="submit" form="FormMateriGroup" class="btn btn-sm btn-success btn-submit">
 								<i class="fa fa-save"></i> Simpan
 							</button>
 						</div>
 					</form>
 
-					<AdminTable v-if="showList" id="table" ref="table" classx="table table-rowed" :urls="'/courses/index'" :callbacks="callback()" :columns="columns"></AdminTable>
+					<AdminTable v-if="showList" id="table" ref="table" classx="table table-rowed" :urls="`/materigroup/${coursesUuid}/index`" :callbacks="callback()" :columns="columns"></AdminTable>
 				</div>
 			</div>
 		</transition>
@@ -42,6 +42,7 @@
 
 <script>
     export default {
+    	props: ['coursesUuid', 'coursesId'],
     	data() {
 	        return {
 	        	showList: true,
@@ -49,6 +50,7 @@
 
 	        	dataMateri: [],
 	        	formData: {
+	        		uuid: '',
 	        		courses_id: '',
 	        		nm_materi: '',
 	        	},
@@ -65,19 +67,50 @@
 	        }
 	    },
 	    methods: {
+	    	setShowList(){
+	    		var vm = this;
+
+	    		vm.showList = true;
+	    		vm.showForm = false;
+	    	},
+	    	setShowForm(){
+	    		var vm = this;
+
+	    		vm.showList = false;
+	    		vm.showForm = true;
+	    	},
 	    	callback(){
 	    		var vm = this;
 	    	},
-	    	dataSubmit(){
+	    	
+	    	simpanData(uuid){
 	    		var vm = this;
 
-	    		$('.test').click(function(){
-		    		Aropex.btnLoad(this, true);
+	    		var urls = `${ vm.apiUrl }/materigroup/create`;
+	    		if(uuid != ''){
+	    			urls = `${ vm.apiUrl }/materigroup/${ uuid }/update`;
+	    		}
+
+	    		Aropex.btnLoad('.btn-submit', true);
+	    		vm.$http({
+	    			url: urls,
+	    			data: vm.formData,
+	    			method: "POST",
+	    		}).then((res) => {
+                	vm.setShowList();
+	    			vm.$ref.table.reload();
+	    			Aropex.btnLoad('.btn-submit', false);
+	    			toastr.success(res.data.message, 'Success');
+	    		}).catch((err)=>{
+	    			Aropex.btnLoad('.btn-submit', false);
+	    			toastr.error(err.response.data.message, 'Error');
 	    		});
-	    	}
+	    	},
 	    },
 	    mounted(){
-	    	this.dataSubmit();
+	    	var vm = this;
+
+	    	vm.formData.courses_id = vm.coursesId;
 	    }
 	}
 </script>

@@ -71,6 +71,24 @@ Route::prefix('v1')->group(function(){
 	    		Route::post('/{uuid}/update', 'CoursesController@update');
 	    		Route::delete('/{uuid}/delete', 'CoursesController@delete');
 	    	});
+
+	    	Route::prefix('materigroup')->group(function(){
+	    		Route::post('/{uuid}/index', 'MateriGroupController@index');
+	    		Route::get('/getdatas', 'MateriGroupController@getDatas');
+	    		Route::get('/{uuid}/getdata', 'MateriGroupController@getData');
+	    		Route::post('/create', 'MateriGroupController@create');
+	    		Route::post('/{uuid}/update', 'MateriGroupController@update');
+	    		Route::delete('/{uuid}/delete', 'MateriGroupController@delete');
+	    	});
+
+	    	Route::prefix('materi')->group(function(){
+	    		Route::post('/{uuid}/index', 'MateriController@index');
+	    		Route::get('/getdatas', 'MateriController@getDatas');
+	    		Route::get('/{uuid}/getdata', 'MateriController@getData');
+	    		Route::post('/create', 'MateriController@create');
+	    		Route::post('/{uuid}/update', 'MateriController@update');
+	    		Route::delete('/{uuid}/delete', 'MateriController@delete');
+	    	});
 		});
 	});
 });

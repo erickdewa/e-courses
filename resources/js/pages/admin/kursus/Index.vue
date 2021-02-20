@@ -32,28 +32,33 @@
 			</div>
 		</transition>
 
-		<Materi></Materi>
+		<div v-if="showMateri">
+			<MateriGroup :coursesUuid="thisUuid" :coursesId="thisId"></MateriGroup>
+		</div>
 		
 	</div>
 </template>
 
 <script>
 	import FormTambah from './components/FormTambah'
-	import Materi from './components/Materi'
+	import MateriGroup from './components/MateriGroup'
     export default {
     	components: {
-            FormTambah, Materi
+            FormTambah, MateriGroup
         },
     	data() {
 	        return {
 	        	showList: true,
 	        	showForm: false,
 
+	        	showMateri: false,
+
 	        	columns: [
 	        		{ name: 'Nama', data: 'name' },
 	        		{ name: 'Aksi', data: 'action' },
 	        	],
 
+	        	thisId: '',
 	        	thisUuid: '',
 	        	isEdit: false,
 	        }
@@ -78,7 +83,9 @@
 	    		setTimeout(function(){
 		    		$('#table').on('click', '.edit', function(e){
 	                    var uuid = $(this).data('uuid');
+	                    var id = $(this).data('id');
 	                    vm.thisUuid = uuid;
+	                    vm.thisId = id;
 	                    vm.isEdit = true;
 	                    vm.setShowForm();
 	                });
@@ -93,7 +100,7 @@
 	    		var vm = this;
 
 	    		vm.$http({
-	    			url: `${ vm.apiUrl }/level/${ uuid }/delete`,
+	    			url: `${ vm.apiUrl }/courses/${ uuid }/delete`,
 	    			method: 'DELETE',
 	    		}).then((res)=>{
 	    			vm.$refs.table.reload();

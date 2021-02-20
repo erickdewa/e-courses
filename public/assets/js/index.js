@@ -5,8 +5,10 @@ $(document).ready(function(){
 			var c = i.attr('class');
 			if(s){
 				i.removeClass(c).addClass('fa fa-spinner fa-spin').attr('data-classx', c);
+				$(el).prop('disabled', true);
 			}else{
 				i.removeClass('fa fa-spinner fa-spin').addClass(i.data('classx'));
+				$(el).prop('disabled', false);
 			}
 		};
 		this.outside = function(el, tg, c){

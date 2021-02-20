@@ -22,6 +22,6 @@ trait Uuid
 
     public static function findByUuid($uuid)
     {
-        return static::where('uuid', '=', $uuid)->first();
+        return static::where('uuid', $uuid)->first();
     }
 }

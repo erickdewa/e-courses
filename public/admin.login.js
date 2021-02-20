@@ -46,6 +46,8 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -58,14 +60,16 @@ __webpack_require__.r(__webpack_exports__);
   methods: {
     inLogin: function inLogin() {
       var vm = this;
+      Aropex.btnLoad('.btn-login', true);
       vm.$auth.login({
         data: vm.formData,
         rememberMe: false,
         fetchUser: true
       }).then(function (res) {
-        console.log(res.data.message);
+        Aropex.btnLoad('.btn-login', false);
         toastr.success(res.data.message, 'Success');
       })["catch"](function (err) {
+        Aropex.btnLoad('.btn-login', false);
         toastr.error(err.response.data.message, 'Error');
       });
     }
@@ -191,14 +195,7 @@ var render = function() {
                 _vm._v(" "),
                 _vm._m(3),
                 _vm._v(" "),
-                _c(
-                  "button",
-                  {
-                    staticClass: "btn btn-info btn-md btn-login",
-                    attrs: { type: "submit", form: "form-login-one" }
-                  },
-                  [_vm._v("MASUK")]
-                )
+                _vm._m(4)
               ]
             )
           ])
@@ -241,6 +238,19 @@ var staticRenderFns = [
     return _c("div", { staticClass: "forgot" }, [
       _c("a", { attrs: { href: "" } }, [_vm._v("Lupa Passord ?")])
     ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "button",
+      {
+        staticClass: "btn btn-info btn-md btn-login",
+        attrs: { type: "submit", form: "form-login-one" }
+      },
+      [_c("i", { staticClass: "fa fa-sign-in" }), _vm._v(" MASUK\n\t\t\t\t\t")]
+    )
   }
 ]
 render._withStripped = true

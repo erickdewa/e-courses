@@ -6,7 +6,7 @@
 					<div class="col-md-12">
 						<div class="form-group" align="center">
 							<div class="image-upload-box images" style="width: 350px; height: 200px">
-								<input type="file" id="image" accept="image/png, image/jpeg" class="form-control" name="image" required v-on:change="changeImage" placeholder="Name">
+								<input type="file" id="image" accept="image/png, image/jpeg" class="form-control" name="thumbnile" required v-on:change="changeImage" placeholder="Name">
 								<label for="image"><i class=" fa fa-plus"></i></label>
 							</div>
 						</div>
@@ -32,10 +32,11 @@
 					<div class="col-md-6">
 						<div class="form-group">
 							<label>Type</label>
-							<select class="form-control type-select" required v-model="formData.type" placeholder="Type Access">
-								<option value="selamanya">Selamanya</option>
-								<option value="tahunan">Tahunan</option>
-								<option value="bulanan">Bulanan</option>
+							<select class="form-control type-select" name="access" required v-model="formData.access" placeholder="Type Access">
+								<option value="lifetime">Selamanya</option>
+								<option value="annual">Tahunan</option>
+								<option value="month">Bulanan</option>
+								<option value="weekly">Mingguan</option>
 							</select>
 						</div>
 					</div>
@@ -64,16 +65,18 @@
 </template>
 <script>
     export default {
+    	props: ['uuid', 'isEdit'],
     	data() {
 	        return {
 	        	formData: {
+	        		uuid: '',
 	        		name: '',
 	        		subname: '',
 	        		thumbnile: '',
 	        		color: '#',
 	        		description: '',
 	        		price: '0',
-	        		type: 'selamanya'
+	        		access: 'lifetime'
 	        	}
 	        }
 	    },
@@ -81,31 +84,51 @@
 	    	changeImage($event){
 	    		var vm = this;
 
-	    		vm.formData.image = $event.target.files[0];
-                if(typeof vm.formData.image != 'undefined'){
+	    		vm.formData.thumbnile = $event.target.files[0];
+                if(typeof vm.formData.thumbnile != 'undefined'){
                     var oFReader = new FileReader();
-                    oFReader.readAsDataURL(vm.formData.image);
+                    oFReader.readAsDataURL(vm.formData.thumbnile);
                  
                     oFReader.onload = function(oFREvent) {
                         $('.images').css('background-image', 'url(' + oFREvent.target.result + ')');
+                        $('.images').css('background-size', 'cover');
                     };
                 }
 	    	},
+
+	    	getData(uuid){
+	    		var vm = this;
+
+	    		vm.$http({
+	    			url: `${ vm.apiUrl }/courses/${ uuid }/getdata`,
+	    			method: 'GET',
+	    		}).then((res)=>{
+	    			vm.formData = res.data.data;
+	    		}).catch((err)=>{
+	    			toastr.error(err.response.data.message, 'Error');
+	    		})
+	    	},
+
 	    	simpanData(uuid){
 	    		var vm = this;
 
-	    		var urls = `${ vm.apiUrl }/tool/create`;
+	    		var urls = `${ vm.apiUrl }/courses/create`;
 	    		if(uuid != ''){
-	    			urls = `${ vm.apiUrl }/tool/${ uuid }/update`;
+	    			urls = `${ vm.apiUrl }/courses/${ uuid }/update`;
 	    		}
 
+	    		Aropex.btnLoad('.btn-submit', true);
 	    		let formData = new FormData($("#FormTambah")[0]);
                 vm.axios.post(urls, formData, {headers: {'content-type': 'multipart/form-data'}}).then((res) => {
-	    			vm.$parent.setShowList();
-	    			$('.btn-submit').prop('disabled', false);
+	    			vm.$parent.thisUuid = res.data.data.uuid;
+	    			vm.$parent.thisId = res.data.data.id;
+	    			if(!vm.$parent.showMateri){
+	    				vm.$parent.showMateri = true;
+	    			}
+	    			Aropex.btnLoad('.btn-submit', false);
 	    			toastr.success(res.data.message, 'Success');
 	    		}).catch((err)=>{
-	    			$('.btn-submit').prop('disabled', false);
+	    			Aropex.btnLoad('.btn-submit', false);
 	    			toastr.error(err.response.data.message, 'Error');
 	    		});
 	    	},
@@ -115,8 +138,8 @@
 	    		$(".type-select").select2({
                     placeholder: "Pilih",
                     width: '100%'
-                }).val(vm.formData.type).on('change', function(val) {
-                    vm.formData.type = $(this).val();
+                }).val(vm.formData.access).on('change', function(val) {
+                    vm.formData.access = $(this).val();
                 });
 	    	}
 	    },
@@ -124,6 +147,12 @@
 	    	var vm = this;
 
 	    	vm.select2();
+	    	if(vm.isEdit){
+	    		vm.getData(vm.uuid);
+	    		vm.formData.uuid = vm.uuid;
+	    		vm.$parent.showMateri = true;
+	    		console.log(vm.$parent.thisUuid);
+	    	}
 	    }
 	}
 </script>

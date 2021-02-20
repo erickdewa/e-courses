@@ -101,8 +101,10 @@ $(document).ready(function () {
 
       if (s) {
         i.removeClass(c).addClass('fa fa-spinner fa-spin').attr('data-classx', c);
+        $(el).prop('disabled', true);
       } else {
         i.removeClass('fa fa-spinner fa-spin').addClass(i.data('classx'));
+        $(el).prop('disabled', false);
       }
     };
 

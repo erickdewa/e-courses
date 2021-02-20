@@ -19,8 +19,8 @@ class CoursesController extends Controller
         })->orderBy('id', 'desc')->paginate($per);
 
         $data->map(function($a){
-            $btnEdit = '<button class="btn btn-clean btn-icon btn-icon-md edit" data-uuid="'.$a->uuid.'"><i class="fa fa-edit text-warning"></i></button>';
-            $btnHapus = '<button class="btn btn-clean btn-icon btn-icon-md hapus" data-uuid="'.$a->uuid.'"><i class="fa fa-trash text-danger"></i></button>';
+            $btnEdit = '<button class="btn btn-clean btn-icon btn-icon-md edit" data-id="'.$a->id.'" data-uuid="'.$a->uuid.'"><i class="fa fa-edit text-warning"></i></button>';
+            $btnHapus = '<button class="btn btn-clean btn-icon btn-icon-md hapus" data-id="'.$a->id.'" data-uuid="'.$a->uuid.'"><i class="fa fa-trash text-danger"></i></button>';
             $a->action = $btnEdit.$btnHapus;
 
             return $a;
@@ -34,13 +34,11 @@ class CoursesController extends Controller
 		$validator = Validator::make($request->all(), [
             'name' => 'required|string',
 			'subname' => 'required|string',
-			'thumbnile' => 'required|string',
+			'thumbnile' => 'required|image',
 			'color' => 'required|string',
 			'description' => 'required|string',
 			'price' => 'required|string',
 			'access' => 'required|string',
-			'status' => 'required|string',
-			'user_id' => 'required|string',
         ]);
 
         if ($validator->fails()) {
@@ -58,13 +56,88 @@ class CoursesController extends Controller
 			'description' => $request->description,
 			'price' => $request->price,
 			'access' => $request->access,
-			'status' => $request->status,
+			'status' => 'active',
 			'user_id' => JWTAuth::user()->id,
         ]);
 
         return response()->json([
         	'status' => true,
+            'data' => $data,
         	'message' => 'Data berhasil di simpan',
         ], 200);
+    }
+
+    public function getData($uuid)
+    {
+        $data = Courses::findByUuid($uuid);
+
+        if(isset($data)){
+            return response()->json([
+                'status' => true,
+                'data' => $data,
+                'message' => 'Data berhasil di temukan',
+            ], 200);
+        }else{
+            return response()->json([
+                'status' => false,
+                'message' => 'Data tidak di temukan',
+            ], 404);
+        }
+    }
+
+    public function update(Request $request, $uuid)
+    {
+        $validator = Validator::make($request->all(), [
+            'name' => 'required|string',
+            'subname' => 'required|string',
+            'thumbnile' => 'required|image',
+            'color' => 'required|string',
+            'description' => 'required|string',
+            'price' => 'required|string',
+            'access' => 'required|string',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json([
+                'status' => false,
+                'message' => $validator->messages()->first()
+            ], 500);
+        }
+
+        $data = Courses::findByUuid($uuid);
+        $data->update([
+            'name' => $request->name,
+            'subname' => $request->subname,
+            'thumbnile' => $request->thumbnile,
+            'color' => $request->color,
+            'description' => $request->description,
+            'price' => $request->price,
+            'access' => $request->access,
+            'status' => 'active',
+            'user_id' => JWTAuth::user()->id,
+        ]);
+
+        return response()->json([
+            'status' => true,
+            'data' => $data,
+            'message' => 'Data berhasil di simpan',
+        ], 200);
+    }
+
+    public function delete($uuid)
+    {
+        $data = Courses::findByUuid($uuid);
+    
+        if($data->delete()){
+            return response()->json([
+                'status' => true,
+                'message' => 'Data berhasil di hapus',
+            ], 200);
+        }else{
+            return response()->json([
+                'status' => false,
+                'message' => 'Data gagal di hapus',
+            ], 404);
+        }
     }
 }
