@@ -122,8 +122,8 @@
                 vm.axios.post(urls, formData, {headers: {'content-type': 'multipart/form-data'}}).then((res) => {
 	    			vm.$parent.thisUuid = res.data.data.uuid;
 	    			vm.$parent.thisId = res.data.data.id;
-	    			if(!vm.$parent.showMateri){
-	    				vm.$parent.showMateri = true;
+	    			if(!vm.$parent.showGroupMateri){
+	    				vm.$parent.showGroupMateri = true;
 	    			}
 	    			Aropex.btnLoad('.btn-submit', false);
 	    			toastr.success(res.data.message, 'Success');
@@ -150,8 +150,7 @@
 	    	if(vm.isEdit){
 	    		vm.getData(vm.uuid);
 	    		vm.formData.uuid = vm.uuid;
-	    		vm.$parent.showMateri = true;
-	    		console.log(vm.$parent.thisUuid);
+	    		vm.$parent.showGroupMateri = true;
 	    	}
 	    }
 	}

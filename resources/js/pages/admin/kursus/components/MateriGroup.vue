@@ -5,10 +5,10 @@
 				<div class="aro-restraint_title">
 					<span>Materi Group</span>
 					<div class="button-table">
-						<button type="button" class="btn btn-info btn-sm" v-if="showForm" @click.prevent="showList = true; showForm = false">
+						<button type="button" class="btn btn-info btn-sm" v-if="showForm" @click.prevent="setShowList()">
 							<i class="fa fa-times"></i> Tutup
 						</button>
-						<button type="button" class="btn btn-success btn-sm" v-if="showList" @click.prevent="showList = false; showForm = true">
+						<button type="button" class="btn btn-success btn-sm" v-if="showList" @click.prevent="setShowForm()">
 							<i class="fa fa-plus"></i> Tambah
 						</button>
 					</div>
@@ -60,6 +60,8 @@
 
 	        	},
 
+	        	dataDetail: [],
+
 	        	columns: [
 	        		{ name: 'Nama Materi', data: 'nm_materi' },
 	        		{ name: 'Aksi', data: 'action' },
@@ -79,8 +81,41 @@
 	    		vm.showList = false;
 	    		vm.showForm = true;
 	    	},
+
 	    	callback(){
 	    		var vm = this;
+
+	    		setTimeout(function(){
+		    		$('#table').on('click', '.edit', function(e){
+	                    var uuid = $(this).data('uuid');
+	                    vm.getData(uuid);
+	                    vm.setShowForm();
+	                });
+	                $('#table').on('click', '.hapus', function(e){
+	                    var uuid = $(this).data('uuid');
+	                    vm.deleteData(uuid);
+	                });
+	                $('#table').on('click', '.detail', function(e){
+	                    var id = $(this).data('id');
+	                    var uuid = $(this).data('uuid');
+	                    vm.$parent.materiGroupId = id;
+						vm.$parent.materiGroupUuid = uuid;
+	                    vm.$parent.setShowMateri();
+	                });
+	    		}, 200);
+	    	},
+
+	    	getData(uuid){
+	    		var vm = this;
+
+	    		vm.$http({
+	    			url: `${ vm.apiUrl }/materigroup/${ uuid }/getdata`,
+	    			method: 'GET',
+	    		}).then((res)=>{
+	    			vm.formData = res.data.data;
+	    		}).catch((err)=>{
+	    			toastr.error(err.response.data.message, 'Error');
+	    		})
 	    	},
 	    	
 	    	simpanData(uuid){
@@ -98,7 +133,7 @@
 	    			method: "POST",
 	    		}).then((res) => {
                 	vm.setShowList();
-	    			vm.$ref.table.reload();
+	    			vm.$refs.table.reload();
 	    			Aropex.btnLoad('.btn-submit', false);
 	    			toastr.success(res.data.message, 'Success');
 	    		}).catch((err)=>{
@@ -106,6 +141,20 @@
 	    			toastr.error(err.response.data.message, 'Error');
 	    		});
 	    	},
+
+	    	deleteData(uuid){
+	    		var vm = this;
+
+	    		vm.$http({
+	    			url: `${ vm.apiUrl }/materigroup/${ uuid }/delete`,
+	    			method: 'DELETE',
+	    		}).then((res)=>{
+	    			vm.$refs.table.reload();
+	    			toastr.success(res.data.message, 'Success');
+	    		}).catch((err)=>{
+	    			toastr.error(err.response.data.message, 'Error');
+	    		})
+	    	}
 	    },
 	    mounted(){
 	    	var vm = this;

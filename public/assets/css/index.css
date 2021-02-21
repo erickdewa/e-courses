@@ -382,6 +382,20 @@ body{
 	border-radius: 5px;
 }
 
+/* Color */
+.text-info{
+	color: #5578EB!important;
+}
+.text-warning{
+	color: #FFB822!important;
+}
+.text-success{
+	color: #0ABB87!important;
+}
+.text-danger{
+	color: #FD397A!important;
+}
+
 /* Scrollbar */
 .aro-scroll::-webkit-scrollbar {
 	height: 5px;

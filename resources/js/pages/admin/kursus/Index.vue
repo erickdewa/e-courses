@@ -5,7 +5,7 @@
 				<div class="aro-restraint_title">
 					<span>Courses</span>
 					<div class="button-table">
-						<button type="button" class="btn btn-success btn-sm" @click.prevent="showList = false; showForm = true">
+						<button type="button" class="btn btn-success btn-sm" @click.prevent="setShowForm()">
 							<i class="fa fa-plus"></i> Tambah
 						</button>
 					</div>
@@ -21,7 +21,7 @@
 				<div class="aro-restraint_title">
 					<span>Tambah Courses</span>
 					<div class="button-table">
-						<button type="button" class="btn btn-info btn-sm" @click.prevent="showList = true; showForm = false">
+						<button type="button" class="btn btn-info btn-sm" @click.prevent="setShowList()">
 							<i class="fa fa-reply-all"></i> Kembali
 						</button>
 					</div>
@@ -32,25 +32,30 @@
 			</div>
 		</transition>
 
-		<div v-if="showMateri">
+		<div v-if="showGroupMateri">
 			<MateriGroup :coursesUuid="thisUuid" :coursesId="thisId"></MateriGroup>
 		</div>
-		
+			
+		<div v-if="showMateri">
+			<Materi :materiGroupUuid="materiGroupUuid" :materiGroupId="materiGroupId"></Materi>
+		</div>
 	</div>
 </template>
 
 <script>
 	import FormTambah from './components/FormTambah'
 	import MateriGroup from './components/MateriGroup'
+	import Materi from './components/Materi'
     export default {
     	components: {
-            FormTambah, MateriGroup
+            FormTambah, MateriGroup, Materi
         },
     	data() {
 	        return {
 	        	showList: true,
 	        	showForm: false,
 
+	        	showGroupMateri: false,
 	        	showMateri: false,
 
 	        	columns: [
@@ -60,6 +65,10 @@
 
 	        	thisId: '',
 	        	thisUuid: '',
+
+	        	materiGroupId: '',
+	        	materiGroupUuid: '',
+
 	        	isEdit: false,
 	        }
 	    },
@@ -69,12 +78,24 @@
 
 	    		vm.showList = true;
 				vm.showForm = false;
+				vm.showGroupMateri = false;
+				vm.showMateri = false;
 	    	},
 	    	setShowForm(){
 	    		var vm = this;
 
 	    		vm.showList = false;
 				vm.showForm = true;
+				vm.showGroupMateri = false;
+				vm.showMateri = false;
+	    	},
+	    	setShowMateri(){
+	    		var vm = this;
+
+	    		vm.showList = false;
+				vm.showForm = false;
+				vm.showGroupMateri = false;
+				vm.showMateri = true;
 	    	},
 
 	    	callback(){

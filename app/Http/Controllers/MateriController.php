@@ -9,7 +9,7 @@ use Validator;
 
 class MateriController extends Controller
 {
-    public function index(Request $request)
+    public function index(Request $request, $uuid)
     {
     	// Data per page
         $per = ( isset($request->per) ? $request->per : 10);
@@ -53,8 +53,8 @@ class MateriController extends Controller
     public function create(Request $request)
     {
     	$validator = Validator::make($request->all(), [
-            'nm_materi' => 'required|string'
-            'courses_id' => 'required|integer'
+            'nm_materi' => 'required|string',
+            'courses_id' => 'required|integer',
         ]);
 
         if ($validator->fails()) {
@@ -96,8 +96,8 @@ class MateriController extends Controller
     public function update(Request $request, $uuid)
     {
     	$validator = Validator::make($request->all(), [
-            'nm_materi' => 'required|string'
-            'courses_id' => 'required|integer'
+            'nm_materi' => 'required|string',
+            'courses_id' => 'required|integer',
         ]);
 
         if ($validator->fails()) {
