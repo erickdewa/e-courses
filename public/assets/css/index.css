@@ -2,6 +2,7 @@
 @import url('./table.css');
 @import url('./form.css');
 @import url('./login.css');
+@import url('./video.css');
 
 body{
 	background: #ECECF9;

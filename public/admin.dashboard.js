@@ -447,17 +447,39 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['materiGroupUuid', 'materiGroupId'],
   data: function data() {
     return {
       showList: true,
       showForm: false,
+      title: 'Tambah Materi',
+      showTambah: true,
+      showPreview: false,
+      player: '',
       columns: [{
         name: 'Nama Materi',
         data: 'nm_materi'
       }],
-      formData: {}
+      formData: {
+        video: '',
+        nm_materi: '',
+        description: ''
+      }
     };
   },
   methods: {
@@ -474,9 +496,62 @@ __webpack_require__.r(__webpack_exports__);
     setShowForm: function setShowForm() {
       var vm = this;
       vm.showForm = true;
+      vm.setShowTambah();
+    },
+    setShowTambah: function setShowTambah() {
+      var vm = this;
+      vm.title = 'Tambah Materi';
+      vm.showTambah = true;
+      vm.showPreview = false;
+
+      if (vm.player != '') {
+        if (typeof vm.player != 'undefined') {
+          vm.player.stopVideo();
+        }
+      }
+    },
+    setShowVideo: function setShowVideo() {
+      var vm = this;
+      vm.title = 'Preview Video';
+      vm.showTambah = false;
+      vm.showPreview = true;
+      vm.player = Aropex.video('aro-video', 'https://img.rawpixel.com/s3fs-private/rawpixel_images/website_content/rm21-background-tong-058.jpg?w=800&dpr=1&fit=default&crop=default&q=65&vib=3&con=3&usm=15&bg=F4F4F3&ixlib=js-2.2.1&s=710a6fed5b1923da8d5f95191839ef8a');
     },
     callback: function callback() {
       var vm = this;
+    },
+    showPreviewVideo: _.debounce(function () {
+      var vm = this;
+      Aropex.btnLoad('#preview', true);
+      var url = vm.formData.video;
+
+      if (url.length != 11) {
+        $('#preview').children('i').css({
+          'color': '#FD397A'
+        });
+      } else {
+        $('#preview').children('i').css({
+          'color': '#0ABB87'
+        });
+      }
+
+      setTimeout(function () {
+        Aropex.btnLoad('#preview', false);
+      }, 1000);
+    }, 500),
+    changeImage: function changeImage($event) {
+      var vm = this;
+      vm.formData.thumbnile = $event.target.files[0];
+
+      if (typeof vm.formData.thumbnile != 'undefined') {
+        var oFReader = new FileReader();
+        oFReader.readAsDataURL(vm.formData.thumbnile);
+
+        oFReader.onload = function (oFREvent) {
+          $('.images').css('background-image', 'url(' + oFREvent.target.result + ')');
+          $('.images').css('background-size', 'cover');
+        };
+      }
     }
   },
   mounted: function mounted() {}
@@ -1176,361 +1251,380 @@ var render = function() {
         _vm.showForm
           ? _c("div", { staticClass: "aro-restraint" }, [
               _c("div", { staticClass: "aro-restraint_title" }, [
-                _c("span", [_vm._v("Tambah Courses")]),
+                _c("span", [_vm._v(_vm._s(_vm.title))]),
                 _vm._v(" "),
                 _c("div", { staticClass: "button-table" }, [
-                  _c(
-                    "button",
-                    {
-                      staticClass: "btn btn-info btn-sm",
-                      attrs: { type: "button" },
-                      on: {
-                        click: function($event) {
-                          $event.preventDefault()
-                          return _vm.setShowList()
-                        }
-                      }
-                    },
-                    [
-                      _c("i", { staticClass: "fa fa-reply-all" }),
-                      _vm._v(" Kembali\n\t\t\t\t\t")
-                    ]
-                  )
+                  _vm.showTambah
+                    ? _c(
+                        "button",
+                        {
+                          staticClass: "btn btn-info btn-sm",
+                          attrs: { type: "button" },
+                          on: {
+                            click: function($event) {
+                              $event.preventDefault()
+                              return _vm.setShowList()
+                            }
+                          }
+                        },
+                        [
+                          _c("i", { staticClass: "fa fa-reply-all" }),
+                          _vm._v(" Kembali\n\t\t\t\t\t")
+                        ]
+                      )
+                    : _vm._e(),
+                  _vm._v(" "),
+                  _vm.showPreview
+                    ? _c(
+                        "button",
+                        {
+                          staticClass: "btn btn-info btn-sm",
+                          attrs: { type: "button" },
+                          on: {
+                            click: function($event) {
+                              $event.preventDefault()
+                              return _vm.setShowTambah()
+                            }
+                          }
+                        },
+                        [
+                          _c("i", { staticClass: "fa fa-reply-all" }),
+                          _vm._v(" Kembali\n\t\t\t\t\t")
+                        ]
+                      )
+                    : _vm._e()
                 ])
               ]),
               _vm._v(" "),
-              _c("div", { staticClass: "aro-restraint_body" }, [
-                _c(
-                  "form",
-                  {
-                    staticClass: "form",
-                    attrs: {
-                      id: "FormTambah",
-                      enctype: "multipart/form-data",
-                      autocomplete: "off"
-                    },
-                    on: {
-                      submit: function($event) {
-                        $event.preventDefault()
-                        return _vm.simpanData(_vm.formData.uuid)
-                      }
-                    }
-                  },
-                  [
-                    _c("div", { staticClass: "form-body" }, [
-                      _c("div", { staticClass: "row" }, [
-                        _c("div", { staticClass: "col-md-12" }, [
+              _c(
+                "div",
+                { staticClass: "aro-restraint_body" },
+                [
+                  _vm.showTambah
+                    ? _c(
+                        "transition",
+                        { attrs: { "enter-active-class": "animated fadeIn" } },
+                        [
                           _c(
-                            "div",
+                            "form",
                             {
-                              staticClass: "form-group",
-                              attrs: { align: "center" }
+                              staticClass: "form",
+                              attrs: {
+                                id: "FormTambah",
+                                enctype: "multipart/form-data",
+                                autocomplete: "off"
+                              },
+                              on: {
+                                submit: function($event) {
+                                  $event.preventDefault()
+                                  return _vm.simpanData(_vm.formData.uuid)
+                                }
+                              }
                             },
                             [
+                              _c("div", { staticClass: "form-body" }, [
+                                _c("div", { staticClass: "row" }, [
+                                  _c("div", { staticClass: "col-md-12" }, [
+                                    _c(
+                                      "div",
+                                      {
+                                        staticClass: "form-group",
+                                        attrs: { align: "center" }
+                                      },
+                                      [
+                                        _c(
+                                          "div",
+                                          {
+                                            staticClass:
+                                              "image-upload-box images",
+                                            staticStyle: {
+                                              width: "350px",
+                                              height: "200px"
+                                            }
+                                          },
+                                          [
+                                            _c("input", {
+                                              staticClass: "form-control",
+                                              attrs: {
+                                                type: "file",
+                                                id: "image",
+                                                accept: "image/png, image/jpeg",
+                                                name: "thumbnile",
+                                                required: "",
+                                                placeholder: "Name"
+                                              },
+                                              on: { change: _vm.changeImage }
+                                            }),
+                                            _vm._v(" "),
+                                            _c(
+                                              "label",
+                                              { attrs: { for: "image" } },
+                                              [
+                                                _c("i", {
+                                                  staticClass: " fa fa-plus"
+                                                })
+                                              ]
+                                            )
+                                          ]
+                                        )
+                                      ]
+                                    )
+                                  ]),
+                                  _vm._v(" "),
+                                  _c("div", { staticClass: "col-md-6" }, [
+                                    _c("div", { staticClass: "form-group" }, [
+                                      _c("label", [_vm._v("Nama Materi")]),
+                                      _vm._v(" "),
+                                      _c("input", {
+                                        directives: [
+                                          {
+                                            name: "model",
+                                            rawName: "v-model",
+                                            value: _vm.formData.nm_materi,
+                                            expression: "formData.nm_materi"
+                                          }
+                                        ],
+                                        staticClass: "form-control",
+                                        attrs: {
+                                          type: "text",
+                                          name: "nm_materi",
+                                          required: "",
+                                          placeholder: "Name"
+                                        },
+                                        domProps: {
+                                          value: _vm.formData.nm_materi
+                                        },
+                                        on: {
+                                          input: function($event) {
+                                            if ($event.target.composing) {
+                                              return
+                                            }
+                                            _vm.$set(
+                                              _vm.formData,
+                                              "nm_materi",
+                                              $event.target.value
+                                            )
+                                          }
+                                        }
+                                      })
+                                    ])
+                                  ]),
+                                  _vm._v(" "),
+                                  _c("div", { staticClass: "col-md-6" }, [
+                                    _c("div", { staticClass: "form-group" }, [
+                                      _c("label", [_vm._v("Link Video")]),
+                                      _vm._v(" "),
+                                      _c(
+                                        "div",
+                                        { staticClass: "input-group mb-3" },
+                                        [
+                                          _c("input", {
+                                            directives: [
+                                              {
+                                                name: "model",
+                                                rawName: "v-model",
+                                                value: _vm.formData.video,
+                                                expression: "formData.video"
+                                              }
+                                            ],
+                                            staticClass: "form-control",
+                                            attrs: {
+                                              type: "text",
+                                              name: "video",
+                                              required: "",
+                                              placeholder: "Link Video"
+                                            },
+                                            domProps: {
+                                              value: _vm.formData.video
+                                            },
+                                            on: {
+                                              input: [
+                                                function($event) {
+                                                  if ($event.target.composing) {
+                                                    return
+                                                  }
+                                                  _vm.$set(
+                                                    _vm.formData,
+                                                    "video",
+                                                    $event.target.value
+                                                  )
+                                                },
+                                                function($event) {
+                                                  return _vm.showPreviewVideo()
+                                                }
+                                              ]
+                                            }
+                                          }),
+                                          _vm._v(" "),
+                                          _c(
+                                            "div",
+                                            {
+                                              staticClass: "input-group-append"
+                                            },
+                                            [
+                                              _c(
+                                                "span",
+                                                {
+                                                  staticClass:
+                                                    "input-group-text",
+                                                  attrs: { id: "preview" },
+                                                  on: {
+                                                    click: function($event) {
+                                                      return _vm.setShowVideo()
+                                                    }
+                                                  }
+                                                },
+                                                [
+                                                  _c("i", {
+                                                    staticClass: "fa fa-link"
+                                                  })
+                                                ]
+                                              )
+                                            ]
+                                          )
+                                        ]
+                                      )
+                                    ])
+                                  ]),
+                                  _vm._v(" "),
+                                  _c("div", { staticClass: "col-md-12" }, [
+                                    _c("div", { staticClass: "form-group" }, [
+                                      _c("label", [_vm._v("Deskripsi")]),
+                                      _vm._v(" "),
+                                      _c("textarea", {
+                                        directives: [
+                                          {
+                                            name: "model",
+                                            rawName: "v-model",
+                                            value: _vm.formData.description,
+                                            expression: "formData.description"
+                                          }
+                                        ],
+                                        staticClass: "form-control",
+                                        attrs: {
+                                          rows: "3",
+                                          name: "description",
+                                          required: "",
+                                          placeholder: "Deskripsi"
+                                        },
+                                        domProps: {
+                                          value: _vm.formData.description
+                                        },
+                                        on: {
+                                          input: function($event) {
+                                            if ($event.target.composing) {
+                                              return
+                                            }
+                                            _vm.$set(
+                                              _vm.formData,
+                                              "description",
+                                              $event.target.value
+                                            )
+                                          }
+                                        }
+                                      })
+                                    ])
+                                  ])
+                                ])
+                              ]),
+                              _vm._v(" "),
+                              _c("hr"),
+                              _vm._v(" "),
                               _c(
                                 "div",
                                 {
-                                  staticClass: "image-upload-box images",
-                                  staticStyle: {
-                                    width: "350px",
-                                    height: "200px"
-                                  }
+                                  staticClass: "form-action",
+                                  attrs: { align: "right" }
                                 },
                                 [
-                                  _c("input", {
-                                    staticClass: "form-control",
-                                    attrs: {
-                                      type: "file",
-                                      id: "image",
-                                      accept: "image/png, image/jpeg",
-                                      name: "thumbnile",
-                                      required: "",
-                                      placeholder: "Name"
+                                  _c(
+                                    "button",
+                                    {
+                                      staticClass:
+                                        "btn btn-sm btn-success btn-submit",
+                                      attrs: {
+                                        type: "submit",
+                                        form: "FormTambah"
+                                      }
                                     },
-                                    on: { change: _vm.changeImage }
-                                  }),
-                                  _vm._v(" "),
-                                  _c("label", { attrs: { for: "image" } }, [
-                                    _c("i", { staticClass: " fa fa-plus" })
-                                  ])
+                                    [
+                                      _c("i", { staticClass: "fa fa-save" }),
+                                      _vm._v(" Simpan\n\t\t\t\t\t\t\t")
+                                    ]
+                                  )
                                 ]
                               )
                             ]
                           )
-                        ]),
-                        _vm._v(" "),
-                        _c("div", { staticClass: "col-md-12" }, [
-                          _c("div", { staticClass: "form-group" }, [
-                            _c("label", [_vm._v("Nama Kursus")]),
-                            _vm._v(" "),
-                            _c("input", {
-                              directives: [
-                                {
-                                  name: "model",
-                                  rawName: "v-model",
-                                  value: _vm.formData.name,
-                                  expression: "formData.name"
-                                }
-                              ],
-                              staticClass: "form-control",
-                              attrs: {
-                                type: "text",
-                                name: "name",
-                                required: "",
-                                placeholder: "Name"
-                              },
-                              domProps: { value: _vm.formData.name },
-                              on: {
-                                input: function($event) {
-                                  if ($event.target.composing) {
-                                    return
+                        ]
+                      )
+                    : _vm._e(),
+                  _vm._v(" "),
+                  _vm.showPreview
+                    ? _c(
+                        "transition",
+                        { attrs: { "enter-active-class": "animated fadeIn" } },
+                        [
+                          _c("div", { attrs: { align: "center" } }, [
+                            _c("div", { staticClass: "courses-video-box" }, [
+                              _c("div", { staticClass: "video-player" }, [
+                                _c("div", {
+                                  attrs: {
+                                    id: "aro-video",
+                                    "data-video": _vm.formData.video
                                   }
-                                  _vm.$set(
-                                    _vm.formData,
-                                    "name",
-                                    $event.target.value
+                                })
+                              ]),
+                              _vm._v(" "),
+                              _c("div", { staticClass: "video-control" }, [
+                                _c("div", { staticClass: "btn-control" }, [
+                                  _c(
+                                    "div",
+                                    {
+                                      staticClass:
+                                        "btn btn-circle btn-info btn-play"
+                                    },
+                                    [_c("i", { staticClass: "fa fa-play" })]
+                                  ),
+                                  _vm._v(" "),
+                                  _c(
+                                    "div",
+                                    {
+                                      staticClass:
+                                        "btn btn-circle btn-info btn-pause",
+                                      staticStyle: { display: "none" }
+                                    },
+                                    [_c("i", { staticClass: "fa fa-pause" })]
                                   )
-                                }
-                              }
-                            })
-                          ])
-                        ]),
-                        _vm._v(" "),
-                        _c("div", { staticClass: "col-md-6" }, [
-                          _c("div", { staticClass: "form-group" }, [
-                            _c("label", [_vm._v("Nama Sub")]),
-                            _vm._v(" "),
-                            _c("input", {
-                              directives: [
-                                {
-                                  name: "model",
-                                  rawName: "v-model",
-                                  value: _vm.formData.subname,
-                                  expression: "formData.subname"
-                                }
-                              ],
-                              staticClass: "form-control",
-                              attrs: {
-                                type: "text",
-                                name: "subname",
-                                required: "",
-                                placeholder: "Name"
-                              },
-                              domProps: { value: _vm.formData.subname },
-                              on: {
-                                input: function($event) {
-                                  if ($event.target.composing) {
-                                    return
-                                  }
-                                  _vm.$set(
-                                    _vm.formData,
-                                    "subname",
-                                    $event.target.value
-                                  )
-                                }
-                              }
-                            })
-                          ])
-                        ]),
-                        _vm._v(" "),
-                        _c("div", { staticClass: "col-md-6" }, [
-                          _c("div", { staticClass: "form-group" }, [
-                            _c("label", [_vm._v("Color")]),
-                            _vm._v(" "),
-                            _c("input", {
-                              directives: [
-                                {
-                                  name: "model",
-                                  rawName: "v-model",
-                                  value: _vm.formData.color,
-                                  expression: "formData.color"
-                                }
-                              ],
-                              staticClass: "form-control",
-                              attrs: {
-                                type: "text",
-                                name: "color",
-                                required: "",
-                                placeholder: "Color"
-                              },
-                              domProps: { value: _vm.formData.color },
-                              on: {
-                                input: function($event) {
-                                  if ($event.target.composing) {
-                                    return
-                                  }
-                                  _vm.$set(
-                                    _vm.formData,
-                                    "color",
-                                    $event.target.value
-                                  )
-                                }
-                              }
-                            })
-                          ])
-                        ]),
-                        _vm._v(" "),
-                        _c("div", { staticClass: "col-md-6" }, [
-                          _c("div", { staticClass: "form-group" }, [
-                            _c("label", [_vm._v("Type")]),
-                            _vm._v(" "),
-                            _c(
-                              "select",
-                              {
-                                directives: [
-                                  {
-                                    name: "model",
-                                    rawName: "v-model",
-                                    value: _vm.formData.access,
-                                    expression: "formData.access"
-                                  }
-                                ],
-                                staticClass: "form-control type-select",
-                                attrs: {
-                                  name: "access",
-                                  required: "",
-                                  placeholder: "Type Access"
-                                },
-                                on: {
-                                  change: function($event) {
-                                    var $$selectedVal = Array.prototype.filter
-                                      .call($event.target.options, function(o) {
-                                        return o.selected
-                                      })
-                                      .map(function(o) {
-                                        var val =
-                                          "_value" in o ? o._value : o.value
-                                        return val
-                                      })
-                                    _vm.$set(
-                                      _vm.formData,
-                                      "access",
-                                      $event.target.multiple
-                                        ? $$selectedVal
-                                        : $$selectedVal[0]
-                                    )
-                                  }
-                                }
-                              },
-                              [
-                                _c("option", { attrs: { value: "lifetime" } }, [
-                                  _vm._v("Selamanya")
                                 ]),
                                 _vm._v(" "),
-                                _c("option", { attrs: { value: "annual" } }, [
-                                  _vm._v("Tahunan")
+                                _c("div", { staticClass: "range-duration" }, [
+                                  _c("input", {
+                                    staticClass: "duration",
+                                    attrs: { type: "range", value: "0" }
+                                  })
                                 ]),
                                 _vm._v(" "),
-                                _c("option", { attrs: { value: "month" } }, [
-                                  _vm._v("Bulanan")
-                                ]),
-                                _vm._v(" "),
-                                _c("option", { attrs: { value: "weekly" } }, [
-                                  _vm._v("Mingguan")
+                                _c("div", { staticClass: "number-duration" }, [
+                                  _c("span", { staticClass: "current-time" }, [
+                                    _vm._v("00:00")
+                                  ]),
+                                  _vm._v(" "),
+                                  _c("span", [_vm._v("/")]),
+                                  _vm._v(" "),
+                                  _c("span", { staticClass: "duration-time" }, [
+                                    _vm._v("00:00")
+                                  ])
                                 ])
-                              ]
-                            )
+                              ])
+                            ])
                           ])
-                        ]),
-                        _vm._v(" "),
-                        _c("div", { staticClass: "col-md-6" }, [
-                          _c("div", { staticClass: "form-group" }, [
-                            _c("label", [_vm._v("Harga")]),
-                            _vm._v(" "),
-                            _c("input", {
-                              directives: [
-                                {
-                                  name: "model",
-                                  rawName: "v-model",
-                                  value: _vm.formData.price,
-                                  expression: "formData.price"
-                                }
-                              ],
-                              staticClass: "form-control",
-                              attrs: {
-                                type: "text",
-                                name: "price",
-                                required: "",
-                                placeholder: "Harga"
-                              },
-                              domProps: { value: _vm.formData.price },
-                              on: {
-                                input: function($event) {
-                                  if ($event.target.composing) {
-                                    return
-                                  }
-                                  _vm.$set(
-                                    _vm.formData,
-                                    "price",
-                                    $event.target.value
-                                  )
-                                }
-                              }
-                            })
-                          ])
-                        ]),
-                        _vm._v(" "),
-                        _c("div", { staticClass: "col-md-12" }, [
-                          _c("div", { staticClass: "form-group" }, [
-                            _c("label", [_vm._v("Deskripsi")]),
-                            _vm._v(" "),
-                            _c("textarea", {
-                              directives: [
-                                {
-                                  name: "model",
-                                  rawName: "v-model",
-                                  value: _vm.formData.description,
-                                  expression: "formData.description"
-                                }
-                              ],
-                              staticClass: "form-control",
-                              attrs: {
-                                rows: "3",
-                                name: "description",
-                                required: "",
-                                placeholder: "Deskripsi"
-                              },
-                              domProps: { value: _vm.formData.description },
-                              on: {
-                                input: function($event) {
-                                  if ($event.target.composing) {
-                                    return
-                                  }
-                                  _vm.$set(
-                                    _vm.formData,
-                                    "description",
-                                    $event.target.value
-                                  )
-                                }
-                              }
-                            })
-                          ])
-                        ])
-                      ])
-                    ]),
-                    _vm._v(" "),
-                    _c("hr"),
-                    _vm._v(" "),
-                    _c(
-                      "div",
-                      { staticClass: "form-action", attrs: { align: "right" } },
-                      [
-                        _c(
-                          "button",
-                          {
-                            staticClass: "btn btn-sm btn-success btn-submit",
-                            attrs: { type: "submit", form: "FormTambah" }
-                          },
-                          [
-                            _c("i", { staticClass: "fa fa-save" }),
-                            _vm._v(" Simpan\n\t\t\t\t\t\t")
-                          ]
-                        )
-                      ]
-                    )
-                  ]
-                )
-              ])
+                        ]
+                      )
+                    : _vm._e()
+                ],
+                1
+              )
             ])
           : _vm._e()
       ]),
@@ -1539,10 +1633,8 @@ var render = function() {
         _vm.showList
           ? _c("div", { staticClass: "aro-restraint" }, [
               _c("div", { staticClass: "aro-restraint_title" }, [
-                _c("span", [_vm._v("Materi")])
-              ]),
-              _vm._v(" "),
-              _c("div", { staticClass: "button-table" }, [
+                _c("span", [_vm._v("Materi")]),
+                _vm._v(" "),
                 _c("div", { staticClass: "button-table" }, [
                   !_vm.showForm
                     ? _c(
