@@ -142,6 +142,12 @@ class SkillController extends Controller
     public function delete($uuid)
     {
         $data = Skill::findByUuid($uuid);
+        if($data->image != '/img/skill/default.png'){
+            $fwhite = public_path().$data->image;
+            if (is_file($fwhite)) {
+                unlink($fwhite);
+            }
+        }
     
         if($data->delete()){
 	        return response()->json([

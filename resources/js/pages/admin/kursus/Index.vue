@@ -39,6 +39,22 @@
 		<div v-if="showMateri">
 			<Materi :materiGroupUuid="materiGroupUuid" :materiGroupId="materiGroupId"></Materi>
 		</div>
+
+		<transition enter-active-class="animated fadeIn">
+			<div class="aro-restraint" v-if="showTools">
+				<div class="aro-restraint_title">
+					<span>Courses Tools</span>
+					<div class="button-table">
+						<button type="button" class="btn btn-info btn-sm" @click.prevent="setShowList()">
+							<i class="fa fa-reply-all"></i> Kembali
+						</button>
+					</div>
+				</div>
+				<div class="aro-restraint_body">
+					<Tools></Tools>
+				</div>
+			</div>
+		</transition>
 	</div>
 </template>
 
@@ -46,9 +62,10 @@
 	import FormTambah from './components/FormTambah'
 	import MateriGroup from './components/MateriGroup'
 	import Materi from './components/Materi'
+	import Tools from './components/Tools'
     export default {
     	components: {
-            FormTambah, MateriGroup, Materi
+            FormTambah, MateriGroup, Materi, Tools
         },
     	data() {
 	        return {
@@ -57,6 +74,7 @@
 
 	        	showGroupMateri: false,
 	        	showMateri: false,
+	        	showTools: false,
 
 	        	columns: [
 	        		{ name: 'Nama', data: 'name' },
@@ -80,6 +98,7 @@
 				vm.showForm = false;
 				vm.showGroupMateri = false;
 				vm.showMateri = false;
+				vm.showTools = false;
 	    	},
 	    	setShowForm(){
 	    		var vm = this;
@@ -88,6 +107,7 @@
 				vm.showForm = true;
 				vm.showGroupMateri = false;
 				vm.showMateri = false;
+				vm.showTools = false;
 	    	},
 	    	setShowMateri(){
 	    		var vm = this;
@@ -96,6 +116,16 @@
 				vm.showForm = false;
 				vm.showGroupMateri = false;
 				vm.showMateri = true;
+				vm.showTools = false;
+	    	},
+	    	setShowTools(){
+	    		var vm = this;
+
+	    		vm.showList = false;
+				vm.showForm = false;
+				vm.showGroupMateri = false;
+				vm.showMateri = false;
+				vm.showTools = true;
 	    	},
 
 	    	callback(){
@@ -110,9 +140,15 @@
 	                    vm.isEdit = true;
 	                    vm.setShowForm();
 	                });
+
 	                $('#table').on('click', '.hapus', function(e){
 	                    var uuid = $(this).data('uuid');
 	                    vm.deleteData(uuid);
+	                });
+
+	                $('#table').on('click', '.tools', function(e){
+	                    var uuid = $(this).data('uuid');
+	                    vm.setShowTools();
 	                });
 	    		}, 200);
 	    	},

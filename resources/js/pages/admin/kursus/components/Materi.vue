@@ -20,8 +20,8 @@
 								<div class="row">
 									<div class="col-md-12">
 										<div class="form-group" align="center">
-											<div class="image-upload-box images" style="width: 350px; height: 200px">
-												<input type="file" id="image" accept="image/png, image/jpeg" class="form-control" name="thumbnile" required v-on:change="changeImage" placeholder="Name">
+											<div class="image-upload-box images" :style="`background-image: url(${formData.thumbnail}); background-size: cover; width: 350px; height: 200px`">
+												<input type="file" id="image" accept="image/png, image/jpeg" class="form-control" name="thumbnail" required v-on:change="changeImage" placeholder="Name">
 												<label for="image"><i class=" fa fa-plus"></i></label>
 											</div>
 										</div>
@@ -48,7 +48,7 @@
 									<div class="col-md-12">
 										<div class="form-group">
 											<label>Deskripsi</label>
-											<textarea class="form-control" rows="3" name="description" required v-model="formData.description" placeholder="Deskripsi"></textarea>
+											<textarea class="form-control" rows="3" name="description" v-model="formData.description" placeholder="Deskripsi"></textarea>
 										</div>
 									</div>
 								</div>
@@ -128,12 +128,14 @@
 
 	        	columns: [
 	        		{ name: 'Nama Materi', data: 'nm_materi' },
+	        		{ name: 'Aksi', data: 'action' },
 	        	],
 
 	        	formData: {
+	        		uuid: '',
 	        		video: '',
 	        		nm_materi: '',
-					description: '',
+					description: '-',
 	        	},
 	        }
 	    },
@@ -149,6 +151,10 @@
 
 	    		vm.showList = true;
 	    		vm.showForm = false;
+
+	    		setTimeout(function(){
+	    			vm.$refs.table.reload();
+	    		}, 200);
 	    	},
 	    	setShowForm(){
 	    		var vm = this;
@@ -180,6 +186,19 @@
 
 	    	callback(){
 	    		var vm = this;
+
+	    		setTimeout(function(){
+		    		$('#table').on('click', '.edit', function(e){
+	                    var uuid = $(this).data('uuid');
+	                    vm.getData(uuid);
+	                    vm.setShowForm();
+	                });
+
+	                $('#table').on('click', '.hapus', function(e){
+	                    var uuid = $(this).data('uuid');
+	                    vm.deleteData(uuid);
+	                });
+	    		}, 200);
 	    	},
 
 	    	showPreviewVideo: _.debounce(function(){
@@ -197,13 +216,26 @@
 	    		}, 1000);
 	    	}, 500),
 
+	    	getData(uuid){
+	    		var vm = this;
+
+	    		vm.$http({
+	    			url: `${ vm.apiUrl }/materi/${ uuid }/getdata`,
+	    			method: 'GET',
+	    		}).then((res)=>{
+	    			vm.formData = res.data.data;
+	    		}).catch((err)=>{
+	    			toastr.error(err.response.data.message, 'Error');
+	    		})
+	    	},
+
 	    	changeImage($event){
 	    		var vm = this;
 
-	    		vm.formData.thumbnile = $event.target.files[0];
-                if(typeof vm.formData.thumbnile != 'undefined'){
+	    		vm.formData.thumbnail = $event.target.files[0];
+                if(vm.formData.thumbnail != undefined){
                     var oFReader = new FileReader();
-                    oFReader.readAsDataURL(vm.formData.thumbnile);
+                    oFReader.readAsDataURL(vm.formData.thumbnail);
                  
                     oFReader.onload = function(oFREvent) {
                         $('.images').css('background-image', 'url(' + oFREvent.target.result + ')');
@@ -211,6 +243,41 @@
                     };
                 }
 	    	},
+
+	    	simpanData(uuid){
+	    		var vm = this;
+
+	    		var urls = `${ vm.apiUrl }/materi/create`;
+	    		if(uuid != ''){
+	    			urls = `${ vm.apiUrl }/materi/${ uuid }/update`;
+	    		}
+
+	    		Aropex.btnLoad('.btn-submit', true);
+	    		let formData = new FormData($("#FormTambah")[0]);
+	    		formData.append('materigroup_id', vm.$parent.materiGroupId);
+                vm.axios.post(urls, formData, {headers: {'content-type': 'multipart/form-data'}}).then((res) => {
+	    			vm.setShowList();
+	    			Aropex.btnLoad('.btn-submit', false);
+	    			toastr.success(res.data.message, 'Success');
+	    		}).catch((err)=>{
+	    			Aropex.btnLoad('.btn-submit', false);
+	    			toastr.error(err.response.data.message, 'Error');
+	    		});
+	    	},
+
+	    	deleteData(uuid){
+	    		var vm = this;
+
+	    		vm.$http({
+	    			url: `${ vm.apiUrl }/materi/${ uuid }/delete`,
+	    			method: 'DELETE',
+	    		}).then((res)=>{
+	    			vm.$refs.table.reload();
+	    			toastr.success(res.data.message, 'Success');
+	    		}).catch((err)=>{
+	    			toastr.error(err.response.data.message, 'Error');
+	    		})
+	    	}
     	},
     	mounted(){
 

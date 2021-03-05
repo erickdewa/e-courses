@@ -43,7 +43,7 @@
 /******/
 /******/ 	// script path function
 /******/ 	function jsonpScriptSrc(chunkId) {
-/******/ 		return __webpack_require__.p + "" + ({"admin.dashboard":"admin.dashboard","admin.login":"admin.login","admin.master":"admin.master","admin.master.kategori":"admin.master.kategori","admin.master.level":"admin.master.level","admin.master.skill":"admin.master.skill","admin.master.tool":"admin.master.tool","admin.setting":"admin.setting","admin.setting.user":"admin.setting.user","admin.setting.webconfig":"admin.setting.webconfig","login":"login","user.home":"user.home","vendors~admin":"vendors~admin","admin":"admin"}[chunkId]||chunkId) + ".js"
+/******/ 		return __webpack_require__.p + "" + ({"admin.login":"admin.login","admin.master":"admin.master","admin.master.kategori":"admin.master.kategori","admin.master.level":"admin.master.level","admin.master.skill":"admin.master.skill","admin.master.tool":"admin.master.tool","admin.setting":"admin.setting","admin.setting.user":"admin.setting.user","admin.setting.webconfig":"admin.setting.webconfig","login":"login","user.home":"user.home","vendors~admin":"vendors~admin","admin":"admin","vendors~admin.dashboard":"vendors~admin.dashboard","admin.dashboard":"admin.dashboard"}[chunkId]||chunkId) + ".js"
 /******/ 	}
 /******/
 /******/ 	// The require function
@@ -47962,7 +47962,34 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(_websanova_vue_auth__WEBPACK_IMPO
 
  // Global Components
 
-vue__WEBPACK_IMPORTED_MODULE_0___default.a.component('AdminTable', _pages_components_Table__WEBPACK_IMPORTED_MODULE_8__["default"]); // Global Variables
+vue__WEBPACK_IMPORTED_MODULE_0___default.a.component('AdminTable', _pages_components_Table__WEBPACK_IMPORTED_MODULE_8__["default"]);
+
+Number.prototype.rupiah = function () {
+  var is_float = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : false;
+  var str = this.toString().replace(/\D/g, '').replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+
+  if (is_float) {
+    var rp = this.toString().split('.');
+    var str = rp[0].toString().replace(/\D/g, '').replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+    return str + ',' + rp[1];
+  }
+
+  return str;
+};
+
+String.prototype.rupiah = function () {
+  var is_float = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : false;
+  var str = this.toString().replace(/\D/g, '').replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+
+  if (is_float) {
+    var rp = this.toString().split('.');
+    var str = rp[0].toString().replace(/\D/g, '').replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+    return str + ',' + rp[1];
+  }
+
+  return str;
+}; // Global Variables
+
 
 vue__WEBPACK_IMPORTED_MODULE_0___default.a.mixin({
   data: function data() {
@@ -48253,7 +48280,7 @@ var routesAdmin = [{
     name: 'admin.dashboard',
     path: '/admin/dashboard',
     component: function component() {
-      return __webpack_require__.e(/*! import() | admin.dashboard */ "admin.dashboard").then(__webpack_require__.bind(null, /*! ../pages/admin/dashboard/Index */ "./resources/js/pages/admin/dashboard/Index.vue"));
+      return Promise.all(/*! import() | admin.dashboard */[__webpack_require__.e("vendors~admin.dashboard"), __webpack_require__.e("admin.dashboard")]).then(__webpack_require__.bind(null, /*! ../pages/admin/dashboard/Index */ "./resources/js/pages/admin/dashboard/Index.vue"));
     },
     meta: {
       title: "Dashboard | ".concat("Laravel"),
@@ -48263,7 +48290,7 @@ var routesAdmin = [{
     name: 'admin.kursus',
     path: '/admin/kursus',
     component: function component() {
-      return __webpack_require__.e(/*! import() | admin.dashboard */ "admin.dashboard").then(__webpack_require__.bind(null, /*! ../pages/admin/kursus/Index */ "./resources/js/pages/admin/kursus/Index.vue"));
+      return Promise.all(/*! import() | admin.dashboard */[__webpack_require__.e("vendors~admin.dashboard"), __webpack_require__.e("admin.dashboard")]).then(__webpack_require__.bind(null, /*! ../pages/admin/kursus/Index */ "./resources/js/pages/admin/kursus/Index.vue"));
     },
     meta: {
       title: "Kursus | ".concat("Laravel"),

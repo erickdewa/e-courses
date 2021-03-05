@@ -19,9 +19,10 @@ class CoursesController extends Controller
         })->orderBy('id', 'desc')->paginate($per);
 
         $data->map(function($a){
-            $btnEdit = '<button class="btn btn-clean btn-icon btn-icon-md edit" data-id="'.$a->id.'" data-uuid="'.$a->uuid.'"><i class="fa fa-edit text-warning"></i></button>';
-            $btnHapus = '<button class="btn btn-clean btn-icon btn-icon-md hapus" data-id="'.$a->id.'" data-uuid="'.$a->uuid.'"><i class="fa fa-trash text-danger"></i></button>';
-            $a->action = $btnEdit.$btnHapus;
+            $btnEdit = '<button class="btn btn-clean btn-icon btn-icon-md edit" title="Edit" data-id="'.$a->id.'" data-uuid="'.$a->uuid.'"><i class="fa fa-edit text-warning"></i></button>';
+            $btnHapus = '<button class="btn btn-clean btn-icon btn-icon-md hapus" title="Hapus" data-id="'.$a->id.'" data-uuid="'.$a->uuid.'"><i class="fa fa-trash text-danger"></i></button>';
+            $btnTools = '<button class="btn btn-clean btn-icon btn-icon-md tools" title="Tools" data-id="'.$a->id.'" data-uuid="'.$a->uuid.'"><i class="fa fa-cogs text-info"></i></button>';
+            $a->action = $btnEdit.$btnHapus.$btnTools;
 
             return $a;
         });
@@ -48,10 +49,18 @@ class CoursesController extends Controller
             ], 500);
         }
 
+        if(isset($request->image)) {
+            $nama_thumbnile = 'coursese_'.time().'.'.$request->thumbnile->getClientOriginalExtension();
+            $request->thumbnile->move(public_path('img/coursese/thumbnile'), $nama_thumbnile);
+            $thumbnile = '/img/coursese/thumbnile/'.$nama_thumbnile;
+        }else{
+            $thumbnile = '/img/coursese/thumbnile/default.png';
+        }
+
         $data = Courses::create([
         	'name' => $request->name,
 			'subname' => $request->subname,
-			'thumbnile' => $request->thumbnile,
+			'thumbnile' => $thumbnile,
 			'color' => $request->color,
 			'description' => $request->description,
 			'price' => $request->price,
@@ -105,10 +114,22 @@ class CoursesController extends Controller
         }
 
         $data = Courses::findByUuid($uuid);
+        if(isset($request->thumbnile)) {
+            $nama_thumbnile = 'courses_'.time().'.'.$request->thumbnile->getClientOriginalExtension();
+            $request->thumbnile->move(public_path('img/courses/thumbnile'), $nama_thumbnile);
+            if($data->thumbnile != '/img/courses/thumbnile/default.png'){
+                $fwhite = public_path().$data->thumbnile;
+                if (is_file($fwhite)) {
+                    unlink($fwhite);
+                }
+            }
+            $thumbnile = '/img/courses/thumbnile/'.$nama_thumbnile;
+        }
+
         $data->update([
             'name' => $request->name,
             'subname' => $request->subname,
-            'thumbnile' => $request->thumbnile,
+            'thumbnile' => $thumbnile,
             'color' => $request->color,
             'description' => $request->description,
             'price' => $request->price,
@@ -127,7 +148,13 @@ class CoursesController extends Controller
     public function delete($uuid)
     {
         $data = Courses::findByUuid($uuid);
-    
+        if($data->thumbnile != '/img/courses/thumbnile/default.png'){
+            $fwhite = public_path().$data->thumbnile;
+            if (is_file($fwhite)) {
+                unlink($fwhite);
+            }
+        }
+        
         if($data->delete()){
             return response()->json([
                 'status' => true,

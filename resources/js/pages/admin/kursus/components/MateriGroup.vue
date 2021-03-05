@@ -133,10 +133,10 @@
 	    			method: "POST",
 	    		}).then((res) => {
                 	vm.setShowList();
-	    			vm.$refs.table.reload();
 	    			Aropex.btnLoad('.btn-submit', false);
 	    			toastr.success(res.data.message, 'Success');
 	    		}).catch((err)=>{
+	    			console.log(err);
 	    			Aropex.btnLoad('.btn-submit', false);
 	    			toastr.error(err.response.data.message, 'Error');
 	    		});

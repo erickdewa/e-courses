@@ -5,7 +5,7 @@
 				<div class="row">
 					<div class="col-md-12">
 						<div class="form-group" align="center">
-							<div class="image-upload-box images" style="width: 350px; height: 200px">
+							<div class="image-upload-box images" :style="`background-image: url(${formData.thumbnile}); background-size: cover; width: 350px; height: 200px`">
 								<input type="file" id="image" accept="image/png, image/jpeg" class="form-control" name="thumbnile" required v-on:change="changeImage" placeholder="Name">
 								<label for="image"><i class=" fa fa-plus"></i></label>
 							</div>
@@ -43,7 +43,7 @@
 					<div class="col-md-6">
 						<div class="form-group">
 							<label>Harga</label>
-							<input type="text" class="form-control" name="price" required v-model="formData.price" placeholder="Harga">
+							<input type="text" class="form-control" name="price" required oninput="this.value = this.value.rupiah()" v-model="formData.price" placeholder="Harga">
 						</div>
 					</div>
 					<div class="col-md-12">
@@ -85,7 +85,7 @@
 	    		var vm = this;
 
 	    		vm.formData.thumbnile = $event.target.files[0];
-                if(typeof vm.formData.thumbnile != 'undefined'){
+                if(vm.formData.thumbnile != undefined){
                     var oFReader = new FileReader();
                     oFReader.readAsDataURL(vm.formData.thumbnile);
                  
@@ -104,6 +104,9 @@
 	    			method: 'GET',
 	    		}).then((res)=>{
 	    			vm.formData = res.data.data;
+
+	    			// rupiah
+	    			vm.formData.price = vm.formData.price.rupiah();
 	    		}).catch((err)=>{
 	    			toastr.error(err.response.data.message, 'Error');
 	    		})

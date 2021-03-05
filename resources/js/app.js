@@ -31,6 +31,30 @@ import AdminTable from './pages/components/Table'
 // Global Components
 Vue.component('AdminTable', AdminTable)
 
+Number.prototype.rupiah = function(is_float=false) {
+    var str = this.toString().replace(/\D/g, '').replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+    
+    if(is_float) {
+        var rp = this.toString().split('.');
+        var str = rp[0].toString().replace(/\D/g, '').replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+        return str+','+rp[1]
+    }
+
+    return str;
+}
+
+String.prototype.rupiah = function(is_float=false) {
+    var str = this.toString().replace(/\D/g, '').replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+
+    if(is_float) {
+        var rp = this.toString().split('.');
+        var str = rp[0].toString().replace(/\D/g, '').replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+        return str+','+rp[1]
+    }
+
+    return str;
+}
+
 // Global Variables
 Vue.mixin({
 	data: function() {

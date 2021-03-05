@@ -53,8 +53,11 @@ class MateriController extends Controller
     public function create(Request $request)
     {
     	$validator = Validator::make($request->all(), [
+            'materigroup_id' => 'required|integer',
             'nm_materi' => 'required|string',
-            'courses_id' => 'required|integer',
+            'thumbnail' => 'required|image',
+            'video' => 'required|string',
+            'description' => 'nullable|string',
         ]);
 
         if ($validator->fails()) {
@@ -64,9 +67,20 @@ class MateriController extends Controller
             ], 500);
         }
 
+        if(isset($request->thumbnail)) {
+            $nama_thumbnail = 'courses_'.time().'.'.$request->thumbnail->getClientOriginalExtension();
+            $request->thumbnail->move(public_path('img/courses/thumbnail'), $nama_thumbnail);
+            $thumbnail = '/img/courses/thumbnileMateri/'.$nama_thumbnail;
+        }else{
+            $thumbnail = '/img/courses/thumbnileMateri/default.png';
+        }
+
         $data = Materi::create([
-        	'courses_id' => $request->courses_id,
-        	'nm_materi' => $request->nm_materi,
+        	'materigroup_id' => $request->materigroup_id,
+            'nm_materi' => $request->nm_materi,
+            'video' => $request->video,
+            'description' => $request->description,
+            'thumbnail' => $thumbnail,
         ]);
 
         return response()->json([
@@ -96,8 +110,11 @@ class MateriController extends Controller
     public function update(Request $request, $uuid)
     {
     	$validator = Validator::make($request->all(), [
+            'materigroup_id' => 'required|integer',
             'nm_materi' => 'required|string',
-            'courses_id' => 'required|integer',
+            'thumbnail' => 'required|image',
+            'video' => 'required|string',
+            'description' => 'nullable|string',
         ]);
 
         if ($validator->fails()) {
@@ -108,9 +125,24 @@ class MateriController extends Controller
         }
 
         $data = Materi::findByUuid($uuid);
+        if(isset($request->thumbnail)) {
+            $nama_thumbnail = 'courses_'.time().'.'.$request->thumbnail->getClientOriginalExtension();
+            $request->thumbnail->move(public_path('img/courses/thumbnileMateri'), $nama_thumbnail);
+            if($data->thumbnail != '/img/courses/thumbnileMateri/default.png'){
+                $fwhite = public_path().$data->thumbnail;
+                if (is_file($fwhite)) {
+                    unlink($fwhite);
+                }
+            }
+            $thumbnail = '/img/courses/thumbnail/'.$nama_thumbnail;
+        }
+
         $data->update([
-        	'courses_id' => $request->courses_id,
-        	'nm_materi' => $request->nm_materi,
+        	'materigroup_id' => $request->materigroup_id,
+            'nm_materi' => $request->nm_materi,
+            'video' => $request->video,
+            'description' => (($request->description!='')?$request->description:'-'),
+            'thumbnail' => $thumbnail,
         ]);
 
         return response()->json([
@@ -122,6 +154,12 @@ class MateriController extends Controller
     public function delete($uuid)
     {
         $data = Materi::findByUuid($uuid);
+        if($data->thumbnile != '/img/courses/thumbnileMateri/default.png'){
+            $fwhite = public_path().$data->thumbnile;
+            if (is_file($fwhite)) {
+                unlink($fwhite);
+            }
+        }
     
         if($data->delete()){
 	        return response()->json([
