@@ -10,6 +10,10 @@ form.form{
     margin-bottom: 25px;
 }
 .form-control:focus{
+	border-color: #CED4DA;
 	outline: none;
 	box-shadow: none;
+}
+.form-control[readonly]{
+	background: #FFFFFF;
 }

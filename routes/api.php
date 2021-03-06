@@ -77,6 +77,11 @@ Route::prefix('v1')->group(function(){
 		    		Route::post('/create', 'CoursesToolController@create');
 		    		Route::delete('/{uuid}/delete', 'CoursesToolController@delete');
 		    	});
+
+		    	Route::prefix('review')->group(function(){
+		    		Route::get('/{uuid}/getdata', 'CoursesToolController@getData');
+		    		Route::delete('/{uuid}/delete', 'CoursesToolController@delete');
+		    	});
 	    	});
 
 	    	Route::prefix('materigroup')->group(function(){

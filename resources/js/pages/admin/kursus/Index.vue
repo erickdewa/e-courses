@@ -55,6 +55,22 @@
 				</div>
 			</div>
 		</transition>
+
+		<transition enter-active-class="animated fadeIn">
+			<div class="aro-restraint" v-if="showReview">
+				<div class="aro-restraint_title">
+					<span>Courses Review</span>
+					<div class="button-table">
+						<button type="button" class="btn btn-info btn-sm" @click.prevent="setShowList()">
+							<i class="fa fa-reply-all"></i> Kembali
+						</button>
+					</div>
+				</div>
+				<div class="aro-restraint_body">
+					<Review></Review>
+				</div>
+			</div>
+		</transition>
 	</div>
 </template>
 
@@ -63,9 +79,10 @@
 	import MateriGroup from './components/MateriGroup'
 	import Materi from './components/Materi'
 	import Tools from './components/Tools'
+	import Review from './components/Review'
     export default {
     	components: {
-            FormTambah, MateriGroup, Materi, Tools
+            FormTambah, MateriGroup, Materi, Tools, Review
         },
     	data() {
 	        return {
@@ -75,6 +92,7 @@
 	        	showGroupMateri: false,
 	        	showMateri: false,
 	        	showTools: false,
+	        	showReview: false,
 
 	        	columns: [
 	        		{ name: 'Nama', data: 'name' },
@@ -99,6 +117,7 @@
 				vm.showGroupMateri = false;
 				vm.showMateri = false;
 				vm.showTools = false;
+				vm.showReview = false;
 	    	},
 	    	setShowForm(){
 	    		var vm = this;
@@ -108,6 +127,7 @@
 				vm.showGroupMateri = false;
 				vm.showMateri = false;
 				vm.showTools = false;
+				vm.showReview = false;
 	    	},
 	    	setShowMateri(){
 	    		var vm = this;
@@ -117,6 +137,7 @@
 				vm.showGroupMateri = false;
 				vm.showMateri = true;
 				vm.showTools = false;
+				vm.showReview = false;
 	    	},
 	    	setShowTools(){
 	    		var vm = this;
@@ -126,6 +147,17 @@
 				vm.showGroupMateri = false;
 				vm.showMateri = false;
 				vm.showTools = true;
+				vm.showReview = false;
+	    	},
+	    	setShowReview(){
+	    		var vm = this;
+
+	    		vm.showList = false;
+				vm.showForm = false;
+				vm.showGroupMateri = false;
+				vm.showMateri = false;
+				vm.showTools = false;
+				vm.showReview = true;
 	    	},
 
 	    	callback(){
@@ -152,6 +184,14 @@
 	                    vm.thisUuid = uuid;
 	                    vm.thisId = id;
 	                    vm.setShowTools();
+	                });
+
+	                $('#table').on('click', '.review', function(e){
+	                	var uuid = $(this).data('uuid');
+	                    var id = $(this).data('id');
+	                    vm.thisUuid = uuid;
+	                    vm.thisId = id;
+	                    vm.setShowReview();
 	                });
 	    		}, 200);
 	    	},

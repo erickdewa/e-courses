@@ -22,7 +22,8 @@ class CoursesController extends Controller
             $btnEdit = '<button class="btn btn-clean btn-icon btn-icon-md edit" title="Edit" data-id="'.$a->id.'" data-uuid="'.$a->uuid.'"><i class="fa fa-edit text-warning"></i></button>';
             $btnHapus = '<button class="btn btn-clean btn-icon btn-icon-md hapus" title="Hapus" data-id="'.$a->id.'" data-uuid="'.$a->uuid.'"><i class="fa fa-trash text-danger"></i></button>';
             $btnTools = '<button class="btn btn-clean btn-icon btn-icon-md tools" title="Tools" data-id="'.$a->id.'" data-uuid="'.$a->uuid.'"><i class="fa fa-cogs text-info"></i></button>';
-            $a->action = $btnEdit.$btnHapus.$btnTools;
+            $btnReview = '<button class="btn btn-clean btn-icon btn-icon-md review" title="Review" data-id="'.$a->id.'" data-uuid="'.$a->uuid.'"><i class="fa fa-star-o text-success"></i></button>';
+            $a->action = $btnEdit.$btnHapus.$btnTools.$btnReview;
 
             return $a;
         });
