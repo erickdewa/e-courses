@@ -947,36 +947,30 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
       formData: {
         rate: '',
-        tanggal: ''
+        tanggal_dari: '',
+        tanggal_sampai: ''
       },
-      dataTools: []
+      dataReview: []
     };
   },
   methods: {
-    getData: function getData() {},
+    getData: function getData() {
+      var vm = this;
+      vm.$http({
+        url: "".concat(vm.apiUrl, "/courses/review/").concat(vm.$parent.thisUuid, "/getdata"),
+        data: vm.formData,
+        method: 'POST'
+      }).then(function (res) {
+        vm.dataReview = res.data.data;
+      })["catch"](function (err) {
+        toastr.error(err.response.data.message, 'Error');
+      });
+    },
     tanggal: function tanggal() {
       var vm = this;
       $(".datepickers").datepicker({
@@ -1012,6 +1006,7 @@ __webpack_require__.r(__webpack_exports__);
     var vm = this;
     vm.select2();
     vm.tanggal();
+    vm.getData();
   }
 });
 
@@ -2511,7 +2506,7 @@ var render = function() {
         on: {
           submit: function($event) {
             $event.preventDefault()
-            return _vm.simpanData()
+            return _vm.getData()
           }
         }
       },
@@ -2572,8 +2567,8 @@ var render = function() {
                   {
                     name: "model",
                     rawName: "v-model",
-                    value: _vm.formData.tanggal,
-                    expression: "formData.tanggal"
+                    value: _vm.formData.tanggal_dari,
+                    expression: "formData.tanggal_dari"
                   }
                 ],
                 staticClass: "form-control datepickers tgl_mulai",
@@ -2584,13 +2579,13 @@ var render = function() {
                   name: "tanggal",
                   "data-date-format": "yyyy-mm-dd"
                 },
-                domProps: { value: _vm.formData.tanggal },
+                domProps: { value: _vm.formData.tanggal_dari },
                 on: {
                   input: function($event) {
                     if ($event.target.composing) {
                       return
                     }
-                    _vm.$set(_vm.formData, "tanggal", $event.target.value)
+                    _vm.$set(_vm.formData, "tanggal_dari", $event.target.value)
                   }
                 }
               })
@@ -2602,8 +2597,8 @@ var render = function() {
                   {
                     name: "model",
                     rawName: "v-model",
-                    value: _vm.formData.tanggal,
-                    expression: "formData.tanggal"
+                    value: _vm.formData.tanggal_sampai,
+                    expression: "formData.tanggal_sampai"
                   }
                 ],
                 staticClass: "form-control datepickers tgl_akhir",
@@ -2614,13 +2609,17 @@ var render = function() {
                   name: "tanggal",
                   "data-date-format": "yyyy-mm-dd"
                 },
-                domProps: { value: _vm.formData.tanggal },
+                domProps: { value: _vm.formData.tanggal_sampai },
                 on: {
                   input: function($event) {
                     if ($event.target.composing) {
                       return
                     }
-                    _vm.$set(_vm.formData, "tanggal", $event.target.value)
+                    _vm.$set(
+                      _vm.formData,
+                      "tanggal_sampai",
+                      $event.target.value
+                    )
                   }
                 }
               })
@@ -2629,7 +2628,38 @@ var render = function() {
             _vm._m(0)
           ]),
           _vm._v(" "),
-          _vm._m(1)
+          _c(
+            "div",
+            { staticClass: "row comment-list" },
+            _vm._l(_vm.dataReview, function(review) {
+              return _c("div", { staticClass: "comment-item" }, [
+                _c("div", { staticClass: "comment-head" }, [
+                  _c("img", { attrs: { src: review.user.image } }),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "comment-user" }, [
+                    _c("div", { staticClass: "nama" }, [
+                      _vm._v(_vm._s(review.user.name))
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "tanggal" }, [
+                      _vm._v(_vm._s(review.created_at))
+                    ])
+                  ]),
+                  _vm._v(" "),
+                  _vm._m(1, true)
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "comment-body" }, [
+                  _vm._v(
+                    "\n\t\t\t\t\t\t" +
+                      _vm._s(review.description) +
+                      "\n\t\t\t\t\t"
+                  )
+                ])
+              ])
+            }),
+            0
+          )
         ])
       ]
     )
@@ -2659,302 +2689,259 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "row comment-list" }, [
-      _c("div", { staticClass: "comment-item" }, [
-        _c("div", { staticClass: "comment-head" }, [
-          _c("img", { attrs: { src: "/img/tool/default.png" } }),
-          _vm._v(" "),
-          _c("div", { staticClass: "comment-user" }, [
-            _c("div", { staticClass: "nama" }, [_vm._v("Erick Pranata")]),
-            _vm._v(" "),
-            _c("div", { staticClass: "tanggal" }, [_vm._v("02 Januari 2021")])
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "comment-rating" }, [
-            _c("div", { staticClass: "rating-group" }, [
-              _c("input", {
-                staticClass: "rating__input rating__input--none",
-                attrs: {
-                  checked: "",
-                  name: "rating2",
-                  id: "rating2-0",
-                  value: "0",
-                  type: "radio",
-                  disabled: ""
-                }
-              }),
-              _vm._v(" "),
-              _c(
-                "label",
-                {
-                  staticClass: "rating__label rating__label--half",
-                  attrs: { "aria-label": "0.5 stars", for: "rating2-05" }
-                },
-                [
-                  _c("i", {
-                    staticClass:
-                      "rating__icon rating__icon--star fa fa-star-half"
-                  })
-                ]
-              ),
-              _vm._v(" "),
-              _c("input", {
-                staticClass: "rating__input",
-                attrs: {
-                  name: "rating2",
-                  id: "rating2-05",
-                  value: "0.5",
-                  type: "radio",
-                  disabled: ""
-                }
-              }),
-              _vm._v(" "),
-              _c(
-                "label",
-                {
-                  staticClass: "rating__label",
-                  attrs: { "aria-label": "1 star", for: "rating2-10" }
-                },
-                [
-                  _c("i", {
-                    staticClass: "rating__icon rating__icon--star fa fa-star"
-                  })
-                ]
-              ),
-              _vm._v(" "),
-              _c("input", {
-                staticClass: "rating__input",
-                attrs: {
-                  name: "rating2",
-                  id: "rating2-10",
-                  value: "1",
-                  type: "radio",
-                  disabled: ""
-                }
-              }),
-              _vm._v(" "),
-              _c(
-                "label",
-                {
-                  staticClass: "rating__label rating__label--half",
-                  attrs: { "aria-label": "1.5 stars", for: "rating2-15" }
-                },
-                [
-                  _c("i", {
-                    staticClass:
-                      "rating__icon rating__icon--star fa fa-star-half"
-                  })
-                ]
-              ),
-              _vm._v(" "),
-              _c("input", {
-                staticClass: "rating__input",
-                attrs: {
-                  name: "rating2",
-                  id: "rating2-15",
-                  value: "1.5",
-                  type: "radio",
-                  disabled: ""
-                }
-              }),
-              _vm._v(" "),
-              _c(
-                "label",
-                {
-                  staticClass: "rating__label",
-                  attrs: { "aria-label": "2 stars", for: "rating2-20" }
-                },
-                [
-                  _c("i", {
-                    staticClass: "rating__icon rating__icon--star fa fa-star"
-                  })
-                ]
-              ),
-              _vm._v(" "),
-              _c("input", {
-                staticClass: "rating__input",
-                attrs: {
-                  name: "rating2",
-                  id: "rating2-20",
-                  value: "2",
-                  type: "radio",
-                  disabled: ""
-                }
-              }),
-              _vm._v(" "),
-              _c(
-                "label",
-                {
-                  staticClass: "rating__label rating__label--half",
-                  attrs: { "aria-label": "2.5 stars", for: "rating2-25" }
-                },
-                [
-                  _c("i", {
-                    staticClass:
-                      "rating__icon rating__icon--star fa fa-star-half"
-                  })
-                ]
-              ),
-              _vm._v(" "),
-              _c("input", {
-                staticClass: "rating__input",
-                attrs: {
-                  name: "rating2",
-                  id: "rating2-25",
-                  value: "2.5",
-                  type: "radio",
-                  checked: ""
-                }
-              }),
-              _vm._v(" "),
-              _c(
-                "label",
-                {
-                  staticClass: "rating__label",
-                  attrs: { "aria-label": "3 stars", for: "rating2-30" }
-                },
-                [
-                  _c("i", {
-                    staticClass: "rating__icon rating__icon--star fa fa-star"
-                  })
-                ]
-              ),
-              _vm._v(" "),
-              _c("input", {
-                staticClass: "rating__input",
-                attrs: {
-                  name: "rating2",
-                  id: "rating2-30",
-                  value: "3",
-                  type: "radio",
-                  disabled: ""
-                }
-              }),
-              _vm._v(" "),
-              _c(
-                "label",
-                {
-                  staticClass: "rating__label rating__label--half",
-                  attrs: { "aria-label": "3.5 stars", for: "rating2-35" }
-                },
-                [
-                  _c("i", {
-                    staticClass:
-                      "rating__icon rating__icon--star fa fa-star-half"
-                  })
-                ]
-              ),
-              _vm._v(" "),
-              _c("input", {
-                staticClass: "rating__input",
-                attrs: {
-                  name: "rating2",
-                  id: "rating2-35",
-                  value: "3.5",
-                  type: "radio",
-                  disabled: ""
-                }
-              }),
-              _vm._v(" "),
-              _c(
-                "label",
-                {
-                  staticClass: "rating__label",
-                  attrs: { "aria-label": "4 stars", for: "rating2-40" }
-                },
-                [
-                  _c("i", {
-                    staticClass: "rating__icon rating__icon--star fa fa-star"
-                  })
-                ]
-              ),
-              _vm._v(" "),
-              _c("input", {
-                staticClass: "rating__input",
-                attrs: {
-                  name: "rating2",
-                  id: "rating2-40",
-                  value: "4",
-                  type: "radio",
-                  disabled: ""
-                }
-              }),
-              _vm._v(" "),
-              _c(
-                "label",
-                {
-                  staticClass: "rating__label rating__label--half",
-                  attrs: { "aria-label": "4.5 stars", for: "rating2-45" }
-                },
-                [
-                  _c("i", {
-                    staticClass:
-                      "rating__icon rating__icon--star fa fa-star-half"
-                  })
-                ]
-              ),
-              _vm._v(" "),
-              _c("input", {
-                staticClass: "rating__input",
-                attrs: {
-                  name: "rating2",
-                  id: "rating2-45",
-                  value: "4.5",
-                  type: "radio",
-                  disabled: ""
-                }
-              }),
-              _vm._v(" "),
-              _c(
-                "label",
-                {
-                  staticClass: "rating__label",
-                  attrs: { "aria-label": "5 stars", for: "rating2-50" }
-                },
-                [
-                  _c("i", {
-                    staticClass: "rating__icon rating__icon--star fa fa-star"
-                  })
-                ]
-              ),
-              _vm._v(" "),
-              _c("input", {
-                staticClass: "rating__input",
-                attrs: {
-                  name: "rating2",
-                  id: "rating2-50",
-                  value: "5",
-                  type: "radio",
-                  disabled: ""
-                }
-              })
-            ])
-          ])
-        ]),
+    return _c("div", { staticClass: "comment-rating" }, [
+      _c("div", { staticClass: "rating-group" }, [
+        _c("input", {
+          staticClass: "rating__input rating__input--none",
+          attrs: {
+            checked: "",
+            name: "rating2",
+            id: "rating2-0",
+            value: "0",
+            type: "radio",
+            disabled: ""
+          }
+        }),
         _vm._v(" "),
-        _c("div", { staticClass: "comment-body" }, [
-          _vm._v(
-            "\n\t\t\t\t\t\tLorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod\n\t\t\t\t\t\ttempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam.\n\t\t\t\t\t"
-          )
-        ])
-      ]),
-      _vm._v(" "),
-      _c("div", { staticClass: "comment-item" }, [
-        _c("div", { staticClass: "comment-head" }, [
-          _c("img", { attrs: { src: "/img/tool/default.png" } }),
-          _vm._v(" "),
-          _c("div", { staticClass: "comment-user" }, [
-            _c("div", { staticClass: "nama" }, [_vm._v("Erick Pranata")]),
-            _vm._v(" "),
-            _c("div", { staticClass: "tanggal" }, [_vm._v("02 Januari 2021")])
-          ])
-        ]),
+        _c(
+          "label",
+          {
+            staticClass: "rating__label rating__label--half",
+            attrs: { "aria-label": "0.5 stars", for: "rating2-05" }
+          },
+          [
+            _c("i", {
+              staticClass: "rating__icon rating__icon--star fa fa-star-half"
+            })
+          ]
+        ),
         _vm._v(" "),
-        _c("div", { staticClass: "comment-body" }, [
-          _vm._v(
-            "\n\t\t\t\t\t\tLorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod\n\t\t\t\t\t\ttempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,\n\t\t\t\t\t\tquis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo\n\t\t\t\t\t\tconsequat. Duis aute irure dolor in reprehenderit in voluptate velit esse\n\t\t\t\t\t\tcillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non\n\t\t\t\t\t\tproident, sunt in culpa qui officia deserunt mollit anim id est laborum.\n\t\t\t\t\t"
-          )
-        ])
+        _c("input", {
+          staticClass: "rating__input",
+          attrs: {
+            name: "rating2",
+            id: "rating2-05",
+            value: "0.5",
+            type: "radio",
+            disabled: ""
+          }
+        }),
+        _vm._v(" "),
+        _c(
+          "label",
+          {
+            staticClass: "rating__label",
+            attrs: { "aria-label": "1 star", for: "rating2-10" }
+          },
+          [
+            _c("i", {
+              staticClass: "rating__icon rating__icon--star fa fa-star"
+            })
+          ]
+        ),
+        _vm._v(" "),
+        _c("input", {
+          staticClass: "rating__input",
+          attrs: {
+            name: "rating2",
+            id: "rating2-10",
+            value: "1",
+            type: "radio",
+            disabled: ""
+          }
+        }),
+        _vm._v(" "),
+        _c(
+          "label",
+          {
+            staticClass: "rating__label rating__label--half",
+            attrs: { "aria-label": "1.5 stars", for: "rating2-15" }
+          },
+          [
+            _c("i", {
+              staticClass: "rating__icon rating__icon--star fa fa-star-half"
+            })
+          ]
+        ),
+        _vm._v(" "),
+        _c("input", {
+          staticClass: "rating__input",
+          attrs: {
+            name: "rating2",
+            id: "rating2-15",
+            value: "1.5",
+            type: "radio",
+            disabled: ""
+          }
+        }),
+        _vm._v(" "),
+        _c(
+          "label",
+          {
+            staticClass: "rating__label",
+            attrs: { "aria-label": "2 stars", for: "rating2-20" }
+          },
+          [
+            _c("i", {
+              staticClass: "rating__icon rating__icon--star fa fa-star"
+            })
+          ]
+        ),
+        _vm._v(" "),
+        _c("input", {
+          staticClass: "rating__input",
+          attrs: {
+            name: "rating2",
+            id: "rating2-20",
+            value: "2",
+            type: "radio",
+            disabled: ""
+          }
+        }),
+        _vm._v(" "),
+        _c(
+          "label",
+          {
+            staticClass: "rating__label rating__label--half",
+            attrs: { "aria-label": "2.5 stars", for: "rating2-25" }
+          },
+          [
+            _c("i", {
+              staticClass: "rating__icon rating__icon--star fa fa-star-half"
+            })
+          ]
+        ),
+        _vm._v(" "),
+        _c("input", {
+          staticClass: "rating__input",
+          attrs: {
+            name: "rating2",
+            id: "rating2-25",
+            value: "2.5",
+            type: "radio",
+            checked: ""
+          }
+        }),
+        _vm._v(" "),
+        _c(
+          "label",
+          {
+            staticClass: "rating__label",
+            attrs: { "aria-label": "3 stars", for: "rating2-30" }
+          },
+          [
+            _c("i", {
+              staticClass: "rating__icon rating__icon--star fa fa-star"
+            })
+          ]
+        ),
+        _vm._v(" "),
+        _c("input", {
+          staticClass: "rating__input",
+          attrs: {
+            name: "rating2",
+            id: "rating2-30",
+            value: "3",
+            type: "radio",
+            disabled: ""
+          }
+        }),
+        _vm._v(" "),
+        _c(
+          "label",
+          {
+            staticClass: "rating__label rating__label--half",
+            attrs: { "aria-label": "3.5 stars", for: "rating2-35" }
+          },
+          [
+            _c("i", {
+              staticClass: "rating__icon rating__icon--star fa fa-star-half"
+            })
+          ]
+        ),
+        _vm._v(" "),
+        _c("input", {
+          staticClass: "rating__input",
+          attrs: {
+            name: "rating2",
+            id: "rating2-35",
+            value: "3.5",
+            type: "radio",
+            disabled: ""
+          }
+        }),
+        _vm._v(" "),
+        _c(
+          "label",
+          {
+            staticClass: "rating__label",
+            attrs: { "aria-label": "4 stars", for: "rating2-40" }
+          },
+          [
+            _c("i", {
+              staticClass: "rating__icon rating__icon--star fa fa-star"
+            })
+          ]
+        ),
+        _vm._v(" "),
+        _c("input", {
+          staticClass: "rating__input",
+          attrs: {
+            name: "rating2",
+            id: "rating2-40",
+            value: "4",
+            type: "radio",
+            disabled: ""
+          }
+        }),
+        _vm._v(" "),
+        _c(
+          "label",
+          {
+            staticClass: "rating__label rating__label--half",
+            attrs: { "aria-label": "4.5 stars", for: "rating2-45" }
+          },
+          [
+            _c("i", {
+              staticClass: "rating__icon rating__icon--star fa fa-star-half"
+            })
+          ]
+        ),
+        _vm._v(" "),
+        _c("input", {
+          staticClass: "rating__input",
+          attrs: {
+            name: "rating2",
+            id: "rating2-45",
+            value: "4.5",
+            type: "radio",
+            disabled: ""
+          }
+        }),
+        _vm._v(" "),
+        _c(
+          "label",
+          {
+            staticClass: "rating__label",
+            attrs: { "aria-label": "5 stars", for: "rating2-50" }
+          },
+          [
+            _c("i", {
+              staticClass: "rating__icon rating__icon--star fa fa-star"
+            })
+          ]
+        ),
+        _vm._v(" "),
+        _c("input", {
+          staticClass: "rating__input",
+          attrs: {
+            name: "rating2",
+            id: "rating2-50",
+            value: "5",
+            type: "radio",
+            disabled: ""
+          }
+        })
       ])
     ])
   }

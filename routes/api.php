@@ -79,8 +79,8 @@ Route::prefix('v1')->group(function(){
 		    	});
 
 		    	Route::prefix('review')->group(function(){
-		    		Route::get('/{uuid}/getdata', 'CoursesToolController@getData');
-		    		Route::delete('/{uuid}/delete', 'CoursesToolController@delete');
+		    		Route::post('/{uuid}/getdata', 'CoursesReviewController@getReview');
+		    		Route::delete('/{uuid}/delete', 'CoursesReviewController@delete');
 		    	});
 	    	});
 

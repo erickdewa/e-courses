@@ -1,6 +1,6 @@
 <template>
 	<div>
-		<form class="form" id="FormTambah" enctype="multipart/form-data" @submit.prevent="simpanData()" autocomplete="off">
+		<form class="form" id="FormTambah" enctype="multipart/form-data" @submit.prevent="getData()" autocomplete="off">
 			<div class="form-body">
 				<div class="row">
 					<div class="col-md-4 col-12">
@@ -13,10 +13,10 @@
 						</select>
 					</div>
 					<div class="col-md-3 col-6">
-						<input type="text" readonly class="form-control datepickers tgl_mulai" placeholder="Pilih Tanggal" name="tanggal" v-model="formData.tanggal" data-date-format="yyyy-mm-dd">
+						<input type="text" readonly class="form-control datepickers tgl_mulai" placeholder="Pilih Tanggal" name="tanggal" v-model="formData.tanggal_dari" data-date-format="yyyy-mm-dd">
 					</div>
 					<div class="col-md-3 col-6">
-						<input type="text" readonly class="form-control datepickers tgl_akhir" placeholder="Pilih Tanggal" name="tanggal" v-model="formData.tanggal" data-date-format="yyyy-mm-dd">
+						<input type="text" readonly class="form-control datepickers tgl_akhir" placeholder="Pilih Tanggal" name="tanggal" v-model="formData.tanggal_sampai" data-date-format="yyyy-mm-dd">
 					</div>
 					<div class="col-md-2 col-12">
 						<button type="submit" class="btn btn-success btn-submit" style="width: 100%">
@@ -25,12 +25,12 @@
 					</div>
 				</div>
 				<div class="row comment-list">
-					<div class="comment-item">
+					<div v-for="review in dataReview" class="comment-item">
 						<div class="comment-head">
-							<img src="/img/tool/default.png">
+							<img :src="review.user.image">
 							<div class="comment-user">
-								<div class="nama">Erick Pranata</div>
-								<div class="tanggal">02 Januari 2021</div>
+								<div class="nama">{{ review.user.name }}</div>
+								<div class="tanggal">{{ review.created_at }}</div>
 							</div>
 							<div class="comment-rating">
 								<div class="rating-group">
@@ -59,25 +59,7 @@
 							</div>
 						</div>
 						<div class="comment-body">
-							Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-							tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam.
-						</div>
-					</div>
-					<div class="comment-item">
-						<div class="comment-head">
-							<img src="/img/tool/default.png">
-							<div class="comment-user">
-								<div class="nama">Erick Pranata</div>
-								<div class="tanggal">02 Januari 2021</div>
-							</div>
-						</div>
-						<div class="comment-body">
-							Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-							tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-							quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-							consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
-							cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
-							proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+							{{ review.description }}
 						</div>
 					</div>
 				</div>
@@ -92,14 +74,26 @@
 	        return {
 	        	formData: {
 	        		rate: '',
-	        		tanggal: '',
+	        		tanggal_dari: '',
+	        		tanggal_sampai: '',
 	        	},
-	        	dataTools: []
+
+	        	dataReview: []
 	        }
 	    },
 	    methods: {
 	    	getData(){
+	    		var vm = this;
 
+	    		vm.$http({
+	    			url: `${ vm.apiUrl }/courses/review/${ vm.$parent.thisUuid }/getdata`,
+	    			data: vm.formData,
+	    			method: 'POST',
+	    		}).then((res)=>{
+	    			vm.dataReview = res.data.data;
+	    		}).catch((err)=>{
+	    			toastr.error(err.response.data.message, 'Error');
+	    		})
 	    	},
 
 	    	tanggal(){
@@ -140,6 +134,7 @@
 
 	    	vm.select2();
 	    	vm.tanggal();
+	    	vm.getData();
 	    }
     }
 </script>

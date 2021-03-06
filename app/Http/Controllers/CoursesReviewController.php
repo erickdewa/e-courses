@@ -25,10 +25,11 @@ class CoursesReviewController extends Controller
     public function getReview(Request $request, $uuid)
     {
     	$courses = Courses::findByUuid($uuid);
-    	$data = CoursesReview::where('courses_id', $courses->id)
+    	$data = CoursesReview::with('courses', 'user')
+    	->where('courses_id', $courses->id)
     	->where(function($query) use ($request){
-    		$query->where('rate', 'like', '%'.$request->search.'%');
-    	})->get();
+    		$query->where('rate', 'like', '%'.$request->rate.'%');
+    	})->orderBy('created_at', 'desc')->get();
 
     	return response()->json([
             'status' => true,
