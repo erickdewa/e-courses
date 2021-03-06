@@ -181,6 +181,9 @@ __webpack_require__.r(__webpack_exports__);
         });
         $('#table').on('click', '.tools', function (e) {
           var uuid = $(this).data('uuid');
+          var id = $(this).data('id');
+          vm.thisUuid = uuid;
+          vm.thisId = id;
           vm.setShowTools();
         });
       }, 200);
@@ -883,10 +886,51 @@ __webpack_require__.r(__webpack_exports__);
     };
   },
   methods: {
+    getData: function getData() {
+      var vm = this;
+      vm.$http({
+        url: "".concat(vm.apiUrl, "/courses/tool/").concat(vm.$parent.thisUuid, "/getdata"),
+        method: "GET"
+      }).then(function (res) {
+        vm.select2();
+        vm.dataSelected = res.data.data;
+      })["catch"](function (err) {
+        toastr.error(err.response.data.message, 'Error');
+      });
+    },
+    simpanData: function simpanData() {
+      var vm = this;
+      Aropex.btnLoad('.btn-submit', true);
+      vm.formData.courses_id = vm.$parent.thisId;
+      vm.$http({
+        url: "".concat(vm.apiUrl, "/courses/tool/create"),
+        data: vm.formData,
+        method: "POST"
+      }).then(function (res) {
+        vm.getData();
+        Aropex.btnLoad('.btn-submit', false);
+        toastr.success(res.data.message, 'Success');
+      })["catch"](function (err) {
+        Aropex.btnLoad('.btn-submit', false);
+        toastr.error(err.response.data.message, 'Error');
+      });
+    },
+    deleteData: function deleteData(uuid) {
+      var vm = this;
+      vm.$http({
+        url: "".concat(vm.apiUrl, "/courses/tool/").concat(uuid, "/delete"),
+        method: "DELETE"
+      }).then(function (res) {
+        vm.getData();
+        toastr.success(res.data.message, 'Success');
+      })["catch"](function (err) {
+        toastr.error(err.response.data.message, 'Error');
+      });
+    },
     select2: function select2() {
       var vm = this;
       vm.$http({
-        url: "".concat(vm.apiUrl, "/tool/getdatas"),
+        url: "".concat(vm.apiUrl, "/courses/tool/").concat(vm.$parent.thisUuid, "/gettool"),
         method: "GET"
       }).then(function (res) {
         vm.dataTools = res.data.data;
@@ -903,7 +947,7 @@ __webpack_require__.r(__webpack_exports__);
   },
   mounted: function mounted() {
     var vm = this;
-    vm.select2();
+    vm.getData();
   }
 });
 
@@ -2192,7 +2236,7 @@ var render = function() {
         on: {
           submit: function($event) {
             $event.preventDefault()
-            return _vm.simpanData(_vm.formData.uuid)
+            return _vm.simpanData()
           }
         }
       },
@@ -2234,8 +2278,8 @@ var render = function() {
                   }
                 },
                 _vm._l(_vm.dataTools, function(tool) {
-                  return _c("option", { domProps: { value: _vm.data.id } }, [
-                    _vm._v(_vm._s(_vm.data.nm_tool))
+                  return _c("option", { domProps: { value: tool.id } }, [
+                    _vm._v(_vm._s(tool.nm_tool))
                   ])
                 }),
                 0
@@ -2251,7 +2295,19 @@ var render = function() {
             _vm._l(_vm.dataSelected, function(selected) {
               return _c("div", { staticClass: "col-md-4 col-12" }, [
                 _c("div", { staticClass: "tool-selected" }, [
-                  _vm._m(1, true),
+                  _c(
+                    "div",
+                    {
+                      staticClass: "tool-hapus",
+                      attrs: { title: "Hapus" },
+                      on: {
+                        click: function($event) {
+                          return _vm.deleteData(selected.uuid)
+                        }
+                      }
+                    },
+                    [_c("i", { staticClass: "fa fa-times text-light" })]
+                  ),
                   _vm._v(" "),
                   _c("div", { staticClass: "tools-image" }, [
                     _c("img", { attrs: { src: selected.tool.image } })
@@ -2284,17 +2340,13 @@ var staticRenderFns = [
     return _c("div", { staticClass: "col-md-2" }, [
       _c(
         "button",
-        { staticClass: "btn btn-success", staticStyle: { width: "100%" } },
+        {
+          staticClass: "btn btn-success btn-submit",
+          staticStyle: { width: "100%" },
+          attrs: { type: "submit" }
+        },
         [_c("i", { staticClass: "fa fa-plus" }), _vm._v(" Tambah\n\t\t\t\t\t")]
       )
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "tool-hapus", attrs: { title: "Hapus" } }, [
-      _c("i", { staticClass: "fa fa-times text-light" })
     ])
   }
 ]

@@ -2,6 +2,9 @@ require('./bootstrap');
 
 window.Vue = require('vue');
 
+import CssBase from "css-loader/lib/css-base";
+import AddStyles from "style-loader/lib/addStyles";
+
 import Vue from 'vue'
 
 import VueRouter from 'vue-router'

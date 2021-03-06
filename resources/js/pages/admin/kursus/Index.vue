@@ -147,7 +147,10 @@
 	                });
 
 	                $('#table').on('click', '.tools', function(e){
-	                    var uuid = $(this).data('uuid');
+	                	var uuid = $(this).data('uuid');
+	                    var id = $(this).data('id');
+	                    vm.thisUuid = uuid;
+	                    vm.thisId = id;
 	                    vm.setShowTools();
 	                });
 	    		}, 200);

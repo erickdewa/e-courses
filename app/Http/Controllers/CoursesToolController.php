@@ -4,10 +4,26 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\CoursesTool;
+use App\Models\Courses;
+use App\Models\Tool;
 use Validator;
 
 class CoursesToolController extends Controller
 {
+    public function getDataTool($uuid)
+    {
+        $courses = Courses::findByUuid($uuid);
+        $coursesTool = CoursesTool::where('courses_id', $courses->id)
+        ->pluck('tool_id')->toArray();
+
+        $data = Tool::whereNotIn('id', $coursesTool)->get();
+
+        return response()->json([
+            'status' => true,
+            'data' => $data,
+            'message' => 'Data berhasil diambil',
+        ]);
+    }
 	public function getData($uuid)
 	{
 		$courses = Courses::findByUuid($uuid);
@@ -47,7 +63,7 @@ class CoursesToolController extends Controller
         ], 200);
     }
 
-    public function destroy($uuid)
+    public function delete($uuid)
     {
     	$data = CoursesTool::findByUuid($uuid);
     

@@ -72,6 +72,7 @@ Route::prefix('v1')->group(function(){
 	    		Route::delete('/{uuid}/delete', 'CoursesController@delete');
 
 	    		Route::prefix('tool')->group(function(){
+	    			Route::get('/{uuid}/gettool', 'CoursesToolController@getDataTool');
 		    		Route::get('/{uuid}/getdata', 'CoursesToolController@getData');
 		    		Route::post('/create', 'CoursesToolController@create');
 		    		Route::delete('/{uuid}/delete', 'CoursesToolController@delete');

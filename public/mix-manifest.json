@@ -16,6 +16,5 @@
     "/admin.setting.webconfig.js": "/admin.setting.webconfig.js",
     "/login.js": "/login.js",
     "/user.home.js": "/user.home.js",
-    "/vendors~admin.js": "/vendors~admin.js",
-    "/vendors~admin.dashboard.js": "/vendors~admin.dashboard.js"
+    "/vendors~admin.js": "/vendors~admin.js"
 }

@@ -1,15 +1,15 @@
 <template>
 	<div>
-		<form class="form" id="FormTambah" enctype="multipart/form-data" @submit.prevent="simpanData(formData.uuid)" autocomplete="off">
+		<form class="form" id="FormTambah" enctype="multipart/form-data" @submit.prevent="simpanData()" autocomplete="off">
 			<div class="form-body">
 				<div class="row">
 					<div class="col-md-10">
 						<select class="form-control tools-select" name="tool" required v-model="formData.tool" placeholder="Tools">
-							<option v-for="tool in dataTools" :value="data.id">{{ data.nm_tool }}</option>
+							<option v-for="tool in dataTools" :value="tool.id">{{ tool.nm_tool }}</option>
 						</select>
 					</div>
 					<div class="col-md-2">
-						<button class="btn btn-success" style="width: 100%">
+						<button type="submit" class="btn btn-success btn-submit" style="width: 100%">
 							<i class="fa fa-plus"></i> Tambah
 						</button>
 					</div>
@@ -17,7 +17,7 @@
 				<div class="row list-tools">
 					<div class="col-md-4 col-12" v-for="selected in dataSelected">
 						<div class="tool-selected">
-							<div class="tool-hapus" title="Hapus">
+							<div class="tool-hapus" title="Hapus" @click="deleteData(selected.uuid)">
 								<i class="fa fa-times text-light"></i>
 							</div>
 							<div class="tools-image">
@@ -49,11 +49,58 @@
 	        }
 	    },
 	    methods: {
+	    	getData(){
+	    		var vm = this;
+
+	    		vm.$http({
+	    			url: `${ vm.apiUrl }/courses/tool/${ vm.$parent.thisUuid }/getdata`,
+	    			method: "GET",
+	    		}).then((res) => {
+	    			vm.select2();
+	    			vm.dataSelected = res.data.data;
+	    		}).catch((err)=>{
+	    			toastr.error(err.response.data.message, 'Error');
+	    		});
+	    	},
+
+	    	simpanData(){
+	    		var vm = this;
+
+	    		Aropex.btnLoad('.btn-submit', true);
+	    		vm.formData.courses_id = vm.$parent.thisId;
+	    		vm.$http({
+	    			url: `${ vm.apiUrl }/courses/tool/create`,
+	    			data: vm.formData,
+	    			method: "POST",
+	    		}).then((res) => {
+	    			vm.getData();
+	    			Aropex.btnLoad('.btn-submit', false);
+	    			toastr.success(res.data.message, 'Success');
+	    		}).catch((err)=>{
+	    			Aropex.btnLoad('.btn-submit', false);
+	    			toastr.error(err.response.data.message, 'Error');
+	    		});
+	    	},
+
+	    	deleteData(uuid){
+	    		var vm = this;
+
+	    		vm.$http({
+	    			url: `${ vm.apiUrl }/courses/tool/${ uuid }/delete`,
+	    			method: "DELETE",
+	    		}).then((res) => {
+	    			vm.getData();
+	    			toastr.success(res.data.message, 'Success');
+	    		}).catch((err)=>{
+	    			toastr.error(err.response.data.message, 'Error');
+	    		});
+	    	},
+
 	    	select2(){
 	    		var vm = this;
 
 	    		vm.$http({
-	    			url: `${ vm.apiUrl }/tool/getdatas`,
+	    			url: `${ vm.apiUrl }/courses/tool/${ vm.$parent.thisUuid }/gettool`,
 	    			method: "GET",
 	    		}).then((res) => {
 	    			vm.dataTools = res.data.data;
@@ -67,13 +114,12 @@
 	    		}).catch((err)=>{
 	    			toastr.error(err.response.data.message, 'Error');
 	    		});
-
 	    	}
 	    },
 	    mounted(){
 	    	var vm = this;
 
-	    	vm.select2();
+	    	vm.getData();
 	    }
     }
 </script>
