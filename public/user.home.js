@@ -9,6 +9,164 @@
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableSpread(); }
+
+function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+
+function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+
+function _iterableToArray(iter) { if (typeof Symbol !== "undefined" && Symbol.iterator in Object(iter)) return Array.from(iter); }
+
+function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) return _arrayLikeToArray(arr); }
+
+function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
+
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -17,10 +175,43 @@ __webpack_require__.r(__webpack_exports__);
 //
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
-    return {};
+    return {
+      showMore: false,
+      thisPage: 0,
+      coursesFilter: {},
+      dataCourses: []
+    };
   },
-  methods: {},
-  mounted: function mounted() {}
+  methods: {
+    getCourses: function getCourses() {
+      var page = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : null;
+      var vm = this;
+      var urls = "".concat(vm.baseUrl, "/courses/getdata");
+
+      if (page != null) {
+        urls = "".concat(vm.baseUrl, "/courses/getdata?page=").concat(page);
+      }
+
+      vm.$http({
+        url: urls,
+        data: vm.coursesFilter,
+        method: 'POST'
+      }).then(function (res) {
+        if (page == null) {
+          vm.dataCourses = res.data.data.data;
+        } else {
+          vm.dataCourses = [].concat(_toConsumableArray(vm.dataCourses), _toConsumableArray(res.data.data.data));
+        }
+
+        vm.showMore = res.data.length > 9 ? true : false;
+        vm.thisPage = res.data.data.current_page;
+      })["catch"](function (error) {});
+    }
+  },
+  mounted: function mounted() {
+    var vm = this;
+    vm.getCourses();
+  }
 });
 
 /***/ }),
@@ -40,9 +231,382 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", [_vm._v("\n\tHome\n")])
+  return _c("div", [
+    _vm._m(0),
+    _vm._v(" "),
+    _c("div", { staticClass: "page-two" }, [
+      _vm._m(1),
+      _vm._v(" "),
+      _c(
+        "div",
+        { staticClass: "courses-list my-3", attrs: { align: "center" } },
+        _vm._l(_vm.dataCourses, function(courses) {
+          return _c(
+            "div",
+            { staticClass: "courses-item-shedow d-inline-block m-3" },
+            [
+              _c("div", { staticClass: "courses-shedow" }),
+              _vm._v(" "),
+              _c(
+                "div",
+                {
+                  staticClass: "courses-item card",
+                  style: "background-image: url(" + courses.thumbnile + ")"
+                },
+                [
+                  _c("div", { staticClass: "courses-item-information" }, [
+                    _c("div", { staticClass: "title" }, [
+                      _vm._v(_vm._s(courses.name))
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "desc" }, [
+                      _vm._v(_vm._s(courses.user.name))
+                    ])
+                  ]),
+                  _vm._v(" "),
+                  _vm._m(2, true),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "courses-type" }, [
+                    _vm._v(
+                      "\n\t\t\t\t\t\t" +
+                        _vm._s(
+                          courses.price != 0
+                            ? "Rp." + courses.price.rupiah()
+                            : "FREE"
+                        ) +
+                        "\n\t\t\t\t\t"
+                    )
+                  ])
+                ]
+              )
+            ]
+          )
+        }),
+        0
+      ),
+      _vm._v(" "),
+      _c(
+        "div",
+        {
+          directives: [
+            {
+              name: "show",
+              rawName: "v-show",
+              value: _vm.showMore,
+              expression: "showMore"
+            }
+          ],
+          staticClass: "courses-more"
+        },
+        [
+          _c(
+            "button",
+            {
+              staticClass: "btn btn-sm bg-default",
+              attrs: { type: "button" },
+              on: {
+                click: function($event) {
+                  return _vm.getCourses(_vm.thisPage + 1)
+                }
+              }
+            },
+            [
+              _c("i", { staticClass: "fa fa-angle-double-right" }),
+              _vm._v(" See More\n\t\t\t")
+            ]
+          )
+        ]
+      )
+    ])
+  ])
 }
-var staticRenderFns = []
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "page-one" }, [
+      _c("nav", { staticClass: "navbar" }, [
+        _c("div", { staticClass: "navbar-brand text-white" }, [
+          _c("span", [_vm._v("IThink")])
+        ]),
+        _vm._v(" "),
+        _c(
+          "div",
+          {
+            staticClass: "btn-navbar",
+            attrs: { "data-event": "dropdown", "data-target": "#navbar-group" }
+          },
+          [_c("i", { staticClass: "fa fa-bars" })]
+        ),
+        _vm._v(" "),
+        _c(
+          "div",
+          { staticClass: "navbar-group", attrs: { id: "navbar-group" } },
+          [
+            _c("ul", { staticClass: "navbar-items" }, [
+              _c("li", { staticClass: "navbar-item" }, [
+                _c("a", { attrs: { href: "javascript:void(0)" } }, [
+                  _vm._v("Menu")
+                ])
+              ]),
+              _vm._v(" "),
+              _c("li", { staticClass: "navbar-item" }, [
+                _c("a", { attrs: { href: "javascript:void(0)" } }, [
+                  _vm._v("Menu")
+                ])
+              ]),
+              _vm._v(" "),
+              _c("li", { staticClass: "navbar-item" }, [
+                _c("a", { attrs: { href: "javascript:void(0)" } }, [
+                  _vm._v("Menu")
+                ])
+              ]),
+              _vm._v(" "),
+              _c(
+                "li",
+                {
+                  staticClass: "navbar-item special btn-modal",
+                  attrs: {
+                    "data-event": "modal",
+                    "data-target": "#modal-login",
+                    "data-modal": "true"
+                  }
+                },
+                [
+                  _c("a", { attrs: { href: "javascript:void(0)" } }, [
+                    _vm._v("Login")
+                  ])
+                ]
+              )
+            ])
+          ]
+        )
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "main-page" }, [
+        _c("div", { staticClass: "body-text" }, [
+          _c("div", { staticClass: "body-text-title" }, [
+            _c("div", [_vm._v("Automated Online Purchases")])
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "body-text-category" }, [
+            _vm._v("\n\t\t\t\t\tTRUSTED | EASY | CHEAP\n\t\t\t\t")
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "body-text-subtitle" }, [
+            _vm._v(
+              "\n\t\t\t\t\tLorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod\n\t\t\t\t\ttempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,\n\t\t\t\t\tquis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo\n\t\t\t\t\tconsequat.\n\t\t\t\t"
+            )
+          ])
+        ]),
+        _vm._v(" "),
+        _c(
+          "div",
+          { staticClass: "body-ilustration", attrs: { align: "center" } },
+          [
+            _c("img", {
+              staticStyle: { padding: "60px 0px" },
+              attrs: {
+                width: "350",
+                src: "/assets/images/ilustration/coding.png"
+              }
+            }),
+            _vm._v(" "),
+            _c(
+              "div",
+              {
+                staticClass: "sub-ilustration",
+                staticStyle: { left: "-50px", top: "-50px" }
+              },
+              [
+                _c("i", { staticClass: "fa fa-play-circle-o" }),
+                _vm._v(" "),
+                _c("span", [_vm._v("Video")])
+              ]
+            ),
+            _vm._v(" "),
+            _c(
+              "div",
+              {
+                staticClass: "sub-ilustration",
+                staticStyle: { right: "-120px", top: "100px" }
+              },
+              [
+                _c("i", { staticClass: "fa fa-paint-brush" }),
+                _vm._v(" "),
+                _c("span", [_vm._v("Soal")])
+              ]
+            ),
+            _vm._v(" "),
+            _c(
+              "div",
+              {
+                staticClass: "sub-ilustration",
+                staticStyle: { left: "-120px", bottom: "0px" }
+              },
+              [
+                _c("i", { staticClass: "fa fa-comments-o" }),
+                _vm._v(" "),
+                _c("span", [_vm._v("Chat")])
+              ]
+            )
+          ]
+        )
+      ]),
+      _vm._v(" "),
+      _c(
+        "div",
+        {
+          staticClass: "modal",
+          attrs: { id: "modal-login", tabindex: "-1", role: "dialog" }
+        },
+        [
+          _c(
+            "div",
+            { staticClass: "modal-dialog", attrs: { role: "document" } },
+            [
+              _c("div", { staticClass: "modal-content" }, [
+                _c("div", { staticClass: "login-modal" }, [
+                  _c("div", { staticClass: "login-header" }, [
+                    _c("div", { staticClass: "title" }, [_vm._v("Login")]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "subtitle" }, [
+                      _vm._v("Masuk untuk melanjutkan belajar")
+                    ])
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "login-body" }, [
+                    _c("form", { staticClass: "form" }, [
+                      _c("div", { staticClass: "form-head" }, [
+                        _c("div", { staticClass: "form-group" }, [
+                          _c("div", { staticClass: "input-group" }, [
+                            _c("span", { staticClass: "input-icon" }, [
+                              _c("i", { staticClass: "fa fa-user" })
+                            ]),
+                            _vm._v(" "),
+                            _c("input", {
+                              attrs: {
+                                type: "text",
+                                name: "email",
+                                placeholder: "Email"
+                              }
+                            })
+                          ])
+                        ]),
+                        _vm._v(" "),
+                        _c("div", { staticClass: "form-group" }, [
+                          _c("div", { staticClass: "input-group" }, [
+                            _c("span", { staticClass: "input-icon" }, [
+                              _c("i", { staticClass: "fa fa-key" })
+                            ]),
+                            _vm._v(" "),
+                            _c("input", {
+                              attrs: {
+                                type: "text",
+                                name: "password",
+                                placeholder: "Password"
+                              }
+                            })
+                          ])
+                        ]),
+                        _vm._v(" "),
+                        _c("div", { staticClass: "forgot" }, [
+                          _vm._v("Lupa Password?")
+                        ])
+                      ]),
+                      _vm._v(" "),
+                      _c(
+                        "div",
+                        {
+                          staticClass: "form-footer",
+                          attrs: { align: "right" }
+                        },
+                        [
+                          _c(
+                            "button",
+                            { staticClass: "btn btn-md bg-default" },
+                            [
+                              _vm._v(
+                                "\n\t\t\t\t\t\t\t\t\t\tMasuk Akun Saya\n\t\t\t\t\t\t\t\t\t"
+                              )
+                            ]
+                          )
+                        ]
+                      )
+                    ])
+                  ])
+                ])
+              ])
+            ]
+          )
+        ]
+      )
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "courses-filter" }, [
+      _c("div", { staticClass: "filter-search" }, [
+        _c("div", { staticClass: "form-group" }, [
+          _c("div", { staticClass: "input-group" }, [
+            _c("span", { staticClass: "input-icon" }, [
+              _c("i", { staticClass: "fa fa-search" })
+            ]),
+            _vm._v(" "),
+            _c("input", {
+              attrs: { type: "text", name: "search", placeholder: "Search" }
+            })
+          ])
+        ])
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "filter-category" }, [
+        _c("div", { staticClass: "title" }, [
+          _vm._v("\n\t\t\t\t\tBy Kategori : \n\t\t\t\t")
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "category-group" }, [
+          _c("div", { staticClass: "category-item" }, [_vm._v("Masak")]),
+          _vm._v(" "),
+          _c("div", { staticClass: "category-item" }, [_vm._v("Akutansi")]),
+          _vm._v(" "),
+          _c("div", { staticClass: "category-item" }, [_vm._v("Mentoring")]),
+          _vm._v(" "),
+          _c("div", { staticClass: "category-item" }, [_vm._v("Back-end")]),
+          _vm._v(" "),
+          _c("div", { staticClass: "category-item" }, [
+            _vm._v("Cyber Scurity")
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "category-item" }, [
+            _vm._v("Cryptocurrency")
+          ])
+        ])
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "courses-item-fiture" }, [
+      _c("div", { staticClass: "fiture", attrs: { title: "Sertifikat" } }, [
+        _c("i", { staticClass: "fa fa-book" })
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "fiture", attrs: { title: "Community" } }, [
+        _c("i", { staticClass: "fa fa-comments-o" })
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "fiture", attrs: { title: "Top Courses" } }, [
+        _c("i", { staticClass: "fa fa-fire" })
+      ])
+    ])
+  }
+]
 render._withStripped = true
 
 

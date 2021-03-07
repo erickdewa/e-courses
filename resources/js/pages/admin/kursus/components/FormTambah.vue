@@ -6,7 +6,7 @@
 					<div class="col-md-12">
 						<div class="form-group" align="center">
 							<div class="image-upload-box images" :style="`background-image: url(${formData.thumbnile}); background-size: cover; width: 350px; height: 200px`">
-								<input type="file" id="image" accept="image/png, image/jpeg" class="form-control" name="thumbnile" required v-on:change="changeImage" placeholder="Name">
+								<input type="file" id="image" accept="image/png, image/jpeg" class="form-control" name="thumbnile" v-on:change="changeImage" placeholder="Name">
 								<label for="image"><i class=" fa fa-plus"></i></label>
 							</div>
 						</div>

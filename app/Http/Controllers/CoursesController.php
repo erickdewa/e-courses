@@ -4,10 +4,23 @@ namespace App\Http\Controllers;
 
 use App\Models\Courses;
 use Illuminate\Http\Request;
-use Validator, JWTAuth;
+use Validator, JWTAuth, AppHelper;
 
 class CoursesController extends Controller
 {
+    public function getDataUser(Request $request)
+    {
+        $data = Courses::with('user')->paginate(9);
+        $length = Courses::get()->count();
+
+        return response()->json([
+            'status' => true,
+            'data' => $data,
+            'length' => $length,
+            'message' => 'Data berhasil diambil'
+        ]);
+    }
+
     public function index(Request $request)
     {
     	// Data per page
@@ -36,7 +49,7 @@ class CoursesController extends Controller
 		$validator = Validator::make($request->all(), [
             'name' => 'required|string',
 			'subname' => 'required|string',
-			'thumbnile' => 'required|image',
+			'thumbnile' => 'image',
 			'color' => 'required|string',
 			'description' => 'required|string',
 			'price' => 'required|string',
@@ -50,7 +63,7 @@ class CoursesController extends Controller
             ], 500);
         }
 
-        if(isset($request->image)) {
+        if(isset($request->thumbnile)) {
             $nama_thumbnile = 'coursese_'.time().'.'.$request->thumbnile->getClientOriginalExtension();
             $request->thumbnile->move(public_path('img/coursese/thumbnile'), $nama_thumbnile);
             $thumbnile = '/img/coursese/thumbnile/'.$nama_thumbnile;
@@ -64,7 +77,7 @@ class CoursesController extends Controller
 			'thumbnile' => $thumbnile,
 			'color' => $request->color,
 			'description' => $request->description,
-			'price' => $request->price,
+			'price' => AppHelper::rupiah($request->price),
 			'access' => $request->access,
 			'status' => 'active',
 			'user_id' => JWTAuth::user()->id,
@@ -100,7 +113,7 @@ class CoursesController extends Controller
         $validator = Validator::make($request->all(), [
             'name' => 'required|string',
             'subname' => 'required|string',
-            'thumbnile' => 'required|image',
+            'thumbnile' => 'image',
             'color' => 'required|string',
             'description' => 'required|string',
             'price' => 'required|string',
@@ -125,6 +138,8 @@ class CoursesController extends Controller
                 }
             }
             $thumbnile = '/img/courses/thumbnile/'.$nama_thumbnile;
+        }else{
+            $thumbnile = $data->thumbnile;
         }
 
         $data->update([
@@ -133,7 +148,7 @@ class CoursesController extends Controller
             'thumbnile' => $thumbnile,
             'color' => $request->color,
             'description' => $request->description,
-            'price' => $request->price,
+            'price' => AppHelper::rupiah($request->price),
             'access' => $request->access,
             'status' => 'active',
             'user_id' => JWTAuth::user()->id,

@@ -14,6 +14,10 @@ use Illuminate\Support\Facades\Route;
 |
 */
 Route::prefix('v1')->group(function(){
+	Route::prefix('courses')->group(function(){
+		Route::post('/getdata', 'CoursesController@getDataUser');
+	});
+
 	Route::prefix('auth')->group(function(){
 		Route::post('/register', 'AuthController@register');
 		Route::post('/login', 'AuthController@login');

@@ -66,8 +66,11 @@ Vue.mixin({
         		return `${process.env.MIX_APP_URL}/api/v1/auth`;
     		},
     		get baseUrl() {
-        		return `${process.env.MIX_APP_URL}`;
+        		return `${process.env.MIX_APP_URL}/api/v1`;
     		},
+            get defaultUrl() {
+                return `${process.env.MIX_APP_URL}`;
+            },
             loadJs: function(file){
                 var htmlTag = document.createElement("script");
                 $('head').append($(htmlTag).prop("src", file));

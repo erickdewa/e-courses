@@ -1529,7 +1529,6 @@ var render = function() {
                           id: "image",
                           accept: "image/png, image/jpeg",
                           name: "thumbnile",
-                          required: "",
                           placeholder: "Name"
                         },
                         on: { change: _vm.changeImage }

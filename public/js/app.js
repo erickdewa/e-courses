@@ -43,7 +43,7 @@
 /******/
 /******/ 	// script path function
 /******/ 	function jsonpScriptSrc(chunkId) {
-/******/ 		return __webpack_require__.p + "" + ({"admin.dashboard":"admin.dashboard","admin.login":"admin.login","admin.master":"admin.master","admin.master.kategori":"admin.master.kategori","admin.master.level":"admin.master.level","admin.master.skill":"admin.master.skill","admin.master.tool":"admin.master.tool","admin.setting":"admin.setting","admin.setting.user":"admin.setting.user","admin.setting.webconfig":"admin.setting.webconfig","login":"login","user.home":"user.home","vendors~admin":"vendors~admin","admin":"admin"}[chunkId]||chunkId) + ".js"
+/******/ 		return __webpack_require__.p + "" + ({"admin.dashboard":"admin.dashboard","admin.login":"admin.login","admin.master":"admin.master","admin.master.kategori":"admin.master.kategori","admin.master.level":"admin.master.level","admin.master.skill":"admin.master.skill","admin.master.tool":"admin.master.tool","admin.setting":"admin.setting","admin.setting.user":"admin.setting.user","admin.setting.webconfig":"admin.setting.webconfig","user.home":"user.home","login":"login","vendors~admin":"vendors~admin","admin":"admin"}[chunkId]||chunkId) + ".js"
 /******/ 	}
 /******/
 /******/ 	// The require function
@@ -48601,6 +48601,10 @@ vue__WEBPACK_IMPORTED_MODULE_2___default.a.mixin({
       },
 
       get baseUrl() {
+        return "".concat("http://localhost:8000", "/api/v1");
+      },
+
+      get defaultUrl() {
         return "".concat("http://localhost:8000");
       },
 
@@ -49035,35 +49039,46 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vue_router__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue-router */ "./node_modules/vue-router/dist/vue-router.esm.js");
 
 var routesUser = [{
-  name: 'user.home',
-  path: '/home',
-  component: function component() {
-    return __webpack_require__.e(/*! import() | user.home */ "user.home").then(__webpack_require__.bind(null, /*! ../pages/user/home/Index */ "./resources/js/pages/user/home/Index.vue"));
-  },
-  meta: {
-    title: "Home | ".concat("Laravel"),
-    auth: undefined
-  }
-}, {
-  name: 'notfound',
+  name: 'user',
   path: '/*',
   component: function component() {
-    return __webpack_require__.e(/*! import() | login */ "login").then(__webpack_require__.bind(null, /*! ../pages/error/Index */ "./resources/js/pages/error/Index.vue"));
+    return Promise.all(/*! import() | admin */[__webpack_require__.e("vendors~admin"), __webpack_require__.e("admin")]).then(__webpack_require__.bind(null, /*! ../pages/user/User */ "./resources/js/pages/user/User.vue"));
   },
   meta: {
-    title: "Halaman tidak ditemukan | ".concat("Laravel"),
-    auth: undefined
-  }
-}, {
-  name: 'notfound404',
-  path: '/404',
-  component: function component() {
-    return __webpack_require__.e(/*! import() | login */ "login").then(__webpack_require__.bind(null, /*! ../pages/error/Index */ "./resources/js/pages/error/Index.vue"));
+    title: "Admin | ".concat("Laravel"),
+    auth: true
   },
-  meta: {
-    title: "Halaman tidak ditemukan | ".concat("Laravel"),
-    auth: undefined
-  }
+  children: [{
+    name: 'user.home',
+    path: '/home',
+    component: function component() {
+      return __webpack_require__.e(/*! import() | user.home */ "user.home").then(__webpack_require__.bind(null, /*! ../pages/user/home/Index */ "./resources/js/pages/user/home/Index.vue"));
+    },
+    meta: {
+      title: "Home | ".concat("Laravel"),
+      auth: undefined
+    }
+  }, {
+    name: 'home',
+    path: '/*',
+    component: function component() {
+      return Promise.all(/*! import() | login */[__webpack_require__.e("user.home"), __webpack_require__.e("login")]).then(__webpack_require__.bind(null, /*! ../pages/user/home/Index */ "./resources/js/pages/user/home/Index.vue"));
+    },
+    meta: {
+      title: "Home | ".concat("Laravel"),
+      auth: undefined
+    }
+  }, {
+    name: 'notfound404',
+    path: '/404',
+    component: function component() {
+      return Promise.all(/*! import() | login */[__webpack_require__.e("user.home"), __webpack_require__.e("login")]).then(__webpack_require__.bind(null, /*! ../pages/error/Index */ "./resources/js/pages/error/Index.vue"));
+    },
+    meta: {
+      title: "Halaman tidak ditemukan | ".concat("Laravel"),
+      auth: undefined
+    }
+  }]
 }];
 /* harmony default export */ __webpack_exports__["default"] = (routesUser);
 

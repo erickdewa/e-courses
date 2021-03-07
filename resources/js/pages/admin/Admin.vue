@@ -129,7 +129,7 @@
 	    	var vm = this;
 	    	
 	    	setTimeout(function() {
-				postscribe('#script', `<script src="${vm.baseUrl}/js/index.js"><\/script>`);
+				postscribe('#script', `<script src="${vm.defaultUrl}/js/index.js"><\/script>`);
 			}, 1000);
 	    }
     }
