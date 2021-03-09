@@ -3,7 +3,7 @@ import VueRouter from 'vue-router'
 const routesUser =  [
     {
         name: 'user',
-        path: '/*',
+        path: '/',
         component: () => import(/* webpackChunkName: "admin" */ '../pages/user/User'),
         meta: {
             title: `Admin | ${process.env.MIX_APP_NAME}`,
@@ -21,10 +21,19 @@ const routesUser =  [
             },
             {
                 name: 'home',
-                path: '/*',
+                path: '/',
                 component: () => import(/* webpackChunkName: "login" */ '../pages/user/home/Index'),
                 meta: {
                     title: `Home | ${process.env.MIX_APP_NAME}`,
+                    auth: undefined
+                }
+            },
+            {
+                name: 'courses',
+                path: '/courses',
+                component: () => import(/* webpackChunkName: "login" */ '../pages/user/kursus/Index'),
+                meta: {
+                    title: `Courses | ${process.env.MIX_APP_NAME}`,
                     auth: undefined
                 }
             },

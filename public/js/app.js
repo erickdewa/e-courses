@@ -49040,7 +49040,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var routesUser = [{
   name: 'user',
-  path: '/*',
+  path: '/',
   component: function component() {
     return Promise.all(/*! import() | admin */[__webpack_require__.e("vendors~admin"), __webpack_require__.e("admin")]).then(__webpack_require__.bind(null, /*! ../pages/user/User */ "./resources/js/pages/user/User.vue"));
   },
@@ -49060,12 +49060,22 @@ var routesUser = [{
     }
   }, {
     name: 'home',
-    path: '/*',
+    path: '/',
     component: function component() {
       return Promise.all(/*! import() | login */[__webpack_require__.e("user.home"), __webpack_require__.e("login")]).then(__webpack_require__.bind(null, /*! ../pages/user/home/Index */ "./resources/js/pages/user/home/Index.vue"));
     },
     meta: {
       title: "Home | ".concat("Laravel"),
+      auth: undefined
+    }
+  }, {
+    name: 'courses',
+    path: '/courses',
+    component: function component() {
+      return Promise.all(/*! import() | login */[__webpack_require__.e("user.home"), __webpack_require__.e("login")]).then(__webpack_require__.bind(null, /*! ../pages/user/kursus/Index */ "./resources/js/pages/user/kursus/Index.vue"));
+    },
+    meta: {
+      title: "Courses | ".concat("Laravel"),
       auth: undefined
     }
   }, {

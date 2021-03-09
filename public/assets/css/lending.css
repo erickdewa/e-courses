@@ -8,18 +8,17 @@
 	overflow-x: hidden;
 }
 .page-one{
-	background-image: url(/assets/images/bg.png); 
-	background-size: cover;
+	background: #20B2AA;
 	width: 100%;
 	height: 660px;
 }
 
 .bg-default{
-	background: #4B4AEF!important;
+	background: #20B2AA!important;
 	color: #FFFFFF;
 }
 .btn-default{
-	background: #4B4AEF!important;
+	background: #20B2AA!important;
 	color: #FFFFFF;
 }
 
@@ -31,8 +30,17 @@
 	color: #FFFFFF;
 	font-size: 30px;
 }
+
 .navbar{
+	background: #1FB1AA;
 	padding: 20px 100px;
+}
+.navbar.stycky-active{
+	background: #20B2AA;
+	position: fixed;
+	width: 100%;
+	top: 0px;
+	z-index: 999;
 }
 .navbar-brand{
 	font-size: 30px;
@@ -71,7 +79,8 @@
 }
 
 .body-text{
-	margin: 50px 100px;
+	margin: 0px 100px;
+	padding: 100px 0px;
 }
 .body-text .body-text-title{
 	color: #FFFFFF;
@@ -80,7 +89,7 @@
 	letter-spacing: 1px;
 }
 .body-text-category{
-	background: #1311C5;
+	background: #14716C;
 	color: #FFFFFF;
 	font-size: 15px;
 	display: inline-block;
@@ -141,7 +150,7 @@
 }
 .courses-item .courses-type{
 	display: inline-block;
-	background: #4A49EF;
+	background: #20B2AA;
 	color: #FFFFFF;
 	position: absolute;
 	right: 20px;
@@ -187,18 +196,17 @@
 	bottom: 20px;
 }
 .courses-item-fiture .fiture{
-	background: #4A49EF;
+	background: #20B2AA;
 	color: #FFFFFF;
 	text-align: center;
 	padding: 5px;
 	margin: 2px;
 	min-width: 35px;
-	border: 1px solid #4A49EF;
-	opacity: 0.9;
+	border: 1px solid #20B2AA;
 	border-radius: 3px;
 }
 .courses-item-fiture .fiture:hover{
-	background: #4A49EF;
+	background: #20B2AA;
 	color: #FFFFFF;
 	text-align: center;
 	padding: 5px;
@@ -238,20 +246,20 @@ a:hover{
 	box-shadow: 30px 30px 60px -5px rgba(75,74,239,0.2);
 }
 .sub-ilustration i{
-	color: #4B4AEF;
+	color: #20B2AA;
 	font-size: 50px;
 	display: flex;
 	padding: 10px 0px 5px 0px;
 	justify-content: center;
 }
 .sub-ilustration span{
-	color: #4B4AEF;
+	color: #20B2AA;
 	font-size: 18px;
 	font-weight: 600;
 }
 
 .page-footer{
-	background: #4B4AEF;
+	background: #20B2AA;
 	color: #FFFFFF;
 	padding: 35px 125px;
 	margin-top: 50px;
@@ -277,8 +285,8 @@ a:hover{
 	text-align: center;
 }
 .page-footer .footer-social .social-box{
-	background: #C9C8FA;
-	color: #4B4AEF;
+	background: #FFFFFF;
+	color: #20B2AA;
 	display: inline-block;
 	width: 35px;
 	font-size: 25px;
@@ -336,7 +344,7 @@ a:hover{
 		letter-spacing: 1px;
 	}
 	.navbar-group.active .navbar-item.special{
-		background: #4B4AEF;
+		background: #20B2AA;
 		color: #FFFFFF;
 		padding: 10px 15px;
 		cursor: pointer;
@@ -417,7 +425,7 @@ a:hover{
 		letter-spacing: 1px;
 	}
 	.navbar-group.active .navbar-item.special{
-		background: #4B4AEF;
+		background: #20B2AA;
 		color: #FFFFFF;
 		padding: 10px 15px;
 		cursor: pointer;
@@ -476,7 +484,7 @@ a:hover{
 	border-radius: 5px;
 }
 .input-group > .input-icon{
-	color: #4B4AEF;
+	color: #20B2AA;
 	font-size: 20px;
     padding: 0px 10px;
     text-align: center;

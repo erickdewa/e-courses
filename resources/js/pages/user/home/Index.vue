@@ -1,22 +1,6 @@
 <template>
 	<div>
 		<div class="page-one">
-			<nav class="navbar">
-				<div class="navbar-brand text-white">
-					<span>IThink</span>
-				</div>
-				<div class="btn-navbar" data-event="dropdown" data-target="#navbar-group">
-					<i class="fa fa-bars"></i>
-				</div>
-				<div class="navbar-group" id="navbar-group">
-					<ul class="navbar-items">
-						<li class="navbar-item"><a href="javascript:void(0)">Menu</a></li>
-						<li class="navbar-item"><a href="javascript:void(0)">Menu</a></li>
-						<li class="navbar-item"><a href="javascript:void(0)">Menu</a></li>
-						<li class="navbar-item special btn-modal" data-event="modal" data-target="#modal-login" data-modal="true"><a href="javascript:void(0)">Login</a></li>
-					</ul>
-				</div>
-			</nav>
 			<div class="main-page">
 				<div class="body-text">
 					<div class="body-text-title">

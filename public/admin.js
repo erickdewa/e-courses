@@ -254,6 +254,22 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {// data
@@ -539,12 +555,82 @@ var render = function() {
     _c(
       "div",
       { staticClass: "main-user" },
-      [_c("router-view"), _vm._v(" "), _vm._m(0), _vm._v(" "), _vm._m(1)],
+      [
+        _vm._m(0),
+        _vm._v(" "),
+        _c("router-view"),
+        _vm._v(" "),
+        _vm._m(1),
+        _vm._v(" "),
+        _vm._m(2)
+      ],
       1
     )
   ])
 }
 var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("nav", { staticClass: "navbar" }, [
+      _c("div", { staticClass: "navbar-brand text-white" }, [
+        _c("span", [_vm._v("ITHINK")])
+      ]),
+      _vm._v(" "),
+      _c(
+        "div",
+        {
+          staticClass: "btn-navbar",
+          attrs: { "data-event": "dropdown", "data-target": "#navbar-group" }
+        },
+        [_c("i", { staticClass: "fa fa-bars" })]
+      ),
+      _vm._v(" "),
+      _c(
+        "div",
+        { staticClass: "navbar-group", attrs: { id: "navbar-group" } },
+        [
+          _c("ul", { staticClass: "navbar-items" }, [
+            _c("li", { staticClass: "navbar-item" }, [
+              _c("a", { attrs: { href: "javascript:void(0)" } }, [
+                _vm._v("Menu")
+              ])
+            ]),
+            _vm._v(" "),
+            _c("li", { staticClass: "navbar-item" }, [
+              _c("a", { attrs: { href: "javascript:void(0)" } }, [
+                _vm._v("Menu")
+              ])
+            ]),
+            _vm._v(" "),
+            _c("li", { staticClass: "navbar-item" }, [
+              _c("a", { attrs: { href: "javascript:void(0)" } }, [
+                _vm._v("Menu")
+              ])
+            ]),
+            _vm._v(" "),
+            _c(
+              "li",
+              {
+                staticClass: "navbar-item special btn-modal",
+                attrs: {
+                  "data-event": "modal",
+                  "data-target": "#modal-login",
+                  "data-modal": "true"
+                }
+              },
+              [
+                _c("a", { attrs: { href: "javascript:void(0)" } }, [
+                  _vm._v("Login")
+                ])
+              ]
+            )
+          ])
+        ]
+      )
+    ])
+  },
   function() {
     var _vm = this
     var _h = _vm.$createElement

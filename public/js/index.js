@@ -335,6 +335,19 @@ $(document).ready(function (e) {
   $('.dropdown').on('click', function () {
     Aropex.event(this, true);
   });
+  $(window).scroll(function () {
+    var scroll = $(window).scrollTop();
+
+    if (scroll >= 90) {
+      $('.navbar').addClass('stycky-active');
+      $('.space').css('margin-top', '100px');
+      $('.page-one').css('margin-top', '100px');
+    } else {
+      $('.navbar').removeClass("stycky-active");
+      $('.space').css('margin-top', '0px');
+      $('.page-one').css('margin-top', '0px');
+    }
+  });
 });
 
 /***/ }),

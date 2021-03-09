@@ -157,22 +157,6 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -326,64 +310,6 @@ var staticRenderFns = [
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c("div", { staticClass: "page-one" }, [
-      _c("nav", { staticClass: "navbar" }, [
-        _c("div", { staticClass: "navbar-brand text-white" }, [
-          _c("span", [_vm._v("IThink")])
-        ]),
-        _vm._v(" "),
-        _c(
-          "div",
-          {
-            staticClass: "btn-navbar",
-            attrs: { "data-event": "dropdown", "data-target": "#navbar-group" }
-          },
-          [_c("i", { staticClass: "fa fa-bars" })]
-        ),
-        _vm._v(" "),
-        _c(
-          "div",
-          { staticClass: "navbar-group", attrs: { id: "navbar-group" } },
-          [
-            _c("ul", { staticClass: "navbar-items" }, [
-              _c("li", { staticClass: "navbar-item" }, [
-                _c("a", { attrs: { href: "javascript:void(0)" } }, [
-                  _vm._v("Menu")
-                ])
-              ]),
-              _vm._v(" "),
-              _c("li", { staticClass: "navbar-item" }, [
-                _c("a", { attrs: { href: "javascript:void(0)" } }, [
-                  _vm._v("Menu")
-                ])
-              ]),
-              _vm._v(" "),
-              _c("li", { staticClass: "navbar-item" }, [
-                _c("a", { attrs: { href: "javascript:void(0)" } }, [
-                  _vm._v("Menu")
-                ])
-              ]),
-              _vm._v(" "),
-              _c(
-                "li",
-                {
-                  staticClass: "navbar-item special btn-modal",
-                  attrs: {
-                    "data-event": "modal",
-                    "data-target": "#modal-login",
-                    "data-modal": "true"
-                  }
-                },
-                [
-                  _c("a", { attrs: { href: "javascript:void(0)" } }, [
-                    _vm._v("Login")
-                  ])
-                ]
-              )
-            ])
-          ]
-        )
-      ]),
-      _vm._v(" "),
       _c("div", { staticClass: "main-page" }, [
         _c("div", { staticClass: "body-text" }, [
           _c("div", { staticClass: "body-text-title" }, [
