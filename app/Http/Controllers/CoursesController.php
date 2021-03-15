@@ -7,7 +7,8 @@ use Illuminate\Http\Request;
 use Validator, JWTAuth, AppHelper;
 
 class CoursesController extends Controller
-{
+{   
+    // Page user home
     public function getDataUser(Request $request)
     {
         $data = Courses::with('user')->paginate(9);
@@ -17,6 +18,25 @@ class CoursesController extends Controller
             'status' => true,
             'data' => $data,
             'length' => $length,
+            'message' => 'Data berhasil diambil'
+        ]);
+    }
+
+    // Page user courses
+    public function getDataCourses($uuid)
+    {
+        $data = Courses::with(['materigroup' => function($query){
+            $query->with(['materi' => function($query){
+                $query->where('is_preview', 'Y');
+            }])->whereHas('materi', function($query){
+                $query->where('is_preview', 'Y');
+            });
+        }, 'user', 'coursestool.tool'])
+        ->where('uuid', $uuid)->first();
+
+        return response()->json([
+            'status' => true,
+            'data' => $data,
             'message' => 'Data berhasil diambil'
         ]);
     }

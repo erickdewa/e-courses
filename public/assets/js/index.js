@@ -176,6 +176,14 @@ $(document).ready(function(e){
 				}else{
 					$(target).removeClass('active');
 				}
+			}else if(event == 'modal'){
+				var ms = $(el).data('modal');
+				var target = $(el).data('target');
+				if(ms){
+					$(target).modal('show');
+				}else{
+					$(target).modal('hide');
+				}
 			}
 		};
 	}

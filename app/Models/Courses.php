@@ -17,4 +17,14 @@ class Courses extends Model
     {
         return $this->belongsTo('\App\Models\User', 'user_id', 'id');
     }
+
+    public function coursestool()
+    {
+        return $this->hasMany('\App\Models\CoursesTool', 'courses_id', 'id');
+    }
+
+    public function materigroup()
+    {
+        return $this->hasMany('\App\Models\MateriGroup', 'courses_id', 'id');
+    }
 }

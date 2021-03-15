@@ -16,5 +16,10 @@
     "/admin.setting.webconfig.js": "/admin.setting.webconfig.js",
     "/login.js": "/login.js",
     "/user.home.js": "/user.home.js",
-    "/vendors~admin.js": "/vendors~admin.js"
+    "/vendors~admin.js": "/vendors~admin.js",
+    "/courses.js": "/courses.js",
+    "/home.js": "/home.js",
+    "/notfound404.js": "/notfound404.js",
+    "/courses.payment.js": "/courses.payment.js",
+    "/courses.player.js": "/courses.player.js"
 }

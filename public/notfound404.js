@@ -1,4 +1,4 @@
-(window["webpackJsonp"] = window["webpackJsonp"] || []).push([["login"],{
+(window["webpackJsonp"] = window["webpackJsonp"] || []).push([["notfound404"],{
 
 /***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/pages/error/Index.vue?vue&type=script&lang=js&":
 /*!*****************************************************************************************************************************************************************!*\

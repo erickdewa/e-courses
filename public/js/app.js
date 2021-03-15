@@ -43,7 +43,7 @@
 /******/
 /******/ 	// script path function
 /******/ 	function jsonpScriptSrc(chunkId) {
-/******/ 		return __webpack_require__.p + "" + ({"admin.dashboard":"admin.dashboard","admin.login":"admin.login","admin.master":"admin.master","admin.master.kategori":"admin.master.kategori","admin.master.level":"admin.master.level","admin.master.skill":"admin.master.skill","admin.master.tool":"admin.master.tool","admin.setting":"admin.setting","admin.setting.user":"admin.setting.user","admin.setting.webconfig":"admin.setting.webconfig","user.home":"user.home","login":"login","vendors~admin":"vendors~admin","admin":"admin"}[chunkId]||chunkId) + ".js"
+/******/ 		return __webpack_require__.p + "" + ({"admin.dashboard":"admin.dashboard","admin.login":"admin.login","admin.master":"admin.master","admin.master.kategori":"admin.master.kategori","admin.master.level":"admin.master.level","admin.master.skill":"admin.master.skill","admin.master.tool":"admin.master.tool","admin.setting":"admin.setting","admin.setting.user":"admin.setting.user","admin.setting.webconfig":"admin.setting.webconfig","courses":"courses","courses.payment":"courses.payment","courses.player":"courses.player","home":"home","notfound404":"notfound404","vendors~admin":"vendors~admin","admin":"admin"}[chunkId]||chunkId) + ".js"
 /******/ 	}
 /******/
 /******/ 	// The require function
@@ -49052,7 +49052,7 @@ var routesUser = [{
     name: 'user.home',
     path: '/home',
     component: function component() {
-      return __webpack_require__.e(/*! import() | user.home */ "user.home").then(__webpack_require__.bind(null, /*! ../pages/user/home/Index */ "./resources/js/pages/user/home/Index.vue"));
+      return __webpack_require__.e(/*! import() | user.home */ "home").then(__webpack_require__.bind(null, /*! ../pages/user/home/Index */ "./resources/js/pages/user/home/Index.vue"));
     },
     meta: {
       title: "Home | ".concat("Laravel"),
@@ -49062,7 +49062,7 @@ var routesUser = [{
     name: 'home',
     path: '/',
     component: function component() {
-      return Promise.all(/*! import() | login */[__webpack_require__.e("user.home"), __webpack_require__.e("login")]).then(__webpack_require__.bind(null, /*! ../pages/user/home/Index */ "./resources/js/pages/user/home/Index.vue"));
+      return __webpack_require__.e(/*! import() | home */ "home").then(__webpack_require__.bind(null, /*! ../pages/user/home/Index */ "./resources/js/pages/user/home/Index.vue"));
     },
     meta: {
       title: "Home | ".concat("Laravel"),
@@ -49070,19 +49070,39 @@ var routesUser = [{
     }
   }, {
     name: 'courses',
-    path: '/courses',
+    path: '/courses/:uuidCourses',
     component: function component() {
-      return Promise.all(/*! import() | login */[__webpack_require__.e("user.home"), __webpack_require__.e("login")]).then(__webpack_require__.bind(null, /*! ../pages/user/kursus/Index */ "./resources/js/pages/user/kursus/Index.vue"));
+      return __webpack_require__.e(/*! import() | courses */ "courses").then(__webpack_require__.bind(null, /*! ../pages/user/kursus/Index */ "./resources/js/pages/user/kursus/Index.vue"));
     },
     meta: {
       title: "Courses | ".concat("Laravel"),
       auth: undefined
     }
   }, {
+    name: 'courses.player',
+    path: '/courses/play/:uuidCourses',
+    component: function component() {
+      return __webpack_require__.e(/*! import() | courses.player */ "courses.player").then(__webpack_require__.bind(null, /*! ../pages/user/player/Index */ "./resources/js/pages/user/player/Index.vue"));
+    },
+    meta: {
+      title: "Courses Play | ".concat("Laravel"),
+      auth: undefined
+    }
+  }, {
+    name: 'courses.payment',
+    path: '/courses/payment/:uuidCourses',
+    component: function component() {
+      return __webpack_require__.e(/*! import() | courses.payment */ "courses.payment").then(__webpack_require__.bind(null, /*! ../pages/user/payment/Index */ "./resources/js/pages/user/payment/Index.vue"));
+    },
+    meta: {
+      title: "Courses Payment | ".concat("Laravel"),
+      auth: undefined
+    }
+  }, {
     name: 'notfound404',
     path: '/404',
     component: function component() {
-      return Promise.all(/*! import() | login */[__webpack_require__.e("user.home"), __webpack_require__.e("login")]).then(__webpack_require__.bind(null, /*! ../pages/error/Index */ "./resources/js/pages/error/Index.vue"));
+      return __webpack_require__.e(/*! import() | notfound404 */ "notfound404").then(__webpack_require__.bind(null, /*! ../pages/error/Index */ "./resources/js/pages/error/Index.vue"));
     },
     meta: {
       title: "Halaman tidak ditemukan | ".concat("Laravel"),

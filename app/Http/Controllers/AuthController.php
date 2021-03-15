@@ -10,7 +10,7 @@ use Validator, JWTAuth;
 class AuthController extends Controller
 {
     public function login(Request $request)
-    {  
+    {   
         $credentials = $request->only('username', 'password');
         $validator = Validator::make($request->all(), [
 			'username' => 'required|string',

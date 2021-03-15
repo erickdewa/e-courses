@@ -16,6 +16,7 @@ use Illuminate\Support\Facades\Route;
 Route::prefix('v1')->group(function(){
 	Route::prefix('courses')->group(function(){
 		Route::post('/getdata', 'CoursesController@getDataUser');
+		Route::get('/{uuid}/getdata', 'CoursesController@getDataCourses');
 	});
 
 	Route::prefix('auth')->group(function(){
@@ -74,6 +75,10 @@ Route::prefix('v1')->group(function(){
 	    		Route::post('/create', 'CoursesController@create');
 	    		Route::post('/{uuid}/update', 'CoursesController@update');
 	    		Route::delete('/{uuid}/delete', 'CoursesController@delete');
+
+	    		Route::prefix('my')->group(function(){
+		    		Route::post('/{uuid}/getplayer', 'UserCoursesController@getDataCoursesPlayer');
+	    		});
 
 	    		Route::prefix('tool')->group(function(){
 	    			Route::get('/{uuid}/gettool', 'CoursesToolController@getDataTool');

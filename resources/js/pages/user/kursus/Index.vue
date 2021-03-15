@@ -4,32 +4,18 @@
 		<div class="courses-page">
 			<div class="courses-information-fly">
 				<div class="courses-thumbnail">
-					.
+					<img :src="dataCourses.thumbnile">
 				</div>
-				<div class="courses-price">Rp. 200.000</div>
+				<div class="courses-price">Rp. {{ dataCourses.price.rupiah() }}</div>
 				<div class="courses-materi">
 					<div class="title">Kursus Materi :</div>
 					<ul class="materi-group">
-						<li class="materi-item">
-							<span>Dasar Pemrograman</span>
-							<i class="fa fa-check"></i>
-						</li>
-						<li class="materi-item">
-							<span>Operator Kondisi</span>
-							<i class="fa fa-check"></i>
-						</li>
-						<li class="materi-item">
-							<span>Operator Perulangan</span>
-							<i class="fa fa-check"></i>
-						</li>
-						<li class="materi-item">
-							<span>Perulangan</span>
-							<i class="fa fa-check"></i>
-						</li>
-						<li class="materi-item">
-							<span>10 Video Dan 2 Quiz</span>
-							<i class="fa fa-lock"></i>
-						</li>
+						<template v-for="materigroup in dataCourses.materigroup">
+							<li v-for="materi in materigroup.materi" class="materi-item">
+								<span>{{ materi.nm_materi }}</span>
+								<i class="fa fa-check"></i>
+							</li>
+						</template>
 					</ul>
 				</div>
 				<div class="courses-action">
@@ -39,8 +25,8 @@
 				</div>
 			</div>
 			<div class="courses-information">
-				<div class="courses-title">Basuc Proggraming</div>
-				<div class="courses-subtitle">Basuc programming all leaguage</div>
+				<div class="courses-title">{{ dataCourses.name }}</div>
+				<div class="courses-subtitle">{{ dataCourses.subname }}</div>
 				<div class="courses-rating-star">
 				    <div class="rating-group">
 				        <input class="rating__input rating__input--none" checked name="rating2" id="rating2-0" value="0" type="radio" disabled>
@@ -70,20 +56,7 @@
 					</div>
 				</div>
 				<div class="courses-description">
-					Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-					tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-					quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-					consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
-					cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
-					proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-					<br>
-					<br>
-					Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-					tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-					quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-					consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
-					cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
-					proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+					{{ dataCourses.description }}
 				</div>
 				<div class="courses-learn">
 					<div class="learn-title">
@@ -124,40 +97,13 @@
 					<div class="title">
 						Tools
 					</div>
-					<div class="box-tool">
+					<div v-for="coursesTool in dataCourses.coursestool" class="box-tool">
 						<div class="tool-image">
-							<img src="/assets/images/avatar-1.png">
+							<img :src="coursesTool.tool.image">
 						</div>
 						<div class="tool-info">
-							<div class="tool-nama">Figma</div>
-							<div class="tool-download">Download</div>
-						</div>
-					</div>
-					<div class="box-tool">
-						<div class="tool-image">
-							<img src="/assets/images/avatar-1.png">
-						</div>
-						<div class="tool-info">
-							<div class="tool-nama">Figma</div>
-							<div class="tool-download">Download</div>
-						</div>
-					</div>
-					<div class="box-tool">
-						<div class="tool-image">
-							<img src="/assets/images/avatar-1.png">
-						</div>
-						<div class="tool-info">
-							<div class="tool-nama">Figma</div>
-							<div class="tool-download">Download</div>
-						</div>
-					</div>
-					<div class="box-tool">
-						<div class="tool-image">
-							<img src="/assets/images/avatar-1.png">
-						</div>
-						<div class="tool-info">
-							<div class="tool-nama">Figma</div>
-							<div class="tool-download">Download</div>
+							<div class="tool-nama">{{ coursesTool.tool.nm_tool }}</div>
+							<div class="tool-download" @click="window.open(coursesTool.tool.link, '_blank');">Download</div>
 						</div>
 					</div>
 				</div>
@@ -167,7 +113,7 @@
 					</div>
 					<div class="teacher-info">
 						<div class="teacher-head">
-							<div class="teacher-name">Erick Dewa Pranata</div>
+							<div class="teacher-name">{{ dataCourses.user.name }}</div>
 							<div class="teacher-profesi">Web Proggramer</div>
 						</div>
 						<div class="teacher-desc">
@@ -253,8 +199,32 @@
     export default {
     	data() {
 	        return {
-	        	// data
+	        	dataCourses: {
+	        		price: '0',
+	        		user: {
+	        			name: '',
+	        		},
+	        	},
 	        }
 	    },
-    }
+	    methods: {
+	    	getDataCourses(uuid){
+	    		var vm = this;
+
+	    		vm.$http({
+	    			url: `${ vm.baseUrl }/courses/${ uuid }/getdata`,
+	    			method: 'GET',
+	    		}).then((res)=>{
+	    			vm.dataCourses = res.data.data;
+	    		}).catch((error)=>{
+	    			// error
+	    		});
+	    	}
+	    },
+	    mounted(){
+	    	var vm = this;
+
+	    	vm.getDataCourses(vm.$route.params.uuidCourses);
+	    }
+	}
 </script>

@@ -15,6 +15,11 @@ class MateriGroup extends Model
 
     public function courses()
     {
-        return $this->hasMany('\App\Models\Courses', 'courses_id', 'id');
+        return $this->belongsTo('\App\Models\Courses', 'courses_id', 'id');
+    }
+
+    public function materi()
+    {
+        return $this->hasMany('\App\Models\Materi', 'materigroup_id', 'id');
     }
 }

@@ -32,47 +32,6 @@
 					</div>
 				</div>
 			</div>
-
-			<div class="modal" id="modal-login" tabindex="-1" role="dialog">
-				<div class="modal-dialog" role="document">
-					<div class="modal-content">
-						<div class="login-modal">
-							<div class="login-header">
-								<div class="title">Login</div>
-								<div class="subtitle">Masuk untuk melanjutkan belajar</div>
-							</div>
-							<div class="login-body">
-								<form class="form">
-									<div class="form-head">
-										<div class="form-group">
-											<div class="input-group">
-												<span class="input-icon">
-													<i class="fa fa-user"></i>
-												</span>
-												<input type="text" name="email" placeholder="Email">
-											</div>
-										</div>
-										<div class="form-group">
-											<div class="input-group">
-												<span class="input-icon">
-													<i class="fa fa-key"></i>
-												</span>
-												<input type="text" name="password" placeholder="Password">
-											</div>
-										</div>
-										<div class="forgot">Lupa Password?</div>
-									</div>
-									<div class="form-footer" align="right">
-										<button class="btn btn-md bg-default">
-											Masuk Akun Saya
-										</button>
-									</div>
-								</form>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
 		</div>
 		<div class="page-two">
 			<div class="courses-filter">
@@ -102,27 +61,29 @@
 			</div>
 			<div class="courses-list my-3" align="center">
 				<div v-for="courses in dataCourses" class="courses-item-shedow d-inline-block m-3">
-					<div class="courses-shedow"></div>
-					<div class="courses-item card" :style="`background-image: url(${ courses.thumbnile })`">
-						<div class="courses-item-information">
-							<div class="title">{{ courses.name }}</div>
-							<div class="desc">{{ courses.user.name }}</div>
-						</div>
-						<div class="courses-item-fiture">
-							<div class="fiture" title="Sertifikat">
-								<i class="fa fa-book"></i>
+					<router-link :to="`/courses/${ courses.uuid }`">
+						<div class="courses-shedow"></div>
+						<div class="courses-item card" :style="`background-image: url(${ courses.thumbnile })`">
+							<div class="courses-item-information">
+								<div class="title">{{ courses.name }}</div>
+								<div class="desc">{{ courses.user.name }}</div>
 							</div>
-							<div class="fiture" title="Community">
-								<i class="fa fa-comments-o"></i>
+							<div class="courses-item-fiture">
+								<div class="fiture" title="Sertifikat">
+									<i class="fa fa-book"></i>
+								</div>
+								<div class="fiture" title="Community">
+									<i class="fa fa-comments-o"></i>
+								</div>
+								<div class="fiture" title="Top Courses">
+									<i class="fa fa-fire"></i>
+								</div>
 							</div>
-							<div class="fiture" title="Top Courses">
-								<i class="fa fa-fire"></i>
+							<div class="courses-type">
+								{{ ((courses.price!=0)?`Rp.${ courses.price.rupiah() }`:`FREE`) }}
 							</div>
 						</div>
-						<div class="courses-type">
-							{{ ((courses.price!=0)?`Rp.${ courses.price.rupiah() }`:`FREE`) }}
-						</div>
-					</div>
+					</router-link>
 				</div>
 			</div>
 			<div class="courses-more" v-show="showMore">
