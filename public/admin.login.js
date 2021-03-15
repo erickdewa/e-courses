@@ -53,7 +53,8 @@ __webpack_require__.r(__webpack_exports__);
     return {
       formData: {
         username: '',
-        password: ''
+        password: '',
+        level_id: '1'
       }
     };
   },
@@ -66,6 +67,7 @@ __webpack_require__.r(__webpack_exports__);
         rememberMe: false,
         fetchUser: true
       }).then(function (res) {
+        localStorage.setItem("level_id", vm.formData.level_id);
         Aropex.btnLoad('.btn-login', false);
         toastr.success(res.data.message, 'Success');
       })["catch"](function (err) {

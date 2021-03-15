@@ -237,7 +237,8 @@ __webpack_require__.r(__webpack_exports__);
     return {
       formData: {
         username: '',
-        password: ''
+        password: '',
+        level_id: '2'
       }
     };
   },
@@ -250,6 +251,7 @@ __webpack_require__.r(__webpack_exports__);
         rememberMe: false,
         fetchUser: true
       }).then(function (res) {
+        localStorage.setItem("level_id", vm.formData.level_id);
         Aropex.btnLoad('.btn-user-login', false);
         toastr.success(res.data.message, 'Success');
       })["catch"](function (err) {
@@ -333,24 +335,36 @@ __webpack_require__.r(__webpack_exports__);
         email: '',
         username: '',
         password: '',
-        confirm_password: ''
+        confirm_password: '',
+        level_id: '2'
       }
     };
   },
   methods: {
+    register: function register() {
+      var vm = this;
+      Aropex.btnLoad('.btn-user-register', true);
+      vm.$auth.register({
+        data: vm.formData
+      }).then(function (res) {
+        vm.login();
+        $('#modal-login').modal('hide');
+        Aropex.btnLoad('.btn-user-register', false);
+        toastr.success(res.data.message, 'Success');
+      })["catch"](function (err) {
+        Aropex.btnLoad('.btn-user-register', false);
+        toastr.error(err.response.data.message, 'Error');
+      });
+    },
     login: function login() {
       var vm = this;
-      Aropex.btnLoad('.btn-user-login', true);
       vm.$auth.login({
         data: vm.formData,
         rememberMe: false,
         fetchUser: true
       }).then(function (res) {
-        Aropex.btnLoad('.btn-user-login', false);
-        toastr.success(res.data.message, 'Success');
-      })["catch"](function (err) {
-        Aropex.btnLoad('.btn-user-login', false);
-        toastr.error(err.response.data.message, 'Error');
+        localStorage.setItem("level_id", vm.formData.level_id);
+      })["catch"](function (err) {// error
       });
     }
   },
@@ -819,7 +833,7 @@ var render = function() {
                     }
                   ],
                   attrs: {
-                    type: "text",
+                    type: "password",
                     name: "password",
                     required: "",
                     placeholder: "Password"
@@ -844,7 +858,7 @@ var render = function() {
             _c(
               "button",
               {
-                staticClass: "btn btn-md btn-info",
+                staticClass: "btn btn-sm btn-info",
                 attrs: { type: "button" },
                 on: {
                   click: function($event) {
@@ -901,7 +915,7 @@ var staticRenderFns = [
     return _c(
       "button",
       {
-        staticClass: "btn btn-md btn-success btn-user-login",
+        staticClass: "btn btn-sm btn-success btn-user-login",
         attrs: { type: "submit", form: "form-login" }
       },
       [
@@ -944,7 +958,7 @@ var render = function() {
           on: {
             submit: function($event) {
               $event.preventDefault()
-              return _vm.login()
+              return _vm.register()
             }
           }
         },
@@ -1028,7 +1042,7 @@ var render = function() {
                     }
                   ],
                   attrs: {
-                    type: "text",
+                    type: "password",
                     name: "password",
                     required: "",
                     placeholder: "Password"
@@ -1060,8 +1074,8 @@ var render = function() {
                     }
                   ],
                   attrs: {
-                    type: "text",
-                    name: "password",
+                    type: "password",
+                    name: "confirm_password",
                     required: "",
                     placeholder: "Ulangi Password"
                   },
@@ -1145,7 +1159,7 @@ var staticRenderFns = [
         _c(
           "button",
           {
-            staticClass: "btn btn-md btn-success btn-user-login",
+            staticClass: "btn btn-sm btn-success btn-user-register",
             attrs: { type: "submit", form: "form-login" }
           },
           [

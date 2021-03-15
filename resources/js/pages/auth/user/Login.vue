@@ -20,16 +20,16 @@
 							<span class="input-icon">
 								<i class="fa fa-key"></i>
 							</span>
-							<input type="text" name="password" required v-model="formData.password" placeholder="Password">
+							<input type="password" name="password" required v-model="formData.password" placeholder="Password">
 						</div>
 					</div>
 					<div class="forgot">Lupa Password?</div>
 				</div>
 				<div class="form-footer" align="right">
-					<button type="button" class="btn btn-md btn-info" @click="$parent.showLogin = false">
+					<button type="button" class="btn btn-sm btn-info" @click="$parent.showLogin = false">
 						<i class="fa fa-user-plus"></i> Daftar
 					</button>
-					<button type="submit" form="form-login" class="btn btn-md btn-success btn-user-login">
+					<button type="submit" form="form-login" class="btn btn-sm btn-success btn-user-login">
 						<i class="fa fa-sign-in"></i> Masuk Akun Saya
 					</button>
 				</div>
@@ -45,6 +45,7 @@
 	        	formData: {
 	        		username: '',
 	        		password: '',
+	        		level_id: '2',
 	        	},
 	        }
 	    },
@@ -58,6 +59,7 @@
                     rememberMe: false,
                     fetchUser: true,
                 }).then((res)=>{
+                	localStorage.setItem("level_id", vm.formData.level_id);
                 	Aropex.btnLoad('.btn-user-login', false);
                 	toastr.success(res.data.message, 'Success');
                 }).catch((err)=>{

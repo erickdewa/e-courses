@@ -10,9 +10,10 @@ use Validator, JWTAuth;
 class AuthController extends Controller
 {
     public function login(Request $request)
-    {   
-        $credentials = $request->only('username', 'password');
+    {
+        $credentials = $request->only('username', 'password', 'level_id');
         $validator = Validator::make($request->all(), [
+            'level_id' => 'required|integer',
 			'username' => 'required|string',
 			'password' => 'required|string|min:8',
         ]);
@@ -47,7 +48,6 @@ class AuthController extends Controller
     public function register(Request $request)
     {
     	$validator = Validator::make($request->all(), [
-    		'name' => 'required|string',
     		'username' => 'required|string',
 			'email' => 'required|string',
 			'password' => 'required|string|min:8',
@@ -60,13 +60,22 @@ class AuthController extends Controller
             ], 400);
         }
 
+        $check = User::where('email', 'like', '%'.$request->email.'%')
+        ->where('username', 'like', '%'.$request->username.'%')->first();
+        if(isset($check)){
+            return response()->json([
+                'status' => true,
+                'message' => 'Email/Usernama sudah digunakan'
+            ], 404);
+        }
+
         $data = User::create([
-	        'name' => $request->name,
+	        'name' => $request->username,
 			'username' => $request->username,
 			'email' => $request->email,
 			'password' => bcrypt($request->password),
 			'confirm' => 'Yes',
-			'level_id' => '1',
+			'level_id' => '2',
 		]);
 
 		return response()->json([

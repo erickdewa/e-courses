@@ -44,6 +44,7 @@
 	        	formData: {
 	        		username: '',
 	        		password: '',
+	        		level_id: '1',
 	        	},
 	        }
 	    },
@@ -57,6 +58,7 @@
                     rememberMe: false,
                     fetchUser: true,
                 }).then((res)=>{
+                	localStorage.setItem("level_id", vm.formData.level_id);
                 	Aropex.btnLoad('.btn-login', false);
                 	toastr.success(res.data.message, 'Success');
                 }).catch((err)=>{

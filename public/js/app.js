@@ -43,7 +43,7 @@
 /******/
 /******/ 	// script path function
 /******/ 	function jsonpScriptSrc(chunkId) {
-/******/ 		return __webpack_require__.p + "" + ({"admin.dashboard":"admin.dashboard","admin.login":"admin.login","admin.master":"admin.master","admin.master.kategori":"admin.master.kategori","admin.master.level":"admin.master.level","admin.master.skill":"admin.master.skill","admin.master.tool":"admin.master.tool","admin.setting":"admin.setting","admin.setting.user":"admin.setting.user","admin.setting.webconfig":"admin.setting.webconfig","courses":"courses","courses.payment":"courses.payment","courses.player":"courses.player","home":"home","notfound404":"notfound404","vendors~admin":"vendors~admin","admin":"admin"}[chunkId]||chunkId) + ".js"
+/******/ 		return __webpack_require__.p + "" + ({"admin.dashboard":"admin.dashboard","admin.login":"admin.login","admin.master":"admin.master","admin.master.kategori":"admin.master.kategori","admin.master.level":"admin.master.level","admin.master.skill":"admin.master.skill","admin.master.tool":"admin.master.tool","admin.setting":"admin.setting","admin.setting.user":"admin.setting.user","admin.setting.webconfig":"admin.setting.webconfig","courses":"courses","courses.payment":"courses.payment","courses.player":"courses.player","global.redirect":"global.redirect","home":"home","notfound404":"notfound404","vendors~admin":"vendors~admin","admin":"admin"}[chunkId]||chunkId) + ".js"
 /******/ 	}
 /******/
 /******/ 	// The require function
@@ -48649,20 +48649,20 @@ var config = {
   tokenDefaultName: 'authToken',
   tokenStore: ['localStorage'],
   registerData: {
-    url: 'v1/register',
+    url: 'v1/auth/register',
     method: 'POST',
-    redirect: '/login'
+    redirect: '/redirect/register'
   },
   loginData: {
     url: 'v1/auth/login',
     method: 'POST',
-    redirect: '/admin/dashboard',
+    redirect: '/redirect/login',
     fetchUser: true
   },
   logoutData: {
     url: 'v1/auth/logout',
     method: 'POST',
-    redirect: '/login',
+    redirect: '/redirect/logout',
     makeRequest: true
   },
   fetchData: {
@@ -49017,7 +49017,17 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
 
 
 
-var routes = [].concat(_toConsumableArray(_admin__WEBPACK_IMPORTED_MODULE_1__["default"]), _toConsumableArray(_user__WEBPACK_IMPORTED_MODULE_2__["default"]));
+var routes = [].concat(_toConsumableArray(_admin__WEBPACK_IMPORTED_MODULE_1__["default"]), _toConsumableArray(_user__WEBPACK_IMPORTED_MODULE_2__["default"]), [{
+  name: 'global.redirect',
+  path: '/redirect/:type',
+  component: function component() {
+    return __webpack_require__.e(/*! import() | global.redirect */ "global.redirect").then(__webpack_require__.bind(null, /*! ../pages/auth/redirect/Index */ "./resources/js/pages/auth/redirect/Index.vue"));
+  },
+  meta: {
+    title: "Redirect | ".concat("Laravel"),
+    auth: true
+  }
+}]);
 var router = new vue_router__WEBPACK_IMPORTED_MODULE_0__["default"]({
   history: true,
   mode: 'history',

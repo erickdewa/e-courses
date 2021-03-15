@@ -11,22 +11,22 @@ const config = {
 	tokenStore: ['localStorage'],
 	
 	registerData: {
-		url: 'v1/register',
+		url: 'v1/auth/register',
 		method: 'POST',
-		redirect: '/login'
+		redirect: '/redirect/register',
 	},
 	
 	loginData: {
 		url: 'v1/auth/login',
 		method: 'POST',
-		redirect: '/admin/dashboard',
+		redirect: '/redirect/login',
 		fetchUser: true
 	},
 
 	logoutData: {
 		url: 'v1/auth/logout',
 		method: 'POST',
-		redirect: '/login',
+		redirect: '/redirect/logout',
 		makeRequest: true
 	},
 
