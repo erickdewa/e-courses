@@ -24,6 +24,9 @@ mix.js('resources/js/app.js', 'public/js')
 	    	net: 'empty',
 	    	tls: 'empty'
 	    },
+	    output: {
+            chunkFilename: 'js/[name].js',
+        },
 	    module: {
 	    	rules: [{
 	        	test: /\.s[ac]ss$/,

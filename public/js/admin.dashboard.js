@@ -1751,7 +1751,7 @@ var render = function() {
                   ],
                   staticClass: "form-control",
                   attrs: {
-                    rows: "3",
+                    rows: "5",
                     name: "description",
                     required: "",
                     placeholder: "Deskripsi"

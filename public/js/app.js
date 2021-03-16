@@ -43,7 +43,7 @@
 /******/
 /******/ 	// script path function
 /******/ 	function jsonpScriptSrc(chunkId) {
-/******/ 		return __webpack_require__.p + "" + ({"admin.dashboard":"admin.dashboard","admin.login":"admin.login","admin.master":"admin.master","admin.master.kategori":"admin.master.kategori","admin.master.level":"admin.master.level","admin.master.skill":"admin.master.skill","admin.master.tool":"admin.master.tool","admin.setting":"admin.setting","admin.setting.user":"admin.setting.user","admin.setting.webconfig":"admin.setting.webconfig","courses":"courses","courses.play":"courses.play","global.redirect":"global.redirect","notfound404":"notfound404","user.home":"user.home","home":"home","vendors~admin":"vendors~admin","admin":"admin"}[chunkId]||chunkId) + ".js"
+/******/ 		return __webpack_require__.p + "js/" + ({"admin.dashboard":"admin.dashboard","admin.login":"admin.login","admin.master":"admin.master","admin.master.kategori":"admin.master.kategori","admin.master.level":"admin.master.level","admin.master.skill":"admin.master.skill","admin.master.tool":"admin.master.tool","admin.setting":"admin.setting","admin.setting.user":"admin.setting.user","admin.setting.webconfig":"admin.setting.webconfig","courses":"courses","courses.play":"courses.play","global.redirect":"global.redirect","notfound404":"notfound404","user.home":"user.home","home":"home","vendors~admin":"vendors~admin","admin":"admin"}[chunkId]||chunkId) + ".js"
 /******/ 	}
 /******/
 /******/ 	// The require function

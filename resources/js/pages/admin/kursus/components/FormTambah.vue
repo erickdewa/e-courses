@@ -49,7 +49,7 @@
 					<div class="col-md-12">
 						<div class="form-group">
 							<label>Deskripsi</label>
-							<textarea class="form-control" rows="3" name="description" required v-model="formData.description" placeholder="Deskripsi"></textarea>
+							<textarea class="form-control" rows="5" name="description" required v-model="formData.description" placeholder="Deskripsi"></textarea>
 						</div>
 					</div>
 				</div>

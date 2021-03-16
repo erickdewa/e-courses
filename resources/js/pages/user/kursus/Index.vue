@@ -56,7 +56,7 @@
 					</div>
 				</div>
 				<div class="courses-description">
-					{{ dataCourses.description }}
+					<div v-html="dataCourses.description"></div>
 				</div>
 				<div class="courses-learn">
 					<div class="learn-title">

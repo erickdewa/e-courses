@@ -301,9 +301,9 @@ var render = function() {
         _vm._m(1),
         _vm._v(" "),
         _c("div", { staticClass: "courses-description" }, [
-          _vm._v(
-            "\n\t\t\t\t" + _vm._s(_vm.dataCourses.description) + "\n\t\t\t"
-          )
+          _c("div", {
+            domProps: { innerHTML: _vm._s(_vm.dataCourses.description) }
+          })
         ]),
         _vm._v(" "),
         _vm._m(2),
