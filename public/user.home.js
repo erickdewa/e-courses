@@ -118,47 +118,6 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -411,95 +370,7 @@ var staticRenderFns = [
             )
           ]
         )
-      ]),
-      _vm._v(" "),
-      _c(
-        "div",
-        {
-          staticClass: "modal",
-          attrs: { id: "modal-login", tabindex: "-1", role: "dialog" }
-        },
-        [
-          _c(
-            "div",
-            { staticClass: "modal-dialog", attrs: { role: "document" } },
-            [
-              _c("div", { staticClass: "modal-content" }, [
-                _c("div", { staticClass: "login-modal" }, [
-                  _c("div", { staticClass: "login-header" }, [
-                    _c("div", { staticClass: "title" }, [_vm._v("Login")]),
-                    _vm._v(" "),
-                    _c("div", { staticClass: "subtitle" }, [
-                      _vm._v("Masuk untuk melanjutkan belajar")
-                    ])
-                  ]),
-                  _vm._v(" "),
-                  _c("div", { staticClass: "login-body" }, [
-                    _c("form", { staticClass: "form" }, [
-                      _c("div", { staticClass: "form-head" }, [
-                        _c("div", { staticClass: "form-group" }, [
-                          _c("div", { staticClass: "input-group" }, [
-                            _c("span", { staticClass: "input-icon" }, [
-                              _c("i", { staticClass: "fa fa-user" })
-                            ]),
-                            _vm._v(" "),
-                            _c("input", {
-                              attrs: {
-                                type: "text",
-                                name: "email",
-                                placeholder: "Email"
-                              }
-                            })
-                          ])
-                        ]),
-                        _vm._v(" "),
-                        _c("div", { staticClass: "form-group" }, [
-                          _c("div", { staticClass: "input-group" }, [
-                            _c("span", { staticClass: "input-icon" }, [
-                              _c("i", { staticClass: "fa fa-key" })
-                            ]),
-                            _vm._v(" "),
-                            _c("input", {
-                              attrs: {
-                                type: "text",
-                                name: "password",
-                                placeholder: "Password"
-                              }
-                            })
-                          ])
-                        ]),
-                        _vm._v(" "),
-                        _c("div", { staticClass: "forgot" }, [
-                          _vm._v("Lupa Password?")
-                        ])
-                      ]),
-                      _vm._v(" "),
-                      _c(
-                        "div",
-                        {
-                          staticClass: "form-footer",
-                          attrs: { align: "right" }
-                        },
-                        [
-                          _c(
-                            "button",
-                            { staticClass: "btn btn-md bg-default" },
-                            [
-                              _vm._v(
-                                "\n\t\t\t\t\t\t\t\t\t\tMasuk Akun Saya\n\t\t\t\t\t\t\t\t\t"
-                              )
-                            ]
-                          )
-                        ]
-                      )
-                    ])
-                  ])
-                ])
-              ])
-            ]
-          )
-        ]
-      )
+      ])
     ])
   },
   function() {

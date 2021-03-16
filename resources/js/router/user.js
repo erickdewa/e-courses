@@ -29,6 +29,25 @@ const routesUser =  [
                 }
             },
             {
+                name: 'profile',
+                path: '/profile',
+                component: () => import(/* webpackChunkName: "home" */ '../pages/user/profile/Index'),
+                beforeEnter: guardUserLogged,
+                meta: {
+                    title: `Profile | ${process.env.MIX_APP_NAME}`,
+                    auth: undefined,
+                },
+            },
+            {
+                name: 'courses',
+                path: '/courses/:uuidCourses',
+                component: () => import(/* webpackChunkName: "courses" */ '../pages/user/kursus/Index'),
+                meta: {
+                    title: `Courses | ${process.env.MIX_APP_NAME}`,
+                    auth: undefined
+                }
+            },
+            {
                 name: 'courses',
                 path: '/courses/:uuidCourses',
                 component: () => import(/* webpackChunkName: "courses" */ '../pages/user/kursus/Index'),
@@ -47,12 +66,12 @@ const routesUser =  [
                 }
             },
             {
-                name: 'courses.payment',
-                path: '/courses/payment/:uuidCourses',
-                component: () => import(/* webpackChunkName: "courses.payment" */ '../pages/user/payment/Index'),
+                name: 'courses.play',
+                path: '/courses/play/:uuidCourses',
+                component: () => import(/* webpackChunkName: "courses.play" */ '../pages/user/player/Index'),
                 meta: {
-                    title: `Courses Payment | ${process.env.MIX_APP_NAME}`,
-                    auth: undefined
+                    title: `Courses Play | ${process.env.MIX_APP_NAME}`,
+                    auth: true
                 }
             },
             {
@@ -67,5 +86,17 @@ const routesUser =  [
         ]
     }
 ];
+
+function guardUserLogged(to, from, next){
+    if(localStorage.getItem("level_id") != null){
+        if(localStorage.getItem("level_id") == 1){
+            next({ path: '/admin/dashboard' });
+        }else{
+            next();
+        }
+    }else{
+        next({ path: '/'});
+    }
+}
 
 export default routesUser

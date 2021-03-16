@@ -49,6 +49,10 @@ __webpack_require__.r(__webpack_exports__);
 
         localStorage.removeItem("level_id");
       }
+    } else {
+      vm.$router.push({
+        path: '/'
+      });
     }
   }
 });

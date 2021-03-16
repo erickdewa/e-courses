@@ -59,6 +59,7 @@
                     rememberMe: false,
                     fetchUser: true,
                 }).then((res)=>{
+                	$('#modal-login').modal('hide');
                 	localStorage.setItem("level_id", vm.formData.level_id);
                 	Aropex.btnLoad('.btn-user-login', false);
                 	toastr.success(res.data.message, 'Success');

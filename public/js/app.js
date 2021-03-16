@@ -43,7 +43,7 @@
 /******/
 /******/ 	// script path function
 /******/ 	function jsonpScriptSrc(chunkId) {
-/******/ 		return __webpack_require__.p + "" + ({"admin.dashboard":"admin.dashboard","admin.login":"admin.login","admin.master":"admin.master","admin.master.kategori":"admin.master.kategori","admin.master.level":"admin.master.level","admin.master.skill":"admin.master.skill","admin.master.tool":"admin.master.tool","admin.setting":"admin.setting","admin.setting.user":"admin.setting.user","admin.setting.webconfig":"admin.setting.webconfig","courses":"courses","courses.payment":"courses.payment","courses.player":"courses.player","global.redirect":"global.redirect","home":"home","notfound404":"notfound404","vendors~admin":"vendors~admin","admin":"admin"}[chunkId]||chunkId) + ".js"
+/******/ 		return __webpack_require__.p + "" + ({"admin.dashboard":"admin.dashboard","admin.login":"admin.login","admin.master":"admin.master","admin.master.kategori":"admin.master.kategori","admin.master.level":"admin.master.level","admin.master.skill":"admin.master.skill","admin.master.tool":"admin.master.tool","admin.setting":"admin.setting","admin.setting.user":"admin.setting.user","admin.setting.webconfig":"admin.setting.webconfig","courses":"courses","courses.play":"courses.play","global.redirect":"global.redirect","notfound404":"notfound404","user.home":"user.home","home":"home","vendors~admin":"vendors~admin","admin":"admin"}[chunkId]||chunkId) + ".js"
 /******/ 	}
 /******/
 /******/ 	// The require function
@@ -49027,6 +49027,26 @@ var routes = [].concat(_toConsumableArray(_admin__WEBPACK_IMPORTED_MODULE_1__["d
     title: "Redirect | ".concat("Laravel"),
     auth: true
   }
+}, {
+  name: 'user.notfound',
+  path: '/*',
+  component: function component() {
+    return __webpack_require__.e(/*! import() | user.notfound */ "notfound404").then(__webpack_require__.bind(null, /*! ../pages/error/Index */ "./resources/js/pages/error/Index.vue"));
+  },
+  meta: {
+    title: "Halaman tidak ditemukan | ".concat("Laravel"),
+    auth: undefined
+  }
+}, {
+  name: 'admin.notfound',
+  path: '/admin/*',
+  component: function component() {
+    return __webpack_require__.e(/*! import() | admin.notfound */ "notfound404").then(__webpack_require__.bind(null, /*! ../pages/error/Index */ "./resources/js/pages/error/Index.vue"));
+  },
+  meta: {
+    title: "Halaman tidak ditemukan | ".concat("Laravel"),
+    auth: undefined
+  }
 }]);
 var router = new vue_router__WEBPACK_IMPORTED_MODULE_0__["default"]({
   history: true,
@@ -49062,7 +49082,7 @@ var routesUser = [{
     name: 'user.home',
     path: '/home',
     component: function component() {
-      return __webpack_require__.e(/*! import() | user.home */ "home").then(__webpack_require__.bind(null, /*! ../pages/user/home/Index */ "./resources/js/pages/user/home/Index.vue"));
+      return __webpack_require__.e(/*! import() | user.home */ "user.home").then(__webpack_require__.bind(null, /*! ../pages/user/home/Index */ "./resources/js/pages/user/home/Index.vue"));
     },
     meta: {
       title: "Home | ".concat("Laravel"),
@@ -49072,10 +49092,31 @@ var routesUser = [{
     name: 'home',
     path: '/',
     component: function component() {
-      return __webpack_require__.e(/*! import() | home */ "home").then(__webpack_require__.bind(null, /*! ../pages/user/home/Index */ "./resources/js/pages/user/home/Index.vue"));
+      return Promise.all(/*! import() | home */[__webpack_require__.e("user.home"), __webpack_require__.e("home")]).then(__webpack_require__.bind(null, /*! ../pages/user/home/Index */ "./resources/js/pages/user/home/Index.vue"));
     },
     meta: {
       title: "Home | ".concat("Laravel"),
+      auth: undefined
+    }
+  }, {
+    name: 'profile',
+    path: '/profile',
+    component: function component() {
+      return Promise.all(/*! import() | home */[__webpack_require__.e("user.home"), __webpack_require__.e("home")]).then(__webpack_require__.bind(null, /*! ../pages/user/profile/Index */ "./resources/js/pages/user/profile/Index.vue"));
+    },
+    beforeEnter: guardUserLogged,
+    meta: {
+      title: "Profile | ".concat("Laravel"),
+      auth: undefined
+    }
+  }, {
+    name: 'courses',
+    path: '/courses/:uuidCourses',
+    component: function component() {
+      return __webpack_require__.e(/*! import() | courses */ "courses").then(__webpack_require__.bind(null, /*! ../pages/user/kursus/Index */ "./resources/js/pages/user/kursus/Index.vue"));
+    },
+    meta: {
+      title: "Courses | ".concat("Laravel"),
       auth: undefined
     }
   }, {
@@ -49092,21 +49133,21 @@ var routesUser = [{
     name: 'courses.player',
     path: '/courses/play/:uuidCourses',
     component: function component() {
-      return __webpack_require__.e(/*! import() | courses.player */ "courses.player").then(__webpack_require__.bind(null, /*! ../pages/user/player/Index */ "./resources/js/pages/user/player/Index.vue"));
+      return __webpack_require__.e(/*! import() | courses.player */ "courses.play").then(__webpack_require__.bind(null, /*! ../pages/user/player/Index */ "./resources/js/pages/user/player/Index.vue"));
     },
     meta: {
       title: "Courses Play | ".concat("Laravel"),
       auth: undefined
     }
   }, {
-    name: 'courses.payment',
-    path: '/courses/payment/:uuidCourses',
+    name: 'courses.play',
+    path: '/courses/play/:uuidCourses',
     component: function component() {
-      return __webpack_require__.e(/*! import() | courses.payment */ "courses.payment").then(__webpack_require__.bind(null, /*! ../pages/user/payment/Index */ "./resources/js/pages/user/payment/Index.vue"));
+      return __webpack_require__.e(/*! import() | courses.play */ "courses.play").then(__webpack_require__.bind(null, /*! ../pages/user/player/Index */ "./resources/js/pages/user/player/Index.vue"));
     },
     meta: {
-      title: "Courses Payment | ".concat("Laravel"),
-      auth: undefined
+      title: "Courses Play | ".concat("Laravel"),
+      auth: true
     }
   }, {
     name: 'notfound404',
@@ -49120,6 +49161,23 @@ var routesUser = [{
     }
   }]
 }];
+
+function guardUserLogged(to, from, next) {
+  if (localStorage.getItem("level_id") != null) {
+    if (localStorage.getItem("level_id") == 1) {
+      next({
+        path: '/admin/dashboard'
+      });
+    } else {
+      next();
+    }
+  } else {
+    next({
+      path: '/'
+    });
+  }
+}
+
 /* harmony default export */ __webpack_exports__["default"] = (routesUser);
 
 /***/ }),

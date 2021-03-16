@@ -251,6 +251,7 @@ __webpack_require__.r(__webpack_exports__);
         rememberMe: false,
         fetchUser: true
       }).then(function (res) {
+        $('#modal-login').modal('hide');
         localStorage.setItem("level_id", vm.formData.level_id);
         Aropex.btnLoad('.btn-user-login', false);
         toastr.success(res.data.message, 'Success');

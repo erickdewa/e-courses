@@ -30,6 +30,8 @@
 	                }
 	                localStorage.removeItem("level_id");
 	    		}
+            }else{
+            	vm.$router.push({ path: '/'});
             }
 	    },
     }
