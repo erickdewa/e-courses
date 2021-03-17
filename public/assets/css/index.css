@@ -5,6 +5,7 @@
 @import url('./video.css');
 @import url('./lending.css');
 @import url('./courses.css');
+@import url('./profile.css');
 
 body{
 	background: #ECECF9;

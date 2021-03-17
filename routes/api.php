@@ -19,6 +19,10 @@ Route::prefix('v1')->group(function(){
 		Route::get('/{uuid}/getdata', 'CoursesController@getDataCourses');
 	});
 
+	Route::prefix('profile')->group(function(){
+		Route::get('/getdata', 'ProfileController@getProfile');
+	});
+
 	Route::prefix('auth')->group(function(){
 		Route::post('/register', 'AuthController@register');
 		Route::post('/login', 'AuthController@login');
@@ -33,6 +37,12 @@ Route::prefix('v1')->group(function(){
 	    		Route::post('/create', 'UserController@create');
 	    		Route::post('/{uuid}/update', 'UserController@update');
 	    		Route::delete('/{uuid}/delete', 'UserController@delete');
+	    	});
+
+	    	Route::prefix('profile')->group(function(){
+	    		Route::post('/create', 'ProfileController@create');
+	    		Route::post('/{uuid}/update', 'ProfileController@update');
+	    		Route::post('/{uuid}/verifed', 'ProfileController@verifed');
 	    	});
 
 	    	Route::prefix('category')->group(function(){

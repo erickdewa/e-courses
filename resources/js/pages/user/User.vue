@@ -96,6 +96,7 @@
         },
     	data() {
 	        return {
+	        	profile: {},
 	        	showLogin: true,
 	        }
 	    },
@@ -105,6 +106,22 @@
 	    	$('.btn-modal').on('click', function(){
 				Aropex.event(this, true);
 			});
+
+	    	if(localStorage.getItem("level_id") != null){
+		    	vm.$http({
+		    		url: `${ vm.baseUrl }/profile/getdata`,
+		    		method: 'GET',
+		    	}).then(() => {
+		    		vm.profile = res.data.data;
+		    	}).catch(() => {
+					swal({
+						title: "Lengkapi Profile?",
+						text: "Oop, anda belum melengkapi profile!",
+						icon: "warning",
+						button: "Ok",
+					});
+		    	});
+		    };
 	    },
     }
 </script>

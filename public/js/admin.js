@@ -485,6 +485,7 @@ __webpack_require__.r(__webpack_exports__);
   },
   data: function data() {
     return {
+      profile: {},
       showLogin: true
     };
   },
@@ -493,6 +494,24 @@ __webpack_require__.r(__webpack_exports__);
     $('.btn-modal').on('click', function () {
       Aropex.event(this, true);
     });
+
+    if (localStorage.getItem("level_id") != null) {
+      vm.$http({
+        url: "".concat(vm.baseUrl, "/profile/getdata"),
+        method: 'GET'
+      }).then(function () {
+        vm.profile = res.data.data;
+      })["catch"](function () {
+        swal({
+          title: "Lengkapi Profile?",
+          text: "Oop, anda belum melengkapi profile!",
+          icon: "warning",
+          button: "Ok"
+        });
+      });
+    }
+
+    ;
   }
 });
 

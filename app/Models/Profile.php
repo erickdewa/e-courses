@@ -12,4 +12,9 @@ class Profile extends Model
     protected $fillable = [
         'uuid', 'user_id', 'nm_full', 'date_bird', 'profession', 'bio', 'address', 'image', 'verifed', 'description', 'instagram', 'facebook', 'twitter', 'github'
     ];
+
+    public function user()
+    {
+        return $this->belongsTo('\App\Models\User', 'user_id', 'id');
+    }
 }

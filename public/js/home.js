@@ -15,6 +15,108 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {};
@@ -42,9 +144,256 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", [_vm._v("\n\tProfile\n")])
+  return _vm._m(0)
 }
-var staticRenderFns = []
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", [
+      _c("div", { staticClass: "page-one" }, [
+        _c("div", { staticClass: "profile-page" }, [
+          _c("div", { staticClass: "profile-image" }, [
+            _c("div", { staticClass: "profile-image-shedow" }),
+            _vm._v(" "),
+            _c("img", { attrs: { src: "/assets/images/avatar-1.png" } })
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "profile-infomation" }, [
+            _c("div", { staticClass: "profile-nama" }, [
+              _vm._v("Erick Dewa Pranata")
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "profile-alamat" }, [
+              _vm._v("Surabaya, Indonesia")
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "profile-bio" }, [
+              _vm._v(
+                "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod\n\t\t\t\ttempor incididunt ut labore et dolore magna aliqua."
+              )
+            ])
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "profile-button" }, [
+            _c("div", { staticClass: "profile-social" }, [
+              _c("div", { staticClass: "profile-socialmedia" }, [
+                _c("div", { staticClass: "social-item" }, [
+                  _c("i", { staticClass: "fa fa-twitter" })
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "social-item" }, [
+                  _c("i", { staticClass: "fa fa-facebook" })
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "social-item" }, [
+                  _c("i", { staticClass: "fa fa-instagram" })
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "social-item" }, [
+                  _c("i", { staticClass: "fa fa-github" })
+                ])
+              ])
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "button-edit" }, [
+              _c("button", { staticClass: "btn btn-sm btn-warning" }, [
+                _c("i", { staticClass: "fa fa-edit" }),
+                _vm._v(" Edit\n\t\t\t\t\t")
+              ])
+            ])
+          ])
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "courses-page" }, [
+          _c("div", { staticClass: "courses-profile-title" }, [
+            _c("span", [_vm._v("Kursus yang anda ikuti :")])
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "courses-profile-list" }, [
+            _c(
+              "div",
+              { staticClass: "courses-list my-3", attrs: { align: "center" } },
+              [
+                _c(
+                  "div",
+                  { staticClass: "courses-item-shedow d-inline-block m-3" },
+                  [
+                    _c(
+                      "div",
+                      {
+                        staticClass: "courses-item card",
+                        staticStyle: {
+                          "background-image":
+                            "url(/assets/images/bg/single1.jpg)"
+                        }
+                      },
+                      [
+                        _c("div", { staticClass: "courses-item-information" }, [
+                          _c("div", { staticClass: "title" }, [
+                            _vm._v("Single Room")
+                          ]),
+                          _vm._v(" "),
+                          _c("div", { staticClass: "desc" }, [
+                            _vm._v("Enjoy Our Single Room")
+                          ])
+                        ]),
+                        _vm._v(" "),
+                        _c("div", { staticClass: "courses-item-fiture" }, [
+                          _c(
+                            "div",
+                            {
+                              staticClass: "fiture",
+                              attrs: { title: "Sertifikat" }
+                            },
+                            [_c("i", { staticClass: "fa fa-book" })]
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "div",
+                            {
+                              staticClass: "fiture",
+                              attrs: { title: "Community" }
+                            },
+                            [_c("i", { staticClass: "fa fa-comments-o" })]
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "div",
+                            {
+                              staticClass: "fiture",
+                              attrs: { title: "Top Courses" }
+                            },
+                            [_c("i", { staticClass: "fa fa-fire" })]
+                          )
+                        ])
+                      ]
+                    )
+                  ]
+                ),
+                _vm._v(" "),
+                _c(
+                  "div",
+                  { staticClass: "courses-item-shedow d-inline-block m-3" },
+                  [
+                    _c(
+                      "div",
+                      {
+                        staticClass: "courses-item card",
+                        staticStyle: {
+                          "background-image":
+                            "url(/assets/images/bg/single1.jpg)"
+                        }
+                      },
+                      [
+                        _c("div", { staticClass: "courses-item-information" }, [
+                          _c("div", { staticClass: "title" }, [
+                            _vm._v("Single Room")
+                          ]),
+                          _vm._v(" "),
+                          _c("div", { staticClass: "desc" }, [
+                            _vm._v("Enjoy Our Single Room")
+                          ])
+                        ]),
+                        _vm._v(" "),
+                        _c("div", { staticClass: "courses-item-fiture" }, [
+                          _c(
+                            "div",
+                            {
+                              staticClass: "fiture",
+                              attrs: { title: "Sertifikat" }
+                            },
+                            [_c("i", { staticClass: "fa fa-book" })]
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "div",
+                            {
+                              staticClass: "fiture",
+                              attrs: { title: "Community" }
+                            },
+                            [_c("i", { staticClass: "fa fa-comments-o" })]
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "div",
+                            {
+                              staticClass: "fiture",
+                              attrs: { title: "Top Courses" }
+                            },
+                            [_c("i", { staticClass: "fa fa-fire" })]
+                          )
+                        ])
+                      ]
+                    )
+                  ]
+                ),
+                _vm._v(" "),
+                _c(
+                  "div",
+                  { staticClass: "courses-item-shedow d-inline-block m-3" },
+                  [
+                    _c(
+                      "div",
+                      {
+                        staticClass: "courses-item card",
+                        staticStyle: {
+                          "background-image":
+                            "url(/assets/images/bg/single1.jpg)"
+                        }
+                      },
+                      [
+                        _c("div", { staticClass: "courses-item-information" }, [
+                          _c("div", { staticClass: "title" }, [
+                            _vm._v("Single Room")
+                          ]),
+                          _vm._v(" "),
+                          _c("div", { staticClass: "desc" }, [
+                            _vm._v("Enjoy Our Single Room")
+                          ])
+                        ]),
+                        _vm._v(" "),
+                        _c("div", { staticClass: "courses-item-fiture" }, [
+                          _c(
+                            "div",
+                            {
+                              staticClass: "fiture",
+                              attrs: { title: "Sertifikat" }
+                            },
+                            [_c("i", { staticClass: "fa fa-book" })]
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "div",
+                            {
+                              staticClass: "fiture",
+                              attrs: { title: "Community" }
+                            },
+                            [_c("i", { staticClass: "fa fa-comments-o" })]
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "div",
+                            {
+                              staticClass: "fiture",
+                              attrs: { title: "Top Courses" }
+                            },
+                            [_c("i", { staticClass: "fa fa-fire" })]
+                          )
+                        ])
+                      ]
+                    )
+                  ]
+                )
+              ]
+            )
+          ])
+        ])
+      ])
+    ])
+  }
+]
 render._withStripped = true
 
 

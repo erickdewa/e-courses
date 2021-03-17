@@ -11,6 +11,7 @@
         <script src="{{ asset('assets/plugin/bootstrap-4.0/bootstrap.min.js') }}"></script>
         <script src="{{ asset('assets/plugin/select2-4.1/select2.min.js') }}"></script>
         <script src="{{ asset('assets/plugin/datepicker-1.9/datepicker.min.js') }}"></script>
+        <script src="{{ asset('assets/plugin/sweetalert-2.1/sweetalert.min.js') }}"></script>
         <meta name="csrf-token" content="{{csrf_token()}}">
         <link href="{{ mix('css/app.css') }}" rel="stylesheet">
     </head>
