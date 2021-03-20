@@ -19,10 +19,6 @@ Route::prefix('v1')->group(function(){
 		Route::get('/{uuid}/getdata', 'CoursesController@getDataCourses');
 	});
 
-	Route::prefix('profile')->group(function(){
-		Route::get('/getdata', 'ProfileController@getProfile');
-	});
-
 	Route::prefix('auth')->group(function(){
 		Route::post('/register', 'AuthController@register');
 		Route::post('/login', 'AuthController@login');
@@ -40,6 +36,7 @@ Route::prefix('v1')->group(function(){
 	    	});
 
 	    	Route::prefix('profile')->group(function(){
+	    		Route::get('/getdata', 'ProfileController@getData');
 	    		Route::post('/create', 'ProfileController@create');
 	    		Route::post('/{uuid}/update', 'ProfileController@update');
 	    		Route::post('/{uuid}/verifed', 'ProfileController@verifed');

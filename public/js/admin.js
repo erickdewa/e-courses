@@ -497,17 +497,19 @@ __webpack_require__.r(__webpack_exports__);
 
     if (localStorage.getItem("level_id") != null) {
       vm.$http({
-        url: "".concat(vm.baseUrl, "/profile/getdata"),
+        url: "".concat(vm.apiUrl, "/profile/getdata"),
         method: 'GET'
-      }).then(function () {
+      }).then(function (res) {
         vm.profile = res.data.data;
-      })["catch"](function () {
-        swal({
-          title: "Lengkapi Profile?",
-          text: "Oop, anda belum melengkapi profile!",
-          icon: "warning",
-          button: "Ok"
-        });
+      })["catch"](function (error) {
+        if (!vm.$route.path.includes('profile')) {
+          swal({
+            title: "Lengkapi Profile?",
+            text: "Oop, anda belum melengkapi profile!",
+            icon: "warning",
+            button: "Ok"
+          });
+        }
       });
     }
 

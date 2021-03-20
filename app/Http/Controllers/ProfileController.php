@@ -8,35 +8,34 @@ use Validator, JWTAuth;
 
 class ProfileController extends Controller
 {
-    public function getProfile()
+    public function getData()
     {
-    	$data = Profile::with('user')
-    	->where('user_id', JWTAuth::user()->id)->first();
+        $data = Profile::with('user')
+        ->where('user_id', JWTAuth::user()->id)->first();
 
-    	if(isset($data)){
-    		return response()->json([
-	    		'status' => false,
-	    		'message' => 'Data tidak ditemukan',
-	    	]);
-    	}
+        if(!isset($data)){
+            return response()->json([
+                'status' => false,
+                'message' => 'Data tidak ditemukan',
+            ], 404);
+        }
 
-    	return response()->json([
-    		'status' => true,
-    		'data' => $data,
-    		'message' => 'Data berhasil diambil',
-    	]);
+        return response()->json([
+            'status' => true,
+            'data' => $data,
+            'message' => 'Data berhasil diambil',
+        ]);
     }
 
     public function create(Request $request)
     {
     	$validator = Validator::make($request->all(), [
-            'user_id' => 'required|integer',
             'nm_full' => 'required|string',
             'date_bird' => 'required|string',
             'profession' => 'required|string',
             'bio' => 'required|string',
             'address' => 'required|string',
-            'image' => 'required|image',
+            'image' => 'image',
             'description' => 'required|string',
             'instagram' => 'required|string',
             'facebook' => 'required|string',
@@ -60,7 +59,7 @@ class ProfileController extends Controller
         }
 
         $data = Profile::create([
-        	'user_id' => $request->user_id,
+        	'user_id' => JWTAuth::user()->id,
             'nm_full' => $request->nm_full,
             'date_bird' => $request->date_bird,
             'profession' => $request->profession,
@@ -83,13 +82,12 @@ class ProfileController extends Controller
     public function update(Request $request, $uuid)
     {
     	$validator = Validator::make($request->all(), [
-            'user_id' => 'required|integer',
             'nm_full' => 'required|string',
             'date_bird' => 'required|string',
             'profession' => 'required|string',
             'bio' => 'required|string',
             'address' => 'required|string',
-            'image' => 'required|image',
+            'image' => 'image',
             'description' => 'required|string',
             'instagram' => 'required|string',
             'facebook' => 'required|string',
@@ -120,7 +118,7 @@ class ProfileController extends Controller
         }
 
         $data->update([
-        	'user_id' => $request->user_id,
+        	'user_id' => JWTAuth::user()->id,
             'nm_full' => $request->nm_full,
             'date_bird' => $request->date_bird,
             'profession' => $request->profession,

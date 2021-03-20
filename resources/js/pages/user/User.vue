@@ -109,17 +109,19 @@
 
 	    	if(localStorage.getItem("level_id") != null){
 		    	vm.$http({
-		    		url: `${ vm.baseUrl }/profile/getdata`,
+		    		url: `${ vm.apiUrl }/profile/getdata`,
 		    		method: 'GET',
-		    	}).then(() => {
+		    	}).then((res) => {
 		    		vm.profile = res.data.data;
-		    	}).catch(() => {
-					swal({
-						title: "Lengkapi Profile?",
-						text: "Oop, anda belum melengkapi profile!",
-						icon: "warning",
-						button: "Ok",
-					});
+		    	}).catch((error) => {
+		    		if(!vm.$route.path.includes('profile')){
+						swal({
+							title: "Lengkapi Profile?",
+							text: "Oop, anda belum melengkapi profile!",
+							icon: "warning",
+							button: "Ok",
+						});
+		    		}
 		    	});
 		    };
 	    },

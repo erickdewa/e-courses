@@ -43,7 +43,7 @@
 /******/
 /******/ 	// script path function
 /******/ 	function jsonpScriptSrc(chunkId) {
-/******/ 		return __webpack_require__.p + "js/" + ({"admin.dashboard":"admin.dashboard","admin.login":"admin.login","admin.master":"admin.master","admin.master.kategori":"admin.master.kategori","admin.master.level":"admin.master.level","admin.master.skill":"admin.master.skill","admin.master.tool":"admin.master.tool","admin.setting":"admin.setting","admin.setting.user":"admin.setting.user","admin.setting.webconfig":"admin.setting.webconfig","courses":"courses","courses.play":"courses.play","global.redirect":"global.redirect","notfound404":"notfound404","user.home":"user.home","home":"home","vendors~admin":"vendors~admin","admin":"admin"}[chunkId]||chunkId) + ".js"
+/******/ 		return __webpack_require__.p + "js/" + ({"admin.dashboard":"admin.dashboard","admin.login":"admin.login","admin.master":"admin.master","admin.master.kategori":"admin.master.kategori","admin.master.level":"admin.master.level","admin.master.skill":"admin.master.skill","admin.master.tool":"admin.master.tool","admin.setting":"admin.setting","admin.setting.user":"admin.setting.user","admin.setting.webconfig":"admin.setting.webconfig","courses":"courses","courses.play":"courses.play","global.redirect":"global.redirect","home":"home","notfound404":"notfound404","profile":"profile","profile.edit":"profile.edit","vendors~admin":"vendors~admin","admin":"admin"}[chunkId]||chunkId) + ".js"
 /******/ 	}
 /******/
 /******/ 	// The require function
@@ -49082,7 +49082,7 @@ var routesUser = [{
     name: 'user.home',
     path: '/home',
     component: function component() {
-      return __webpack_require__.e(/*! import() | user.home */ "user.home").then(__webpack_require__.bind(null, /*! ../pages/user/home/Index */ "./resources/js/pages/user/home/Index.vue"));
+      return __webpack_require__.e(/*! import() | user.home */ "home").then(__webpack_require__.bind(null, /*! ../pages/user/home/Index */ "./resources/js/pages/user/home/Index.vue"));
     },
     meta: {
       title: "Home | ".concat("Laravel"),
@@ -49092,7 +49092,7 @@ var routesUser = [{
     name: 'home',
     path: '/',
     component: function component() {
-      return Promise.all(/*! import() | home */[__webpack_require__.e("user.home"), __webpack_require__.e("home")]).then(__webpack_require__.bind(null, /*! ../pages/user/home/Index */ "./resources/js/pages/user/home/Index.vue"));
+      return __webpack_require__.e(/*! import() | home */ "home").then(__webpack_require__.bind(null, /*! ../pages/user/home/Index */ "./resources/js/pages/user/home/Index.vue"));
     },
     meta: {
       title: "Home | ".concat("Laravel"),
@@ -49102,7 +49102,18 @@ var routesUser = [{
     name: 'profile',
     path: '/profile',
     component: function component() {
-      return Promise.all(/*! import() | home */[__webpack_require__.e("user.home"), __webpack_require__.e("home")]).then(__webpack_require__.bind(null, /*! ../pages/user/profile/Index */ "./resources/js/pages/user/profile/Index.vue"));
+      return __webpack_require__.e(/*! import() | profile */ "profile").then(__webpack_require__.bind(null, /*! ../pages/user/profile/Index */ "./resources/js/pages/user/profile/Index.vue"));
+    },
+    beforeEnter: guardUserLogged,
+    meta: {
+      title: "Profile | ".concat("Laravel"),
+      auth: undefined
+    }
+  }, {
+    name: 'profile.edit',
+    path: '/profile/edit',
+    component: function component() {
+      return __webpack_require__.e(/*! import() | profile.edit */ "profile.edit").then(__webpack_require__.bind(null, /*! ../pages/user/profile/Edit */ "./resources/js/pages/user/profile/Edit.vue"));
     },
     beforeEnter: guardUserLogged,
     meta: {

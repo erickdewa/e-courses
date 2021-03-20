@@ -1,0 +1,95 @@
+.page-one{
+	background: #20B2AA; 
+	width: 100%;
+}
+
+.profile-page-edit{
+	background: #20B2AA;
+	padding: 25px 100px;
+	width: auto;
+	display: flex;
+	justify-content: center;
+}
+.profile-page-edit .profile-image{
+	position: relative;
+}
+.profile-image-shedow{
+	position: absolute;
+	background: red;
+	content: "";
+	top: -2.5px;
+	left: -2.5px;
+	height: 145px;
+	width: 145px;
+	border-radius: 50%;
+	background: rgb(232,247,246);
+	background: linear-gradient(30deg, rgba(232,247,246,1) 25%, rgba(255,221,223,1) 75%);
+}
+.profile-page-edit .profile-image img{
+	width: 140px;
+	height: 140px;
+	position: relative;
+	z-index: 1;
+	border-radius: 50%;
+}
+
+.profile-edit{
+	background: #FFFFFF;
+	padding: 25px 0px;
+}
+.profile-edit .profile-edit-title{
+	padding: 15px 100px;
+    font-size: 20px;
+    font-weight: 600;
+}
+.profile-edit .info-profile{
+	padding: 0px 100px;
+}
+.form-footer{
+	margin-top: 15px;
+	display: flex;
+	justify-content: space-between;
+}
+
+@media screen and (max-width: 720px) {
+	.profile-page-edit{
+		margin: 0px;
+		padding: 25px;
+		display: flex;
+	}
+	.profile-page-edit .profile-image{
+		text-align: center;
+	}
+	.profile-image-shedow{
+		display: none;
+	}
+
+	.profile-edit .profile-edit-title{
+		padding: 15px 25px;
+	}
+	.profile-edit .info-profile{
+		padding: 0px 25px;
+	}
+}
+
+@media screen and (min-width: 720px) and (max-width: 1200px){
+	.profile-page-edit{
+		margin: 0px;
+		padding: 25px;
+		width: 100%;
+		display: flex;
+	}
+	.profile-page-edit .profile-image{
+		text-align: center;
+	}
+	.profile-image-shedow{
+		display: none;
+	}
+
+	.profile-edit .profile-edit-title{
+		padding: 15px 25px;
+	}
+	.profile-edit .info-profile{
+		padding: 0px 25px;
+	}
+}

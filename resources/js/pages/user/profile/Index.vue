@@ -4,13 +4,12 @@
 			<div class="profile-page">
 				<div class="profile-image">
 					<div class="profile-image-shedow"></div>
-					<img src="/assets/images/avatar-1.png">
+					<img :src="$parent.profile.image">
 				</div>
 				<div class="profile-infomation">
-					<div class="profile-nama">Erick Dewa Pranata</div>
-					<div class="profile-alamat">Surabaya, Indonesia</div>
-					<div class="profile-bio">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-					tempor incididunt ut labore et dolore magna aliqua.</div>
+					<div class="profile-nama">{{ $parent.profile.nm_full }}</div>
+					<div class="profile-alamat">{{ $parent.profile.address }}</div>
+					<div class="profile-bio">{{ $parent.profile.bio }}</div>
 				</div>
 				<div class="profile-button">
 					<div class="profile-social">
@@ -30,7 +29,7 @@
 						</div>
 					</div>
 					<div class="button-edit">
-						<button class="btn btn-sm btn-warning">
+						<button type="button" class="btn btn-sm btn-warning" @click="$router.push({ path: '/profile/edit' })">
 							<i class="fa fa-edit"></i> Edit
 						</button>
 					</div>

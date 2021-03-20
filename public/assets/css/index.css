@@ -6,6 +6,7 @@
 @import url('./lending.css');
 @import url('./courses.css');
 @import url('./profile.css');
+@import url('./profileEdit.css');
 
 body{
 	background: #ECECF9;

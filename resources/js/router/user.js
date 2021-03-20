@@ -31,7 +31,17 @@ const routesUser =  [
             {
                 name: 'profile',
                 path: '/profile',
-                component: () => import(/* webpackChunkName: "home" */ '../pages/user/profile/Index'),
+                component: () => import(/* webpackChunkName: "profile" */ '../pages/user/profile/Index'),
+                beforeEnter: guardUserLogged,
+                meta: {
+                    title: `Profile | ${process.env.MIX_APP_NAME}`,
+                    auth: undefined,
+                },
+            },
+            {
+                name: 'profile.edit',
+                path: '/profile/edit',
+                component: () => import(/* webpackChunkName: "profile.edit" */ '../pages/user/profile/Edit'),
                 beforeEnter: guardUserLogged,
                 meta: {
                     title: `Profile | ${process.env.MIX_APP_NAME}`,
