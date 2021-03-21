@@ -130,6 +130,10 @@ __webpack_require__.r(__webpack_exports__);
           name: 'admin.master.level',
           path: '/admin/master/level'
         }, {
+          title: 'Pekerjaan',
+          name: 'admin.master.pekerjaan',
+          path: '/admin/master/pekerjaan'
+        }, {
           title: 'Kategori',
           name: 'admin.master.kategori',
           path: '/admin/master/kategori'
@@ -387,6 +391,7 @@ __webpack_require__.r(__webpack_exports__);
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _auth_user_Login__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../auth/user/Login */ "./resources/js/pages/auth/user/Login.vue");
 /* harmony import */ var _auth_user_Register__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../auth/user/Register */ "./resources/js/pages/auth/user/Register.vue");
+//
 //
 //
 //
@@ -1219,13 +1224,78 @@ var render = function() {
       "div",
       { staticClass: "main-user" },
       [
-        _vm._m(0),
+        _c("nav", { staticClass: "navbar" }, [
+          _vm._m(0),
+          _vm._v(" "),
+          _vm._m(1),
+          _vm._v(" "),
+          _c(
+            "div",
+            { staticClass: "navbar-group", attrs: { id: "navbar-group" } },
+            [
+              _c(
+                "ul",
+                {
+                  staticClass: "navbar-items",
+                  staticStyle: { display: "flex" }
+                },
+                [
+                  _vm._m(2),
+                  _vm._v(" "),
+                  _vm._m(3),
+                  _vm._v(" "),
+                  _vm._m(4),
+                  _vm._v(" "),
+                  !_vm.$auth.check()
+                    ? _c(
+                        "li",
+                        {
+                          staticClass: "navbar-item special-login btn-modal",
+                          attrs: {
+                            "data-event": "modal",
+                            "data-target": "#modal-login",
+                            "data-modal": "true"
+                          }
+                        },
+                        [
+                          _c("a", { attrs: { href: "javascript:void(0)" } }, [
+                            _vm._v("Login")
+                          ])
+                        ]
+                      )
+                    : _vm._e(),
+                  _vm._v(" "),
+                  _vm.$auth.check()
+                    ? _c(
+                        "li",
+                        {
+                          staticClass: "navbar-item special-profile",
+                          on: {
+                            click: function($event) {
+                              !_vm.$route.path.includes("profile")
+                                ? _vm.$router.push({ path: "/profile" })
+                                : ""
+                            }
+                          }
+                        },
+                        [
+                          _c("a", { attrs: { href: "javascript:void(0)" } }, [
+                            _vm._v("Erick Dewa Pranata")
+                          ])
+                        ]
+                      )
+                    : _vm._e()
+                ]
+              )
+            ]
+          )
+        ]),
         _vm._v(" "),
         _c("router-view"),
         _vm._v(" "),
-        _vm._m(1),
+        _vm._m(5),
         _vm._v(" "),
-        _vm._m(2)
+        _vm._m(6)
       ],
       1
     ),
@@ -1264,62 +1334,45 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("nav", { staticClass: "navbar" }, [
-      _c("div", { staticClass: "navbar-brand text-white" }, [
-        _c("span", [_vm._v("ITHINK")])
-      ]),
-      _vm._v(" "),
-      _c(
-        "div",
-        {
-          staticClass: "btn-navbar",
-          attrs: { "data-event": "dropdown", "data-target": "#navbar-group" }
-        },
-        [_c("i", { staticClass: "fa fa-bars" })]
-      ),
-      _vm._v(" "),
-      _c(
-        "div",
-        { staticClass: "navbar-group", attrs: { id: "navbar-group" } },
-        [
-          _c("ul", { staticClass: "navbar-items" }, [
-            _c("li", { staticClass: "navbar-item" }, [
-              _c("a", { attrs: { href: "javascript:void(0)" } }, [
-                _vm._v("Menu")
-              ])
-            ]),
-            _vm._v(" "),
-            _c("li", { staticClass: "navbar-item" }, [
-              _c("a", { attrs: { href: "javascript:void(0)" } }, [
-                _vm._v("Menu")
-              ])
-            ]),
-            _vm._v(" "),
-            _c("li", { staticClass: "navbar-item" }, [
-              _c("a", { attrs: { href: "javascript:void(0)" } }, [
-                _vm._v("Menu")
-              ])
-            ]),
-            _vm._v(" "),
-            _c(
-              "li",
-              {
-                staticClass: "navbar-item special btn-modal",
-                attrs: {
-                  "data-event": "modal",
-                  "data-target": "#modal-login",
-                  "data-modal": "true"
-                }
-              },
-              [
-                _c("a", { attrs: { href: "javascript:void(0)" } }, [
-                  _vm._v("Login")
-                ])
-              ]
-            )
-          ])
-        ]
-      )
+    return _c("div", { staticClass: "navbar-brand text-white" }, [
+      _c("span", [_vm._v("ITHINK")])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "div",
+      {
+        staticClass: "btn-navbar",
+        attrs: { "data-event": "dropdown", "data-target": "#navbar-group" }
+      },
+      [_c("i", { staticClass: "fa fa-bars" })]
+    )
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("li", { staticClass: "navbar-item" }, [
+      _c("a", { attrs: { href: "javascript:void(0)" } }, [_vm._v("Menu")])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("li", { staticClass: "navbar-item" }, [
+      _c("a", { attrs: { href: "javascript:void(0)" } }, [_vm._v("Menu")])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("li", { staticClass: "navbar-item" }, [
+      _c("a", { attrs: { href: "javascript:void(0)" } }, [_vm._v("Menu")])
     ])
   },
   function() {

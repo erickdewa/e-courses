@@ -9,11 +9,12 @@
 					<i class="fa fa-bars"></i>
 				</div>
 				<div class="navbar-group" id="navbar-group">
-					<ul class="navbar-items">
+					<ul class="navbar-items" style="display: flex;">
 						<li class="navbar-item"><a href="javascript:void(0)">Menu</a></li>
 						<li class="navbar-item"><a href="javascript:void(0)">Menu</a></li>
 						<li class="navbar-item"><a href="javascript:void(0)">Menu</a></li>
-						<li class="navbar-item special btn-modal" data-event="modal" data-target="#modal-login" data-modal="true"><a href="javascript:void(0)">Login</a></li>
+						<li v-if="!$auth.check()" class="navbar-item special-login btn-modal" data-event="modal" data-target="#modal-login" data-modal="true"><a href="javascript:void(0)">Login</a></li>
+						<li v-if="$auth.check()" class="navbar-item special-profile" @click="((!$route.path.includes('profile'))?$router.push({ path: '/profile' }):'')"><a href="javascript:void(0)">Erick Dewa Pranata</a></li>
 					</ul>
 				</div>
 			</nav>

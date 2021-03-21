@@ -116,11 +116,17 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {};
   },
-  methods: {},
+  methods: {
+    socialMedia: function socialMedia(url) {
+      var vm = this;
+      window.open(url, '_blank');
+    }
+  },
   mounted: function mounted() {
     var vm = this;
   }
@@ -144,54 +150,105 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", [
-    _c("div", { staticClass: "page-one" }, [
-      _c("div", { staticClass: "profile-page" }, [
-        _c("div", { staticClass: "profile-image" }, [
-          _c("div", { staticClass: "profile-image-shedow" }),
-          _vm._v(" "),
-          _c("img", { attrs: { src: _vm.$parent.profile.image } })
+    _c("div", { staticClass: "profile-page" }, [
+      _c("div", { staticClass: "profile-image" }, [
+        _c("div", { staticClass: "profile-image-shedow" }),
+        _vm._v(" "),
+        _c("img", { attrs: { src: _vm.$parent.profile.image } })
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "profile-infomation" }, [
+        _c("div", { staticClass: "profile-nama" }, [
+          _vm._v(_vm._s(_vm.$parent.profile.nm_full))
         ]),
         _vm._v(" "),
-        _c("div", { staticClass: "profile-infomation" }, [
-          _c("div", { staticClass: "profile-nama" }, [
-            _vm._v(_vm._s(_vm.$parent.profile.nm_full))
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "profile-alamat" }, [
-            _vm._v(_vm._s(_vm.$parent.profile.address))
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "profile-bio" }, [
-            _vm._v(_vm._s(_vm.$parent.profile.bio))
-          ])
+        _c("div", { staticClass: "profile-alamat" }, [
+          _vm._v(_vm._s(_vm.$parent.profile.address))
         ]),
         _vm._v(" "),
-        _c("div", { staticClass: "profile-button" }, [
-          _vm._m(0),
-          _vm._v(" "),
-          _c("div", { staticClass: "button-edit" }, [
-            _c(
-              "button",
-              {
-                staticClass: "btn btn-sm btn-warning",
-                attrs: { type: "button" },
-                on: {
-                  click: function($event) {
-                    return _vm.$router.push({ path: "/profile/edit" })
-                  }
-                }
-              },
-              [
-                _c("i", { staticClass: "fa fa-edit" }),
-                _vm._v(" Edit\n\t\t\t\t\t")
-              ]
-            )
-          ])
+        _c("div", { staticClass: "profile-bio" }, [
+          _vm._v(_vm._s(_vm.$parent.profile.bio))
         ])
       ]),
       _vm._v(" "),
-      _vm._m(1)
-    ])
+      _c("div", { staticClass: "profile-button" }, [
+        _c("div", { staticClass: "profile-social" }, [
+          _c("div", { staticClass: "profile-socialmedia" }, [
+            _c(
+              "div",
+              {
+                staticClass: "social-item",
+                on: {
+                  click: function($event) {
+                    return _vm.socialMedia(_vm.$parent.profile.twitter)
+                  }
+                }
+              },
+              [_c("i", { staticClass: "fa fa-twitter" })]
+            ),
+            _vm._v(" "),
+            _c(
+              "div",
+              {
+                staticClass: "social-item",
+                on: {
+                  click: function($event) {
+                    return _vm.socialMedia(_vm.$parent.profile.facebook)
+                  }
+                }
+              },
+              [_c("i", { staticClass: "fa fa-facebook" })]
+            ),
+            _vm._v(" "),
+            _c(
+              "div",
+              {
+                staticClass: "social-item",
+                on: {
+                  click: function($event) {
+                    return _vm.socialMedia(_vm.$parent.profile.instagram)
+                  }
+                }
+              },
+              [_c("i", { staticClass: "fa fa-instagram" })]
+            ),
+            _vm._v(" "),
+            _c(
+              "div",
+              {
+                staticClass: "social-item",
+                on: {
+                  click: function($event) {
+                    return _vm.socialMedia(_vm.$parent.profile.github)
+                  }
+                }
+              },
+              [_c("i", { staticClass: "fa fa-github" })]
+            )
+          ])
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "button-edit" }, [
+          _c(
+            "button",
+            {
+              staticClass: "btn btn-sm btn-warning",
+              attrs: { type: "button" },
+              on: {
+                click: function($event) {
+                  return _vm.$router.push({ path: "/profile/edit" })
+                }
+              }
+            },
+            [_c("i", { staticClass: "fa fa-edit" }), _vm._v(" Edit\n\t\t\t\t")]
+          ),
+          _vm._v(" "),
+          _vm._m(0)
+        ])
+      ])
+    ]),
+    _vm._v(" "),
+    _vm._m(1)
   ])
 }
 var staticRenderFns = [
@@ -199,25 +256,11 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "profile-social" }, [
-      _c("div", { staticClass: "profile-socialmedia" }, [
-        _c("div", { staticClass: "social-item" }, [
-          _c("i", { staticClass: "fa fa-twitter" })
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "social-item" }, [
-          _c("i", { staticClass: "fa fa-facebook" })
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "social-item" }, [
-          _c("i", { staticClass: "fa fa-instagram" })
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "social-item" }, [
-          _c("i", { staticClass: "fa fa-github" })
-        ])
-      ])
-    ])
+    return _c(
+      "button",
+      { staticClass: "btn btn-sm btn-info", attrs: { type: "button" } },
+      [_c("i", { staticClass: "fa fa-sign-out" }), _vm._v(" Logout\n\t\t\t\t")]
+    )
   },
   function() {
     var _vm = this

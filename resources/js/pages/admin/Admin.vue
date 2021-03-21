@@ -100,6 +100,7 @@
 	        		{ title: 'Kursus', icon: 'fa-book', name: 'admin.kursus', path: '/admin/kursus', haveChild: false },
 	        		{ title: 'Master', icon: 'fa-th-large', name: 'admin.master', path: '', haveChild: true, child: [
 	        			{ title: 'Level', name: 'admin.master.level', path: '/admin/master/level' },
+	        			{ title: 'Pekerjaan', name: 'admin.master.pekerjaan', path: '/admin/master/pekerjaan' },
 	        			{ title: 'Kategori', name: 'admin.master.kategori', path: '/admin/master/kategori' },
 	        			{ title: 'Skill', name: 'admin.master.skill', path: '/admin/master/skill' },
 	        			{ title: 'Tool', name: 'admin.master.tool', path: '/admin/master/tool' },

@@ -19,8 +19,8 @@
     "/js/global.redirect.js": "/js/global.redirect.js",
     "/js/home.js": "/js/home.js",
     "/js/notfound404.js": "/js/notfound404.js",
-    "/js/user.home.js": "/js/user.home.js",
-    "/js/vendors~admin.js": "/js/vendors~admin.js",
+    "/js/profile.js": "/js/profile.js",
     "/js/profile.edit.js": "/js/profile.edit.js",
-    "/js/profile.js": "/js/profile.js"
+    "/js/vendors~admin.js": "/js/vendors~admin.js",
+    "/js/admin.master.pekerjaan.js": "/js/admin.master.pekerjaan.js"
 }

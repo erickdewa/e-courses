@@ -37,7 +37,7 @@
 							<div class="form-group">
 								<label>Pekerjaan</label>
 								<select class="form-control profession-select" name="profession" v-model="formData.profession" placeholder="Pekerjaan">
-									<option>Pelajar</option>
+									<option v-for="pekerjaan in dataPekerjaan" :value="pekerjaan.nm_pekerjaan">{{ pekerjaan.nm_pekerjaan }}</option>
 								</select>
 							</div>
 						</div>
@@ -120,6 +120,8 @@
 					twitter: '',
 					github: '',
 	        	},
+
+	        	dataPekerjaan: [],
 	        }
 	    },
 	    methods: {
@@ -175,12 +177,21 @@
 	    	select2(){
 	    		var vm = this;
 
-	    		$(".profession-select").select2({
-                    placeholder: "Pilih",
-                    width: '100%'
-                }).val(vm.formData.profession).on('change', function(val) {
-                    vm.formData.profession = $(this).val();
-                });
+	    		vm.$http({
+		    		url: `${ vm.apiUrl }/pekerjaan/getdatas`,
+		    		method: 'GET',
+		    	}).then((res) => {
+		    		vm.dataPekerjaan = res.data.data;
+
+		    		$(".profession-select").select2({
+	                    placeholder: "Pilih",
+	                    width: '100%'
+	                }).val(vm.formData.profession).on('change', function(val) {
+	                    vm.formData.profession = $(this).val();
+	                });
+		    	}).catch((error) => {
+
+		    	});
 	    	}
 	    },
 	    mounted(){

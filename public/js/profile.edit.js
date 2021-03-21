@@ -129,7 +129,8 @@ __webpack_require__.r(__webpack_exports__);
         instagram: '',
         twitter: '',
         github: ''
-      }
+      },
+      dataPekerjaan: []
     };
   },
   methods: {
@@ -186,12 +187,18 @@ __webpack_require__.r(__webpack_exports__);
     },
     select2: function select2() {
       var vm = this;
-      $(".profession-select").select2({
-        placeholder: "Pilih",
-        width: '100%'
-      }).val(vm.formData.profession).on('change', function (val) {
-        vm.formData.profession = $(this).val();
-      });
+      vm.$http({
+        url: "".concat(vm.apiUrl, "/pekerjaan/getdatas"),
+        method: 'GET'
+      }).then(function (res) {
+        vm.dataPekerjaan = res.data.data;
+        $(".profession-select").select2({
+          placeholder: "Pilih",
+          width: '100%'
+        }).val(vm.formData.profession).on('change', function (val) {
+          vm.formData.profession = $(this).val();
+        });
+      })["catch"](function (error) {});
     }
   },
   mounted: function mounted() {
@@ -400,7 +407,14 @@ var render = function() {
                         }
                       }
                     },
-                    [_c("option", [_vm._v("Pelajar")])]
+                    _vm._l(_vm.dataPekerjaan, function(pekerjaan) {
+                      return _c(
+                        "option",
+                        { domProps: { value: pekerjaan.nm_pekerjaan } },
+                        [_vm._v(_vm._s(pekerjaan.nm_pekerjaan))]
+                      )
+                    }),
+                    0
                   )
                 ])
               ]),

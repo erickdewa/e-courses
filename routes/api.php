@@ -75,6 +75,15 @@ Route::prefix('v1')->group(function(){
 	    		Route::delete('/{uuid}/delete', 'LevelController@delete');
 	    	});
 
+	    	Route::prefix('pekerjaan')->group(function(){
+	    		Route::post('/index', 'PekerjaanController@index');
+	    		Route::get('/getdatas', 'PekerjaanController@getDatas');
+	    		Route::get('/{uuid}/getdata', 'PekerjaanController@getData');
+	    		Route::post('/create', 'PekerjaanController@create');
+	    		Route::post('/{uuid}/update', 'PekerjaanController@update');
+	    		Route::delete('/{uuid}/delete', 'PekerjaanController@delete');
+	    	});
+
 	    	Route::prefix('courses')->group(function(){
 	    		Route::post('/index', 'CoursesController@index');
 	    		Route::get('/getdatas', 'CoursesController@getDatas');
