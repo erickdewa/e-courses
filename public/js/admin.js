@@ -130,6 +130,10 @@ __webpack_require__.r(__webpack_exports__);
           name: 'admin.master.level',
           path: '/admin/master/level'
         }, {
+          title: 'Payment',
+          name: 'admin.master.payment',
+          path: '/admin/master/payment'
+        }, {
           title: 'Pekerjaan',
           name: 'admin.master.pekerjaan',
           path: '/admin/master/pekerjaan'

@@ -1,0 +1,68 @@
+.payment-page{
+	margin: 50px 100px;
+}
+.default-box{
+	background: #FFFFFF;
+	color: #000000;
+	padding: 25px;
+	border-radius: 15px;
+	box-shadow: 0px 0px 60px -5px rgba(75,74,239,0.2);
+}
+.box-shedow{
+	box-shadow: 0px 0px 60px -5px rgba(75,74,239,0.2)!important;
+}
+.border{
+	border: 1px solid #DAD8CB!important;
+}
+.cursor-pointer{
+	cursor: pointer;
+}
+
+.default-box .title{
+	font-size: 17px;
+	font-weight: 600;
+}
+.payment-box .method-item{
+	border-radius: 15px;
+	overflow: hidden;
+	border: 2px solid #DAD8CB;
+}
+.payment-box .method-item:hover,
+.payment-box .method-item.active{
+	border-radius: 15px;
+	overflow: hidden;
+	border: 2px solid #20B2AA;
+}
+.method-item .method-item_image img{
+	width: 100px;
+	height: 100px;
+}
+.method-item .method-item_info .nama,
+.payment-item_info .nama,
+.jumlah-bayar .nama,
+.jumlah-bayar .price{
+	font-size: 16px;
+	font-weight: 500;
+}
+.method-item .method-item_info .subname,
+.payment-item_info .subname, .expired-date,
+.payment-sum .note, .order-id,
+.payment-sum .price, .how-to-pay{
+	font-size: 13px;
+	font-weight: 400;
+}
+.method-item .method-item_info .price,
+.payment-item_info .price{
+	font-size: 15px;
+	font-weight: 500;
+}
+.account-bayar .nomor{
+	font-size: 20px;
+	font-weight: 600;
+}
+
+.payment-item .payment-item_image img{
+	width: 150px;
+	height: 100px;
+	border-radius: 15px;
+}

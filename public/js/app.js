@@ -43,7 +43,7 @@
 /******/
 /******/ 	// script path function
 /******/ 	function jsonpScriptSrc(chunkId) {
-/******/ 		return __webpack_require__.p + "js/" + ({"admin.dashboard":"admin.dashboard","admin.login":"admin.login","admin.master":"admin.master","admin.master.kategori":"admin.master.kategori","admin.master.level":"admin.master.level","admin.master.pekerjaan":"admin.master.pekerjaan","admin.master.skill":"admin.master.skill","admin.master.tool":"admin.master.tool","admin.setting":"admin.setting","admin.setting.user":"admin.setting.user","admin.setting.webconfig":"admin.setting.webconfig","courses":"courses","courses.play":"courses.play","global.redirect":"global.redirect","home":"home","notfound404":"notfound404","profile":"profile","profile.edit":"profile.edit","vendors~admin":"vendors~admin","admin":"admin"}[chunkId]||chunkId) + ".js"
+/******/ 		return __webpack_require__.p + "js/" + ({"admin.dashboard":"admin.dashboard","admin.login":"admin.login","admin.master":"admin.master","admin.master.kategori":"admin.master.kategori","admin.master.level":"admin.master.level","admin.master.payment":"admin.master.payment","admin.master.pekerjaan":"admin.master.pekerjaan","admin.master.skill":"admin.master.skill","admin.master.tool":"admin.master.tool","admin.setting":"admin.setting","admin.setting.user":"admin.setting.user","admin.setting.webconfig":"admin.setting.webconfig","courses":"courses","courses.play":"courses.play","global.redirect":"global.redirect","home":"home","notfound404":"notfound404","payment":"payment","profile":"profile","profile.edit":"profile.edit","vendors~admin":"vendors~admin","admin":"admin"}[chunkId]||chunkId) + ".js"
 /******/ 	}
 /******/
 /******/ 	// The require function
@@ -48923,6 +48923,16 @@ var routesAdmin = [{
         auth: true
       }
     }, {
+      name: 'admin.master.payment',
+      path: '/admin/master/payment',
+      component: function component() {
+        return __webpack_require__.e(/*! import() | admin.master.payment */ "admin.master.payment").then(__webpack_require__.bind(null, /*! ../pages/admin/master/payment/Index */ "./resources/js/pages/admin/master/payment/Index.vue"));
+      },
+      meta: {
+        title: "Payment | ".concat("Laravel"),
+        auth: true
+      }
+    }, {
       name: 'admin.master.pekerjaan',
       path: '/admin/master/pekerjaan',
       component: function component() {
@@ -49138,6 +49148,17 @@ var routesUser = [{
     },
     meta: {
       title: "Courses | ".concat("Laravel"),
+      auth: undefined
+    }
+  }, {
+    name: 'payment',
+    path: '/payment/:uuidCourses',
+    component: function component() {
+      return __webpack_require__.e(/*! import() | payment */ "payment").then(__webpack_require__.bind(null, /*! ../pages/user/payment/Index */ "./resources/js/pages/user/payment/Index.vue"));
+    },
+    beforeEnter: guardUserLogged,
+    meta: {
+      title: "Payment | ".concat("Laravel"),
       auth: undefined
     }
   }, {

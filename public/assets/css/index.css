@@ -7,6 +7,7 @@
 @import url('./courses.css');
 @import url('./profile.css');
 @import url('./profileEdit.css');
+@import url('./payment.css');
 
 body{
 	background: #ECECF9;

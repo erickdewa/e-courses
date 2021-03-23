@@ -9,6 +9,7 @@
     "/js/admin.master.js": "/js/admin.master.js",
     "/js/admin.master.kategori.js": "/js/admin.master.kategori.js",
     "/js/admin.master.level.js": "/js/admin.master.level.js",
+    "/js/admin.master.pekerjaan.js": "/js/admin.master.pekerjaan.js",
     "/js/admin.master.skill.js": "/js/admin.master.skill.js",
     "/js/admin.master.tool.js": "/js/admin.master.tool.js",
     "/js/admin.setting.js": "/js/admin.setting.js",
@@ -22,5 +23,6 @@
     "/js/profile.js": "/js/profile.js",
     "/js/profile.edit.js": "/js/profile.edit.js",
     "/js/vendors~admin.js": "/js/vendors~admin.js",
-    "/js/admin.master.pekerjaan.js": "/js/admin.master.pekerjaan.js"
+    "/js/admin.master.payment.js": "/js/admin.master.payment.js",
+    "/js/payment.js": "/js/payment.js"
 }

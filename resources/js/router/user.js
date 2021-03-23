@@ -58,6 +58,16 @@ const routesUser =  [
                 }
             },
             {
+                name: 'payment',
+                path: '/payment/:uuidCourses',
+                component: () => import(/* webpackChunkName: "payment" */ '../pages/user/payment/Index'),
+                beforeEnter: guardUserLogged,
+                meta: {
+                    title: `Payment | ${process.env.MIX_APP_NAME}`,
+                    auth: undefined
+                }
+            },
+            {
                 name: 'courses',
                 path: '/courses/:uuidCourses',
                 component: () => import(/* webpackChunkName: "courses" */ '../pages/user/kursus/Index'),
