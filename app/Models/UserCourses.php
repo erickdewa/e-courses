@@ -10,7 +10,7 @@ class UserCourses extends Model
     use Uuid;
 
     protected $fillable = [
-        'uuid', 'courses_id', 'user_id', 'method_id', 'status', 'payment_time'
+        'uuid', 'courses_id', 'user_id', 'method_id', 'status', 'discount', 'total', 'payment_expired', 'payment_time'
     ];
 
     public function tool()

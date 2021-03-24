@@ -16,7 +16,7 @@
 											<div class="method-item_info ml-4 mt-2">
 												<div class="nama">{{ method.nm_method }}</div>
 												<div class="subname">Bayar Otomatis</div>
-												<div class="price mt-2">Rp. 200.000</div>
+												<div class="price mt-2">Rp. {{ dataCourses.price.rupiah() }}</div>
 											</div>
 										</div>
 									</div>
@@ -36,14 +36,14 @@
 								<div class="payment-item_info mt-2">
 									<div class="nama">Laravel 8 For Beginer</div>
 									<div class="subname">Lifetime</div>
-									<div class="price" align="right">Rp. 200.000</div>
+									<div class="price" align="right">Rp. {{ dataCourses.price.rupiah() }}</div>
 								</div>
 							</div>
 							<hr>
 							<div class="payment-sum">
 								<div class="d-flex justify-content-between my-2">
 									<div class="note"></div>
-									<div class="price" align="right">Rp. 200.000</div>
+									<div class="price" align="right">Rp. {{ dataCourses.price.rupiah() }}</div>
 								</div>
 								<div class="d-flex justify-content-between my-2">
 									<div class="note">Diskon</div>
@@ -51,11 +51,11 @@
 								</div>
 								<div class="d-flex justify-content-between my-2">
 									<div class="note">Total</div>
-									<div class="price" align="right">Rp. 200.000</div>
+									<div class="price" align="right">Rp. {{ dataCourses.price.rupiah() }}</div>
 								</div>
 							</div>
 							<div class="payment-action mt-3">
-								<button type="button" class="btn btn-success btn-sm" style="width: 100%" @click="setShowBayar()" v-bind:disabled="((formData.method_id!='')?false:true)">
+								<button type="button" class="btn btn-success btn-sm btn-reload" style="width: 100%" @click="createOrder()" v-bind:disabled="((formData.method_id!='')?false:true)">
 									<i class="fa fa-money"></i> Bayar Sekarang
 								</button>
 							</div>
@@ -64,7 +64,7 @@
 							<div class="title">Bayar Sekarang</div>
 							<div class="jumlah-bayar d-flex justify-content-between mt-3">
 								<div class="nama">Total</div>
-								<div class="price">Rp. 200.000</div>
+								<div class="price">Rp. {{ dataCourses.price.rupiah() }}</div>
 							</div>
 							<div class="order-id">Order ID #1 (Gopay)</div>
 							<div class="expired-date">Expired 28 Mei 21:07 WIB</div>
@@ -98,12 +98,30 @@
 	        	bayar: false,
 	        	dataMethod: [],
 
-	        	dataCourses: {},
+	        	dataCourses: {
+	        		price: 0,
+	        	},
+	        	paymentParameter: '',
 
 	        	formData: {
 	        		user_id: '',
 	        		method_id: '',
 	        		courses_id: '',
+	        		discount: 0,
+					payment_type: '',
+					bank: '',
+					item_details: [{
+						id: 1,
+						price: 0,
+						quantity: 1,
+						name: '',
+					}],
+					customer_details: {
+						first_name: '',
+						last_name: '',
+						email: '',
+						phone: ''
+					},
 	        	},
 	        }
 	    },
@@ -125,8 +143,37 @@
 	    	methodSelected(id){
 	    		var vm = this;
 
+	    		var codePay = '';
+	    		var subPayment = '';
+	    		for(var i = 0; i < vm.dataMethod.length; i++){
+	    			if(vm.dataMethod[i].id == id){
+	    				codePay = vm.dataMethod[i].kode;
+	    				subPayment = codePay.split('-')[1];
+	    				vm.paymentParameter = codePay.split('-')[0];
+	    			}
+	    		}
+
 	    		if(!vm.bayar){
-	    			vm.formData.method_id = id;
+	    			vm.formData = {
+		        		user_id: vm.$auth.user().id,
+		        		method_id: id,
+		        		courses_id: vm.dataCourses.id,
+		        		discount: 0,
+						payment_type: subPayment,
+						bank: subPayment,
+						item_details: [{
+							id: vm.dataCourses.id,
+							price: vm.dataCourses.price,
+							quantity: 1,
+							name: vm.dataCourses.name,
+						}],
+						customer_details: {
+							first_name: vm.$auth.user().name,
+							last_name: "-",
+							email: vm.$auth.user().email,
+							phone: "-"
+						},
+		        	}
 	    		}
 	    	},
 	    	getMethod(){
@@ -152,13 +199,30 @@
 	    		}).catch((error)=>{
 	    			// error
 	    		});
-	    	}
+	    	},
+
+	    	createOrder(){
+	    		var vm = this;
+
+	    		Aropex.btnLoad('.btn-reload', true);
+	    		vm.$http({
+	    			url: `${ vm.apiUrl }/payment/${ vm.paymentParameter }/create`,
+	    			method: 'POST',
+	    			data: vm.formData,
+	    		}).then((res)=>{
+	    			vm.setShowBayar();
+	    			Aropex.btnLoad('.btn-reload', false);
+	    		}).catch((err)=>{
+	    			Aropex.btnLoad('.btn-reload', false);
+	    		});
+	    	},
 	    },
 	    mounted(){
 	    	var vm = this;
 
 	    	vm.getMethod();
 	    	vm.getCourses();
+	    	console.log(vm.$auth.user());
 	    }
 	}
 </script>

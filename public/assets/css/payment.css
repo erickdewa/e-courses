@@ -25,6 +25,7 @@
 .payment-box .method-item{
 	border-radius: 15px;
 	overflow: hidden;
+	margin: 10px 0px;
 	border: 2px solid #DAD8CB;
 }
 .payment-box .method-item:hover,

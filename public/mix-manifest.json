@@ -9,6 +9,7 @@
     "/js/admin.master.js": "/js/admin.master.js",
     "/js/admin.master.kategori.js": "/js/admin.master.kategori.js",
     "/js/admin.master.level.js": "/js/admin.master.level.js",
+    "/js/admin.master.payment.js": "/js/admin.master.payment.js",
     "/js/admin.master.pekerjaan.js": "/js/admin.master.pekerjaan.js",
     "/js/admin.master.skill.js": "/js/admin.master.skill.js",
     "/js/admin.master.tool.js": "/js/admin.master.tool.js",
@@ -20,9 +21,8 @@
     "/js/global.redirect.js": "/js/global.redirect.js",
     "/js/home.js": "/js/home.js",
     "/js/notfound404.js": "/js/notfound404.js",
+    "/js/payment.js": "/js/payment.js",
     "/js/profile.js": "/js/profile.js",
     "/js/profile.edit.js": "/js/profile.edit.js",
-    "/js/vendors~admin.js": "/js/vendors~admin.js",
-    "/js/admin.master.payment.js": "/js/admin.master.payment.js",
-    "/js/payment.js": "/js/payment.js"
+    "/js/vendors~admin.js": "/js/vendors~admin.js"
 }

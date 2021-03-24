@@ -29,8 +29,12 @@ class CreateUserCoursesTable extends Migration
             $table->foreign('method_id')->references('id')->on('pay_methods')
                   ->onDelete('cascade');
 
+            $table->integer('discount')->default(0);
+            $table->integer('total')->default(0);
+
             $table->enum('status', ['pending', 'procces', 'success', 'expiret'])->default('pending');
             $table->timestamp('payment_time')->nullable();
+            $table->timestamp('payment_expired')->nullable();
 
             $table->timestamps();
         });

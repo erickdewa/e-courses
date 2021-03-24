@@ -19,7 +19,7 @@
 					</ul>
 				</div>
 				<div class="courses-action">
-					<div class="btn-join">
+					<div class="btn-join" @click="cekLogin(dataCourses.uuid)">
 						Ikut Kelas
 					</div>
 				</div>
@@ -208,6 +208,15 @@
 	        }
 	    },
 	    methods: {
+	    	cekLogin(uuid){
+	    		var vm = this;
+
+	    		if(localStorage.getItem("level_id") != null){
+	    			vm.$router.push({ path: `/payment/${ uuid }`});
+	    		}else{
+	    			$('#modal-login').modal('show');
+	    		}
+	    	},
 	    	getDataCourses(uuid){
 	    		var vm = this;
 

@@ -218,6 +218,17 @@ __webpack_require__.r(__webpack_exports__);
     };
   },
   methods: {
+    cekLogin: function cekLogin(uuid) {
+      var vm = this;
+
+      if (localStorage.getItem("level_id") != null) {
+        vm.$router.push({
+          path: "/payment/".concat(uuid)
+        });
+      } else {
+        $('#modal-login').modal('show');
+      }
+    },
     getDataCourses: function getDataCourses(uuid) {
       var vm = this;
       vm.$http({
@@ -286,7 +297,20 @@ var render = function() {
           )
         ]),
         _vm._v(" "),
-        _vm._m(0)
+        _c("div", { staticClass: "courses-action" }, [
+          _c(
+            "div",
+            {
+              staticClass: "btn-join",
+              on: {
+                click: function($event) {
+                  return _vm.cekLogin(_vm.dataCourses.uuid)
+                }
+              }
+            },
+            [_vm._v("\n\t\t\t\t\tIkut Kelas\n\t\t\t\t")]
+          )
+        ])
       ]),
       _vm._v(" "),
       _c("div", { staticClass: "courses-information" }, [
@@ -298,7 +322,7 @@ var render = function() {
           _vm._v(_vm._s(_vm.dataCourses.subname))
         ]),
         _vm._v(" "),
-        _vm._m(1),
+        _vm._m(0),
         _vm._v(" "),
         _c("div", { staticClass: "courses-description" }, [
           _c("div", {
@@ -306,7 +330,7 @@ var render = function() {
           })
         ]),
         _vm._v(" "),
-        _vm._m(2),
+        _vm._m(1),
         _vm._v(" "),
         _c(
           "div",
@@ -350,7 +374,7 @@ var render = function() {
         ),
         _vm._v(" "),
         _c("div", { staticClass: "courses-teacher" }, [
-          _vm._m(3),
+          _vm._m(2),
           _vm._v(" "),
           _c("div", { staticClass: "teacher-info" }, [
             _c("div", { staticClass: "teacher-head" }, [
@@ -371,22 +395,12 @@ var render = function() {
           ])
         ]),
         _vm._v(" "),
-        _vm._m(4)
+        _vm._m(3)
       ])
     ])
   ])
 }
 var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "courses-action" }, [
-      _c("div", { staticClass: "btn-join" }, [
-        _vm._v("\n\t\t\t\t\tIkut Kelas\n\t\t\t\t")
-      ])
-    ])
-  },
   function() {
     var _vm = this
     var _h = _vm.$createElement

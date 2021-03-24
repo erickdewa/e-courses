@@ -44,6 +44,7 @@ class PayMethodController extends Controller
     {
     	$validator = Validator::make($request->all(), [
             'nm_method' => 'required|string',
+            'kode' => 'required|string',
         ]);
 
         if ($validator->fails()) {
@@ -55,6 +56,7 @@ class PayMethodController extends Controller
 
         $data = PayMethod::create([
         	'nm_method' => $request->nm_method,
+            'kode' => $request->kode,
         ]);
 
         return response()->json([
@@ -85,6 +87,7 @@ class PayMethodController extends Controller
     {
     	$validator = Validator::make($request->all(), [
             'nm_method' => 'required|string',
+            'kode' => 'required|string',
         ]);
 
         if ($validator->fails()) {
@@ -97,6 +100,7 @@ class PayMethodController extends Controller
         $data = PayMethod::findByUuid($uuid);
         $data->update([
         	'nm_method' => $request->nm_method,
+            'kode' => $request->kode,
         ]);
 
         return response()->json([

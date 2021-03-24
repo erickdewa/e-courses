@@ -27,6 +27,11 @@ Route::prefix('v1')->group(function(){
 		    Route::get('/refresh', 'AuthController@refresh');
 	    	Route::get('/user', 'AuthController@user');
 
+	    	Route::prefix('payment')->group(function(){
+	    		Route::post('/{type}/create', 'PaymentController@createOrder');
+				Route::post('/callback', 'PaymentController@callback');
+	    	});
+
 	    	Route::prefix('user')->group(function(){
 	    		Route::post('/index', 'UserController@index');
 	    		Route::get('/{uuid}/getdata', 'UserController@getData');
@@ -102,6 +107,7 @@ Route::prefix('v1')->group(function(){
 	    		Route::delete('/{uuid}/delete', 'CoursesController@delete');
 
 	    		Route::prefix('my')->group(function(){
+	    			Route::get('/getcourses', 'UserCoursesController@getDataCoursesAll');
 		    		Route::post('/{uuid}/getplayer', 'UserCoursesController@getDataCoursesPlayer');
 	    		});
 

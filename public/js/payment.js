@@ -106,11 +106,29 @@ __webpack_require__.r(__webpack_exports__);
       showBayar: false,
       bayar: false,
       dataMethod: [],
-      dataCourses: {},
+      dataCourses: {
+        price: 0
+      },
+      paymentParameter: '',
       formData: {
         user_id: '',
         method_id: '',
-        courses_id: ''
+        courses_id: '',
+        discount: 0,
+        payment_type: '',
+        bank: '',
+        item_details: [{
+          id: 1,
+          price: 0,
+          quantity: 1,
+          name: ''
+        }],
+        customer_details: {
+          first_name: '',
+          last_name: '',
+          email: '',
+          phone: ''
+        }
       }
     };
   },
@@ -128,9 +146,38 @@ __webpack_require__.r(__webpack_exports__);
     },
     methodSelected: function methodSelected(id) {
       var vm = this;
+      var codePay = '';
+      var subPayment = '';
+
+      for (var i = 0; i < vm.dataMethod.length; i++) {
+        if (vm.dataMethod[i].id == id) {
+          codePay = vm.dataMethod[i].kode;
+          subPayment = codePay.split('-')[1];
+          vm.paymentParameter = codePay.split('-')[0];
+        }
+      }
 
       if (!vm.bayar) {
-        vm.formData.method_id = id;
+        vm.formData = {
+          user_id: vm.$auth.user().id,
+          method_id: id,
+          courses_id: vm.dataCourses.id,
+          discount: 0,
+          payment_type: subPayment,
+          bank: subPayment,
+          item_details: [{
+            id: vm.dataCourses.id,
+            price: vm.dataCourses.price,
+            quantity: 1,
+            name: vm.dataCourses.name
+          }],
+          customer_details: {
+            first_name: vm.$auth.user().name,
+            last_name: "-",
+            email: vm.$auth.user().email,
+            phone: "-"
+          }
+        };
       }
     },
     getMethod: function getMethod() {
@@ -152,12 +199,27 @@ __webpack_require__.r(__webpack_exports__);
         vm.dataCourses = res.data.data;
       })["catch"](function (error) {// error
       });
+    },
+    createOrder: function createOrder() {
+      var vm = this;
+      Aropex.btnLoad('.btn-reload', true);
+      vm.$http({
+        url: "".concat(vm.apiUrl, "/payment/").concat(vm.paymentParameter, "/create"),
+        method: 'POST',
+        data: vm.formData
+      }).then(function (res) {
+        vm.setShowBayar();
+        Aropex.btnLoad('.btn-reload', false);
+      })["catch"](function (err) {
+        Aropex.btnLoad('.btn-reload', false);
+      });
     }
   },
   mounted: function mounted() {
     var vm = this;
     vm.getMethod();
     vm.getCourses();
+    console.log(vm.$auth.user());
   }
 });
 
@@ -224,7 +286,10 @@ var render = function() {
                                 ]),
                                 _vm._v(" "),
                                 _c("div", { staticClass: "price mt-2" }, [
-                                  _vm._v("Rp. 200.000")
+                                  _vm._v(
+                                    "Rp. " +
+                                      _vm._s(_vm.dataCourses.price.rupiah())
+                                  )
                                 ])
                               ]
                             )
@@ -249,17 +314,77 @@ var render = function() {
                 ? [
                     _c("div", { staticClass: "title" }, [_vm._v("Checkout")]),
                     _vm._v(" "),
-                    _vm._m(1),
+                    _c("div", { staticClass: "payment-item mt-3" }, [
+                      _vm._m(1),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "payment-item_info mt-2" }, [
+                        _c("div", { staticClass: "nama" }, [
+                          _vm._v("Laravel 8 For Beginer")
+                        ]),
+                        _vm._v(" "),
+                        _c("div", { staticClass: "subname" }, [
+                          _vm._v("Lifetime")
+                        ]),
+                        _vm._v(" "),
+                        _c(
+                          "div",
+                          { staticClass: "price", attrs: { align: "right" } },
+                          [
+                            _vm._v(
+                              "Rp. " + _vm._s(_vm.dataCourses.price.rupiah())
+                            )
+                          ]
+                        )
+                      ])
+                    ]),
                     _vm._v(" "),
                     _c("hr"),
                     _vm._v(" "),
-                    _vm._m(2),
+                    _c("div", { staticClass: "payment-sum" }, [
+                      _c(
+                        "div",
+                        { staticClass: "d-flex justify-content-between my-2" },
+                        [
+                          _c("div", { staticClass: "note" }),
+                          _vm._v(" "),
+                          _c(
+                            "div",
+                            { staticClass: "price", attrs: { align: "right" } },
+                            [
+                              _vm._v(
+                                "Rp. " + _vm._s(_vm.dataCourses.price.rupiah())
+                              )
+                            ]
+                          )
+                        ]
+                      ),
+                      _vm._v(" "),
+                      _vm._m(2),
+                      _vm._v(" "),
+                      _c(
+                        "div",
+                        { staticClass: "d-flex justify-content-between my-2" },
+                        [
+                          _c("div", { staticClass: "note" }, [_vm._v("Total")]),
+                          _vm._v(" "),
+                          _c(
+                            "div",
+                            { staticClass: "price", attrs: { align: "right" } },
+                            [
+                              _vm._v(
+                                "Rp. " + _vm._s(_vm.dataCourses.price.rupiah())
+                              )
+                            ]
+                          )
+                        ]
+                      )
+                    ]),
                     _vm._v(" "),
                     _c("div", { staticClass: "payment-action mt-3" }, [
                       _c(
                         "button",
                         {
-                          staticClass: "btn btn-success btn-sm",
+                          staticClass: "btn btn-success btn-sm btn-reload",
                           staticStyle: { width: "100%" },
                           attrs: {
                             type: "button",
@@ -268,7 +393,7 @@ var render = function() {
                           },
                           on: {
                             click: function($event) {
-                              return _vm.setShowBayar()
+                              return _vm.createOrder()
                             }
                           }
                         },
@@ -287,7 +412,22 @@ var render = function() {
                       _vm._v("Bayar Sekarang")
                     ]),
                     _vm._v(" "),
-                    _vm._m(3),
+                    _c(
+                      "div",
+                      {
+                        staticClass:
+                          "jumlah-bayar d-flex justify-content-between mt-3"
+                      },
+                      [
+                        _c("div", { staticClass: "nama" }, [_vm._v("Total")]),
+                        _vm._v(" "),
+                        _c("div", { staticClass: "price" }, [
+                          _vm._v(
+                            "Rp. " + _vm._s(_vm.dataCourses.price.rupiah())
+                          )
+                        ])
+                      ]
+                    ),
                     _vm._v(" "),
                     _c("div", { staticClass: "order-id" }, [
                       _vm._v("Order ID #1 (Gopay)")
@@ -299,7 +439,7 @@ var render = function() {
                     _vm._v(" "),
                     _c("hr"),
                     _vm._v(" "),
-                    _vm._m(4),
+                    _vm._m(3),
                     _vm._v(" "),
                     _c("hr"),
                     _vm._v(" "),
@@ -307,7 +447,7 @@ var render = function() {
                       _vm._v("How to Pay?")
                     ]),
                     _vm._v(" "),
-                    _vm._m(5)
+                    _vm._m(4)
                   ]
                 : _vm._e()
             ],
@@ -331,67 +471,23 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "payment-item mt-3" }, [
-      _c(
-        "div",
-        { staticClass: "payment-item_image", attrs: { align: "center" } },
-        [_c("img", { attrs: { src: "/assets/images/avatar-1.png" } })]
-      ),
-      _vm._v(" "),
-      _c("div", { staticClass: "payment-item_info mt-2" }, [
-        _c("div", { staticClass: "nama" }, [_vm._v("Laravel 8 For Beginer")]),
-        _vm._v(" "),
-        _c("div", { staticClass: "subname" }, [_vm._v("Lifetime")]),
-        _vm._v(" "),
-        _c("div", { staticClass: "price", attrs: { align: "right" } }, [
-          _vm._v("Rp. 200.000")
-        ])
-      ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "payment-sum" }, [
-      _c("div", { staticClass: "d-flex justify-content-between my-2" }, [
-        _c("div", { staticClass: "note" }),
-        _vm._v(" "),
-        _c("div", { staticClass: "price", attrs: { align: "right" } }, [
-          _vm._v("Rp. 200.000")
-        ])
-      ]),
-      _vm._v(" "),
-      _c("div", { staticClass: "d-flex justify-content-between my-2" }, [
-        _c("div", { staticClass: "note" }, [_vm._v("Diskon")]),
-        _vm._v(" "),
-        _c("div", { staticClass: "price", attrs: { align: "right" } }, [
-          _vm._v("Rp. 0")
-        ])
-      ]),
-      _vm._v(" "),
-      _c("div", { staticClass: "d-flex justify-content-between my-2" }, [
-        _c("div", { staticClass: "note" }, [_vm._v("Total")]),
-        _vm._v(" "),
-        _c("div", { staticClass: "price", attrs: { align: "right" } }, [
-          _vm._v("Rp. 200.000")
-        ])
-      ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
     return _c(
       "div",
-      { staticClass: "jumlah-bayar d-flex justify-content-between mt-3" },
-      [
-        _c("div", { staticClass: "nama" }, [_vm._v("Total")]),
-        _vm._v(" "),
-        _c("div", { staticClass: "price" }, [_vm._v("Rp. 200.000")])
-      ]
+      { staticClass: "payment-item_image", attrs: { align: "center" } },
+      [_c("img", { attrs: { src: "/assets/images/avatar-1.png" } })]
     )
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "d-flex justify-content-between my-2" }, [
+      _c("div", { staticClass: "note" }, [_vm._v("Diskon")]),
+      _vm._v(" "),
+      _c("div", { staticClass: "price", attrs: { align: "right" } }, [
+        _vm._v("Rp. 0")
+      ])
+    ])
   },
   function() {
     var _vm = this

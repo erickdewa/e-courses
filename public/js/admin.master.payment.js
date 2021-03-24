@@ -142,13 +142,20 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['uuid', 'isEdit'],
   data: function data() {
     return {
       formData: {
         uuid: '',
-        nm_method: ''
+        nm_method: '',
+        kode: ''
       }
     };
   },
@@ -381,6 +388,39 @@ var render = function() {
                         return
                       }
                       _vm.$set(_vm.formData, "nm_method", $event.target.value)
+                    }
+                  }
+                })
+              ])
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "col-md-12" }, [
+              _c("div", { staticClass: "form-group" }, [
+                _c("label", [_vm._v("Kode")]),
+                _vm._v(" "),
+                _c("input", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.formData.kode,
+                      expression: "formData.kode"
+                    }
+                  ],
+                  staticClass: "form-control",
+                  attrs: {
+                    type: "text",
+                    name: "kode",
+                    required: "",
+                    placeholder: "Kode"
+                  },
+                  domProps: { value: _vm.formData.kode },
+                  on: {
+                    input: function($event) {
+                      if ($event.target.composing) {
+                        return
+                      }
+                      _vm.$set(_vm.formData, "kode", $event.target.value)
                     }
                   }
                 })

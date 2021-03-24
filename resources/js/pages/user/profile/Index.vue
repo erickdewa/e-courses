@@ -43,49 +43,11 @@
 			</div>
 			<div class="courses-profile-list">
 				<div class="courses-list my-3" align="center">
-					<div class="courses-item-shedow d-inline-block m-3">
-						<div class="courses-item card" style="background-image: url(/assets/images/bg/single1.jpg)">
+					<div v-for="data in dataCourses" class="courses-item-shedow cursor-pointer d-inline-block m-3">
+						<div class="courses-item card" :style="`background-image: url(${ data.thumbnile })`">
 							<div class="courses-item-information">
-								<div class="title">Single Room</div>
-								<div class="desc">Enjoy Our Single Room</div>
-							</div>
-							<div class="courses-item-fiture">
-								<div class="fiture" title="Sertifikat">
-									<i class="fa fa-book"></i>
-								</div>
-								<div class="fiture" title="Community">
-									<i class="fa fa-comments-o"></i>
-								</div>
-								<div class="fiture" title="Top Courses">
-									<i class="fa fa-fire"></i>
-								</div>
-							</div>
-						</div>
-					</div>
-					<div class="courses-item-shedow d-inline-block m-3">
-						<div class="courses-item card" style="background-image: url(/assets/images/bg/single1.jpg)">
-							<div class="courses-item-information">
-								<div class="title">Single Room</div>
-								<div class="desc">Enjoy Our Single Room</div>
-							</div>
-							<div class="courses-item-fiture">
-								<div class="fiture" title="Sertifikat">
-									<i class="fa fa-book"></i>
-								</div>
-								<div class="fiture" title="Community">
-									<i class="fa fa-comments-o"></i>
-								</div>
-								<div class="fiture" title="Top Courses">
-									<i class="fa fa-fire"></i>
-								</div>
-							</div>
-						</div>
-					</div>
-					<div class="courses-item-shedow d-inline-block m-3">
-						<div class="courses-item card" style="background-image: url(/assets/images/bg/single1.jpg)">
-							<div class="courses-item-information">
-								<div class="title">Single Room</div>
-								<div class="desc">Enjoy Our Single Room</div>
+								<div class="title">{{ data.name }}</div>
+								<div class="desc">{{ data.subname }}</div>
 							</div>
 							<div class="courses-item-fiture">
 								<div class="fiture" title="Sertifikat">
@@ -110,7 +72,7 @@
     export default {
     	data() {
 	        return {
-
+	        	dataCourses: [],
 	        }
 	    },
 	    methods: {
@@ -119,9 +81,23 @@
 
 	    		window.open(url, '_blank');
 	    	},
+
+	    	getMyCourses(){
+	    		var vm = this;
+
+	    		vm.$http({
+	    			url: `${ vm.apiUrl }/courses/my/getcourses`,
+	    			method: 'GET',
+	    		}).then((res)=>{
+	    			vm.dataCourses = res.data.data;
+	    		}).catch((error)=>{
+	    			// error
+	    		})
+	    	},
 	    },
 	    mounted(){
 	    	var vm = this;
+	    	vm.getMyCourses();
 	    },
     }
 </script>

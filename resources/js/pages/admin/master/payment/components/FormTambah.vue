@@ -9,6 +9,12 @@
 							<input type="text" class="form-control" name="nm_method" required v-model="formData.nm_method" placeholder="Nama Payment">
 						</div>
 					</div>
+					<div class="col-md-12">
+						<div class="form-group">
+							<label>Kode</label>
+							<input type="text" class="form-control" name="kode" required v-model="formData.kode" placeholder="Kode">
+						</div>
+					</div>
 				</div>
 			</div>
 			<hr>
@@ -29,6 +35,7 @@
 	        	formData: {
 	        		uuid: '',
 	        		nm_method: '',
+	        		kode: '',
 	        	},
 	        }
 	    },
