@@ -47,6 +47,7 @@
 
 	        	columns: [
 	        		{ name: 'Nama Payment', data: 'nm_method' },
+	        		{ name: 'Active', data: 'active' },
 	        		{ name: 'Aksi', data: 'action' },
 	        	],
 
@@ -82,9 +83,25 @@
 	                    var uuid = $(this).data('uuid');
 	                    vm.deleteData(uuid);
 	                });
+	                $('#table').on('click', '.form-active', function(e){
+	                    var uuid = $(this).data('uuid');
+	                    vm.changeStatus(uuid);
+	                });
 	    		}, 200);
 	    	},
 
+	    	changeStatus(uuid){
+	    		var vm = this;
+
+	    		vm.$http({
+	    			url: `${ vm.apiUrl }/payment/${ uuid }/change`,
+	    			method: 'POST',
+	    		}).then((res)=>{
+	    			vm.$refs.table.reload();
+	    		}).catch((err)=>{
+	    			toastr.error(err.response.data.message, 'Error');
+	    		})
+	    	},
 	    	deleteData(uuid){
 	    		var vm = this;
 

@@ -59,6 +59,9 @@ __webpack_require__.r(__webpack_exports__);
         name: 'Nama Payment',
         data: 'nm_method'
       }, {
+        name: 'Active',
+        data: 'active'
+      }, {
         name: 'Aksi',
         data: 'action'
       }],
@@ -90,7 +93,22 @@ __webpack_require__.r(__webpack_exports__);
           var uuid = $(this).data('uuid');
           vm.deleteData(uuid);
         });
+        $('#table').on('click', '.form-active', function (e) {
+          var uuid = $(this).data('uuid');
+          vm.changeStatus(uuid);
+        });
       }, 200);
+    },
+    changeStatus: function changeStatus(uuid) {
+      var vm = this;
+      vm.$http({
+        url: "".concat(vm.apiUrl, "/payment/").concat(uuid, "/change"),
+        method: 'POST'
+      }).then(function (res) {
+        vm.$refs.table.reload();
+      })["catch"](function (err) {
+        toastr.error(err.response.data.message, 'Error');
+      });
     },
     deleteData: function deleteData(uuid) {
       var vm = this;

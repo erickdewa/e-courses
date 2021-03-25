@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Courses;
+use App\Models\UserCourses;
 use Illuminate\Http\Request;
 use Validator, JWTAuth, AppHelper;
 
@@ -31,7 +32,7 @@ class CoursesController extends Controller
             }])->whereHas('materi', function($query){
                 $query->where('is_preview', 'Y');
             });
-        }, 'user', 'coursestool.tool'])
+        }, 'user', 'coursestool.tool', 'courseslearn'])
         ->where('uuid', $uuid)->first();
 
         return response()->json([
@@ -56,7 +57,8 @@ class CoursesController extends Controller
             $btnHapus = '<button class="btn btn-clean btn-icon btn-icon-md hapus" title="Hapus" data-id="'.$a->id.'" data-uuid="'.$a->uuid.'"><i class="fa fa-trash text-danger"></i></button>';
             $btnTools = '<button class="btn btn-clean btn-icon btn-icon-md tools" title="Tools" data-id="'.$a->id.'" data-uuid="'.$a->uuid.'"><i class="fa fa-cogs text-info"></i></button>';
             $btnReview = '<button class="btn btn-clean btn-icon btn-icon-md review" title="Review" data-id="'.$a->id.'" data-uuid="'.$a->uuid.'"><i class="fa fa-star-o text-success"></i></button>';
-            $a->action = $btnEdit.$btnHapus.$btnTools.$btnReview;
+            $btnBook = '<button class="btn btn-clean btn-icon btn-icon-md learn" title="Learn" data-id="'.$a->id.'" data-uuid="'.$a->uuid.'"><i class="fa fa-book text-success"></i></button>';
+            $a->action = $btnEdit.$btnHapus.$btnTools.$btnReview.$btnBook;
 
             return $a;
         });

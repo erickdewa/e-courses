@@ -58,7 +58,7 @@ body{
 }
 .aro-sidebar--menu{
 	margin-top: 25px;
-	height: 60%;
+	height: 100%;
 	overflow: hidden;
 }
 .aro-sidebar--menu_ul{

@@ -189,6 +189,7 @@
 	margin-bottom: 10px;
 }
 .learn-items .learn-item{
+	display: flex;
 	padding: 5px;
 }
 .learn-item i{

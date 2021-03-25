@@ -63,32 +63,10 @@
 						Apa saja yang dipelajari?
 					</div>
 					<div class="row learn-items">
-						<div class="col-md-6 col-sm-12">
+						<div v-for="learn in dataCourses.courseslearn" class="col-md-6 col-sm-12">
 							<div class="learn-item">
 								<i class="fa fa-lightbulb-o"></i>
-								<div class="learn-text">Be able to build ANY website you want.</div>
-							</div>
-							<div class="learn-item">
-								<i class="fa fa-lightbulb-o"></i>
-								<div class="learn-text">Be able to build ANY website you want.</div>
-							</div>
-							<div class="learn-item">
-								<i class="fa fa-lightbulb-o"></i>
-								<div class="learn-text">Be able to build ANY website you want.</div>
-							</div>
-						</div>
-						<div class="col-md-6 col-sm-12">
-							<div class="learn-item">
-								<i class="fa fa-lightbulb-o"></i>
-								<div class="learn-text">Be able to build ANY website you want.</div>
-							</div>
-							<div class="learn-item">
-								<i class="fa fa-lightbulb-o"></i>
-								<div class="learn-text">Be able to build ANY website you want.</div>
-							</div>
-							<div class="learn-item">
-								<i class="fa fa-lightbulb-o"></i>
-								<div class="learn-text">Be able to build ANY website you want.</div>
+								<div class="learn-text text-justify">{{ learn.text }}</div>
 							</div>
 						</div>
 					</div>

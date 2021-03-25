@@ -39,7 +39,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _components_MateriGroup__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./components/MateriGroup */ "./resources/js/pages/admin/kursus/components/MateriGroup.vue");
 /* harmony import */ var _components_Materi__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./components/Materi */ "./resources/js/pages/admin/kursus/components/Materi.vue");
 /* harmony import */ var _components_Tools__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./components/Tools */ "./resources/js/pages/admin/kursus/components/Tools.vue");
-/* harmony import */ var _components_Review__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./components/Review */ "./resources/js/pages/admin/kursus/components/Review.vue");
+/* harmony import */ var _components_Learn__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./components/Learn */ "./resources/js/pages/admin/kursus/components/Learn.vue");
+/* harmony import */ var _components_Review__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./components/Review */ "./resources/js/pages/admin/kursus/components/Review.vue");
 //
 //
 //
@@ -116,6 +117,11 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+
 
 
 
@@ -127,7 +133,8 @@ __webpack_require__.r(__webpack_exports__);
     MateriGroup: _components_MateriGroup__WEBPACK_IMPORTED_MODULE_1__["default"],
     Materi: _components_Materi__WEBPACK_IMPORTED_MODULE_2__["default"],
     Tools: _components_Tools__WEBPACK_IMPORTED_MODULE_3__["default"],
-    Review: _components_Review__WEBPACK_IMPORTED_MODULE_4__["default"]
+    Review: _components_Review__WEBPACK_IMPORTED_MODULE_5__["default"],
+    Learn: _components_Learn__WEBPACK_IMPORTED_MODULE_4__["default"]
   },
   data: function data() {
     return {
@@ -137,6 +144,7 @@ __webpack_require__.r(__webpack_exports__);
       showMateri: false,
       showTools: false,
       showReview: false,
+      showLearn: false,
       columns: [{
         name: 'Nama',
         data: 'name'
@@ -160,6 +168,7 @@ __webpack_require__.r(__webpack_exports__);
       vm.showMateri = false;
       vm.showTools = false;
       vm.showReview = false;
+      vm.showLearn = false;
     },
     setShowForm: function setShowForm() {
       var vm = this;
@@ -169,6 +178,7 @@ __webpack_require__.r(__webpack_exports__);
       vm.showMateri = false;
       vm.showTools = false;
       vm.showReview = false;
+      vm.showLearn = false;
     },
     setShowMateri: function setShowMateri() {
       var vm = this;
@@ -178,6 +188,7 @@ __webpack_require__.r(__webpack_exports__);
       vm.showMateri = true;
       vm.showTools = false;
       vm.showReview = false;
+      vm.showLearn = false;
     },
     setShowTools: function setShowTools() {
       var vm = this;
@@ -187,6 +198,7 @@ __webpack_require__.r(__webpack_exports__);
       vm.showMateri = false;
       vm.showTools = true;
       vm.showReview = false;
+      vm.showLearn = false;
     },
     setShowReview: function setShowReview() {
       var vm = this;
@@ -196,6 +208,17 @@ __webpack_require__.r(__webpack_exports__);
       vm.showMateri = false;
       vm.showTools = false;
       vm.showReview = true;
+      vm.showLearn = false;
+    },
+    setShowLearn: function setShowLearn() {
+      var vm = this;
+      vm.showList = false;
+      vm.showForm = false;
+      vm.showGroupMateri = false;
+      vm.showMateri = false;
+      vm.showTools = false;
+      vm.showReview = false;
+      vm.showLearn = true;
     },
     callback: function callback() {
       var vm = this;
@@ -225,6 +248,13 @@ __webpack_require__.r(__webpack_exports__);
           vm.thisUuid = uuid;
           vm.thisId = id;
           vm.setShowReview();
+        });
+        $('#table').on('click', '.learn', function (e) {
+          var uuid = $(this).data('uuid');
+          var id = $(this).data('id');
+          vm.thisUuid = uuid;
+          vm.thisId = id;
+          vm.setShowLearn();
         });
       }, 200);
     },
@@ -412,6 +442,159 @@ __webpack_require__.r(__webpack_exports__);
       vm.formData.uuid = vm.uuid;
       vm.$parent.showGroupMateri = true;
     }
+  }
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/pages/admin/kursus/components/Learn.vue?vue&type=script&lang=js&":
+/*!***********************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/pages/admin/kursus/components/Learn.vue?vue&type=script&lang=js& ***!
+  \***********************************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+/* harmony default export */ __webpack_exports__["default"] = ({
+  data: function data() {
+    return {
+      showList: true,
+      showForm: false,
+      formData: {
+        uuid: '',
+        courses_id: '',
+        text: ''
+      },
+      columns: [{
+        name: 'Text',
+        data: 'text'
+      }, {
+        name: 'Aksi',
+        data: 'action'
+      }]
+    };
+  },
+  methods: {
+    setShowList: function setShowList() {
+      var vm = this;
+      vm.showList = true;
+      vm.showForm = false;
+      vm.formData = {
+        uuid: '',
+        courses_id: '',
+        text: ''
+      };
+    },
+    setShowForm: function setShowForm() {
+      var vm = this;
+      vm.showList = false;
+      vm.showForm = true;
+    },
+    callback: function callback() {
+      var vm = this;
+      setTimeout(function () {
+        $('#table').on('click', '.edit', function (e) {
+          var uuid = $(this).data('uuid');
+          vm.getData(uuid);
+          vm.setShowForm();
+        });
+        $('#table').on('click', '.hapus', function (e) {
+          var uuid = $(this).data('uuid');
+          vm.deleteData(uuid);
+        });
+      }, 200);
+    },
+    getData: function getData(uuid) {
+      var vm = this;
+      vm.$http({
+        url: "".concat(vm.apiUrl, "/courses/learn/").concat(uuid, "/getdata"),
+        method: 'GET'
+      }).then(function (res) {
+        vm.formData = res.data.data;
+      })["catch"](function (err) {
+        toastr.error(err.response.data.message, 'Error');
+      });
+    },
+    simpanData: function simpanData(uuid) {
+      var vm = this;
+      var urls = "".concat(vm.apiUrl, "/courses/learn/create");
+
+      if (uuid != '') {
+        urls = "".concat(vm.apiUrl, "/courses/learn/").concat(uuid, "/update");
+      }
+
+      Aropex.btnLoad('.btn-submit', true);
+      vm.$http({
+        url: urls,
+        data: vm.formData,
+        method: "POST"
+      }).then(function (res) {
+        vm.setShowList();
+        Aropex.btnLoad('.btn-submit', false);
+        toastr.success(res.data.message, 'Success');
+      })["catch"](function (err) {
+        Aropex.btnLoad('.btn-submit', false);
+        toastr.error(err.response.data.message, 'Error');
+      });
+    },
+    deleteData: function deleteData(uuid) {
+      var vm = this;
+      vm.$http({
+        url: "".concat(vm.apiUrl, "/courses/learn/").concat(uuid, "/delete"),
+        method: 'DELETE'
+      }).then(function (res) {
+        vm.$refs.table.reload();
+        toastr.success(res.data.message, 'Success');
+      })["catch"](function (err) {
+        toastr.error(err.response.data.message, 'Error');
+      });
+    }
+  },
+  mounted: function mounted() {
+    var vm = this;
+    vm.formData.courses_id = vm.$parent.thisId;
   }
 });
 
@@ -1393,6 +1576,8 @@ var render = function() {
           )
         : _vm._e(),
       _vm._v(" "),
+      _vm.showLearn ? _c("div", [_c("Learn")], 1) : _vm._e(),
+      _vm._v(" "),
       _c("transition", { attrs: { "enter-active-class": "animated fadeIn" } }, [
         _vm.showTools
           ? _c("div", { staticClass: "aro-restraint" }, [
@@ -1807,6 +1992,200 @@ var staticRenderFns = [
     )
   }
 ]
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/pages/admin/kursus/components/Learn.vue?vue&type=template&id=07bd4658&":
+/*!***************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/pages/admin/kursus/components/Learn.vue?vue&type=template&id=07bd4658& ***!
+  \***************************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "div",
+    [
+      _c("transition", { attrs: { "enter-active-class": "animated fadeIn" } }, [
+        _c("div", { staticClass: "aro-restraint" }, [
+          _c("div", { staticClass: "aro-restraint_title" }, [
+            _c("span", [_vm._v("Courses Learn")]),
+            _vm._v(" "),
+            _c("div", { staticClass: "button-table" }, [
+              _vm.showList
+                ? _c(
+                    "button",
+                    {
+                      staticClass: "btn btn-success btn-sm",
+                      attrs: { type: "button" },
+                      on: {
+                        click: function($event) {
+                          $event.preventDefault()
+                          return _vm.setShowForm()
+                        }
+                      }
+                    },
+                    [
+                      _c("i", { staticClass: "fa fa-plus" }),
+                      _vm._v(" Tambah\n\t\t\t\t\t")
+                    ]
+                  )
+                : _vm._e(),
+              _vm._v(" "),
+              _vm.showList
+                ? _c(
+                    "button",
+                    {
+                      staticClass: "btn btn-info btn-sm",
+                      attrs: { type: "button" },
+                      on: {
+                        click: function($event) {
+                          $event.preventDefault()
+                          return _vm.$parent.setShowList()
+                        }
+                      }
+                    },
+                    [
+                      _c("i", { staticClass: "fa fa-reply-all" }),
+                      _vm._v(" Kembali\n\t\t\t\t\t")
+                    ]
+                  )
+                : _vm._e(),
+              _vm._v(" "),
+              _vm.showForm
+                ? _c(
+                    "button",
+                    {
+                      staticClass: "btn btn-info btn-sm",
+                      attrs: { type: "button" },
+                      on: {
+                        click: function($event) {
+                          $event.preventDefault()
+                          return _vm.setShowList()
+                        }
+                      }
+                    },
+                    [
+                      _c("i", { staticClass: "fa fa-reply-all" }),
+                      _vm._v(" Kembali\n\t\t\t\t\t")
+                    ]
+                  )
+                : _vm._e()
+            ])
+          ]),
+          _vm._v(" "),
+          _c(
+            "div",
+            { staticClass: "aro-restraint_body" },
+            [
+              _vm.showForm
+                ? _c(
+                    "form",
+                    {
+                      staticClass: "form",
+                      attrs: { id: "FormTambah", autocomplete: "off" },
+                      on: {
+                        submit: function($event) {
+                          $event.preventDefault()
+                          return _vm.simpanData(_vm.formData.uuid)
+                        }
+                      }
+                    },
+                    [
+                      _c("div", { staticClass: "form-body" }, [
+                        _c("div", { staticClass: "form-group" }, [
+                          _c("label", [_vm._v("Isi Teks")]),
+                          _vm._v(" "),
+                          _c("input", {
+                            directives: [
+                              {
+                                name: "model",
+                                rawName: "v-model",
+                                value: _vm.formData.text,
+                                expression: "formData.text"
+                              }
+                            ],
+                            staticClass: "form-control",
+                            attrs: {
+                              type: "text",
+                              name: "text",
+                              placeholder: "Text"
+                            },
+                            domProps: { value: _vm.formData.text },
+                            on: {
+                              input: function($event) {
+                                if ($event.target.composing) {
+                                  return
+                                }
+                                _vm.$set(
+                                  _vm.formData,
+                                  "text",
+                                  $event.target.value
+                                )
+                              }
+                            }
+                          })
+                        ])
+                      ]),
+                      _vm._v(" "),
+                      _c("hr"),
+                      _vm._v(" "),
+                      _c(
+                        "div",
+                        {
+                          staticClass: "form-action",
+                          attrs: { align: "right" }
+                        },
+                        [
+                          _c(
+                            "button",
+                            {
+                              staticClass: "btn btn-sm btn-success btn-submit",
+                              attrs: { type: "submit", form: "FormTambah" }
+                            },
+                            [
+                              _c("i", { staticClass: "fa fa-save" }),
+                              _vm._v(" Simpan\n\t\t\t\t\t\t")
+                            ]
+                          )
+                        ]
+                      )
+                    ]
+                  )
+                : _vm._e(),
+              _vm._v(" "),
+              _vm.showList
+                ? _c("AdminTable", {
+                    ref: "table",
+                    attrs: {
+                      id: "table",
+                      classx: "table table-rowed",
+                      urls: "/courses/learn/" + _vm.$parent.thisUuid + "/index",
+                      callbacks: _vm.callback(),
+                      columns: _vm.columns
+                    }
+                  })
+                : _vm._e()
+            ],
+            1
+          )
+        ])
+      ])
+    ],
+    1
+  )
+}
+var staticRenderFns = []
 render._withStripped = true
 
 
@@ -3301,6 +3680,75 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_FormTambah_vue_vue_type_template_id_15317869___WEBPACK_IMPORTED_MODULE_0__["render"]; });
 
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_FormTambah_vue_vue_type_template_id_15317869___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
+/***/ "./resources/js/pages/admin/kursus/components/Learn.vue":
+/*!**************************************************************!*\
+  !*** ./resources/js/pages/admin/kursus/components/Learn.vue ***!
+  \**************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _Learn_vue_vue_type_template_id_07bd4658___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Learn.vue?vue&type=template&id=07bd4658& */ "./resources/js/pages/admin/kursus/components/Learn.vue?vue&type=template&id=07bd4658&");
+/* harmony import */ var _Learn_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Learn.vue?vue&type=script&lang=js& */ "./resources/js/pages/admin/kursus/components/Learn.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _Learn_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _Learn_vue_vue_type_template_id_07bd4658___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _Learn_vue_vue_type_template_id_07bd4658___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/pages/admin/kursus/components/Learn.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/pages/admin/kursus/components/Learn.vue?vue&type=script&lang=js&":
+/*!***************************************************************************************!*\
+  !*** ./resources/js/pages/admin/kursus/components/Learn.vue?vue&type=script&lang=js& ***!
+  \***************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_Learn_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../../node_modules/babel-loader/lib??ref--4-0!../../../../../../node_modules/vue-loader/lib??vue-loader-options!./Learn.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/pages/admin/kursus/components/Learn.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_Learn_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/pages/admin/kursus/components/Learn.vue?vue&type=template&id=07bd4658&":
+/*!*********************************************************************************************!*\
+  !*** ./resources/js/pages/admin/kursus/components/Learn.vue?vue&type=template&id=07bd4658& ***!
+  \*********************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Learn_vue_vue_type_template_id_07bd4658___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../../../node_modules/vue-loader/lib??vue-loader-options!./Learn.vue?vue&type=template&id=07bd4658& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/pages/admin/kursus/components/Learn.vue?vue&type=template&id=07bd4658&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Learn_vue_vue_type_template_id_07bd4658___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Learn_vue_vue_type_template_id_07bd4658___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
 
 
 

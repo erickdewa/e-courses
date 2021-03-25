@@ -25,12 +25,28 @@ class PaymentController extends Controller
 			$status = 'expire';
 		}
 
-		return response()->json($data);
+		$payment = UserCourses::findByUuid($data['order_id']);
+		$payment->update([
+			'payment_time' => $data['transaction_time'],
+			'status' => $status,
+		]);
+
+		return response()->json([
+			'data' => $data,
+		], 200);
 	}
 
 	public function createOrder(Request $request, $type)
 	{
 		$endpoin = '/charge';
+		$payment = UserCourses::create([
+            'courses_id' => $request->courses_id,
+            'user_id' => JWTAuth::user()->id,
+            'method_id' => $request->method_id,
+            'discount' => $request->discount,
+            'total' => $this->grossAmount($request->item_details),
+        ]);
+
 		if($type == 'ewallet'){
 			$validator = Validator::make($request->all(), [
 	            'payment_type' => 'required|string',
@@ -42,14 +58,6 @@ class PaymentController extends Controller
 	            	'message' => $validator->messages()->first()
 	            ], 500);
 	        }
-
-	        $payment = UserCourses::create([
-	            'courses_id' => $request->courses_id,
-	            'user_id' => JWTAuth::user()->id,
-	            'method_id' => $request->method_id,
-	            'discount' => $request->discount,
-	            'total' => $this->grossAmount($request->item_details),
-	        ]);
 
 			$data = $this->request($endpoin, [
 				'payment_type' => $request->payment_type,
@@ -109,7 +117,6 @@ class PaymentController extends Controller
 		}else if($type == 'internetbanking'){
 			$validator = Validator::make($request->all(), [
 				'payment_type' => 'required|string',
-	            'user_id' => (($request->payment_type!='bca_klikbca')?'nullable':'required|string'),
 	            'description' => 'required|string',
 	        ]);
 
@@ -139,7 +146,7 @@ class PaymentController extends Controller
 				    'description' => $request->description
 				],
 				'bca_klikbca' => [
-				   'user_id' => $request->user_id,
+				   'user_id' => JWTAuth::user()->id,
 				   'description' => $request->description,
 				],
 				'cimb_clicks' => [
@@ -187,6 +194,7 @@ class PaymentController extends Controller
 
 		return response()->json([
 			'status' => true,
+			'data' => $data,
 			'message' => 'Pembayaran berhasil dibuat.',
 		]);
 	}
@@ -228,7 +236,7 @@ class PaymentController extends Controller
 			'Content-Type: application/json',
 			'Accept: application/json',
 			'Authorization: Basic '.base64_encode($serverKey.':'),
-			'X-Append-Notification: https://cc57bc33a41f.ngrok.io/api/v1/payment/callback',
+			'X-Append-Notification: https://788754dee293.ngrok.io/api/v1/payment/callback',
 		);
 
 		$curl = curl_init();

@@ -184,28 +184,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -330,7 +308,28 @@ var render = function() {
           })
         ]),
         _vm._v(" "),
-        _vm._m(1),
+        _c("div", { staticClass: "courses-learn" }, [
+          _c("div", { staticClass: "learn-title" }, [
+            _vm._v("\n\t\t\t\t\tApa saja yang dipelajari?\n\t\t\t\t")
+          ]),
+          _vm._v(" "),
+          _c(
+            "div",
+            { staticClass: "row learn-items" },
+            _vm._l(_vm.dataCourses.courseslearn, function(learn) {
+              return _c("div", { staticClass: "col-md-6 col-sm-12" }, [
+                _c("div", { staticClass: "learn-item" }, [
+                  _c("i", { staticClass: "fa fa-lightbulb-o" }),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "learn-text text-justify" }, [
+                    _vm._v(_vm._s(learn.text))
+                  ])
+                ])
+              ])
+            }),
+            0
+          )
+        ]),
         _vm._v(" "),
         _c(
           "div",
@@ -374,7 +373,7 @@ var render = function() {
         ),
         _vm._v(" "),
         _c("div", { staticClass: "courses-teacher" }, [
-          _vm._m(2),
+          _vm._m(1),
           _vm._v(" "),
           _c("div", { staticClass: "teacher-info" }, [
             _c("div", { staticClass: "teacher-head" }, [
@@ -395,7 +394,7 @@ var render = function() {
           ])
         ]),
         _vm._v(" "),
-        _vm._m(3)
+        _vm._m(2)
       ])
     ])
   ])
@@ -662,70 +661,6 @@ var staticRenderFns = [
       _vm._v(" "),
       _c("div", { staticClass: "courses-rating-label" }, [
         _c("span", [_vm._v("4.5/5.0")])
-      ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "courses-learn" }, [
-      _c("div", { staticClass: "learn-title" }, [
-        _vm._v("\n\t\t\t\t\tApa saja yang dipelajari?\n\t\t\t\t")
-      ]),
-      _vm._v(" "),
-      _c("div", { staticClass: "row learn-items" }, [
-        _c("div", { staticClass: "col-md-6 col-sm-12" }, [
-          _c("div", { staticClass: "learn-item" }, [
-            _c("i", { staticClass: "fa fa-lightbulb-o" }),
-            _vm._v(" "),
-            _c("div", { staticClass: "learn-text" }, [
-              _vm._v("Be able to build ANY website you want.")
-            ])
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "learn-item" }, [
-            _c("i", { staticClass: "fa fa-lightbulb-o" }),
-            _vm._v(" "),
-            _c("div", { staticClass: "learn-text" }, [
-              _vm._v("Be able to build ANY website you want.")
-            ])
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "learn-item" }, [
-            _c("i", { staticClass: "fa fa-lightbulb-o" }),
-            _vm._v(" "),
-            _c("div", { staticClass: "learn-text" }, [
-              _vm._v("Be able to build ANY website you want.")
-            ])
-          ])
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "col-md-6 col-sm-12" }, [
-          _c("div", { staticClass: "learn-item" }, [
-            _c("i", { staticClass: "fa fa-lightbulb-o" }),
-            _vm._v(" "),
-            _c("div", { staticClass: "learn-text" }, [
-              _vm._v("Be able to build ANY website you want.")
-            ])
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "learn-item" }, [
-            _c("i", { staticClass: "fa fa-lightbulb-o" }),
-            _vm._v(" "),
-            _c("div", { staticClass: "learn-text" }, [
-              _vm._v("Be able to build ANY website you want.")
-            ])
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "learn-item" }, [
-            _c("i", { staticClass: "fa fa-lightbulb-o" }),
-            _vm._v(" "),
-            _c("div", { staticClass: "learn-text" }, [
-              _vm._v("Be able to build ANY website you want.")
-            ])
-          ])
-        ])
       ])
     ])
   },

@@ -33,6 +33,7 @@
         "toastr": "^2.1.4",
         "vue": "^2.6.12",
         "vue-axios": "^3.2.2",
+        "vue-loading-skeleton": "^1.1.9",
         "vue-resource": "^1.5.1",
         "vue-router": "^3.4.9"
     }

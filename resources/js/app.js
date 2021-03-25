@@ -15,6 +15,10 @@ window.toastr = require('toastr');
 Vue.use(VueRouter)
 Vue.router = router;
 
+import Skeleton from 'vue-loading-skeleton';
+
+Vue.use(Skeleton)
+
 import VueAxios from 'vue-axios'
 import axios from 'axios'
 

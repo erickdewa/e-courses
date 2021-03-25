@@ -23,6 +23,11 @@ class Courses extends Model
         return $this->hasMany('\App\Models\CoursesTool', 'courses_id', 'id');
     }
 
+    public function courseslearn()
+    {
+        return $this->hasMany('\App\Models\CoursesLearn', 'courses_id', 'id');
+    }
+
     public function materigroup()
     {
         return $this->hasMany('\App\Models\MateriGroup', 'courses_id', 'id');

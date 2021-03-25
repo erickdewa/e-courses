@@ -3,26 +3,28 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\PayMethod;
+use App\Models\CoursesLearn;
+use App\Models\Courses;
 use Validator;
 
-class PayMethodController extends Controller
-{
-    public function index(Request $request)
+class CoursesLearnController extends Controller
+{	
+	public function index(Request $request, $uuid)
     {
-    	// Data per page
+        // Data per page
         $per = ( isset($request->per) ? $request->per : 10);
 
         // Data all paginate
-        $data = PayMethod::where(function($query) use ($request){
-            $query->where('nm_method', 'like', '%'.$request->search.'%');
+        $courses = Courses::findByUuid($uuid);
+        $data = CoursesLearn::where('courses_id', $courses->id)
+        ->where(function($query) use ($request){
+            $query->where('text', 'like', '%'.$request->search.'%');
         })->orderBy('id', 'desc')->paginate($per);
 
         $data->map(function($a){
             $btnEdit = '<button class="btn btn-clean btn-icon btn-icon-md edit" data-uuid="'.$a->uuid.'"><i class="fa fa-edit text-warning"></i></button>';
             $btnHapus = '<button class="btn btn-clean btn-icon btn-icon-md hapus" data-uuid="'.$a->uuid.'"><i class="fa fa-trash text-danger"></i></button>';
             $a->action = $btnEdit.$btnHapus;
-            $a->active = '<label class="switch"><input class="form-active" type="checkbox" '.(($a->active=='Y')?'checked':'').' data-uuid="'.$a->uuid.'"><span class="slider round"></span></label>';
 
             return $a;
         });
@@ -30,11 +32,12 @@ class PayMethodController extends Controller
         return response()->json($data);
     }
 
-    public function getDatas()
+    public function getDatas($uuid)
     {
-        $data = PayMethod::where('active', 'Y')->get();
+    	$courses = Courses::findByUuid($uuid);
+        $data = CoursesLearn::where('courses_id', $courses->id)->get();
 
-        return response()->json([
+    	return response()->json([
             'status' => true,
             'data' => $data,
             'message' => 'Data berhasil di temukan',
@@ -44,8 +47,8 @@ class PayMethodController extends Controller
     public function create(Request $request)
     {
     	$validator = Validator::make($request->all(), [
-            'nm_method' => 'required|string',
-            'kode' => 'required|string',
+            'courses_id' => 'required|integer',
+            'text' => 'required|string',
         ]);
 
         if ($validator->fails()) {
@@ -55,9 +58,9 @@ class PayMethodController extends Controller
             ], 500);
         }
 
-        $data = PayMethod::create([
-        	'nm_method' => $request->nm_method,
-            'kode' => $request->kode,
+        $data = CoursesLearn::create([
+        	'courses_id' => $request->courses_id,
+            'text' => $request->text,
         ]);
 
         return response()->json([
@@ -68,7 +71,7 @@ class PayMethodController extends Controller
 
     public function getData($uuid)
     {
-    	$data = PayMethod::findByUuid($uuid);
+    	$data = CoursesLearn::findByUuid($uuid);
 
     	if(isset($data)){
     		return response()->json([
@@ -87,8 +90,8 @@ class PayMethodController extends Controller
     public function update(Request $request, $uuid)
     {
     	$validator = Validator::make($request->all(), [
-            'nm_method' => 'required|string',
-            'kode' => 'required|string',
+            'courses_id' => 'required|integer',
+            'text' => 'required|string',
         ]);
 
         if ($validator->fails()) {
@@ -98,10 +101,10 @@ class PayMethodController extends Controller
             ], 500);
         }
 
-        $data = PayMethod::findByUuid($uuid);
+        $data = CoursesLearn::findByUuid($uuid);
         $data->update([
-        	'nm_method' => $request->nm_method,
-            'kode' => $request->kode,
+        	'courses_id' => $request->courses_id,
+            'text' => $request->text,
         ]);
 
         return response()->json([
@@ -110,23 +113,9 @@ class PayMethodController extends Controller
         ], 200);
     }
 
-    public function change($uuid)
-    {
-        $data = PayMethod::findByUuid($uuid);
-        $data->update([
-            'active' => (($data->active=='N')?'Y':'N'),
-        ]);
-
-        return response()->json([
-            'status' => true,
-            'message' => 'Data berhasil di simpan',
-        ], 200);
-    }
-
     public function delete($uuid)
     {
-        $data = PayMethod::findByUuid($uuid);
-    
+        $data = CoursesLearn::findByUuid($uuid);
         if($data->delete()){
 	        return response()->json([
 	        	'status' => true,
