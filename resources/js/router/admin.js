@@ -38,6 +38,15 @@ const routesAdmin =  [
 		        }
 		    },
 		    {
+		        name: 'admin.pembayaran',
+		        path: '/admin/pembayaran',
+		        component: () => import(/* webpackChunkName: "admin.dashboard" */ '../pages/admin/pembayaran/Index'),
+		        meta: {
+		            title: `Pembayaran | ${process.env.MIX_APP_NAME}`,
+		            auth: true
+		        }
+		    },
+		    {
 		        name: 'admin.master',
 		        path: '/admin/master',
 		        component: () => import(/* webpackChunkName: "admin.master" */ '../pages/admin/master/Master'),

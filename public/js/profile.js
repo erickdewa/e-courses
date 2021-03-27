@@ -79,6 +79,11 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -230,38 +235,84 @@ var render = function() {
         _c(
           "div",
           { staticClass: "courses-list my-3", attrs: { align: "center" } },
-          _vm._l(_vm.dataCourses, function(data) {
-            return _c(
-              "div",
-              {
-                staticClass:
-                  "courses-item-shedow cursor-pointer d-inline-block m-3"
-              },
-              [
-                _c(
-                  "div",
-                  {
-                    staticClass: "courses-item card",
-                    style: "background-image: url(" + data.thumbnile + ")"
-                  },
-                  [
-                    _c("div", { staticClass: "courses-item-information" }, [
-                      _c("div", { staticClass: "title" }, [
-                        _vm._v(_vm._s(data.name))
-                      ]),
-                      _vm._v(" "),
-                      _c("div", { staticClass: "desc" }, [
-                        _vm._v(_vm._s(data.subname))
-                      ])
-                    ]),
-                    _vm._v(" "),
-                    _vm._m(2, true)
-                  ]
-                )
-              ]
-            )
-          }),
-          0
+          [
+            _vm._l(_vm.dataCourses, function(data) {
+              return _c(
+                "div",
+                {
+                  staticClass:
+                    "courses-item-shedow cursor-pointer d-inline-block m-3"
+                },
+                [
+                  _c(
+                    "router-link",
+                    { attrs: { to: "/courses/play/" + data.uuid } },
+                    [
+                      _c(
+                        "div",
+                        {
+                          staticClass: "courses-item card",
+                          style: "background-image: url(" + data.thumbnile + ")"
+                        },
+                        [
+                          _c(
+                            "div",
+                            { staticClass: "courses-item-information" },
+                            [
+                              _c("div", { staticClass: "title" }, [
+                                _vm._v(_vm._s(data.name))
+                              ]),
+                              _vm._v(" "),
+                              _c("div", { staticClass: "desc" }, [
+                                _vm._v(_vm._s(data.subname))
+                              ])
+                            ]
+                          ),
+                          _vm._v(" "),
+                          _c("div", { staticClass: "courses-item-fiture" }, [
+                            _c(
+                              "div",
+                              {
+                                staticClass: "fiture",
+                                attrs: { title: "Sertifikat" }
+                              },
+                              [_c("i", { staticClass: "fa fa-book" })]
+                            ),
+                            _vm._v(" "),
+                            _c(
+                              "div",
+                              {
+                                staticClass: "fiture",
+                                attrs: { title: "Community" }
+                              },
+                              [_c("i", { staticClass: "fa fa-comments-o" })]
+                            ),
+                            _vm._v(" "),
+                            _c(
+                              "div",
+                              {
+                                staticClass: "fiture",
+                                attrs: { title: "Top Courses" }
+                              },
+                              [_c("i", { staticClass: "fa fa-fire" })]
+                            )
+                          ])
+                        ]
+                      )
+                    ]
+                  )
+                ],
+                1
+              )
+            }),
+            _vm._v(" "),
+            _vm.dataCourses.length == 0
+              ? _c("div", { staticClass: "notfound" }, [
+                  _c("span", [_vm._v("Coursus tidak ditemukan")])
+                ])
+              : _vm._e()
+          ],
+          2
         )
       ])
     ])
@@ -284,24 +335,6 @@ var staticRenderFns = [
     var _c = _vm._self._c || _h
     return _c("div", { staticClass: "courses-profile-title" }, [
       _c("span", [_vm._v("Kursus yang anda ikuti :")])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "courses-item-fiture" }, [
-      _c("div", { staticClass: "fiture", attrs: { title: "Sertifikat" } }, [
-        _c("i", { staticClass: "fa fa-book" })
-      ]),
-      _vm._v(" "),
-      _c("div", { staticClass: "fiture", attrs: { title: "Community" } }, [
-        _c("i", { staticClass: "fa fa-comments-o" })
-      ]),
-      _vm._v(" "),
-      _c("div", { staticClass: "fiture", attrs: { title: "Top Courses" } }, [
-        _c("i", { staticClass: "fa fa-fire" })
-      ])
     ])
   }
 ]

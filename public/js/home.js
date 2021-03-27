@@ -118,6 +118,9 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
 //
 //
 //
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -185,79 +188,92 @@ var render = function() {
       _c(
         "div",
         { staticClass: "courses-list my-3", attrs: { align: "center" } },
-        _vm._l(_vm.dataCourses, function(courses) {
-          return _c(
-            "div",
-            { staticClass: "courses-item-shedow d-inline-block m-3" },
-            [
-              _c("router-link", { attrs: { to: "/courses/" + courses.uuid } }, [
-                _c("div", { staticClass: "courses-shedow" }),
-                _vm._v(" "),
+        [
+          _vm._l(_vm.dataCourses, function(courses) {
+            return _c(
+              "div",
+              { staticClass: "courses-item-shedow d-inline-block m-3" },
+              [
                 _c(
-                  "div",
-                  {
-                    staticClass: "courses-item card",
-                    style: "background-image: url(" + courses.thumbnile + ")"
-                  },
+                  "router-link",
+                  { attrs: { to: "/courses/" + courses.uuid } },
                   [
-                    _c("div", { staticClass: "courses-item-information" }, [
-                      _c("div", { staticClass: "title" }, [
-                        _vm._v(_vm._s(courses.name))
-                      ]),
-                      _vm._v(" "),
-                      _c("div", { staticClass: "desc" }, [
-                        _vm._v(_vm._s(courses.user.name))
-                      ])
-                    ]),
+                    _c("div", { staticClass: "courses-shedow" }),
                     _vm._v(" "),
-                    _c("div", { staticClass: "courses-item-fiture" }, [
-                      _c(
-                        "div",
-                        {
-                          staticClass: "fiture",
-                          attrs: { title: "Sertifikat" }
-                        },
-                        [_c("i", { staticClass: "fa fa-book" })]
-                      ),
-                      _vm._v(" "),
-                      _c(
-                        "div",
-                        {
-                          staticClass: "fiture",
-                          attrs: { title: "Community" }
-                        },
-                        [_c("i", { staticClass: "fa fa-comments-o" })]
-                      ),
-                      _vm._v(" "),
-                      _c(
-                        "div",
-                        {
-                          staticClass: "fiture",
-                          attrs: { title: "Top Courses" }
-                        },
-                        [_c("i", { staticClass: "fa fa-fire" })]
-                      )
-                    ]),
-                    _vm._v(" "),
-                    _c("div", { staticClass: "courses-type" }, [
-                      _vm._v(
-                        "\n\t\t\t\t\t\t\t" +
-                          _vm._s(
-                            courses.price != 0
-                              ? "Rp." + courses.price.rupiah()
-                              : "FREE"
-                          ) +
-                          "\n\t\t\t\t\t\t"
-                      )
-                    ])
+                    _c(
+                      "div",
+                      {
+                        staticClass: "courses-item card",
+                        style:
+                          "background-image: url(" + courses.thumbnile + ")"
+                      },
+                      [
+                        _c("div", { staticClass: "courses-item-information" }, [
+                          _c("div", { staticClass: "title" }, [
+                            _vm._v(_vm._s(courses.name))
+                          ]),
+                          _vm._v(" "),
+                          _c("div", { staticClass: "desc" }, [
+                            _vm._v(_vm._s(courses.user.name))
+                          ])
+                        ]),
+                        _vm._v(" "),
+                        _c("div", { staticClass: "courses-item-fiture" }, [
+                          _c(
+                            "div",
+                            {
+                              staticClass: "fiture",
+                              attrs: { title: "Sertifikat" }
+                            },
+                            [_c("i", { staticClass: "fa fa-book" })]
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "div",
+                            {
+                              staticClass: "fiture",
+                              attrs: { title: "Community" }
+                            },
+                            [_c("i", { staticClass: "fa fa-comments-o" })]
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "div",
+                            {
+                              staticClass: "fiture",
+                              attrs: { title: "Top Courses" }
+                            },
+                            [_c("i", { staticClass: "fa fa-fire" })]
+                          )
+                        ]),
+                        _vm._v(" "),
+                        _c("div", { staticClass: "courses-type" }, [
+                          _vm._v(
+                            "\n\t\t\t\t\t\t\t" +
+                              _vm._s(
+                                courses.price != 0
+                                  ? "Rp." + courses.price.rupiah()
+                                  : "FREE"
+                              ) +
+                              "\n\t\t\t\t\t\t"
+                          )
+                        ])
+                      ]
+                    )
                   ]
                 )
+              ],
+              1
+            )
+          }),
+          _vm._v(" "),
+          _vm.dataCourses.length == 0
+            ? _c("div", { staticClass: "notfound" }, [
+                _c("span", [_vm._v("Coursus tidak ditemukan")])
               ])
-            ],
-            1
-          )
-        }),
-        0
+            : _vm._e()
+        ],
+        2
       ),
       _vm._v(" "),
       _c(

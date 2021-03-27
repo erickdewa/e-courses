@@ -120,6 +120,12 @@ __webpack_require__.r(__webpack_exports__);
         path: '/admin/kursus',
         haveChild: false
       }, {
+        title: 'Pembayaran',
+        icon: 'fa-money',
+        name: 'admin.pembayaran',
+        path: '/admin/pembayaran',
+        haveChild: false
+      }, {
         title: 'Master',
         icon: 'fa-th-large',
         name: 'admin.master',

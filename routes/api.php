@@ -38,6 +38,13 @@ Route::prefix('v1')->group(function(){
 		    		Route::post('/{uuid}/update', 'ProfileController@update');
 		    		Route::post('/{uuid}/verifed', 'ProfileController@verifed');
 		    	});
+
+				Route::prefix('courses')->group(function(){
+			    	Route::prefix('my')->group(function(){
+		    			Route::get('/getcourses', 'UserCoursesController@getDataCoursesAll');
+			    		Route::post('/{uuid}/getplayer', 'UserCoursesController@getDataCoursesPlayer');
+		    		});
+			    });
 			});
 
 			Route::group(['middleware' => ['admin']], function() {
@@ -106,6 +113,16 @@ Route::prefix('v1')->group(function(){
 		    		Route::delete('/{uuid}/delete', 'PayMethodController@delete');
 		    	});
 
+		    	Route::prefix('usercourses')->group(function(){
+		    		Route::post('/index', 'UserCoursesController@index');
+		    		Route::get('/getdatas', 'UserCoursesController@getDatas');
+		    		Route::get('/{uuid}/getdata', 'UserCoursesController@getData');
+		    		Route::post('/create', 'UserCoursesController@create');
+		    		Route::post('/{uuid}/update', 'UserCoursesController@update');
+		    		Route::post('/{uuid}/change', 'UserCoursesController@change');
+		    		Route::delete('/{uuid}/delete', 'UserCoursesController@delete');
+		    	});
+
 		    	Route::prefix('courses')->group(function(){
 		    		Route::post('/index', 'CoursesController@index');
 		    		Route::get('/getdatas', 'CoursesController@getDatas');
@@ -113,11 +130,6 @@ Route::prefix('v1')->group(function(){
 		    		Route::post('/create', 'CoursesController@create');
 		    		Route::post('/{uuid}/update', 'CoursesController@update');
 		    		Route::delete('/{uuid}/delete', 'CoursesController@delete');
-
-		    		Route::prefix('my')->group(function(){
-		    			Route::get('/getcourses', 'UserCoursesController@getDataCoursesAll');
-			    		Route::post('/{uuid}/getplayer', 'UserCoursesController@getDataCoursesPlayer');
-		    		});
 
 		    		Route::prefix('tool')->group(function(){
 		    			Route::get('/{uuid}/gettool', 'CoursesToolController@getDataTool');

@@ -13,18 +13,18 @@ class UserCourses extends Model
         'uuid', 'courses_id', 'user_id', 'method_id', 'status', 'discount', 'total', 'payment_expired', 'payment_time'
     ];
 
-    public function tool()
-    {
-        return $this->belongsTo('\App\Models\User', 'user_id', 'id');
-    }
-
     public function courses()
     {
-        return $this->belongsTo('\App\Models\courses_id', 'courses_id', 'id');
+        return $this->belongsTo('\App\Models\Courses', 'courses_id', 'id');
     }
 
     public function method()
     {
         return $this->belongsTo('\App\Models\PayMethod', 'method_id', 'id');
+    }
+
+    public function user()
+    {
+        return $this->belongsTo('\App\Models\User', 'user_id', 'id');
     }
 }

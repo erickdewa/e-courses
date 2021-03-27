@@ -98,6 +98,7 @@
 	        	dataMenu: [
 	        		{ title: 'Dashboard', icon: 'fa-th-large', name: 'admin.dashboard', path: '/admin/dashboard', haveChild: false },
 	        		{ title: 'Kursus', icon: 'fa-book', name: 'admin.kursus', path: '/admin/kursus', haveChild: false },
+	        		{ title: 'Pembayaran', icon: 'fa-money', name: 'admin.pembayaran', path: '/admin/pembayaran', haveChild: false },
 	        		{ title: 'Master', icon: 'fa-th-large', name: 'admin.master', path: '', haveChild: true, child: [
 	        			{ title: 'Level', name: 'admin.master.level', path: '/admin/master/level' },
 	        			{ title: 'Payment', name: 'admin.master.payment', path: '/admin/master/payment' },

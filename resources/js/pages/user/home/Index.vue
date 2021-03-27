@@ -85,6 +85,9 @@
 						</div>
 					</router-link>
 				</div>
+				<div v-if="dataCourses.length == 0" class="notfound">
+						<span>Coursus tidak ditemukan</span>
+					</div>
 			</div>
 			<div class="courses-more" v-show="showMore">
 				<button type="button" class="btn btn-sm bg-default" @click="getCourses(thisPage+1)">

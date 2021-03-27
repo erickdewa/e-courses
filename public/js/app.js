@@ -3308,6 +3308,29 @@ __webpack_require__.r(__webpack_exports__);
     };
   },
   methods: {
+    eval: function _eval(data, column, eVal) {
+      return eval(eVal);
+    },
+    getData: function getData(s, index, ind) {
+      var app = this;
+      s = s.data.split('.');
+      var p = 'app.dataTable[ind]';
+
+      for (var i = 0; i < s.length; i++) {
+        p = p + '["' + s[i] + '"]';
+      }
+
+      var d = "";
+
+      try {
+        d = eval(p);
+      } catch (e) {
+        d = '';
+      }
+
+      console.log(d);
+      return d;
+    },
     reload: function reload() {
       var url = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : null;
       var search = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
@@ -49379,6 +49402,16 @@ var routesAdmin = [{
       auth: true
     }
   }, {
+    name: 'admin.pembayaran',
+    path: '/admin/pembayaran',
+    component: function component() {
+      return __webpack_require__.e(/*! import() | admin.dashboard */ "admin.dashboard").then(__webpack_require__.bind(null, /*! ../pages/admin/pembayaran/Index */ "./resources/js/pages/admin/pembayaran/Index.vue"));
+    },
+    meta: {
+      title: "Pembayaran | ".concat("Laravel"),
+      auth: true
+    }
+  }, {
     name: 'admin.master',
     path: '/admin/master',
     component: function component() {
@@ -49635,16 +49668,6 @@ var routesUser = [{
     beforeEnter: guardUserLogged,
     meta: {
       title: "Payment | ".concat("Laravel"),
-      auth: undefined
-    }
-  }, {
-    name: 'courses',
-    path: '/courses/:uuidCourses',
-    component: function component() {
-      return __webpack_require__.e(/*! import() | courses */ "courses").then(__webpack_require__.bind(null, /*! ../pages/user/kursus/Index */ "./resources/js/pages/user/kursus/Index.vue"));
-    },
-    meta: {
-      title: "Courses | ".concat("Laravel"),
       auth: undefined
     }
   }, {

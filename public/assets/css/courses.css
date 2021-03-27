@@ -1,3 +1,11 @@
+.notfound{
+	background: #F0F0F0;
+	display: inline-block;
+	font-size: 15px;
+	font-weight: 600;
+	padding: 5px 25px;
+	border-radius: 15px;
+}
 .bg-default{
 	background: #4B4AEF!important;
 	color: #FFFFFF;

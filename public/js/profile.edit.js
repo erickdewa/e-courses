@@ -506,6 +506,7 @@ var render = function() {
                     attrs: {
                       type: "text",
                       name: "facebook",
+                      title: _vm.formData.facebook,
                       placeholder: "Facebook"
                     },
                     domProps: { value: _vm.formData.facebook },
@@ -538,6 +539,7 @@ var render = function() {
                     attrs: {
                       type: "text",
                       name: "instagram",
+                      title: _vm.formData.instagram,
                       placeholder: "Instagram"
                     },
                     domProps: { value: _vm.formData.instagram },
@@ -570,6 +572,7 @@ var render = function() {
                     attrs: {
                       type: "text",
                       name: "twitter",
+                      title: _vm.formData.twitter,
                       placeholder: "Twitter"
                     },
                     domProps: { value: _vm.formData.twitter },
@@ -602,6 +605,7 @@ var render = function() {
                     attrs: {
                       type: "text",
                       name: "github",
+                      title: _vm.formData.github,
                       placeholder: "Github"
                     },
                     domProps: { value: _vm.formData.github },

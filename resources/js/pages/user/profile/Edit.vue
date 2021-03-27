@@ -63,25 +63,25 @@
 						<div class="col-md-6">
 							<div class="form-group">
 								<label>Facebook</label>
-								<input type="text" class="form-control" name="facebook" v-model="formData.facebook" placeholder="Facebook">
+								<input type="text" class="form-control" name="facebook" :title="formData.facebook" v-model="formData.facebook" placeholder="Facebook">
 							</div>
 						</div>
 						<div class="col-md-6">
 							<div class="form-group">
 								<label>Instagram</label>
-								<input type="text" class="form-control" name="instagram" v-model="formData.instagram" placeholder="Instagram">
+								<input type="text" class="form-control" name="instagram" :title="formData.instagram" v-model="formData.instagram" placeholder="Instagram">
 							</div>
 						</div>
 						<div class="col-md-6">
 							<div class="form-group">
 								<label>Twitter</label>
-								<input type="text" class="form-control" name="twitter" v-model="formData.twitter" placeholder="Twitter">
+								<input type="text" class="form-control" name="twitter" :title="formData.twitter" v-model="formData.twitter" placeholder="Twitter">
 							</div>
 						</div>
 						<div class="col-md-6">
 							<div class="form-group">
 								<label>Github</label>
-								<input type="text" class="form-control" name="github" v-model="formData.github" placeholder="Github">
+								<input type="text" class="form-control" name="github" :title="formData.github" v-model="formData.github" placeholder="Github">
 							</div>
 						</div>
 					</div>

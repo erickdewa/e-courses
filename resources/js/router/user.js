@@ -68,15 +68,6 @@ const routesUser =  [
                 }
             },
             {
-                name: 'courses',
-                path: '/courses/:uuidCourses',
-                component: () => import(/* webpackChunkName: "courses" */ '../pages/user/kursus/Index'),
-                meta: {
-                    title: `Courses | ${process.env.MIX_APP_NAME}`,
-                    auth: undefined
-                }
-            },
-            {
                 name: 'courses.player',
                 path: '/courses/play/:uuidCourses',
                 component: () => import(/* webpackChunkName: "courses.player" */ '../pages/user/player/Index'),

@@ -87,6 +87,25 @@
 	        }
 	    },
 	    methods: {
+	    	eval(data, column, eVal) {
+				return eval(eVal);
+			},
+			getData(s, index, ind) {
+				var app = this;
+				s = s.data.split('.');
+				var p = 'app.dataTable[ind]';
+				for(var i = 0; i<s.length; i++){
+					p = p+'["'+s[i]+'"]';
+				}
+				var d = "";
+				try {
+					d = eval(p);
+				}catch(e) {
+					d = '';
+				}
+				console.log(d);
+				return d;
+			},
 	    	reload(url=null, search=false){
 	    		var vm = this;
 
