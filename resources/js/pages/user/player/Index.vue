@@ -4,34 +4,7 @@
 			<div class="courses-play container">
 				<div class="courses-player">
 					<div id="courses-status"></div>
-					<div id="courses-video-box" class="courses-video-box">
-						<div class="video-player">
-							<div id="aro-video" data-video="M7lc1UVf-VE"></div>
-						</div>
-						<div class="video-control">
-							<div class="btn-control-left" align="center">
-								<div class="btn btn-circle btn-info btn-play">
-									<i class="fa fa-play"></i>
-								</div>
-								<div class="btn btn-circle btn-info btn-pause" style="display: none;">
-									<i class="fa fa-pause"></i>
-								</div>
-							</div>
-							<div class="range-duration">
-								<input type="range" class="duration" value="0">
-							</div>
-							<div class="number-duration">
-								<span class="current-time">00:00</span>
-								<span>/</span>
-								<span class="duration-time">00:00</span>
-							</div>
-							<div class="btn-control-right" align="center">
-								<div id="btn-fullscreen" class="btn btn-sm btn-info btn-fullscreen">
-									<i class="fa fa-arrows-alt"></i>
-								</div>
-							</div>
-						</div>
-					</div>
+					<Player></Player>
 					<div class="courses-play-header">
 						<ul class="ul-header">
 							<li class="li-header tabbed-head active" data-event="tabbed" data-target="#card-information">
@@ -70,66 +43,7 @@
 					</div>
 				</div>
 				<div class="courses-player-list">
-					<ul class="ul-parent">
-						<li class="li-parent">
-							<div class="item-materigroup">
-								<div class="text-group">
-									<div class="text">Bagian 1: Introduction</div>
-									<div class="subtext">5/10</div>
-								</div>
-								<div class="icon-drop">
-									<i class="fa fa-angle-down"></i>
-								</div>
-							</div>
-							<ul class="ul-child">
-								<li class="li-child">
-									<div class="item-materi">
-										<div class="text-group">
-											<div class="text">1. What is laravel?</div>
-											<div class="subtext"><i class="fa fa-play-circle-o"></i> 15 minute</div>
-										</div>
-									</div>
-								</li>
-								<li class="li-child">
-									<div class="item-materi">
-										<div class="text-group">
-											<div class="text">2. What is VueJs?</div>
-											<div class="subtext"><i class="fa fa-play-circle-o"></i> 5 minute</div>
-										</div>
-									</div>
-								</li>
-							</ul>
-						</li>
-						<li class="li-parent">
-							<div class="item-materigroup">
-								<div class="text-group">
-									<div class="text">Bagian 2: Instalation</div>
-									<div class="subtext">5/10</div>
-								</div>
-								<div class="icon-drop">
-									<i class="fa fa-angle-down"></i>
-								</div>
-							</div>
-							<ul class="ul-child active">
-								<li class="li-child">
-									<div class="item-materi">
-										<div class="text-group">
-											<div class="text">1. What is laravel?</div>
-											<div class="subtext"><i class="fa fa-play-circle-o"></i> 15 minute</div>
-										</div>
-									</div>
-								</li>
-								<li class="li-child">
-									<div class="item-materi">
-										<div class="text-group">
-											<div class="text">2. What is VueJs?</div>
-											<div class="subtext"><i class="fa fa-play-circle-o"></i> 5 minute</div>
-										</div>
-									</div>
-								</li>
-							</ul>
-						</li>
-					</ul>
+					<SideBar></SideBar>
 				</div>
 			</div>
 		</div>
@@ -137,7 +51,12 @@
 </template>
 
 <script>
+	import SideBar from './components/Sidebar'
+	import Player from './components/Player'
     export default {
+    	components: {
+    		SideBar, Player
+    	},
     	data() {
 	        return {
 
@@ -161,7 +80,6 @@
 	    	var vm = this;
 
 	    	vm.getDataCoursesAuth(vm.$route.params.uuidCourses);
-	    	Aropex.video('aro-video', '/assets/images/bg/bg-01.jpg');
 	    }
 	}
 </script>
