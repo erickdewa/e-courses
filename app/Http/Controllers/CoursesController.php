@@ -24,6 +24,24 @@ class CoursesController extends Controller
     }
 
     // Page user courses
+    public function getDataCoursesAuth($uuid)
+    {
+        $data = Courses::with(['materigroup' => function($query){
+            $query->with(['materi' => function($query){
+                $query->where('is_preview', 'Y');
+            }])->whereHas('materi', function($query){
+                $query->where('is_preview', 'Y');
+            });
+        }, 'user', 'coursestool.tool', 'courseslearn'])
+        ->where('uuid', $uuid)->first();
+
+        return response()->json([
+            'status' => true,
+            'data' => $data,
+            'message' => 'Data berhasil diambil'
+        ]);
+    }
+
     public function getDataCourses($uuid)
     {
         $data = Courses::with(['materigroup' => function($query){

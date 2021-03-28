@@ -37,6 +37,8 @@ __webpack_require__.r(__webpack_exports__);
           });
         }
       } else if (vm.type == 'logout') {
+        vm.$auth.logout();
+
         if (localStorage.getItem("level_id") == 1) {
           vm.$router.push({
             path: '/admin/login'

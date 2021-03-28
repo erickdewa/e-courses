@@ -184,6 +184,13 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -192,17 +199,24 @@ __webpack_require__.r(__webpack_exports__);
         user: {
           name: ''
         }
-      }
+      },
+      isPay: false
     };
   },
   methods: {
-    cekLogin: function cekLogin(uuid) {
+    ceked: function ceked(uuid) {
       var vm = this;
 
       if (localStorage.getItem("level_id") != null) {
-        vm.$router.push({
-          path: "/payment/".concat(uuid)
-        });
+        if (!vm.isPay) {
+          vm.$router.push({
+            path: "/payment/".concat(uuid)
+          });
+        } else {
+          vm.$router.push({
+            path: "/courses/play/".concat(uuid)
+          });
+        }
       } else {
         $('#modal-login').modal('show');
       }
@@ -216,11 +230,29 @@ __webpack_require__.r(__webpack_exports__);
         vm.dataCourses = res.data.data;
       })["catch"](function (error) {// error
       });
+    },
+    getDataCoursesAuth: function getDataCoursesAuth(uuid) {
+      var vm = this;
+      vm.$http({
+        url: "".concat(vm.apiUrl, "/courses/").concat(uuid, "/auth"),
+        method: 'GET'
+      }).then(function (res) {
+        vm.dataCourses = res.data.data;
+      })["catch"](function (error) {// error
+      });
     }
   },
   mounted: function mounted() {
     var vm = this;
-    vm.getDataCourses(vm.$route.params.uuidCourses);
+    vm.isPay = false;
+
+    if (localStorage.getItem("level_id") != null) {
+      vm.getDataCoursesAuth(vm.$route.params.uuidCourses);
+      vm.isPay = true;
+    } else {
+      vm.getDataCourses(vm.$route.params.uuidCourses);
+      vm.isPay = false;
+    }
   }
 });
 
@@ -275,20 +307,46 @@ var render = function() {
           )
         ]),
         _vm._v(" "),
-        _c("div", { staticClass: "courses-action" }, [
-          _c(
-            "div",
-            {
-              staticClass: "btn-join",
-              on: {
-                click: function($event) {
-                  return _vm.cekLogin(_vm.dataCourses.uuid)
-                }
-              }
-            },
-            [_vm._v("\n\t\t\t\t\tIkut Kelas\n\t\t\t\t")]
-          )
-        ])
+        _c(
+          "div",
+          { staticClass: "courses-action" },
+          [
+            !_vm.isPay
+              ? [
+                  _c(
+                    "div",
+                    {
+                      staticClass: "btn-join",
+                      on: {
+                        click: function($event) {
+                          return _vm.ceked(_vm.dataCourses.uuid)
+                        }
+                      }
+                    },
+                    [_vm._v("\n\t\t\t\t\t\tIkut Kelas\n\t\t\t\t\t")]
+                  )
+                ]
+              : _vm._e(),
+            _vm._v(" "),
+            _vm.isPay
+              ? [
+                  _c(
+                    "div",
+                    {
+                      staticClass: "btn-join",
+                      on: {
+                        click: function($event) {
+                          return _vm.ceked(_vm.dataCourses.uuid)
+                        }
+                      }
+                    },
+                    [_vm._v("\n\t\t\t\t\t\tTonton Sekarang\n\t\t\t\t\t")]
+                  )
+                ]
+              : _vm._e()
+          ],
+          2
+        )
       ]),
       _vm._v(" "),
       _c("div", { staticClass: "courses-information" }, [

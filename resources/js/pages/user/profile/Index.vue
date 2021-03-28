@@ -31,7 +31,7 @@
 					<button type="button" class="btn btn-sm btn-warning" @click="$router.push({ path: '/profile/edit' })">
 						<i class="fa fa-edit"></i> Edit
 					</button>
-					<button type="button" class="btn btn-sm btn-info">
+					<button type="button" class="btn btn-sm btn-info" @click="logout()">
 						<i class="fa fa-sign-out"></i> Logout
 					</button>
 				</div>
@@ -99,9 +99,24 @@
 	    			// error
 	    		})
 	    	},
+	    	logout(){
+				var vm = this;
+
+				swal({
+                    title: "Anda akan logout?",
+					text: "Apakah anda yakin untuk logout!",
+					icon: "warning",
+					confirmButtonText: "Yes",
+                }).then((result) => {
+                    if(result) {
+                    	vm.$router.push({ path: '/redirect/logout'});
+                    }
+                });
+			},
 	    },
 	    mounted(){
 	    	var vm = this;
+	    	
 	    	vm.getMyCourses();
 	    },
     }

@@ -19,9 +19,16 @@
 					</ul>
 				</div>
 				<div class="courses-action">
-					<div class="btn-join" @click="cekLogin(dataCourses.uuid)">
-						Ikut Kelas
-					</div>
+					<template v-if="!isPay">
+						<div class="btn-join" @click="ceked(dataCourses.uuid)">
+							Ikut Kelas
+						</div>
+					</template>
+					<template v-if="isPay">
+						<div class="btn-join" @click="ceked(dataCourses.uuid)">
+							Tonton Sekarang
+						</div>
+					</template>
 				</div>
 			</div>
 			<div class="courses-information">
@@ -183,14 +190,20 @@
 	        			name: '',
 	        		},
 	        	},
+
+	        	isPay: false,
 	        }
 	    },
 	    methods: {
-	    	cekLogin(uuid){
+	    	ceked(uuid){
 	    		var vm = this;
 
 	    		if(localStorage.getItem("level_id") != null){
-	    			vm.$router.push({ path: `/payment/${ uuid }`});
+	    			if(!vm.isPay){
+		    			vm.$router.push({ path: `/payment/${ uuid }`});
+	    			}else{
+	    				vm.$router.push({ path: `/courses/play/${ uuid }`});
+	    			}
 	    		}else{
 	    			$('#modal-login').modal('show');
 	    		}
@@ -206,12 +219,31 @@
 	    		}).catch((error)=>{
 	    			// error
 	    		});
+	    	},
+	    	getDataCoursesAuth(uuid){
+	    		var vm = this;
+
+	    		vm.$http({
+	    			url: `${ vm.apiUrl }/courses/${ uuid }/auth`,
+	    			method: 'GET',
+	    		}).then((res)=>{
+	    			vm.dataCourses = res.data.data;
+	    		}).catch((error)=>{
+	    			// error
+	    		});
 	    	}
 	    },
 	    mounted(){
 	    	var vm = this;
 
-	    	vm.getDataCourses(vm.$route.params.uuidCourses);
+    		vm.isPay = false;
+	    	if(localStorage.getItem("level_id") != null){
+	    		vm.getDataCoursesAuth(vm.$route.params.uuidCourses);
+	    		vm.isPay = true;
+	    	}else{
+		    	vm.getDataCourses(vm.$route.params.uuidCourses);
+		    	vm.isPay = false;
+	    	}
 	    }
 	}
 </script>

@@ -284,3 +284,6 @@
     	}
     }
 </script>
+<style type="text/css" scoped>
+	@import url('/assets/css/video.css');
+</style>

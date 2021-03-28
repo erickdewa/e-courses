@@ -15,13 +15,158 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {};
   },
-  methods: {},
+  methods: {
+    getDataCoursesAuth: function getDataCoursesAuth(uuid) {
+      var vm = this;
+      vm.$http({
+        url: "".concat(vm.apiUrl, "/courses/").concat(uuid, "/auth"),
+        method: 'GET'
+      }).then(function (res) {
+        vm.dataCourses = res.data.data;
+      })["catch"](function (error) {// error
+      });
+    }
+  },
   mounted: function mounted() {
     var vm = this;
+    vm.getDataCoursesAuth(vm.$route.params.uuidCourses);
+    Aropex.video('aro-video', '/assets/images/bg/bg-01.jpg');
   }
 });
 
@@ -42,9 +187,281 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", [_vm._v("\n\tPlayer\n")])
+  return _vm._m(0)
 }
-var staticRenderFns = []
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", [
+      _c("div", { staticClass: "courses-page" }, [
+        _c("div", { staticClass: "courses-play container" }, [
+          _c("div", { staticClass: "courses-player" }, [
+            _c("div", { attrs: { id: "courses-status" } }),
+            _vm._v(" "),
+            _c(
+              "div",
+              {
+                staticClass: "courses-video-box",
+                attrs: { id: "courses-video-box" }
+              },
+              [
+                _c("div", { staticClass: "video-player" }, [
+                  _c("div", {
+                    attrs: { id: "aro-video", "data-video": "M7lc1UVf-VE" }
+                  })
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "video-control" }, [
+                  _c(
+                    "div",
+                    {
+                      staticClass: "btn-control-left",
+                      attrs: { align: "center" }
+                    },
+                    [
+                      _c(
+                        "div",
+                        { staticClass: "btn btn-circle btn-info btn-play" },
+                        [_c("i", { staticClass: "fa fa-play" })]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "div",
+                        {
+                          staticClass: "btn btn-circle btn-info btn-pause",
+                          staticStyle: { display: "none" }
+                        },
+                        [_c("i", { staticClass: "fa fa-pause" })]
+                      )
+                    ]
+                  ),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "range-duration" }, [
+                    _c("input", {
+                      staticClass: "duration",
+                      attrs: { type: "range", value: "0" }
+                    })
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "number-duration" }, [
+                    _c("span", { staticClass: "current-time" }, [
+                      _vm._v("00:00")
+                    ]),
+                    _vm._v(" "),
+                    _c("span", [_vm._v("/")]),
+                    _vm._v(" "),
+                    _c("span", { staticClass: "duration-time" }, [
+                      _vm._v("00:00")
+                    ])
+                  ]),
+                  _vm._v(" "),
+                  _c(
+                    "div",
+                    {
+                      staticClass: "btn-control-right",
+                      attrs: { align: "center" }
+                    },
+                    [
+                      _c(
+                        "div",
+                        {
+                          staticClass: "btn btn-sm btn-info btn-fullscreen",
+                          attrs: { id: "btn-fullscreen" }
+                        },
+                        [_c("i", { staticClass: "fa fa-arrows-alt" })]
+                      )
+                    ]
+                  )
+                ])
+              ]
+            ),
+            _vm._v(" "),
+            _c("div", { staticClass: "courses-play-header" }, [
+              _c("ul", { staticClass: "ul-header" }, [
+                _c(
+                  "li",
+                  {
+                    staticClass: "li-header tabbed-head active",
+                    attrs: {
+                      "data-event": "tabbed",
+                      "data-target": "#card-information"
+                    }
+                  },
+                  [
+                    _c("div", { staticClass: "header-title" }, [
+                      _vm._v("Information")
+                    ])
+                  ]
+                ),
+                _vm._v(" "),
+                _c(
+                  "li",
+                  {
+                    staticClass: "li-header tabbed-head",
+                    attrs: {
+                      "data-event": "tabbed",
+                      "data-target": "#card-comment"
+                    }
+                  },
+                  [
+                    _c("div", { staticClass: "header-title" }, [
+                      _vm._v("Comment")
+                    ])
+                  ]
+                )
+              ])
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "courses-play-body" }, [
+              _c(
+                "div",
+                {
+                  staticClass: "tabbed-card active",
+                  attrs: { id: "card-information" }
+                },
+                [
+                  _c("div", { staticClass: "courses-title" }, [
+                    _vm._v(
+                      "\n\t\t\t\t\t\t\tBagian 1: Intro - Laravel For Beginer\n\t\t\t\t\t\t"
+                    )
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "courses-description" }, [
+                    _vm._v(
+                      "\n\t\t\t\t\t\t\tLorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod\n\t\t\t\t\t\t\ttempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,\n\t\t\t\t\t\t\tquis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo\n\t\t\t\t\t\t\tconsequat. Duis aute irure dolor in reprehenderit in voluptate velit esse\n\t\t\t\t\t\t\tcillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non\n\t\t\t\t\t\t\tproident, sunt in culpa qui officia deserunt mollit anim id est laborum.\n\t\t\t\t\t\t"
+                    )
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "courses-created" }, [
+                    _c("div", { staticClass: "label" }, [
+                      _c("div", { staticClass: "title" }, [_vm._v("Creator")]),
+                      _vm._v(": Erick Dewa\n\t\t\t\t\t\t\t")
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "label" }, [
+                      _c("div", { staticClass: "title" }, [
+                        _vm._v("Created At")
+                      ]),
+                      _vm._v(": 18 Maret 2021\n\t\t\t\t\t\t\t")
+                    ])
+                  ])
+                ]
+              ),
+              _vm._v(" "),
+              _c(
+                "div",
+                { staticClass: "tabbed-card", attrs: { id: "card-comment" } },
+                [_vm._v("\n\t\t\t\t\t\tcomment\n\t\t\t\t\t")]
+              )
+            ])
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "courses-player-list" }, [
+            _c("ul", { staticClass: "ul-parent" }, [
+              _c("li", { staticClass: "li-parent" }, [
+                _c("div", { staticClass: "item-materigroup" }, [
+                  _c("div", { staticClass: "text-group" }, [
+                    _c("div", { staticClass: "text" }, [
+                      _vm._v("Bagian 1: Introduction")
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "subtext" }, [_vm._v("5/10")])
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "icon-drop" }, [
+                    _c("i", { staticClass: "fa fa-angle-down" })
+                  ])
+                ]),
+                _vm._v(" "),
+                _c("ul", { staticClass: "ul-child" }, [
+                  _c("li", { staticClass: "li-child" }, [
+                    _c("div", { staticClass: "item-materi" }, [
+                      _c("div", { staticClass: "text-group" }, [
+                        _c("div", { staticClass: "text" }, [
+                          _vm._v("1. What is laravel?")
+                        ]),
+                        _vm._v(" "),
+                        _c("div", { staticClass: "subtext" }, [
+                          _c("i", { staticClass: "fa fa-play-circle-o" }),
+                          _vm._v(" 15 minute")
+                        ])
+                      ])
+                    ])
+                  ]),
+                  _vm._v(" "),
+                  _c("li", { staticClass: "li-child" }, [
+                    _c("div", { staticClass: "item-materi" }, [
+                      _c("div", { staticClass: "text-group" }, [
+                        _c("div", { staticClass: "text" }, [
+                          _vm._v("2. What is VueJs?")
+                        ]),
+                        _vm._v(" "),
+                        _c("div", { staticClass: "subtext" }, [
+                          _c("i", { staticClass: "fa fa-play-circle-o" }),
+                          _vm._v(" 5 minute")
+                        ])
+                      ])
+                    ])
+                  ])
+                ])
+              ]),
+              _vm._v(" "),
+              _c("li", { staticClass: "li-parent" }, [
+                _c("div", { staticClass: "item-materigroup" }, [
+                  _c("div", { staticClass: "text-group" }, [
+                    _c("div", { staticClass: "text" }, [
+                      _vm._v("Bagian 2: Instalation")
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "subtext" }, [_vm._v("5/10")])
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "icon-drop" }, [
+                    _c("i", { staticClass: "fa fa-angle-down" })
+                  ])
+                ]),
+                _vm._v(" "),
+                _c("ul", { staticClass: "ul-child active" }, [
+                  _c("li", { staticClass: "li-child" }, [
+                    _c("div", { staticClass: "item-materi" }, [
+                      _c("div", { staticClass: "text-group" }, [
+                        _c("div", { staticClass: "text" }, [
+                          _vm._v("1. What is laravel?")
+                        ]),
+                        _vm._v(" "),
+                        _c("div", { staticClass: "subtext" }, [
+                          _c("i", { staticClass: "fa fa-play-circle-o" }),
+                          _vm._v(" 15 minute")
+                        ])
+                      ])
+                    ])
+                  ]),
+                  _vm._v(" "),
+                  _c("li", { staticClass: "li-child" }, [
+                    _c("div", { staticClass: "item-materi" }, [
+                      _c("div", { staticClass: "text-group" }, [
+                        _c("div", { staticClass: "text" }, [
+                          _vm._v("2. What is VueJs?")
+                        ]),
+                        _vm._v(" "),
+                        _c("div", { staticClass: "subtext" }, [
+                          _c("i", { staticClass: "fa fa-play-circle-o" }),
+                          _vm._v(" 5 minute")
+                        ])
+                      ])
+                    ])
+                  ])
+                ])
+              ])
+            ])
+          ])
+        ])
+      ])
+    ])
+  }
+]
 render._withStripped = true
 
 

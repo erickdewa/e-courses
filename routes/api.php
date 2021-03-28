@@ -40,6 +40,8 @@ Route::prefix('v1')->group(function(){
 		    	});
 
 				Route::prefix('courses')->group(function(){
+					Route::get('/{uuid}/auth', 'CoursesController@getDataCoursesAuth');
+					
 			    	Route::prefix('my')->group(function(){
 		    			Route::get('/getcourses', 'UserCoursesController@getDataCoursesAll');
 			    		Route::post('/{uuid}/getplayer', 'UserCoursesController@getDataCoursesPlayer');

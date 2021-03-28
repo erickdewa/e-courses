@@ -26,7 +26,6 @@ const config = {
 	logoutData: {
 		url: 'v1/auth/logout',
 		method: 'POST',
-		redirect: '/redirect/logout',
 		makeRequest: true
 	},
 

@@ -104,6 +104,21 @@ __webpack_require__.r(__webpack_exports__);
         vm.dataCourses = res.data.data;
       })["catch"](function (error) {// error
       });
+    },
+    logout: function logout() {
+      var vm = this;
+      swal({
+        title: "Anda akan logout?",
+        text: "Apakah anda yakin untuk logout!",
+        icon: "warning",
+        confirmButtonText: "Yes"
+      }).then(function (result) {
+        if (result) {
+          vm.$router.push({
+            path: '/redirect/logout'
+          });
+        }
+      });
     }
   },
   mounted: function mounted() {
@@ -223,13 +238,28 @@ var render = function() {
             [_c("i", { staticClass: "fa fa-edit" }), _vm._v(" Edit\n\t\t\t\t")]
           ),
           _vm._v(" "),
-          _vm._m(0)
+          _c(
+            "button",
+            {
+              staticClass: "btn btn-sm btn-info",
+              attrs: { type: "button" },
+              on: {
+                click: function($event) {
+                  return _vm.logout()
+                }
+              }
+            },
+            [
+              _c("i", { staticClass: "fa fa-sign-out" }),
+              _vm._v(" Logout\n\t\t\t\t")
+            ]
+          )
         ])
       ])
     ]),
     _vm._v(" "),
     _c("div", { staticClass: "courses-page" }, [
-      _vm._m(1),
+      _vm._m(0),
       _vm._v(" "),
       _c("div", { staticClass: "courses-profile-list" }, [
         _c(
@@ -319,16 +349,6 @@ var render = function() {
   ])
 }
 var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c(
-      "button",
-      { staticClass: "btn btn-sm btn-info", attrs: { type: "button" } },
-      [_c("i", { staticClass: "fa fa-sign-out" }), _vm._v(" Logout\n\t\t\t\t")]
-    )
-  },
   function() {
     var _vm = this
     var _h = _vm.$createElement
