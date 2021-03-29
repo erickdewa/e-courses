@@ -1,59 +1,22 @@
 <template>
 	<div>
 		<ul class="ul-parent">
-			<li class="li-parent">
+			<li class="li-parent" v-for="(materigroup, i) in $parent.dataCourses.materigroup">
 				<div class="item-materigroup">
 					<div class="text-group">
-						<div class="text">Bagian 1: Introduction</div>
+						<div class="text">Bagian {{ i+=1 }}: {{ materigroup.nm_materi }}</div>
 						<div class="subtext">5/10</div>
 					</div>
 					<div class="icon-drop">
 						<i class="fa fa-angle-down"></i>
 					</div>
 				</div>
-				<ul class="ul-child">
-					<li class="li-child">
+				<ul class="ul-child" v-bind:class="(($parent.materiGroupUuid==null)?((i==0)?'active':''):((materigroup.uuid==$parent.materiGroupUuid)?'active':''))">
+					<li class="li-child active" v-for="(materi, j) in materigroup.materi" @click="$parent.setCookie(materigroup.uuid, materi.uuid)">
 						<div class="item-materi">
 							<div class="text-group">
-								<div class="text">1. What is laravel?</div>
+								<div class="text">{{ j+=1 }}. {{ materi.nm_materi }}</div>
 								<div class="subtext"><i class="fa fa-play-circle-o"></i> 15 minute</div>
-							</div>
-						</div>
-					</li>
-					<li class="li-child">
-						<div class="item-materi">
-							<div class="text-group">
-								<div class="text">2. What is VueJs?</div>
-								<div class="subtext"><i class="fa fa-play-circle-o"></i> 5 minute</div>
-							</div>
-						</div>
-					</li>
-				</ul>
-			</li>
-			<li class="li-parent">
-				<div class="item-materigroup">
-					<div class="text-group">
-						<div class="text">Bagian 2: Instalation</div>
-						<div class="subtext">5/10</div>
-					</div>
-					<div class="icon-drop">
-						<i class="fa fa-angle-down"></i>
-					</div>
-				</div>
-				<ul class="ul-child active">
-					<li class="li-child">
-						<div class="item-materi">
-							<div class="text-group">
-								<div class="text">1. What is laravel?</div>
-								<div class="subtext"><i class="fa fa-play-circle-o"></i> 15 minute</div>
-							</div>
-						</div>
-					</li>
-					<li class="li-child">
-						<div class="item-materi">
-							<div class="text-group">
-								<div class="text">2. What is VueJs?</div>
-								<div class="subtext"><i class="fa fa-play-circle-o"></i> 5 minute</div>
 							</div>
 						</div>
 					</li>
@@ -71,12 +34,32 @@
 	        }
 	    },
 	    methods: {
+	    	loadJsElement(){
+	    		var vm = this;
 
+	    		setTimeout(function(){
+			    	$('.li-parent').on('click', function(){
+						if(!$(this).children('.ul-child').hasClass('active')){
+							if($('.ul-child').hasClass('active')){
+								$('.ul-child').removeClass('active');
+
+								if($(this).children('ul').length > 0){
+									$(this).children('.ul-child').addClass('active');
+								}
+							}else{
+								if($(this).children('ul').length > 0){
+									$(this).children('.ul-child').addClass('active');
+								}
+							}
+						}else{
+							$('.ul-child').removeClass('active');
+						}
+					});
+		    	}, 1000);
+	    	},
 	    },
 	    mounted(){
 	    	var vm = this;
-
-	    	Aropex.video('aro-video', '/assets/images/bg/bg-01.jpg');
 	    }
 	}
 </script>

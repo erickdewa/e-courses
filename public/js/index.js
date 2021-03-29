@@ -292,9 +292,9 @@ $(document).ready(function (e) {
             fsStatus = document.getElementById('courses-status');
 
         if (window.fullScreenApi.supportsFullScreen) {
-          fsStatus.innerHTML = 'YES: Your browser supports FullScreen';
-          fsStatus.className = 'fullScreenSupported'; // handle button click
-
+          // fsStatus.innerHTML = 'YES: Your browser supports FullScreen';
+          // fsStatus.className = 'fullScreenSupported';
+          // handle button click
           fsButton.addEventListener('click', function () {
             window.fullScreenApi.requestFullScreen(fsElement);
           }, true);
@@ -304,19 +304,16 @@ $(document).ready(function (e) {
               var height = width / 2 + 30;
               $('#aro-video').prop('width', width);
               $('#aro-video').prop('height', height);
-              $('#courses-video-box').addClass('fullscreen');
-              fsStatus.innerHTML = 'Whoa, you went fullscreen';
+              $('#courses-video-box').addClass('fullscreen'); // fsStatus.innerHTML = 'Whoa, you went fullscreen';
             } else {
               var width = $('#courses-video-box').width();
               var height = width / 2;
               $('#aro-video').prop('width', width);
               $('#aro-video').prop('height', height);
-              $('#courses-video-box').removeClass('fullscreen');
-              fsStatus.innerHTML = 'Back to normal';
+              $('#courses-video-box').removeClass('fullscreen'); // fsStatus.innerHTML = 'Back to normal';
             }
           }, true);
-        } else {
-          fsStatus.innerHTML = 'SORRY: Your browser does not support FullScreen';
+        } else {// fsStatus.innerHTML = 'SORRY: Your browser does not support FullScreen';
         }
 
         function updateTimerDisplay() {
@@ -397,6 +394,15 @@ $(document).ready(function (e) {
         } else {
           $(target).modal('hide');
         }
+      } else if (event == 'tabbed') {
+        var target = $(el).data('target');
+
+        if (!$(el).hasClass('active')) {
+          $('.tabbed-head').removeClass('active');
+          $('.tabbed-card').removeClass('active');
+          $(el).addClass('active');
+          $(target).addClass('active');
+        }
       }
     };
   }
@@ -448,6 +454,10 @@ $(document).ready(function (e) {
   });
   $('.dropdown').on('click', function () {
     Aropex.event(this, true);
+  });
+  $('.tabbed-head').on('click', function () {
+    Aropex.event(this, false);
+    console.log(this);
   });
   $(window).scroll(function () {
     var scroll = $(window).scrollTop();

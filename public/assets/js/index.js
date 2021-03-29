@@ -191,8 +191,8 @@ $(document).ready(function(e){
 
 
 				if (window.fullScreenApi.supportsFullScreen) {
-					fsStatus.innerHTML = 'YES: Your browser supports FullScreen';
-					fsStatus.className = 'fullScreenSupported';
+					// fsStatus.innerHTML = 'YES: Your browser supports FullScreen';
+					// fsStatus.className = 'fullScreenSupported';
 					
 					// handle button click
 					fsButton.addEventListener('click', function() {
@@ -206,19 +206,19 @@ $(document).ready(function(e){
 							$('#aro-video').prop('width', width);
 							$('#aro-video').prop('height', height);
 							$('#courses-video-box').addClass('fullscreen');
-							fsStatus.innerHTML = 'Whoa, you went fullscreen';
+							// fsStatus.innerHTML = 'Whoa, you went fullscreen';
 						} else {
 							var width = $('#courses-video-box').width();
 							var height = ((width/2));
 							$('#aro-video').prop('width', width);
 							$('#aro-video').prop('height', height);
 							$('#courses-video-box').removeClass('fullscreen');
-							fsStatus.innerHTML = 'Back to normal';
+							// fsStatus.innerHTML = 'Back to normal';
 						}
 					}, true);
 					
 				} else {
-					fsStatus.innerHTML = 'SORRY: Your browser does not support FullScreen';
+					// fsStatus.innerHTML = 'SORRY: Your browser does not support FullScreen';
 				}
 
 				function updateTimerDisplay(){
@@ -291,6 +291,14 @@ $(document).ready(function(e){
 				}else{
 					$(target).modal('hide');
 				}
+			}else if(event == 'tabbed'){
+				var target = $(el).data('target');
+				if(!$(el).hasClass('active')){
+					$('.tabbed-head').removeClass('active');
+					$('.tabbed-card').removeClass('active');
+					$(el).addClass('active');
+					$(target).addClass('active');
+				}
 			}
 		};
 	}
@@ -339,6 +347,11 @@ $(document).ready(function(e){
 	$('.dropdown').on('click', function(){
 		Aropex.event(this, true);
 	});
+
+	$('.tabbed-head').on('click', function(){
+		Aropex.event(this, false);
+		console.log(this);
+	})
 
 	$(window).scroll(function() {
         var scroll = $(window).scrollTop();

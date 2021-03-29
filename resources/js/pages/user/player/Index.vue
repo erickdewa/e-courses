@@ -3,7 +3,6 @@
 		<div class="courses-page">
 			<div class="courses-play container">
 				<div class="courses-player">
-					<div id="courses-status"></div>
 					<Player></Player>
 					<div class="courses-play-header">
 						<ul class="ul-header">
@@ -16,27 +15,26 @@
 						</ul>
 					</div>
 					<div class="courses-play-body">
-						<div id="card-information" class="tabbed-card active">
-							<div class="courses-title">
-								Bagian 1: Intro - Laravel For Beginer
-							</div>
-							<div class="courses-description">
-								Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-								tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-								quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-								consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
-								cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
-								proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-							</div>
-							<div class="courses-created">
-								<div class="label">
-									<div class="title">Creator</div>: Erick Dewa
-								</div>
-								<div class="label">
-									<div class="title">Created At</div>: 18 Maret 2021
-								</div>
-							</div>
-						</div>
+						<template v-for="(materigroup, i) in dataCourses.materigroup">
+							<template v-if="((materiGroupUuid==null)?(i==0):(materigroup.uuid==materiGroupUuid))" v-for="(materi, j) in materigroup.materi">
+								<template v-if="((materiGroupUuid==null)?(j==0):(materi.uuid==materiUuid))">
+									<div id="card-information" class="tabbed-card active">
+										<div class="courses-title">
+											Bagian {{ i+=1 }}: Intro - {{ materi.nm_materi }}
+										</div>
+										<div class="courses-description" v-html="dataCourses.description"></div>
+										<div class="courses-created">
+											<div class="label">
+												<div class="title">Creator</div>: {{ dataCourses.user.name }}
+											</div>
+											<div class="label">
+												<div class="title">Created At</div>: {{ dataCourses.created_at }}
+											</div>
+										</div>
+									</div>
+								</template>
+							</template>
+						</template>
 						<div id="card-comment" class="tabbed-card">
 							comment
 						</div>
@@ -59,7 +57,10 @@
     	},
     	data() {
 	        return {
+	        	dataCourses: {},
 
+	        	materiGroupUuid: '',
+				materiUuid: '',
 	        }
 	    },
 	    methods: {
@@ -71,13 +72,39 @@
 	    			method: 'GET',
 	    		}).then((res)=>{
 	    			vm.dataCourses = res.data.data;
+
+	    			vm.getCookie();
+			    	if(vm.materigroup == null){
+			    		vm.setCookie();
+			    	}
 	    		}).catch((error)=>{
 	    			// error
 	    		});
-	    	}
+	    	},
+	    	setCookie(materiGroupUuid = null, materiUuid = null){
+	    		var vm = this;
+	    		
+	    		if(materiGroupUuid == null && materiUuid == null){
+		    		localStorage.setItem("materiGroupUuid", vm.dataCourses.materigroup[0].uuid);
+		    		localStorage.setItem("materiUuid", vm.dataCourses.materigroup[0].materi[0].uuid);
+	    		}else{
+	    			localStorage.setItem("materiGroupUuid", materiGroupUuid);
+		    		localStorage.setItem("materiUuid", materiUuid);
+	    		}
+	    	},
+	    	getCookie(){
+	    		var vm = this;
+
+	    		vm.materiGroupUuid = localStorage.getItem("materiGroupUuid");
+	    		vm.materiUuid = localStorage.getItem("materiUuid");
+	    	},
 	    },
 	    mounted(){
 	    	var vm = this;
+
+	    	$('.tabbed-head').on('click', function(){
+				Aropex.event(this, false);
+			})
 
 	    	vm.getDataCoursesAuth(vm.$route.params.uuidCourses);
 	    }

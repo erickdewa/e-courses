@@ -2,7 +2,13 @@
 	<div>
 		<div id="courses-video-box" class="courses-video-box">
 			<div class="video-player">
-				<div id="aro-video" data-video="M7lc1UVf-VE"></div>
+				<template v-for="(materigroup, i) in $parent.dataCourses.materigroup">
+					<template v-if="(($parent.materiGroupUuid==null)?(i==0):(materigroup.uuid==$parent.materiGroupUuid))" v-for="(materi, j) in materigroup.materi">
+						<template v-if="(($parent.materiGroupUuid==null)?(j==0):(materi.uuid==$parent.materiUuid))">
+							<div id="aro-video" :data-video="materi.video"></div>
+						</template>
+					</template>
+				</template>
 			</div>
 			<div class="video-control">
 				<div class="btn-control-left" align="center">
@@ -43,6 +49,10 @@
 	    },
 	    mounted(){
 	    	var vm = this;
+
+	    	setTimeout(function(){
+		    	Aropex.video('aro-video', '/assets/images/bg/bg-01.jpg');
+	    	}, 1000);
 	    }
 	}
 </script>
