@@ -185,6 +185,21 @@ __webpack_require__.r(__webpack_exports__);
         var nameParent = "".concat(menuName[0], ".").concat(menuName[1]);
         return nameParent == name ? 'active' : '';
       }
+    },
+    logout: function logout() {
+      var vm = this;
+      swal({
+        title: "Anda akan logout?",
+        text: "Apakah anda yakin untuk logout!",
+        icon: "warning",
+        confirmButtonText: "Yes"
+      }).then(function (result) {
+        if (result) {
+          vm.$router.push({
+            path: '/redirect/logout'
+          });
+        }
+      });
     }
   },
   mounted: function mounted() {
@@ -644,12 +659,53 @@ var render = function() {
     ]),
     _vm._v(" "),
     _c("div", { staticClass: "aro-main" }, [
-      _vm._m(1),
+      _c("div", { staticClass: "aro-top-menu" }, [
+        _c("div", { staticClass: "top-menu" }, [
+          _vm._m(1),
+          _vm._v(" "),
+          _c("div", { staticClass: "aro-top-menu_rigth" }, [
+            _vm._m(2),
+            _vm._v(" "),
+            _vm._m(3),
+            _vm._v(" "),
+            _c(
+              "div",
+              {
+                staticClass: "aro-profile-top-dropdown",
+                attrs: { id: "profile-top-dropdown" }
+              },
+              [
+                _vm._m(4),
+                _vm._v(" "),
+                _c("div", { staticClass: "aro-profile-button" }, [
+                  _c(
+                    "div",
+                    {
+                      staticClass: "btn btn-warning btn-sm",
+                      on: {
+                        click: function($event) {
+                          return _vm.logout()
+                        }
+                      }
+                    },
+                    [
+                      _c("i", { staticClass: "fa fa-sign-out" }),
+                      _vm._v(" Logout")
+                    ]
+                  ),
+                  _vm._v(" "),
+                  _vm._m(5)
+                ])
+              ]
+            )
+          ])
+        ])
+      ]),
       _vm._v(" "),
       _c("div", { staticClass: "aro-content" }, [_c("router-view")], 1)
     ]),
     _vm._v(" "),
-    _vm._m(2)
+    _vm._m(6)
   ])
 }
 var staticRenderFns = [
@@ -665,87 +721,81 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "aro-top-menu" }, [
-      _c("div", { staticClass: "top-menu" }, [
-        _c("div", { staticClass: "aro-top-menu_left" }, [
-          _c(
-            "div",
-            {
-              staticClass: "aro-menu",
-              attrs: { "data-event": "dropdown", "data-target": "#aro-sidebar" }
-            },
-            [_c("i", { staticClass: "fa fa-bars" })]
-          )
-        ]),
+    return _c("div", { staticClass: "aro-top-menu_left" }, [
+      _c(
+        "div",
+        {
+          staticClass: "aro-menu",
+          attrs: { "data-event": "dropdown", "data-target": "#aro-sidebar" }
+        },
+        [_c("i", { staticClass: "fa fa-bars" })]
+      )
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "aro-info-top" }, [
+      _c("div", { staticClass: "top-icon" }, [
+        _c("i", { staticClass: "fa fa-search" })
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "top-icon" }, [
+        _c("i", { staticClass: "fa fa-snowflake-o" })
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "top-icon" }, [
+        _c("span", [_vm._v("12")]),
         _vm._v(" "),
-        _c("div", { staticClass: "aro-top-menu_rigth" }, [
-          _c("div", { staticClass: "aro-info-top" }, [
-            _c("div", { staticClass: "top-icon" }, [
-              _c("i", { staticClass: "fa fa-search" })
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "top-icon" }, [
-              _c("i", { staticClass: "fa fa-snowflake-o" })
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "top-icon" }, [
-              _c("span", [_vm._v("12")]),
-              _vm._v(" "),
-              _c("i", { staticClass: "fa fa-commenting-o" })
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "top-icon" }, [
-              _c("span", [_vm._v("1")]),
-              _vm._v(" "),
-              _c("i", { staticClass: "fa fa-bell-o" })
-            ])
-          ]),
-          _vm._v(" "),
-          _c(
-            "div",
-            {
-              staticClass: "aro-profile-top dropdown",
-              attrs: {
-                "data-event": "dropdown",
-                "data-target": "#profile-top-dropdown"
-              }
-            },
-            [
-              _c("img", {
-                staticClass: "aro-profile-top-img",
-                attrs: { src: "/assets/images/avatar-1.png" }
-              })
-            ]
-          ),
-          _vm._v(" "),
-          _c(
-            "div",
-            {
-              staticClass: "aro-profile-top-dropdown",
-              attrs: { id: "profile-top-dropdown" }
-            },
-            [
-              _c("div", { staticClass: "aro-profile-information" }, [
-                _c("div", { staticClass: "profile-dropdown-name" }, [
-                  _vm._v("Erick Dewa Pranata")
-                ])
-              ]),
-              _vm._v(" "),
-              _c("div", { staticClass: "aro-profile-button" }, [
-                _c("div", { staticClass: "btn btn-warning btn-sm" }, [
-                  _c("i", { staticClass: "fa fa-sign-out" }),
-                  _vm._v(" Logout")
-                ]),
-                _vm._v(" "),
-                _c("div", { staticClass: "btn btn-info btn-sm" }, [
-                  _c("i", { staticClass: "fa fa-user" }),
-                  _vm._v(" Profile")
-                ])
-              ])
-            ]
-          )
-        ])
+        _c("i", { staticClass: "fa fa-commenting-o" })
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "top-icon" }, [
+        _c("span", [_vm._v("1")]),
+        _vm._v(" "),
+        _c("i", { staticClass: "fa fa-bell-o" })
       ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "div",
+      {
+        staticClass: "aro-profile-top dropdown",
+        attrs: {
+          "data-event": "dropdown",
+          "data-target": "#profile-top-dropdown"
+        }
+      },
+      [
+        _c("img", {
+          staticClass: "aro-profile-top-img",
+          attrs: { src: "/assets/images/avatar-1.png" }
+        })
+      ]
+    )
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "aro-profile-information" }, [
+      _c("div", { staticClass: "profile-dropdown-name" }, [
+        _vm._v("Erick Dewa Pranata")
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "btn btn-info btn-sm" }, [
+      _c("i", { staticClass: "fa fa-user" }),
+      _vm._v(" Profile")
     ])
   },
   function() {

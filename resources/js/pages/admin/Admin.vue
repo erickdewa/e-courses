@@ -63,7 +63,7 @@
 								<div class="profile-dropdown-name">Erick Dewa Pranata</div>
 							</div>
 							<div class="aro-profile-button">
-								<div class="btn btn-warning btn-sm"><i class="fa fa-sign-out"></i> Logout</div>
+								<div class="btn btn-warning btn-sm" @click="logout()"><i class="fa fa-sign-out"></i> Logout</div>
 								<div class="btn btn-info btn-sm"><i class="fa fa-user"></i> Profile</div>
 							</div>
 						</div>
@@ -126,7 +126,21 @@
 	    			var nameParent = `${ menuName[0] }.${ menuName[1] }`;
 	    			return ((nameParent == name) ? 'active' : '' );
 	    		}
-	    	}
+	    	},
+	    	logout(){
+				var vm = this;
+
+				swal({
+                    title: "Anda akan logout?",
+					text: "Apakah anda yakin untuk logout!",
+					icon: "warning",
+					confirmButtonText: "Yes",
+                }).then((result) => {
+                    if(result) {
+                    	vm.$router.push({ path: '/redirect/logout'});
+                    }
+                });
+			},
 	    },
 	    mounted(){
 	    	var vm = this;

@@ -64,17 +64,18 @@
 
 	    		vm.showList = true;
 	    		vm.showForm = false;
-	    		vm.formData = {
-	        		uuid: '',
-	        		courses_id: '',
-	        		text: '',
-	        	};
 	    	},
 	    	setShowForm(){
 	    		var vm = this;
 
 	    		vm.showList = false;
 	    		vm.showForm = true;
+
+	    		vm.formData = {
+	        		uuid: '',
+	        		courses_id: '',
+	        		text: '',
+	        	};
 	    	},
 
 	    	callback(){

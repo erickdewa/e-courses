@@ -35,7 +35,7 @@
 									<div class="col-md-6">
 										<div class="form-group">
 											<label>Link Video</label>
-											<div class="input-group mb-3">
+											<div class="input-group d-flex" style="padding: 2px">
 												<input type="text" class="form-control" name="video" required @input="showPreviewVideo()" v-model="formData.video" placeholder="Link Video">
 												<div class="input-group-append">
 													<span class="input-group-text" id="preview" @click="setShowVideo()">
@@ -168,6 +168,13 @@
 	    		vm.title = 'Tambah Materi';
 	    		vm.showTambah = true;
 	        	vm.showPreview = false;
+
+	        	vm.formData = {
+	        		uuid: '',
+	        		video: '',
+	        		nm_materi: '',
+					description: '-',
+	        	};
 
 	        	if(vm.player != ''){
 	        		if(typeof vm.player != 'undefined'){

@@ -521,16 +521,16 @@ __webpack_require__.r(__webpack_exports__);
       var vm = this;
       vm.showList = true;
       vm.showForm = false;
-      vm.formData = {
-        uuid: '',
-        courses_id: '',
-        text: ''
-      };
     },
     setShowForm: function setShowForm() {
       var vm = this;
       vm.showList = false;
       vm.showForm = true;
+      vm.formData = {
+        uuid: '',
+        courses_id: '',
+        text: ''
+      };
     },
     callback: function callback() {
       var vm = this;
@@ -773,6 +773,12 @@ __webpack_require__.r(__webpack_exports__);
       vm.title = 'Tambah Materi';
       vm.showTambah = true;
       vm.showPreview = false;
+      vm.formData = {
+        uuid: '',
+        video: '',
+        nm_materi: '',
+        description: '-'
+      };
 
       if (vm.player != '') {
         if (typeof vm.player != 'undefined') {
@@ -974,6 +980,11 @@ __webpack_require__.r(__webpack_exports__);
       var vm = this;
       vm.showList = false;
       vm.showForm = true;
+      vm.formData = {
+        uuid: '',
+        courses_id: '',
+        nm_materi: ''
+      };
     },
     callback: function callback() {
       var vm = this;
@@ -2647,7 +2658,10 @@ var render = function() {
                                       _vm._v(" "),
                                       _c(
                                         "div",
-                                        { staticClass: "input-group mb-3" },
+                                        {
+                                          staticClass: "input-group d-flex",
+                                          staticStyle: { padding: "2px" }
+                                        },
                                         [
                                           _c("input", {
                                             directives: [

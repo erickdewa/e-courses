@@ -80,6 +80,12 @@
 
 	    		vm.showList = false;
 	    		vm.showForm = true;
+
+	    		vm.formData = {
+	        		uuid: '',
+	        		courses_id: '',
+	        		nm_materi: '',
+	        	};
 	    	},
 
 	    	callback(){
