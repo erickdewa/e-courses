@@ -70,9 +70,9 @@ class MateriController extends Controller
         if(isset($request->thumbnail)) {
             $nama_thumbnail = 'courses_'.time().'.'.$request->thumbnail->getClientOriginalExtension();
             $request->thumbnail->move(public_path('img/courses/thumbnail'), $nama_thumbnail);
-            $thumbnail = '/img/courses/thumbnileMateri/'.$nama_thumbnail;
+            $thumbnail = '/img/courses/thumbnail/'.$nama_thumbnail;
         }else{
-            $thumbnail = '/img/courses/thumbnileMateri/default.png';
+            $thumbnail = '/img/courses/thumbnail/default.png';
         }
 
         $data = Materi::create([
@@ -127,8 +127,8 @@ class MateriController extends Controller
         $data = Materi::findByUuid($uuid);
         if(isset($request->thumbnail)) {
             $nama_thumbnail = 'courses_'.time().'.'.$request->thumbnail->getClientOriginalExtension();
-            $request->thumbnail->move(public_path('img/courses/thumbnileMateri'), $nama_thumbnail);
-            if($data->thumbnail != '/img/courses/thumbnileMateri/default.png'){
+            $request->thumbnail->move(public_path('img/courses/thumbnail'), $nama_thumbnail);
+            if($data->thumbnail != '/img/courses/thumbnail/default.png'){
                 $fwhite = public_path().$data->thumbnail;
                 if (is_file($fwhite)) {
                     unlink($fwhite);
@@ -154,7 +154,7 @@ class MateriController extends Controller
     public function delete($uuid)
     {
         $data = Materi::findByUuid($uuid);
-        if($data->thumbnile != '/img/courses/thumbnileMateri/default.png'){
+        if($data->thumbnile != '/img/courses/thumbnail/default.png'){
             $fwhite = public_path().$data->thumbnile;
             if (is_file($fwhite)) {
                 unlink($fwhite);

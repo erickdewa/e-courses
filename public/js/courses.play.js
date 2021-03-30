@@ -71,6 +71,7 @@ __webpack_require__.r(__webpack_exports__);
   data: function data() {
     return {
       dataCourses: {},
+      thumbnail: '',
       materiGroupUuid: '',
       materiUuid: ''
     };
@@ -91,15 +92,21 @@ __webpack_require__.r(__webpack_exports__);
       })["catch"](function (error) {// error
       });
     },
+    changeVideo: function changeVideo() {
+      var vm = this;
+    },
     setCookie: function setCookie() {
-      var materiGroupUuid = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : null;
-      var materiUuid = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : null;
+      var thumbnail = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : null;
+      var materiGroupUuid = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : null;
+      var materiUuid = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : null;
       var vm = this;
 
-      if (materiGroupUuid == null && materiUuid == null) {
+      if (thumbnail == null && materiGroupUuid == null && materiUuid == null) {
+        localStorage.setItem("thumbnail", vm.dataCourses.materigroup[0].materi[0].thumbnail);
         localStorage.setItem("materiGroupUuid", vm.dataCourses.materigroup[0].uuid);
         localStorage.setItem("materiUuid", vm.dataCourses.materigroup[0].materi[0].uuid);
       } else {
+        localStorage.setItem("thumbnail", thumbnail);
         localStorage.setItem("materiGroupUuid", materiGroupUuid);
         localStorage.setItem("materiUuid", materiUuid);
       }
@@ -108,6 +115,7 @@ __webpack_require__.r(__webpack_exports__);
       var vm = this;
       vm.materiGroupUuid = localStorage.getItem("materiGroupUuid");
       vm.materiUuid = localStorage.getItem("materiUuid");
+      vm.thumbnail = localStorage.getItem("thumbnail");
     }
   },
   mounted: function mounted() {
@@ -171,14 +179,17 @@ __webpack_require__.r(__webpack_exports__);
 //
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
-    return {};
+    return {
+      thumbnail: '/assets/images/bg/bg-01.jpg'
+    };
   },
   methods: {},
   mounted: function mounted() {
     var vm = this;
     setTimeout(function () {
-      Aropex.video('aro-video', '/assets/images/bg/bg-01.jpg');
-    }, 1000);
+      vm.thumbnail = vm.$parent.thumbnail;
+      Aropex.video('aro-video', vm.thumbnail);
+    }, 1500);
   }
 });
 
@@ -221,6 +232,8 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {};
@@ -230,6 +243,8 @@ __webpack_require__.r(__webpack_exports__);
       var vm = this;
       setTimeout(function () {
         $('.li-parent').on('click', function () {
+          console.log(true);
+
           if (!$(this).children('.ul-child').hasClass('active')) {
             if ($('.ul-child').hasClass('active')) {
               $('.ul-child').removeClass('active');
@@ -242,8 +257,6 @@ __webpack_require__.r(__webpack_exports__);
                 $(this).children('.ul-child').addClass('active');
               }
             }
-          } else {
-            $('.ul-child').removeClass('active');
           }
         });
       }, 1000);
@@ -251,6 +264,7 @@ __webpack_require__.r(__webpack_exports__);
   },
   mounted: function mounted() {
     var vm = this;
+    vm.loadJsElement();
   }
 });
 
@@ -600,36 +614,45 @@ var render = function() {
                   ? "active"
                   : ""
             },
-            _vm._l(materigroup.materi, function(materi, j) {
-              return _c(
-                "li",
-                {
-                  staticClass: "li-child active",
-                  on: {
-                    click: function($event) {
-                      return _vm.$parent.setCookie(
-                        materigroup.uuid,
-                        materi.uuid
+            [
+              _vm._l(materigroup.materi, function(materi, j) {
+                return materi.materigroup_id == materigroup.id
+                  ? [
+                      _c(
+                        "li",
+                        {
+                          staticClass: "li-child active",
+                          on: {
+                            click: function($event) {
+                              return _vm.$parent.setCookie(
+                                materi.thumbnail,
+                                materigroup.uuid,
+                                materi.uuid
+                              )
+                            }
+                          }
+                        },
+                        [
+                          _c("div", { staticClass: "item-materi" }, [
+                            _c("div", { staticClass: "text-group" }, [
+                              _c("div", { staticClass: "text" }, [
+                                _vm._v(
+                                  _vm._s((j += 1)) +
+                                    ". " +
+                                    _vm._s(materi.nm_materi)
+                                )
+                              ]),
+                              _vm._v(" "),
+                              _vm._m(1, true)
+                            ])
+                          ])
+                        ]
                       )
-                    }
-                  }
-                },
-                [
-                  _c("div", { staticClass: "item-materi" }, [
-                    _c("div", { staticClass: "text-group" }, [
-                      _c("div", { staticClass: "text" }, [
-                        _vm._v(
-                          _vm._s((j += 1)) + ". " + _vm._s(materi.nm_materi)
-                        )
-                      ]),
-                      _vm._v(" "),
-                      _vm._m(1, true)
-                    ])
-                  ])
-                ]
-              )
-            }),
-            0
+                    ]
+                  : _vm._e()
+              })
+            ],
+            2
           )
         ])
       }),

@@ -28,10 +28,11 @@ class CoursesController extends Controller
     {
         $data = Courses::with(['materigroup' => function($query){
             $query->with(['materi' => function($query){
-                $query->where('is_preview', 'Y');
+                $query->where('is_preview', 'Y')
+                ->orderBy('id', 'asc');
             }])->whereHas('materi', function($query){
                 $query->where('is_preview', 'Y');
-            });
+            })->orderBy('id', 'asc');
         }, 'user', 'coursestool.tool', 'courseslearn'])
         ->where('uuid', $uuid)->first();
 

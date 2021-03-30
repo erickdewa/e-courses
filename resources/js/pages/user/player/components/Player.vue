@@ -41,7 +41,7 @@
     export default {
     	data() {
 	        return {
-
+	        	thumbnail: '/assets/images/bg/bg-01.jpg',
 	        }
 	    },
 	    methods: {
@@ -51,8 +51,9 @@
 	    	var vm = this;
 
 	    	setTimeout(function(){
-		    	Aropex.video('aro-video', '/assets/images/bg/bg-01.jpg');
-	    	}, 1000);
+		    	vm.thumbnail = vm.$parent.thumbnail;
+		    	Aropex.video('aro-video', vm.thumbnail);
+	    	}, 1500);
 	    }
 	}
 </script>

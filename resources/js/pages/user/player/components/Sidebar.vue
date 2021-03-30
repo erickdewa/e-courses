@@ -12,14 +12,16 @@
 					</div>
 				</div>
 				<ul class="ul-child" v-bind:class="(($parent.materiGroupUuid==null)?((i==0)?'active':''):((materigroup.uuid==$parent.materiGroupUuid)?'active':''))">
-					<li class="li-child active" v-for="(materi, j) in materigroup.materi" @click="$parent.setCookie(materigroup.uuid, materi.uuid)">
-						<div class="item-materi">
-							<div class="text-group">
-								<div class="text">{{ j+=1 }}. {{ materi.nm_materi }}</div>
-								<div class="subtext"><i class="fa fa-play-circle-o"></i> 15 minute</div>
+					<template v-for="(materi, j) in materigroup.materi" v-if="materi.materigroup_id == materigroup.id">
+						<li class="li-child active" @click="$parent.setCookie(materi.thumbnail, materigroup.uuid, materi.uuid)">
+							<div class="item-materi">
+								<div class="text-group">
+									<div class="text">{{ j+=1 }}. {{ materi.nm_materi }}</div>
+									<div class="subtext"><i class="fa fa-play-circle-o"></i> 15 minute</div>
+								</div>
 							</div>
-						</div>
-					</li>
+						</li>
+					</template>
 				</ul>
 			</li>
 		</ul>
@@ -39,6 +41,7 @@
 
 	    		setTimeout(function(){
 			    	$('.li-parent').on('click', function(){
+			    		console.log(true);
 						if(!$(this).children('.ul-child').hasClass('active')){
 							if($('.ul-child').hasClass('active')){
 								$('.ul-child').removeClass('active');
@@ -51,8 +54,6 @@
 									$(this).children('.ul-child').addClass('active');
 								}
 							}
-						}else{
-							$('.ul-child').removeClass('active');
 						}
 					});
 		    	}, 1000);
@@ -60,6 +61,8 @@
 	    },
 	    mounted(){
 	    	var vm = this;
+
+	    	vm.loadJsElement();
 	    }
 	}
 </script>

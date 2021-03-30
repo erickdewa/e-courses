@@ -59,6 +59,7 @@
 	        return {
 	        	dataCourses: {},
 
+	        	thumbnail: '',
 	        	materiGroupUuid: '',
 				materiUuid: '',
 	        }
@@ -81,13 +82,18 @@
 	    			// error
 	    		});
 	    	},
-	    	setCookie(materiGroupUuid = null, materiUuid = null){
+	    	changeVideo(){
+	    		var vm = this;
+	    	},
+	    	setCookie(thumbnail = null, materiGroupUuid = null, materiUuid = null){
 	    		var vm = this;
 	    		
-	    		if(materiGroupUuid == null && materiUuid == null){
+	    		if(thumbnail == null && materiGroupUuid == null && materiUuid == null){
+	    			localStorage.setItem("thumbnail", vm.dataCourses.materigroup[0].materi[0].thumbnail);
 		    		localStorage.setItem("materiGroupUuid", vm.dataCourses.materigroup[0].uuid);
 		    		localStorage.setItem("materiUuid", vm.dataCourses.materigroup[0].materi[0].uuid);
 	    		}else{
+	    			localStorage.setItem("thumbnail", thumbnail);
 	    			localStorage.setItem("materiGroupUuid", materiGroupUuid);
 		    		localStorage.setItem("materiUuid", materiUuid);
 	    		}
@@ -97,6 +103,7 @@
 
 	    		vm.materiGroupUuid = localStorage.getItem("materiGroupUuid");
 	    		vm.materiUuid = localStorage.getItem("materiUuid");
+	    		vm.thumbnail = localStorage.getItem("thumbnail");
 	    	},
 	    },
 	    mounted(){
