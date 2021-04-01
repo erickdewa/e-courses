@@ -128,6 +128,7 @@
 
 	        	columns: [
 	        		{ name: 'Nama Materi', data: 'nm_materi' },
+	        		{ name: 'Status', data: 'is_preview' },
 	        		{ name: 'Aksi', data: 'action' },
 	        	],
 
@@ -205,6 +206,12 @@
 	                    var uuid = $(this).data('uuid');
 	                    vm.deleteData(uuid);
 	                });
+
+	                $('#table').on('click', '.switch', function(e){
+	                    var uuid = $(this).data('uuid');
+	                    var is_preview = $(this).data('is_preview');
+	                    vm.changeStatus(uuid, ((is_preview=='Y')?'N':'Y'));
+	                });
 	    		}, 200);
 	    	},
 
@@ -271,6 +278,20 @@
 	    			toastr.error(err.response.data.message, 'Error');
 	    		});
 	    	},
+
+	    	changeStatus: _.debounce(function(uuid, status){
+	    		var vm = this;
+
+	    		vm.$http({
+	    			url: `${ vm.apiUrl }/materi/${ uuid }/status`,
+	    			data: { is_preview: status },
+	    			method: 'POST',
+	    		}).then((res)=>{
+	    			vm.$refs.table.reload();
+	    		}).catch((err)=>{
+	    			toastr.error(err.response.data.message, 'Error');
+	    		})
+	    	}, 1000),
 
 	    	deleteData(uuid){
 	    		var vm = this;

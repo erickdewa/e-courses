@@ -70,6 +70,8 @@ __webpack_require__.r(__webpack_exports__);
   },
   data: function data() {
     return {
+      show: true,
+      change: false,
       dataCourses: {},
       thumbnail: '',
       materiGroupUuid: '',
@@ -92,8 +94,15 @@ __webpack_require__.r(__webpack_exports__);
       })["catch"](function (error) {// error
       });
     },
-    changeVideo: function changeVideo() {
+    changeVideo: function changeVideo(thumbnail, materiGroupUuid, materiUuid) {
       var vm = this;
+      vm.setCookie(thumbnail, materiGroupUuid, materiUuid);
+      vm.getCookie();
+      vm.change = true;
+      vm.show = false;
+      setTimeout(function () {
+        vm.show = true;
+      }, 100);
     },
     setCookie: function setCookie() {
       var thumbnail = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : null;
@@ -171,25 +180,45 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
+  props: ['videoId', 'change'],
   data: function data() {
     return {
-      thumbnail: '/assets/images/bg/bg-01.jpg'
+      thumbnail: '/assets/images/bg/bg-01.jpg',
+      player: ''
     };
   },
-  methods: {},
+  methods: {
+    StopVideo: function StopVideo() {
+      var vm = this;
+
+      if (vm.player != '') {
+        if (typeof vm.player != 'undefined') {
+          vm.player.stopVideo();
+        }
+      }
+    },
+    reloadPlayer: function reloadPlayer() {
+      var vm = this;
+      setTimeout(function () {
+        vm.thumbnail = vm.$parent.thumbnail;
+        vm.player = Aropex.video('aro-video', vm.thumbnail);
+        console.log($('#aro-video').data('video') + '-' + true);
+
+        if (vm.change) {
+          vm.player.loadVideoById(vm.videoId);
+        }
+      }, 1500);
+    }
+  },
   mounted: function mounted() {
     var vm = this;
-    setTimeout(function () {
-      vm.thumbnail = vm.$parent.thumbnail;
-      Aropex.video('aro-video', vm.thumbnail);
-    }, 1500);
+
+    if (vm.change) {
+      vm.StopVideo();
+    }
+
+    vm.reloadPlayer();
   }
 });
 
@@ -287,119 +316,152 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c("div", [
     _c("div", { staticClass: "courses-page" }, [
-      _c("div", { staticClass: "courses-play container" }, [
-        _c(
-          "div",
-          { staticClass: "courses-player" },
-          [
-            _c("Player"),
-            _vm._v(" "),
-            _vm._m(0),
-            _vm._v(" "),
-            _c(
-              "div",
-              { staticClass: "courses-play-body" },
-              [
-                _vm._l(_vm.dataCourses.materigroup, function(materigroup, i) {
-                  return [
-                    _vm._l(materigroup.materi, function(materi, j) {
-                      return (_vm.materiGroupUuid == null
-                      ? i == 0
-                      : materigroup.uuid == _vm.materiGroupUuid)
+      _c(
+        "div",
+        { staticClass: "courses-play container" },
+        [
+          _vm._l(_vm.dataCourses.materigroup, function(materigroup, i) {
+            return [
+              _vm._l(materigroup.materi, function(materi, j) {
+                return (_vm.materiGroupUuid == null
+                ? i == 0
+                : materigroup.uuid == _vm.materiGroupUuid)
+                  ? [
+                      (_vm.materiGroupUuid == null
+                      ? j == 0
+                      : materi.uuid == _vm.materiUuid)
                         ? [
-                            (_vm.materiGroupUuid == null
-                            ? j == 0
-                            : materi.uuid == _vm.materiUuid)
-                              ? [
-                                  _c(
-                                    "div",
-                                    {
-                                      staticClass: "tabbed-card active",
-                                      attrs: { id: "card-information" }
-                                    },
-                                    [
-                                      _c(
-                                        "div",
-                                        { staticClass: "courses-title" },
-                                        [
-                                          _vm._v(
-                                            "\n\t\t\t\t\t\t\t\t\t\tBagian " +
-                                              _vm._s((i += 1)) +
-                                              ": Intro - " +
-                                              _vm._s(materi.nm_materi) +
-                                              "\n\t\t\t\t\t\t\t\t\t"
-                                          )
-                                        ]
-                                      ),
-                                      _vm._v(" "),
-                                      _c("div", {
-                                        staticClass: "courses-description",
-                                        domProps: {
-                                          innerHTML: _vm._s(
-                                            _vm.dataCourses.description
-                                          )
-                                        }
-                                      }),
-                                      _vm._v(" "),
-                                      _c(
-                                        "div",
-                                        { staticClass: "courses-created" },
-                                        [
-                                          _c("div", { staticClass: "label" }, [
+                            _vm.show
+                              ? _c(
+                                  "div",
+                                  { staticClass: "courses-player" },
+                                  [
+                                    _c("Player", {
+                                      ref: "player",
+                                      refInFor: true,
+                                      attrs: {
+                                        change: _vm.change,
+                                        videoId: materi.video
+                                      }
+                                    }),
+                                    _vm._v(" "),
+                                    _vm._m(0, true),
+                                    _vm._v(" "),
+                                    _c(
+                                      "div",
+                                      { staticClass: "courses-play-body" },
+                                      [
+                                        _c(
+                                          "div",
+                                          {
+                                            staticClass: "tabbed-card active",
+                                            attrs: { id: "card-information" }
+                                          },
+                                          [
                                             _c(
                                               "div",
-                                              { staticClass: "title" },
-                                              [_vm._v("Creator")]
+                                              { staticClass: "courses-title" },
+                                              [
+                                                _vm._v(
+                                                  "\n\t\t\t\t\t\t\t\t\t\tBagian " +
+                                                    _vm._s((i += 1)) +
+                                                    ": Intro - " +
+                                                    _vm._s(materi.nm_materi) +
+                                                    "\n\t\t\t\t\t\t\t\t\t"
+                                                )
+                                              ]
                                             ),
-                                            _vm._v(
-                                              ": " +
-                                                _vm._s(
-                                                  _vm.dataCourses.user.name
-                                                ) +
-                                                "\n\t\t\t\t\t\t\t\t\t\t"
-                                            )
-                                          ]),
-                                          _vm._v(" "),
-                                          _c("div", { staticClass: "label" }, [
+                                            _vm._v(" "),
+                                            _c("div", {
+                                              staticClass:
+                                                "courses-description",
+                                              domProps: {
+                                                innerHTML: _vm._s(
+                                                  _vm.dataCourses.description
+                                                )
+                                              }
+                                            }),
+                                            _vm._v(" "),
                                             _c(
                                               "div",
-                                              { staticClass: "title" },
-                                              [_vm._v("Created At")]
-                                            ),
-                                            _vm._v(
-                                              ": " +
-                                                _vm._s(
-                                                  _vm.dataCourses.created_at
-                                                ) +
-                                                "\n\t\t\t\t\t\t\t\t\t\t"
+                                              {
+                                                staticClass: "courses-created"
+                                              },
+                                              [
+                                                _c(
+                                                  "div",
+                                                  { staticClass: "label" },
+                                                  [
+                                                    _c(
+                                                      "div",
+                                                      { staticClass: "title" },
+                                                      [_vm._v("Creator")]
+                                                    ),
+                                                    _vm._v(
+                                                      ": " +
+                                                        _vm._s(
+                                                          _vm.dataCourses.user
+                                                            .name
+                                                        ) +
+                                                        "\n\t\t\t\t\t\t\t\t\t\t"
+                                                    )
+                                                  ]
+                                                ),
+                                                _vm._v(" "),
+                                                _c(
+                                                  "div",
+                                                  { staticClass: "label" },
+                                                  [
+                                                    _c(
+                                                      "div",
+                                                      { staticClass: "title" },
+                                                      [_vm._v("Created At")]
+                                                    ),
+                                                    _vm._v(
+                                                      ": " +
+                                                        _vm._s(
+                                                          _vm.dataCourses
+                                                            .created_at
+                                                        ) +
+                                                        "\n\t\t\t\t\t\t\t\t\t\t"
+                                                    )
+                                                  ]
+                                                )
+                                              ]
                                             )
-                                          ])
-                                        ]
-                                      )
-                                    ]
-                                  )
-                                ]
+                                          ]
+                                        ),
+                                        _vm._v(" "),
+                                        _c(
+                                          "div",
+                                          {
+                                            staticClass: "tabbed-card",
+                                            attrs: { id: "card-comment" }
+                                          },
+                                          [
+                                            _vm._v(
+                                              "\n\t\t\t\t\t\t\t\t\tcomment\n\t\t\t\t\t\t\t\t"
+                                            )
+                                          ]
+                                        )
+                                      ]
+                                    )
+                                  ],
+                                  1
+                                )
                               : _vm._e()
                           ]
                         : _vm._e()
-                    })
-                  ]
-                }),
-                _vm._v(" "),
-                _c(
-                  "div",
-                  { staticClass: "tabbed-card", attrs: { id: "card-comment" } },
-                  [_vm._v("\n\t\t\t\t\t\tcomment\n\t\t\t\t\t")]
-                )
-              ],
-              2
-            )
-          ],
-          1
-        ),
-        _vm._v(" "),
-        _c("div", { staticClass: "courses-player-list" }, [_c("SideBar")], 1)
-      ])
+                    ]
+                  : _vm._e()
+              })
+            ]
+          }),
+          _vm._v(" "),
+          _c("div", { staticClass: "courses-player-list" }, [_c("SideBar")], 1)
+        ],
+        2
+      )
     ])
   ])
 }
@@ -460,40 +522,9 @@ var render = function() {
       "div",
       { staticClass: "courses-video-box", attrs: { id: "courses-video-box" } },
       [
-        _c(
-          "div",
-          { staticClass: "video-player" },
-          [
-            _vm._l(_vm.$parent.dataCourses.materigroup, function(
-              materigroup,
-              i
-            ) {
-              return [
-                _vm._l(materigroup.materi, function(materi, j) {
-                  return (_vm.$parent.materiGroupUuid == null
-                  ? i == 0
-                  : materigroup.uuid == _vm.$parent.materiGroupUuid)
-                    ? [
-                        (_vm.$parent.materiGroupUuid == null
-                        ? j == 0
-                        : materi.uuid == _vm.$parent.materiUuid)
-                          ? [
-                              _c("div", {
-                                attrs: {
-                                  id: "aro-video",
-                                  "data-video": materi.video
-                                }
-                              })
-                            ]
-                          : _vm._e()
-                      ]
-                    : _vm._e()
-                })
-              ]
-            })
-          ],
-          2
-        ),
+        _c("div", { staticClass: "video-player" }, [
+          _c("div", { attrs: { id: "aro-video", "data-video": _vm.videoId } })
+        ]),
         _vm._v(" "),
         _vm._m(0)
       ]
@@ -624,7 +655,7 @@ var render = function() {
                           staticClass: "li-child active",
                           on: {
                             click: function($event) {
-                              return _vm.$parent.setCookie(
+                              return _vm.$parent.changeVideo(
                                 materi.thumbnail,
                                 materigroup.uuid,
                                 materi.uuid

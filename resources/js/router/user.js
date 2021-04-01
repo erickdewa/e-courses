@@ -71,6 +71,7 @@ const routesUser =  [
                 name: 'courses.player',
                 path: '/courses/play/:uuidCourses',
                 component: () => import(/* webpackChunkName: "courses.player" */ '../pages/user/player/Index'),
+                beforeEnter: guardUserLogged,
                 meta: {
                     title: `Courses Play | ${process.env.MIX_APP_NAME}`,
                     auth: undefined

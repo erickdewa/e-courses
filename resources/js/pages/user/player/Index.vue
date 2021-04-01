@@ -2,22 +2,22 @@
 	<div>
 		<div class="courses-page">
 			<div class="courses-play container">
-				<div class="courses-player">
-					<Player></Player>
-					<div class="courses-play-header">
-						<ul class="ul-header">
-							<li class="li-header tabbed-head active" data-event="tabbed" data-target="#card-information">
-								<div class="header-title">Information</div>
-							</li>
-							<li class="li-header tabbed-head" data-event="tabbed" data-target="#card-comment">
-								<div class="header-title">Comment</div>
-							</li>
-						</ul>
-					</div>
-					<div class="courses-play-body">
-						<template v-for="(materigroup, i) in dataCourses.materigroup">
-							<template v-if="((materiGroupUuid==null)?(i==0):(materigroup.uuid==materiGroupUuid))" v-for="(materi, j) in materigroup.materi">
-								<template v-if="((materiGroupUuid==null)?(j==0):(materi.uuid==materiUuid))">
+				<template v-for="(materigroup, i) in dataCourses.materigroup">
+					<template v-if="((materiGroupUuid==null)?(i==0):(materigroup.uuid==materiGroupUuid))" v-for="(materi, j) in materigroup.materi">
+						<template v-if="((materiGroupUuid==null)?(j==0):(materi.uuid==materiUuid))">
+							<div v-if="show" class="courses-player">
+								<Player ref="player" :change="change" :videoId="materi.video"></Player>
+								<div class="courses-play-header">
+									<ul class="ul-header">
+										<li class="li-header tabbed-head active" data-event="tabbed" data-target="#card-information">
+											<div class="header-title">Information</div>
+										</li>
+										<li class="li-header tabbed-head" data-event="tabbed" data-target="#card-comment">
+											<div class="header-title">Comment</div>
+										</li>
+									</ul>
+								</div>
+								<div class="courses-play-body">
 									<div id="card-information" class="tabbed-card active">
 										<div class="courses-title">
 											Bagian {{ i+=1 }}: Intro - {{ materi.nm_materi }}
@@ -32,14 +32,14 @@
 											</div>
 										</div>
 									</div>
-								</template>
-							</template>
+									<div id="card-comment" class="tabbed-card">
+										comment
+									</div>
+								</div>
+							</div>
 						</template>
-						<div id="card-comment" class="tabbed-card">
-							comment
-						</div>
-					</div>
-				</div>
+					</template>
+				</template>
 				<div class="courses-player-list">
 					<SideBar></SideBar>
 				</div>
@@ -57,6 +57,8 @@
     	},
     	data() {
 	        return {
+	        	show: true,
+	        	change: false,
 	        	dataCourses: {},
 
 	        	thumbnail: '',
@@ -82,8 +84,16 @@
 	    			// error
 	    		});
 	    	},
-	    	changeVideo(){
+	    	changeVideo(thumbnail, materiGroupUuid, materiUuid){
 	    		var vm = this;
+
+	    		vm.setCookie(thumbnail, materiGroupUuid, materiUuid);
+	    		vm.getCookie();
+	    		vm.change = true;
+	    		vm.show = false;
+	    		setTimeout(function(){
+	    			vm.show = true;
+	    		}, 100);
 	    	},
 	    	setCookie(thumbnail = null, materiGroupUuid = null, materiUuid = null){
 	    		var vm = this;

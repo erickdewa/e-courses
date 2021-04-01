@@ -566,6 +566,7 @@ __webpack_require__.r(__webpack_exports__);
       }
 
       Aropex.btnLoad('.btn-submit', true);
+      vm.formData.courses_id = vm.$parent.thisId;
       vm.$http({
         url: urls,
         data: vm.formData,
@@ -594,7 +595,6 @@ __webpack_require__.r(__webpack_exports__);
   },
   mounted: function mounted() {
     var vm = this;
-    vm.formData.courses_id = vm.$parent.thisId;
   }
 });
 
@@ -738,6 +738,9 @@ __webpack_require__.r(__webpack_exports__);
         name: 'Nama Materi',
         data: 'nm_materi'
       }, {
+        name: 'Status',
+        data: 'is_preview'
+      }, {
         name: 'Aksi',
         data: 'action'
       }],
@@ -804,6 +807,11 @@ __webpack_require__.r(__webpack_exports__);
         $('#table').on('click', '.hapus', function (e) {
           var uuid = $(this).data('uuid');
           vm.deleteData(uuid);
+        });
+        $('#table').on('click', '.switch', function (e) {
+          var uuid = $(this).data('uuid');
+          var is_preview = $(this).data('is_preview');
+          vm.changeStatus(uuid, is_preview == 'Y' ? 'N' : 'Y');
         });
       }, 200);
     },
@@ -875,6 +883,20 @@ __webpack_require__.r(__webpack_exports__);
         toastr.error(err.response.data.message, 'Error');
       });
     },
+    changeStatus: _.debounce(function (uuid, status) {
+      var vm = this;
+      vm.$http({
+        url: "".concat(vm.apiUrl, "/materi/").concat(uuid, "/status"),
+        data: {
+          is_preview: status
+        },
+        method: 'POST'
+      }).then(function (res) {
+        vm.$refs.table.reload();
+      })["catch"](function (err) {
+        toastr.error(err.response.data.message, 'Error');
+      });
+    }, 1000),
     deleteData: function deleteData(uuid) {
       var vm = this;
       vm.$http({
@@ -1027,6 +1049,7 @@ __webpack_require__.r(__webpack_exports__);
       }
 
       Aropex.btnLoad('.btn-submit', true);
+      vm.formData.courses_id = vm.coursesId;
       vm.$http({
         url: urls,
         data: vm.formData,
@@ -1056,7 +1079,6 @@ __webpack_require__.r(__webpack_exports__);
   },
   mounted: function mounted() {
     var vm = this;
-    vm.formData.courses_id = vm.coursesId;
   }
 });
 
@@ -1511,6 +1533,18 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -1539,12 +1573,35 @@ __webpack_require__.r(__webpack_exports__);
       })["catch"](function (err) {
         toastr.error(err.response.data.message, 'Error');
       });
+    },
+    select2: function select2() {
+      var vm = this;
+      $(".status-select").select2({
+        placeholder: "Pilih",
+        width: '100%'
+      }).val(vm.formData.status).on('change', function (val) {
+        vm.formData.status = $(this).val();
+        vm.simpanStatus();
+      });
+    },
+    simpanStatus: function simpanStatus() {
+      var vm = this;
+      vm.$http({
+        url: "".concat(vm.apiUrl, "/payment/").concat(vm.formData.uuid, "/status"),
+        data: vm.formData,
+        method: 'POST'
+      }).then(function (res) {
+        vm.$parent.setShowList();
+      })["catch"](function (err) {
+        toastr.error(err.response.data.message, 'Error');
+      });
     }
   },
   mounted: function mounted() {
     var vm = this;
     vm.formData.uuid = vm.$parent.thisUuid;
     vm.getData(vm.formData.uuid);
+    vm.select2();
   }
 });
 
@@ -3910,6 +3967,66 @@ var render = function() {
       [
         _c("div", { staticClass: "form-body" }, [
           _c("div", { staticClass: "row" }, [
+            _c("div", { staticClass: "col-md-12" }, [
+              _c("div", { staticClass: "form-group" }, [
+                _c("label", [_vm._v("Status")]),
+                _vm._v(" "),
+                _c(
+                  "select",
+                  {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.formData.status,
+                        expression: "formData.status"
+                      }
+                    ],
+                    staticClass: "form-control status-select",
+                    attrs: { name: "status", placeholder: "Status" },
+                    on: {
+                      change: function($event) {
+                        var $$selectedVal = Array.prototype.filter
+                          .call($event.target.options, function(o) {
+                            return o.selected
+                          })
+                          .map(function(o) {
+                            var val = "_value" in o ? o._value : o.value
+                            return val
+                          })
+                        _vm.$set(
+                          _vm.formData,
+                          "status",
+                          $event.target.multiple
+                            ? $$selectedVal
+                            : $$selectedVal[0]
+                        )
+                      }
+                    }
+                  },
+                  [
+                    _c("option", { attrs: { value: "pending" } }, [
+                      _vm._v("Pending")
+                    ]),
+                    _vm._v(" "),
+                    _c("option", { attrs: { value: "proccess" } }, [
+                      _vm._v("Proccess")
+                    ]),
+                    _vm._v(" "),
+                    _c("option", { attrs: { value: "success" } }, [
+                      _vm._v("Success")
+                    ]),
+                    _vm._v(" "),
+                    _c("option", { attrs: { value: "expiret" } }, [
+                      _vm._v("Expired")
+                    ])
+                  ]
+                )
+              ])
+            ]),
+            _vm._v(" "),
+            _c("hr"),
+            _vm._v(" "),
             _c("div", { staticClass: "col-md-12" }, [
               _c("div", { staticClass: "form-group" }, [
                 _c("label", [_vm._v("Courses")]),

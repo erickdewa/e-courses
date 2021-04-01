@@ -2,13 +2,7 @@
 	<div>
 		<div id="courses-video-box" class="courses-video-box">
 			<div class="video-player">
-				<template v-for="(materigroup, i) in $parent.dataCourses.materigroup">
-					<template v-if="(($parent.materiGroupUuid==null)?(i==0):(materigroup.uuid==$parent.materiGroupUuid))" v-for="(materi, j) in materigroup.materi">
-						<template v-if="(($parent.materiGroupUuid==null)?(j==0):(materi.uuid==$parent.materiUuid))">
-							<div id="aro-video" :data-video="materi.video"></div>
-						</template>
-					</template>
-				</template>
+				<div id="aro-video" :data-video="videoId"></div>
 			</div>
 			<div class="video-control">
 				<div class="btn-control-left" align="center">
@@ -39,21 +33,43 @@
 
 <script>
     export default {
+    	props: ['videoId', 'change'],
     	data() {
 	        return {
 	        	thumbnail: '/assets/images/bg/bg-01.jpg',
+	        	player: '',
 	        }
 	    },
 	    methods: {
+	    	StopVideo(){
+	    		var vm = this;
 
+	    		if(vm.player != ''){
+	        		if(typeof vm.player != 'undefined'){
+			    		vm.player.stopVideo();
+			    	}
+	    		}
+	    	},
+	    	reloadPlayer(){
+	    		var vm = this;
+
+		    	setTimeout(function(){
+			    	vm.thumbnail = vm.$parent.thumbnail;
+			    	vm.player = Aropex.video('aro-video', vm.thumbnail);
+		    		console.log($('#aro-video').data('video')+'-'+true);
+			    	if(vm.change){
+			    		vm.player.loadVideoById(vm.videoId);
+			    	}
+		    	}, 1500);
+	    	},
 	    },
 	    mounted(){
 	    	var vm = this;
 
-	    	setTimeout(function(){
-		    	vm.thumbnail = vm.$parent.thumbnail;
-		    	Aropex.video('aro-video', vm.thumbnail);
-	    	}, 1500);
+	    	if(vm.change){
+	    		vm.StopVideo();
+	    	}
+	    	vm.reloadPlayer();
 	    }
 	}
 </script>

@@ -457,7 +457,6 @@ $(document).ready(function (e) {
   });
   $('.tabbed-head').on('click', function () {
     Aropex.event(this, false);
-    console.log(this);
   });
   $(window).scroll(function () {
     var scroll = $(window).scrollTop();

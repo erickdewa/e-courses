@@ -12,7 +12,10 @@ class CoursesController extends Controller
     // Page user home
     public function getDataUser(Request $request)
     {
-        $data = Courses::with('user')->paginate(9);
+        $data = Courses::with('user')
+        ->where(function($q) use ($request){
+            $q->where('name', 'like', '%'.$request->search.'%');
+        })->paginate(9);
         $length = Courses::get()->count();
 
         return response()->json([
@@ -105,11 +108,11 @@ class CoursesController extends Controller
         }
 
         if(isset($request->thumbnile)) {
-            $nama_thumbnile = 'coursese_'.time().'.'.$request->thumbnile->getClientOriginalExtension();
-            $request->thumbnile->move(public_path('img/coursese/thumbnile'), $nama_thumbnile);
-            $thumbnile = '/img/coursese/thumbnile/'.$nama_thumbnile;
+            $nama_thumbnile = 'courses_'.time().'.'.$request->thumbnile->getClientOriginalExtension();
+            $request->thumbnile->move(public_path('img/courses/thumbnile'), $nama_thumbnile);
+            $thumbnile = '/img/courses/thumbnile/'.$nama_thumbnile;
         }else{
-            $thumbnile = '/img/coursese/thumbnile/default.png';
+            $thumbnile = '/img/courses/thumbnile/default.png';
         }
 
         $data = Courses::create([

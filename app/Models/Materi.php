@@ -10,7 +10,7 @@ class Materi extends Model
     use Uuid;
 
     protected $fillable = [
-        'uuid', 'nm_materi', 'thumbnail', 'description', 'video', ' is_preview', 'materigroup_id'
+        'uuid', 'nm_materi', 'thumbnail', 'description', 'video', 'is_preview', 'materigroup_id'
     ];
 
     public function materigroup()

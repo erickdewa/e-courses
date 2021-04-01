@@ -49675,6 +49675,7 @@ var routesUser = [{
     component: function component() {
       return __webpack_require__.e(/*! import() | courses.player */ "courses.play").then(__webpack_require__.bind(null, /*! ../pages/user/player/Index */ "./resources/js/pages/user/player/Index.vue"));
     },
+    beforeEnter: guardUserLogged,
     meta: {
       title: "Courses Play | ".concat("Laravel"),
       auth: undefined

@@ -133,6 +133,7 @@
 	    		}
 
 	    		Aropex.btnLoad('.btn-submit', true);
+	    		vm.formData.courses_id = vm.coursesId;
 	    		vm.$http({
 	    			url: urls,
 	    			data: vm.formData,
@@ -164,8 +165,6 @@
 	    },
 	    mounted(){
 	    	var vm = this;
-
-	    	vm.formData.courses_id = vm.coursesId;
 	    }
 	}
 </script>

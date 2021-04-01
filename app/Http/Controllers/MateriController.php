@@ -33,6 +33,8 @@ class MateriController extends Controller
             $btnHapus = '<button class="btn btn-clean btn-icon btn-icon-md hapus" data-uuid="'.$a->uuid.'"><i class="fa fa-trash text-danger"></i></button>';
             $a->action = $btnEdit.$btnHapus;
 
+            $a->is_preview = '<label class="switch" data-uuid="'.$a->uuid.'" data-is_preview="'.$a->is_preview.'"><input type="checkbox" '.(($a->is_preview=='Y')?'checked':'').'><span class="slider round"></span></label>';
+
             return $a;
         });
 
@@ -69,10 +71,10 @@ class MateriController extends Controller
 
         if(isset($request->thumbnail)) {
             $nama_thumbnail = 'courses_'.time().'.'.$request->thumbnail->getClientOriginalExtension();
-            $request->thumbnail->move(public_path('img/courses/thumbnail'), $nama_thumbnail);
-            $thumbnail = '/img/courses/thumbnail/'.$nama_thumbnail;
+            $request->thumbnail->move(public_path('img/courses/thumbnailMateri'), $nama_thumbnail);
+            $thumbnail = '/img/courses/thumbnailMateri/'.$nama_thumbnail;
         }else{
-            $thumbnail = '/img/courses/thumbnail/default.png';
+            $thumbnail = '/img/courses/thumbnailMateri/default.png';
         }
 
         $data = Materi::create([
@@ -127,8 +129,8 @@ class MateriController extends Controller
         $data = Materi::findByUuid($uuid);
         if(isset($request->thumbnail)) {
             $nama_thumbnail = 'courses_'.time().'.'.$request->thumbnail->getClientOriginalExtension();
-            $request->thumbnail->move(public_path('img/courses/thumbnail'), $nama_thumbnail);
-            if($data->thumbnail != '/img/courses/thumbnail/default.png'){
+            $request->thumbnail->move(public_path('img/courses/thumbnailMateri'), $nama_thumbnail);
+            if($data->thumbnail != '/img/courses/thumbnailMateri/default.png'){
                 $fwhite = public_path().$data->thumbnail;
                 if (is_file($fwhite)) {
                     unlink($fwhite);
@@ -148,6 +150,21 @@ class MateriController extends Controller
         return response()->json([
         	'status' => true,
         	'message' => 'Data berhasil di simpan',
+        ], 200);
+    }
+
+    public function changeStatus(Request $request, $uuid)
+    {
+        $data = Materi::findByUuid($uuid);
+        if(isset($data)){
+            $data->update([
+                'is_preview' => $request->is_preview,
+            ]);
+        }
+
+        return response()->json([
+            'status' => true,
+            'message' => 'Data berhasil di ubah',
         ], 200);
     }
 

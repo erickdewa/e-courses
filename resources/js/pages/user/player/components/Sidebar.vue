@@ -13,7 +13,7 @@
 				</div>
 				<ul class="ul-child" v-bind:class="(($parent.materiGroupUuid==null)?((i==0)?'active':''):((materigroup.uuid==$parent.materiGroupUuid)?'active':''))">
 					<template v-for="(materi, j) in materigroup.materi" v-if="materi.materigroup_id == materigroup.id">
-						<li class="li-child active" @click="$parent.setCookie(materi.thumbnail, materigroup.uuid, materi.uuid)">
+						<li class="li-child active" @click="$parent.changeVideo(materi.thumbnail, materigroup.uuid, materi.uuid)">
 							<div class="item-materi">
 								<div class="text-group">
 									<div class="text">{{ j+=1 }}. {{ materi.nm_materi }}</div>

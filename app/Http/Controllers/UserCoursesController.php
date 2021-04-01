@@ -79,4 +79,14 @@ class UserCoursesController extends Controller
             'message' => 'Data berhasil diambil'
         ]);
     }
+
+    public function changeStatus(Request $request, $uuid)
+    {   
+        $request->payment_expired = (($request->status == 'expired')?date('Y-m-d H:i:s'):null);
+        $data = UserCourses::findByUuid($uuid);
+        $data->update([
+            'status' => $request->status,
+            'payment_expired' => $request->payment_expired,
+        ]);
+    }
 }

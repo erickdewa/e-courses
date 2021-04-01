@@ -5,6 +5,18 @@
 				<div class="row">
 					<div class="col-md-12">
 						<div class="form-group">
+							<label>Status</label>
+							<select class="form-control status-select" name="status" v-model="formData.status" placeholder="Status">
+								<option value="pending">Pending</option>
+								<option value="proccess">Proccess</option>
+								<option value="success">Success</option>
+								<option value="expiret">Expired</option>
+							</select>
+						</div>
+					</div>
+					<hr>
+					<div class="col-md-12">
+						<div class="form-group">
 							<label>Courses</label>
 							<input type="text" class="form-control" name="courses.name" required disabled v-model="formData.courses.name" placeholder="Courses">
 						</div>
@@ -82,12 +94,38 @@
 	    			toastr.error(err.response.data.message, 'Error');
 	    		})
 	    	},
+
+	    	select2(){
+	    		var vm = this;
+
+	    		$(".status-select").select2({
+                    placeholder: "Pilih",
+                    width: '100%'
+                }).val(vm.formData.status).on('change', function(val) {
+                    vm.formData.status = $(this).val();
+                    vm.simpanStatus();
+                });
+	    	},
+	    	simpanStatus(){
+	    		var vm = this;
+
+	    		vm.$http({
+	    			url: `${ vm.apiUrl }/payment/${ vm.formData.uuid }/status`,
+	    			data: vm.formData,
+	    			method: 'POST',
+	    		}).then((res)=>{
+	    			vm.$parent.setShowList();
+	    		}).catch((err)=>{
+	    			toastr.error(err.response.data.message, 'Error');
+	    		})
+	    	},
 	    },
 	    mounted(){
 	    	var vm = this;
 
     		vm.formData.uuid = vm.$parent.thisUuid;
     		vm.getData(vm.formData.uuid);
+    		vm.select2();
 	    }
     }
 </script>

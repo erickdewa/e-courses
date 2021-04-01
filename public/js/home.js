@@ -126,12 +126,14 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
     return {
       showMore: false,
       thisPage: 0,
-      coursesFilter: {},
+      coursesFilter: {
+        search: ''
+      },
       dataCourses: []
     };
   },
   methods: {
-    getCourses: function getCourses() {
+    getCourses: _.debounce(function () {
       var page = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : null;
       var vm = this;
       var urls = "".concat(vm.baseUrl, "/courses/getdata");
@@ -154,7 +156,7 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
         vm.showMore = res.data.length > 9 ? true : false;
         vm.thisPage = res.data.data.current_page;
       })["catch"](function (error) {});
-    }
+    }, 500)
   },
   mounted: function mounted() {
     var vm = this;
@@ -183,7 +185,43 @@ var render = function() {
     _vm._m(0),
     _vm._v(" "),
     _c("div", { staticClass: "page-two" }, [
-      _vm._m(1),
+      _c("div", { staticClass: "courses-filter" }, [
+        _c("div", { staticClass: "filter-search" }, [
+          _c("div", { staticClass: "form-group" }, [
+            _c("div", { staticClass: "input-group" }, [
+              _vm._m(1),
+              _vm._v(" "),
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.coursesFilter.search,
+                    expression: "coursesFilter.search"
+                  }
+                ],
+                attrs: { type: "text", name: "search", placeholder: "Search" },
+                domProps: { value: _vm.coursesFilter.search },
+                on: {
+                  input: [
+                    function($event) {
+                      if ($event.target.composing) {
+                        return
+                      }
+                      _vm.$set(_vm.coursesFilter, "search", $event.target.value)
+                    },
+                    function($event) {
+                      return _vm.getCourses()
+                    }
+                  ]
+                }
+              })
+            ])
+          ])
+        ]),
+        _vm._v(" "),
+        _vm._m(2)
+      ]),
       _vm._v(" "),
       _c(
         "div",
@@ -393,43 +431,31 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "courses-filter" }, [
-      _c("div", { staticClass: "filter-search" }, [
-        _c("div", { staticClass: "form-group" }, [
-          _c("div", { staticClass: "input-group" }, [
-            _c("span", { staticClass: "input-icon" }, [
-              _c("i", { staticClass: "fa fa-search" })
-            ]),
-            _vm._v(" "),
-            _c("input", {
-              attrs: { type: "text", name: "search", placeholder: "Search" }
-            })
-          ])
-        ])
+    return _c("span", { staticClass: "input-icon" }, [
+      _c("i", { staticClass: "fa fa-search" })
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "filter-category" }, [
+      _c("div", { staticClass: "title" }, [
+        _vm._v("\n\t\t\t\t\tBy Kategori : \n\t\t\t\t")
       ]),
       _vm._v(" "),
-      _c("div", { staticClass: "filter-category" }, [
-        _c("div", { staticClass: "title" }, [
-          _vm._v("\n\t\t\t\t\tBy Kategori : \n\t\t\t\t")
-        ]),
+      _c("div", { staticClass: "category-group" }, [
+        _c("div", { staticClass: "category-item" }, [_vm._v("Masak")]),
         _vm._v(" "),
-        _c("div", { staticClass: "category-group" }, [
-          _c("div", { staticClass: "category-item" }, [_vm._v("Masak")]),
-          _vm._v(" "),
-          _c("div", { staticClass: "category-item" }, [_vm._v("Akutansi")]),
-          _vm._v(" "),
-          _c("div", { staticClass: "category-item" }, [_vm._v("Mentoring")]),
-          _vm._v(" "),
-          _c("div", { staticClass: "category-item" }, [_vm._v("Back-end")]),
-          _vm._v(" "),
-          _c("div", { staticClass: "category-item" }, [
-            _vm._v("Cyber Scurity")
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "category-item" }, [
-            _vm._v("Cryptocurrency")
-          ])
-        ])
+        _c("div", { staticClass: "category-item" }, [_vm._v("Akutansi")]),
+        _vm._v(" "),
+        _c("div", { staticClass: "category-item" }, [_vm._v("Mentoring")]),
+        _vm._v(" "),
+        _c("div", { staticClass: "category-item" }, [_vm._v("Back-end")]),
+        _vm._v(" "),
+        _c("div", { staticClass: "category-item" }, [_vm._v("Cyber Scurity")]),
+        _vm._v(" "),
+        _c("div", { staticClass: "category-item" }, [_vm._v("Cryptocurrency")])
       ])
     ])
   }

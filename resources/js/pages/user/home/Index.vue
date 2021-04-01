@@ -41,7 +41,7 @@
 							<span class="input-icon">
 								<i class="fa fa-search"></i>
 							</span>
-							<input type="text" name="search" placeholder="Search">
+							<input type="text" name="search" v-model="coursesFilter.search" @input="getCourses()" placeholder="Search">
 						</div>
 					</div>
 				</div>
@@ -105,13 +105,15 @@
 	        	showMore: false,
 	        	thisPage: 0,
 
-	        	coursesFilter: {},
+	        	coursesFilter: {
+	        		search: '',
+	        	},
 
 	        	dataCourses: [],
 	        }
 	    },
 	    methods: {
-	    	getCourses(page=null){
+	    	getCourses: _.debounce(function(page=null){
 	    		var vm = this;
 
 	    		var urls = `${ vm.baseUrl }/courses/getdata`;
@@ -134,7 +136,7 @@
 	    		}).catch((error)=>{
 
 	    		});
-	    	},
+	    	}, 500),
 	    },
 	    mounted(){
 	    	var vm = this;

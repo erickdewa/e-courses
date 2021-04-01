@@ -46,6 +46,10 @@ Route::prefix('v1')->group(function(){
 		    			Route::get('/getcourses', 'UserCoursesController@getDataCoursesAll');
 			    		Route::post('/{uuid}/getplayer', 'UserCoursesController@getDataCoursesPlayer');
 		    		});
+
+		    		Route::prefix('review')->group(function(){
+		    			Route::post('/create', 'CoursesReviewController@create');
+		    		});
 			    });
 			});
 
@@ -53,6 +57,7 @@ Route::prefix('v1')->group(function(){
 				Route::prefix('payment')->group(function(){
 		    		Route::post('/{type}/create', 'PaymentController@createOrder');
 					Route::post('/callback', 'PaymentController@callback');
+					Route::post('/{uuid}/status', 'UserCoursesController@changeStatus');
 		    	});
 
 		    	Route::prefix('user')->group(function(){
@@ -169,6 +174,7 @@ Route::prefix('v1')->group(function(){
 		    		Route::get('/{uuid}/getdata', 'MateriController@getData');
 		    		Route::post('/create', 'MateriController@create');
 		    		Route::post('/{uuid}/update', 'MateriController@update');
+		    		Route::post('/{uuid}/status', 'MateriController@changeStatus');
 		    		Route::delete('/{uuid}/delete', 'MateriController@delete');
 		    	});
 			});
