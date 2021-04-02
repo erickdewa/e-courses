@@ -2,7 +2,7 @@
 	<div>
 		<div class="main-user">
 			<nav class="navbar">
-				<div class="navbar-brand text-white">
+				<div class="navbar-brand text-white cursor-pointer" @click="$router.push({ path: '/' })">
 					<span>ITHINK</span>
 				</div>
 				<div class="btn-navbar" data-event="dropdown" data-target="#navbar-group">

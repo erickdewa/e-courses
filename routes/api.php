@@ -39,6 +39,10 @@ Route::prefix('v1')->group(function(){
 		    		Route::post('/{uuid}/verifed', 'ProfileController@verifed');
 		    	});
 
+		    	Route::prefix('payment')->group(function(){
+		    		Route::get('/getdatas', 'PayMethodController@getDatas');
+		    	});
+
 				Route::prefix('courses')->group(function(){
 					Route::get('/{uuid}/auth', 'CoursesController@getDataCoursesAuth');
 					
@@ -112,7 +116,6 @@ Route::prefix('v1')->group(function(){
 
 		    	Route::prefix('payment')->group(function(){
 		    		Route::post('/index', 'PayMethodController@index');
-		    		Route::get('/getdatas', 'PayMethodController@getDatas');
 		    		Route::get('/{uuid}/getdata', 'PayMethodController@getData');
 		    		Route::post('/create', 'PayMethodController@create');
 		    		Route::post('/{uuid}/update', 'PayMethodController@update');

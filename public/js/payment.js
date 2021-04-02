@@ -193,10 +193,16 @@ __webpack_require__.r(__webpack_exports__);
     getCourses: function getCourses() {
       var vm = this;
       vm.$http({
-        url: "".concat(vm.apiUrl, "/courses/").concat(vm.$route.params.uuidCourses, "/getdata"),
+        url: "".concat(vm.apiUrl, "/courses/").concat(vm.$route.params.uuidCourses, "/auth"),
         method: 'GET'
       }).then(function (res) {
         vm.dataCourses = res.data.data;
+
+        if (res.data.payment) {
+          vm.$router.push({
+            path: "/courses/".concat(vm.$route.params.uuidCourses)
+          });
+        }
       })["catch"](function (error) {// error
       });
     },
@@ -219,7 +225,6 @@ __webpack_require__.r(__webpack_exports__);
     var vm = this;
     vm.getMethod();
     vm.getCourses();
-    console.log(vm.$auth.user());
   }
 });
 

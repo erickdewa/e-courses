@@ -56,7 +56,6 @@
 		    	setTimeout(function(){
 			    	vm.thumbnail = vm.$parent.thumbnail;
 			    	vm.player = Aropex.video('aro-video', vm.thumbnail);
-		    		console.log($('#aro-video').data('video')+'-'+true);
 			    	if(vm.change){
 			    		vm.player.loadVideoById(vm.videoId);
 			    	}

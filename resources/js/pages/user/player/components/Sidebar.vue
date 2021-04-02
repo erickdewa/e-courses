@@ -41,7 +41,6 @@
 
 	    		setTimeout(function(){
 			    	$('.li-parent').on('click', function(){
-			    		console.log(true);
 						if(!$(this).children('.ul-child').hasClass('active')){
 							if($('.ul-child').hasClass('active')){
 								$('.ul-child').removeClass('active');

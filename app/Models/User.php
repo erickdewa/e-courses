@@ -21,6 +21,11 @@ class User extends Authenticatable implements JWTSubject
         'password', 'remember_token',
     ];
 
+    public function profile()
+    {
+        return $this->belongsTo('\App\Models\Profile', 'id', 'user_id');
+    }
+
     public function getJWTIdentifier()
     {
         return $this->getKey();

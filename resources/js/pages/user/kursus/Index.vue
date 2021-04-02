@@ -16,6 +16,10 @@
 								<i class="fa fa-check"></i>
 							</li>
 						</template>
+						<li class="materi-item">
+							<span>{{ dataCourses.count_materi }} Kursus {{ ((isPay)?'Lainnya':'Terkunci') }}</span>
+							<i class="fa" v-bind:class="((isPay))?'fa-check':'fa-lock'"></i>
+						</li>
 					</ul>
 				</div>
 				<div class="courses-action">
@@ -36,30 +40,20 @@
 				<div class="courses-subtitle">{{ dataCourses.subname }}</div>
 				<div class="courses-rating-star">
 				    <div class="rating-group">
-				        <input class="rating__input rating__input--none" checked name="rating2" id="rating2-0" value="0" type="radio" disabled>
-				        <label aria-label="0.5 stars" class="rating__label rating__label--half" for="rating2-05"><i class="rating__icon rating__icon--star fa fa-star-half"></i></label>
-				        <input class="rating__input" name="rating2" id="rating2-05" value="0.5" type="radio" disabled>
-				        <label aria-label="1 star" class="rating__label" for="rating2-10"><i class="rating__icon rating__icon--star fa fa-star"></i></label>
-				        <input class="rating__input" name="rating2" id="rating2-10" value="1" type="radio" disabled>
-				        <label aria-label="1.5 stars" class="rating__label rating__label--half" for="rating2-15"><i class="rating__icon rating__icon--star fa fa-star-half"></i></label>
-				        <input class="rating__input" name="rating2" id="rating2-15" value="1.5" type="radio" disabled>
-				        <label aria-label="2 stars" class="rating__label" for="rating2-20"><i class="rating__icon rating__icon--star fa fa-star"></i></label>
-				        <input class="rating__input" name="rating2" id="rating2-20" value="2" type="radio" disabled>
-				        <label aria-label="2.5 stars" class="rating__label rating__label--half" for="rating2-25"><i class="rating__icon rating__icon--star fa fa-star-half"></i></label>
-				        <input class="rating__input" name="rating2" id="rating2-25" value="2.5" type="radio" checked>
-				        <label aria-label="3 stars" class="rating__label" for="rating2-30"><i class="rating__icon rating__icon--star fa fa-star"></i></label>
-				        <input class="rating__input" name="rating2" id="rating2-30" value="3" type="radio" disabled>
-				        <label aria-label="3.5 stars" class="rating__label rating__label--half" for="rating2-35"><i class="rating__icon rating__icon--star fa fa-star-half"></i></label>
-				        <input class="rating__input" name="rating2" id="rating2-35" value="3.5" type="radio" disabled>
-				        <label aria-label="4 stars" class="rating__label" for="rating2-40"><i class="rating__icon rating__icon--star fa fa-star"></i></label>
-				        <input class="rating__input" name="rating2" id="rating2-40" value="4" type="radio" disabled>
-				        <label aria-label="4.5 stars" class="rating__label rating__label--half" for="rating2-45"><i class="rating__icon rating__icon--star fa fa-star-half"></i></label>
-				        <input class="rating__input" name="rating2" id="rating2-45" value="4.5" type="radio" disabled>
-				        <label aria-label="5 stars" class="rating__label" for="rating2-50"><i class="rating__icon rating__icon--star fa fa-star"></i></label>
-				        <input class="rating__input" name="rating2" id="rating2-50" value="5" type="radio" disabled>
+				        <input v-bind:checked="((dataCourses.rating==0)?true:false)" class="rating__input rating__input--none" checked name="5" id="5-0" value="0" type="radio" disabled>
+				        <label aria-label="1 star" class="rating__label" for="5-10"><i class="rating__icon rating__icon--star fa fa-star"></i></label>
+				        <input v-bind:checked="((dataCourses.rating==1)?true:false)" class="rating__input" name="5" id="5-10" value="1" type="radio" disabled>
+				        <label aria-label="2 stars" class="rating__label" for="5-20"><i class="rating__icon rating__icon--star fa fa-star"></i></label>
+				        <input v-bind:checked="((dataCourses.rating==2)?true:false)" class="rating__input" name="5" id="5-20" value="2" type="radio" disabled>
+				        <label aria-label="3 stars" class="rating__label" for="5-30"><i class="rating__icon rating__icon--star fa fa-star"></i></label>
+				        <input v-bind:checked="((dataCourses.rating==3)?true:false)" class="rating__input" name="5" id="5-30" value="3" type="radio" disabled>
+				        <label aria-label="4 stars" class="rating__label" for="5-40"><i class="rating__icon rating__icon--star fa fa-star"></i></label>
+				        <input v-bind:checked="((dataCourses.rating==4)?true:false)" class="rating__input" name="5" id="5-40" value="4" type="radio" disabled>
+				        <label aria-label="5 stars" class="rating__label" for="5-50"><i class="rating__icon rating__icon--star fa fa-star"></i></label>
+				        <input v-bind:checked="((dataCourses.rating==5)?true:false)" class="rating__input" name="5" id="5-50" value="5" type="radio" disabled>
 				    </div>
 					<div class="courses-rating-label">
-						<span>4.5/5.0</span>
+						<span>{{ `${ dataCourses.rating }.0` }}/5.0</span>
 					</div>
 				</div>
 				<div class="courses-description">
@@ -113,65 +107,44 @@
 					<div class="title">Everyone's reviews</div>
 					<div class="carousel slide" data-ride="carousel">
 						<div class="carousel-inner">
-							<div class="comment-item carousel-item active">
-								<div class="comment-box">
-									<div class="comment-info">
-										<div class="comment-image">
-											<img src="/assets/images/avatar-1.png">
-										</div>
-										<div class="comment-nama">Erick Dewa Pranata</div>
-										<div class="comment-date">11 January 2020</div>
-									</div>
-									<div class="comment-side">
-										<div class="side-top">
-											<div class="comment-rating">
-												<div class="rating-group">
-											        <input class="rating__input rating__input--none" checked name="rating2" id="rating2-0" value="0" type="radio" disabled>
-											        <label aria-label="0.5 stars" class="rating__label rating__label--half" for="rating2-05"><i class="rating__icon rating__icon--star fa fa-star-half"></i></label>
-											        <input class="rating__input" name="rating2" id="rating2-05" value="0.5" type="radio" disabled>
-											        <label aria-label="1 star" class="rating__label" for="rating2-10"><i class="rating__icon rating__icon--star fa fa-star"></i></label>
-											        <input class="rating__input" name="rating2" id="rating2-10" value="1" type="radio" disabled>
-											        <label aria-label="1.5 stars" class="rating__label rating__label--half" for="rating2-15"><i class="rating__icon rating__icon--star fa fa-star-half"></i></label>
-											        <input class="rating__input" name="rating2" id="rating2-15" value="1.5" type="radio" disabled>
-											        <label aria-label="2 stars" class="rating__label" for="rating2-20"><i class="rating__icon rating__icon--star fa fa-star"></i></label>
-											        <input class="rating__input" name="rating2" id="rating2-20" value="2" type="radio" disabled>
-											        <label aria-label="2.5 stars" class="rating__label rating__label--half" for="rating2-25"><i class="rating__icon rating__icon--star fa fa-star-half"></i></label>
-											        <input class="rating__input" name="rating2" id="rating2-25" value="2.5" type="radio" checked>
-											        <label aria-label="3 stars" class="rating__label" for="rating2-30"><i class="rating__icon rating__icon--star fa fa-star"></i></label>
-											        <input class="rating__input" name="rating2" id="rating2-30" value="3" type="radio" disabled>
-											        <label aria-label="3.5 stars" class="rating__label rating__label--half" for="rating2-35"><i class="rating__icon rating__icon--star fa fa-star-half"></i></label>
-											        <input class="rating__input" name="rating2" id="rating2-35" value="3.5" type="radio" disabled>
-											        <label aria-label="4 stars" class="rating__label" for="rating2-40"><i class="rating__icon rating__icon--star fa fa-star"></i></label>
-											        <input class="rating__input" name="rating2" id="rating2-40" value="4" type="radio" disabled>
-											        <label aria-label="4.5 stars" class="rating__label rating__label--half" for="rating2-45"><i class="rating__icon rating__icon--star fa fa-star-half"></i></label>
-											        <input class="rating__input" name="rating2" id="rating2-45" value="4.5" type="radio" disabled>
-											        <label aria-label="5 stars" class="rating__label" for="rating2-50"><i class="rating__icon rating__icon--star fa fa-star"></i></label>
-											        <input class="rating__input" name="rating2" id="rating2-50" value="5" type="radio" disabled>
-											    </div>
-											    <div class="comment-verifed" title="Verifed User">
-											    	<i class="fa fa-check-circle-o"></i>
-											    </div>
+							<template v-for="review in dataCourses.coursesreview">
+								<div class="comment-item carousel-item active">
+									<div class="comment-box">
+										<div class="comment-info">
+											<div class="comment-image">
+												<img :src="review.user.profile.image">
 											</div>
-											<div class="comment-thumb">
-												<span class="thumb-up">
-													<i class="fa fa-thumbs-o-up"></i>
-												</span>
-												<span class="thumb-down">
-													<i class="fa fa-thumbs-o-down"></i>
-												</span>
-											</div>
+											<div class="comment-nama">{{ review.user.name }}</div>
+											<div class="comment-date">{{ review.tanggal }}</div>
 										</div>
-										<div class="side-bottom">
-											Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-											tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-											quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-											consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
-											cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
-											proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+										<div class="comment-side">
+											<div class="side-top">
+												<div class="comment-rating">
+													<div class="rating-group">
+														<input v-bind:checked="((review.rate==0)?true:false)" class="rating__input rating__input--none" checked name="rating2" id="rating2-0" value="0" type="radio" disabled>
+												        <label aria-label="1 star" class="rating__label" for="rating2-10"><i class="rating__icon rating__icon--star fa fa-star"></i></label>
+												        <input v-bind:checked="((review.rate==1)?true:false)" class="rating__input" name="rating2" id="rating2-10" value="1" type="radio" disabled>
+												        <label aria-label="2 stars" class="rating__label" for="rating2-20"><i class="rating__icon rating__icon--star fa fa-star"></i></label>
+												        <input v-bind:checked="((review.rate==2)?true:false)" class="rating__input" name="rating2" id="rating2-20" value="2" type="radio" disabled>
+												        <label aria-label="3 stars" class="rating__label" for="rating2-30"><i class="rating__icon rating__icon--star fa fa-star"></i></label>
+												        <input v-bind:checked="((review.rate==3)?true:false)" class="rating__input" name="rating2" id="rating2-30" value="3" type="radio" disabled>
+												        <label aria-label="4 stars" class="rating__label" for="rating2-40"><i class="rating__icon rating__icon--star fa fa-star"></i></label>
+												        <input v-bind:checked="((review.rate==4)?true:false)" class="rating__input" name="rating2" id="rating2-40" value="4" type="radio" disabled>
+												        <label aria-label="5 stars" class="rating__label" for="rating2-50"><i class="rating__icon rating__icon--star fa fa-star"></i></label>
+												        <input v-bind:checked="((review.rate==5)?true:false)" class="rating__input" name="rating2" id="rating2-50" value="5" type="radio" disabled>
+												    </div>
+												    <div class="comment-verifed" title="Verifed User">
+												    	<i class="fa fa-check-circle-o"></i>
+												    </div>
+												</div>
+											</div>
+											<div class="side-bottom">
+												{{ review.description }}
+											</div>
 										</div>
 									</div>
 								</div>
-							</div>
+							</template>
 						</div>
 					</div>
 				</div>
@@ -216,6 +189,7 @@
 	    			method: 'GET',
 	    		}).then((res)=>{
 	    			vm.dataCourses = res.data.data;
+	    			vm.isPay = res.data.payment;
 	    		}).catch((error)=>{
 	    			// error
 	    		});
@@ -228,6 +202,7 @@
 	    			method: 'GET',
 	    		}).then((res)=>{
 	    			vm.dataCourses = res.data.data;
+	    			vm.isPay = res.data.payment;
 	    		}).catch((error)=>{
 	    			// error
 	    		});
@@ -239,11 +214,17 @@
     		vm.isPay = false;
 	    	if(localStorage.getItem("level_id") != null){
 	    		vm.getDataCoursesAuth(vm.$route.params.uuidCourses);
-	    		vm.isPay = true;
 	    	}else{
 		    	vm.getDataCourses(vm.$route.params.uuidCourses);
-		    	vm.isPay = false;
 	    	}
 	    }
 	}
 </script>
+
+<style type="text/css">
+	.custom-star{
+		color: #FFA500;
+		font-size: 18px;
+		margin: 0px 2px;
+	}
+</style>

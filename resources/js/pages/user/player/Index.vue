@@ -28,7 +28,7 @@
 												<div class="title">Creator</div>: {{ dataCourses.user.name }}
 											</div>
 											<div class="label">
-												<div class="title">Created At</div>: {{ dataCourses.created_at }}
+												<div class="title">Created At</div>: {{ dataCourses.tanggal }}
 											</div>
 										</div>
 									</div>

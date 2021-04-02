@@ -203,7 +203,6 @@ __webpack_require__.r(__webpack_exports__);
       setTimeout(function () {
         vm.thumbnail = vm.$parent.thumbnail;
         vm.player = Aropex.video('aro-video', vm.thumbnail);
-        console.log($('#aro-video').data('video') + '-' + true);
 
         if (vm.change) {
           vm.player.loadVideoById(vm.videoId);
@@ -272,8 +271,6 @@ __webpack_require__.r(__webpack_exports__);
       var vm = this;
       setTimeout(function () {
         $('.li-parent').on('click', function () {
-          console.log(true);
-
           if (!$(this).children('.ul-child').hasClass('active')) {
             if ($('.ul-child').hasClass('active')) {
               $('.ul-child').removeClass('active');
@@ -421,7 +418,7 @@ var render = function() {
                                                       ": " +
                                                         _vm._s(
                                                           _vm.dataCourses
-                                                            .created_at
+                                                            .tanggal
                                                         ) +
                                                         "\n\t\t\t\t\t\t\t\t\t\t"
                                                     )

@@ -3,6 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Courses;
+use App\Models\CoursesReview;
+use App\Models\MateriGroup;
+use App\Models\Materi;
 use App\Models\UserCourses;
 use Illuminate\Http\Request;
 use Validator, JWTAuth, AppHelper;
@@ -28,20 +31,54 @@ class CoursesController extends Controller
 
     // Page user courses
     public function getDataCoursesAuth($uuid)
-    {
-        $data = Courses::with(['materigroup' => function($query){
-            $query->with(['materi' => function($query){
-                $query->where('is_preview', 'Y')
-                ->orderBy('id', 'asc');
-            }])->whereHas('materi', function($query){
-                $query->where('is_preview', 'Y');
-            })->orderBy('id', 'asc');
-        }, 'user', 'coursestool.tool', 'courseslearn'])
-        ->where('uuid', $uuid)->first();
+    {   
+        $data = Courses::findByUuid($uuid);
+        $payment = UserCourses::where('courses_id', $data->id)
+        ->where('user_id', JWTAuth::user()->id)
+        ->where('status', 'success')->first();
+
+        if(isset($payment)){
+            $data = Courses::with(['materigroup' => function($query){
+                $query->with(['materi' => function($query){
+                    $query->orderBy('id', 'asc');
+                }])->has('materi')->orderBy('id', 'asc');
+            }, 'user', 'coursestool.tool', 'courseslearn', 'coursesreview.user.profile'])
+            ->has('materigroup')->where('uuid', $uuid)->first();
+        }else{
+            $data = Courses::with(['materigroup' => function($query){
+                $query->with(['materi' => function($query){
+                    $query->where('is_preview', 'Y')
+                    ->orderBy('id', 'asc');
+                }])->has('materi')->orderBy('id', 'asc');
+            }, 'user', 'coursestool.tool', 'courseslearn', 'coursesreview.user.profile'])
+            ->has('materigroup')->where('uuid', $uuid)->first();
+        }
+
+        // Hitung Rating
+        $review = CoursesReview::where('courses_id', $data->id)->get();
+        $sum = $review->sum('rate');
+        $count = $review->count();
+        $data->rating = $sum/$count;
+
+        $materiGroup = MateriGroup::where('courses_id', $data->id)
+        ->pluck('id')->toArray();
+
+        $data->count_materi = Materi::whereIn('materigroup_id', $materiGroup)
+        ->where('is_preview', 'N')
+        ->get()->count();
+
+        // Tanggal
+        $data->tanggal = $this->tanggal($data->created_at);
+        $data->coursesreview->map(function($a){
+            $a->tanggal = $this->tanggal($a->created_at);
+
+            return $a;
+        });
 
         return response()->json([
             'status' => true,
             'data' => $data,
+            'payment' => ((isset($payment))?true:false),
             'message' => 'Data berhasil diambil'
         ]);
     }
@@ -50,16 +87,23 @@ class CoursesController extends Controller
     {
         $data = Courses::with(['materigroup' => function($query){
             $query->with(['materi' => function($query){
-                $query->where('is_preview', 'Y');
-            }])->whereHas('materi', function($query){
-                $query->where('is_preview', 'Y');
-            });
-        }, 'user', 'coursestool.tool', 'courseslearn'])
-        ->where('uuid', $uuid)->first();
+                $query->where('is_preview', 'Y')
+                ->orderBy('id', 'asc');
+            }])->has('materi')->orderBy('id', 'asc');
+        }, 'user', 'coursestool.tool', 'courseslearn', 'coursesreview.user.profile'])
+        ->has('materigroup')->where('uuid', $uuid)->first();
+
+        $materiGroup = MateriGroup::where('courses_id', $data->id)
+        ->pluck('id')->toArray();
+
+        $data->count_materi = Materi::whereIn('materigroup_id', $materiGroup)
+        ->where('is_preview', 'N')
+        ->get()->count();
 
         return response()->json([
             'status' => true,
             'data' => $data,
+            'payment' => false,
             'message' => 'Data berhasil diambil'
         ]);
     }
@@ -226,5 +270,11 @@ class CoursesController extends Controller
                 'message' => 'Data gagal di hapus',
             ], 404);
         }
+    }
+
+    public function tanggal($date)
+    {   
+        $bulan = ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'];
+        return date('d', strtotime($date)).' '.$bulan[intval(date('m', strtotime($date)))].' '.date('Y', strtotime($date));
     }
 }

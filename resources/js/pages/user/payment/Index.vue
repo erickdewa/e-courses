@@ -192,10 +192,13 @@
 	    		var vm = this;
 
 	    		vm.$http({
-	    			url: `${ vm.apiUrl }/courses/${ vm.$route.params.uuidCourses }/getdata`,
+	    			url: `${ vm.apiUrl }/courses/${ vm.$route.params.uuidCourses }/auth`,
 	    			method: 'GET',
 	    		}).then((res)=>{
 	    			vm.dataCourses = res.data.data;
+	    			if(res.data.payment){
+	    				vm.$router.push({ path: `/courses/${ vm.$route.params.uuidCourses }` });
+	    			}
 	    		}).catch((error)=>{
 	    			// error
 	    		});
@@ -222,7 +225,6 @@
 
 	    	vm.getMethod();
 	    	vm.getCourses();
-	    	console.log(vm.$auth.user());
 	    }
 	}
 </script>
