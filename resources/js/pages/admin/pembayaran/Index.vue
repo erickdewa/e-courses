@@ -4,11 +4,6 @@
 			<div class="aro-restraint" v-if="showList">
 				<div class="aro-restraint_title">
 					<span>Pembayaran</span>
-					<div class="button-table">
-						<button type="button" class="btn btn-success btn-sm" @click.prevent="showList = false; showForm = true">
-							<i class="fa fa-plus"></i> Tambah
-						</button>
-					</div>
 				</div>
 				<div class="aro-restraint_body">
 					<AdminTable id="table" ref="table" classx="table table-rowed" :urls="'/usercourses/index'" :callbacks="callback()" :columns="columns"></AdminTable>

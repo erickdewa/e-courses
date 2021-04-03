@@ -166,6 +166,20 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['uuid', 'isEdit'],
   data: function data() {
@@ -173,11 +187,26 @@ __webpack_require__.r(__webpack_exports__);
       formData: {
         uuid: '',
         nm_method: '',
-        kode: ''
+        nomor: '',
+        nm_account: '',
+        image: ''
       }
     };
   },
   methods: {
+    changeImage: function changeImage($event) {
+      var vm = this;
+      vm.formData.image = $event.target.files[0];
+
+      if (typeof vm.formData.image != 'undefined') {
+        var oFReader = new FileReader();
+        oFReader.readAsDataURL(vm.formData.image);
+
+        oFReader.onload = function (oFREvent) {
+          $('.images').css('background-image', 'url(' + oFREvent.target.result + ')');
+        };
+      }
+    },
     simpanData: function simpanData(uuid) {
       var vm = this;
       var urls = "".concat(vm.apiUrl, "/payment/create");
@@ -194,10 +223,10 @@ __webpack_require__.r(__webpack_exports__);
         }
       }).then(function (res) {
         vm.$parent.setShowList();
-        Aropex.btnLoad('.btn-submit', true);
+        Aropex.btnLoad('.btn-submit', false);
         toastr.success(res.data.message, 'Success');
       })["catch"](function (err) {
-        Aropex.btnLoad('.btn-submit', true);
+        Aropex.btnLoad('.btn-submit', false);
         toastr.error(err.response.data.message, 'Error');
       });
     },
@@ -380,6 +409,42 @@ var render = function() {
         _c("div", { staticClass: "form-body" }, [
           _c("div", { staticClass: "row" }, [
             _c("div", { staticClass: "col-md-12" }, [
+              _c(
+                "div",
+                { staticClass: "form-group", attrs: { align: "center" } },
+                [
+                  _c(
+                    "div",
+                    {
+                      staticClass: "image-upload-box images",
+                      staticStyle: {
+                        width: "300px",
+                        height: "200px",
+                        "background-size": "cover"
+                      }
+                    },
+                    [
+                      _c("input", {
+                        staticClass: "form-control",
+                        attrs: {
+                          type: "file",
+                          id: "image",
+                          accept: "image/png, image/jpeg",
+                          name: "image",
+                          required: "",
+                          placeholder: "Name"
+                        },
+                        on: { change: _vm.changeImage }
+                      }),
+                      _vm._v(" "),
+                      _vm._m(0)
+                    ]
+                  )
+                ]
+              )
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "col-md-12" }, [
               _c("div", { staticClass: "form-group" }, [
                 _c("label", [_vm._v("Nama Payment")]),
                 _vm._v(" "),
@@ -412,33 +477,66 @@ var render = function() {
               ])
             ]),
             _vm._v(" "),
-            _c("div", { staticClass: "col-md-12" }, [
+            _c("div", { staticClass: "col-md-6" }, [
               _c("div", { staticClass: "form-group" }, [
-                _c("label", [_vm._v("Kode")]),
+                _c("label", [_vm._v("Atasnama")]),
                 _vm._v(" "),
                 _c("input", {
                   directives: [
                     {
                       name: "model",
                       rawName: "v-model",
-                      value: _vm.formData.kode,
-                      expression: "formData.kode"
+                      value: _vm.formData.nm_account,
+                      expression: "formData.nm_account"
                     }
                   ],
                   staticClass: "form-control",
                   attrs: {
                     type: "text",
-                    name: "kode",
+                    name: "nm_account",
                     required: "",
-                    placeholder: "Kode"
+                    placeholder: "Atasnama"
                   },
-                  domProps: { value: _vm.formData.kode },
+                  domProps: { value: _vm.formData.nm_account },
                   on: {
                     input: function($event) {
                       if ($event.target.composing) {
                         return
                       }
-                      _vm.$set(_vm.formData, "kode", $event.target.value)
+                      _vm.$set(_vm.formData, "nm_account", $event.target.value)
+                    }
+                  }
+                })
+              ])
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "col-md-6" }, [
+              _c("div", { staticClass: "form-group" }, [
+                _c("label", [_vm._v("Nomor")]),
+                _vm._v(" "),
+                _c("input", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.formData.nomor,
+                      expression: "formData.nomor"
+                    }
+                  ],
+                  staticClass: "form-control",
+                  attrs: {
+                    type: "text",
+                    name: "nomor",
+                    required: "",
+                    placeholder: "Nomor"
+                  },
+                  domProps: { value: _vm.formData.nomor },
+                  on: {
+                    input: function($event) {
+                      if ($event.target.composing) {
+                        return
+                      }
+                      _vm.$set(_vm.formData, "nomor", $event.target.value)
                     }
                   }
                 })
@@ -449,12 +547,20 @@ var render = function() {
         _vm._v(" "),
         _c("hr"),
         _vm._v(" "),
-        _vm._m(0)
+        _vm._m(1)
       ]
     )
   ])
 }
 var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("label", { attrs: { for: "image" } }, [
+      _c("i", { staticClass: " fa fa-plus" })
+    ])
+  },
   function() {
     var _vm = this
     var _h = _vm.$createElement

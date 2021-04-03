@@ -1351,7 +1351,7 @@ var render = function() {
                         },
                         [
                           _c("a", { attrs: { href: "javascript:void(0)" } }, [
-                            _vm._v("Erick Dewa Pranata")
+                            _vm._v(_vm._s(_vm.$auth.user().name))
                           ])
                         ]
                       )

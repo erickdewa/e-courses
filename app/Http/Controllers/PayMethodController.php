@@ -45,7 +45,9 @@ class PayMethodController extends Controller
     {
     	$validator = Validator::make($request->all(), [
             'nm_method' => 'required|string',
-            'kode' => 'required|string',
+            'nomor' => 'required|string',
+            'nm_account' => 'required|string',
+            'image' => 'required|image',
         ]);
 
         if ($validator->fails()) {
@@ -55,9 +57,19 @@ class PayMethodController extends Controller
             ], 500);
         }
 
+        if(isset($request->image)) {
+            $nama_image = 'method_'.time().'.'.$request->image->getClientOriginalExtension();
+            $request->image->move(public_path('img/method'), $nama_image);
+            $image = '/img/method/'.$nama_image;
+        }else{
+            $image = '/img/method/default.png';
+        }
+
         $data = PayMethod::create([
         	'nm_method' => $request->nm_method,
-            'kode' => $request->kode,
+            'nomor' => $request->nomor,
+            'nm_account' => $request->nm_account,
+            'image' => $image,
         ]);
 
         return response()->json([
@@ -88,7 +100,9 @@ class PayMethodController extends Controller
     {
     	$validator = Validator::make($request->all(), [
             'nm_method' => 'required|string',
-            'kode' => 'required|string',
+            'nomor' => 'required|string',
+            'nm_account' => 'required|string',
+            'image' => 'required|image',
         ]);
 
         if ($validator->fails()) {
@@ -99,9 +113,24 @@ class PayMethodController extends Controller
         }
 
         $data = PayMethod::findByUuid($uuid);
+
+        if(isset($request->image)) {
+            $nama_image = 'method_'.time().'.'.$request->image->getClientOriginalExtension();
+            $request->image->move(public_path('img/method'), $nama_image);
+            if($data->image != '/img/method/default.png'){
+                $fwhite = public_path().$data->image;
+                if (is_file($fwhite)) {
+                    unlink($fwhite);
+                }
+            }
+            $image = '/img/method/'.$nama_image;
+        }
+
         $data->update([
         	'nm_method' => $request->nm_method,
-            'kode' => $request->kode,
+            'nomor' => $request->nomor,
+            'nm_account' => $request->nm_account,
+            'image' => $image,
         ]);
 
         return response()->json([
@@ -126,6 +155,12 @@ class PayMethodController extends Controller
     public function delete($uuid)
     {
         $data = PayMethod::findByUuid($uuid);
+        if($data->image != '/img/method/default.png'){
+            $fwhite = public_path().$data->image;
+            if (is_file($fwhite)) {
+                unlink($fwhite);
+            }
+        }
     
         if($data->delete()){
 	        return response()->json([

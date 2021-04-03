@@ -35,7 +35,7 @@ class CoursesController extends Controller
         $data = Courses::findByUuid($uuid);
         $payment = UserCourses::where('courses_id', $data->id)
         ->where('user_id', JWTAuth::user()->id)
-        ->where('status', 'success')->first();
+        ->whereIn('status', ['success', 'procces'])->first();
 
         if(isset($payment)){
             $data = Courses::with(['materigroup' => function($query){

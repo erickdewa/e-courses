@@ -10,6 +10,6 @@ class PayMethod extends Model
     use Uuid;
 
     protected $fillable = [
-        'uuid', 'nm_method', 'kode', 'active'
+        'uuid', 'nm_method', 'nomor', 'nm_account', 'active', 'image'
     ];
 }

@@ -18,7 +18,9 @@ class CreatePayMethodsTable extends Migration
             $table->uuid('uuid')->unique();
 
             $table->string('nm_method');
-            $table->string('kode')->default('-');
+            $table->string('nomor')->default('-');
+            $table->string('image')->default('/img/method/default.png');
+            $table->string('nm_account')->default('-');
             $table->enum('active', ['Y', 'N'])->default('N');
             
             $table->timestamps();

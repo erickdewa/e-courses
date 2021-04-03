@@ -9,9 +9,9 @@
 							<div class="row">
 								<template v-for="method in dataMethod">
 									<div class="col-6">
-										<div class="method-item d-flex p-0 cursor-pointer" v-bind:class="((formData.method_id==method.id)?'active':'')" @click="methodSelected(method.id)">
+										<div class="method-item d-flex p-0 cursor-pointer" v-bind:class="((method_id==method.id)?'active':'')" @click="methodSelected(method.id)">
 											<div class="method-item_image">
-												<img src="/assets/images/avatar-1.png">
+												<img :src="method.image">
 											</div>
 											<div class="method-item_info ml-4 mt-2">
 												<div class="nama">{{ method.nm_method }}</div>
@@ -31,7 +31,7 @@
 							<div class="title">Checkout</div>
 							<div class="payment-item mt-3">
 								<div class="payment-item_image" align="center">
-									<img src="/assets/images/avatar-1.png">
+									<img :src="dataCourses.thumbnile">
 								</div>
 								<div class="payment-item_info mt-2">
 									<div class="nama">Laravel 8 For Beginer</div>
@@ -66,20 +66,48 @@
 								<div class="nama">Total</div>
 								<div class="price">Rp. {{ dataCourses.price.rupiah() }}</div>
 							</div>
-							<div class="order-id">Order ID #1 (Gopay)</div>
-							<div class="expired-date">Expired 28 Mei 21:07 WIB</div>
+							<div class="order-id">Order ID #{{ formData.id }} ({{ formData.method.nm_method }})</div>
 							<hr>
 							<div class="account-bayar">
 								<div class="nama">Account Number</div>
-								<div class="nomor">26303847172</div>
+								<div class="nomor">{{ formData.method.nomor }}</div>
+								<div class="account">{{ formData.method.nm_account }}</div>
 							</div>
 							<hr>
-							<div class="how-to-pay cursor-pointer">How to Pay?</div>
-							<div class="payment-action mt-3">
-								<button type="button" class="btn btn-success btn-sm" style="width: 100%">
-									<i class="fa fa-money"></i> Cek Pembayaran
+							<div style="display: flex; justify-content: space-between;">
+								<div class="how-to-pay cursor-pointer">How to Pay?</div>
+								<div v-if="!changeMethods" class="how-to-pay cursor-pointer" @click="change()">Change method?</div>
+							</div>
+							<div v-if="changeMethods" class="payment-action mt-3">
+								<button type="button" class="btn btn-success btn-sm btn-simpan" style="width: 100%" @click="changeMethod()">
+									<i class="fa fa-save"></i> Simpan Method Pembayaran
 								</button>
 							</div>
+							<div v-if="!changeMethods" class="payment-action mt-3">
+								<button type="button" class="btn btn-info btn-sm" style="width: 100%" @click="setShowBukti()">
+									<i class="fa fa-money"></i> Next
+								</button>
+							</div>
+						</template>
+						<template v-if="showBukti">
+							<div class="title">Upload Bukti</div>
+							<form id="form-bukti" class="form" @submit.prevent="buktiOrder()" autocomplete="off">
+								<div class="form-group mt-3" align="center">
+									<div class="image-upload-box images" style=" width: 250px; height: 150px; background-size: cover;">
+										<input type="file" id="bukti" accept="image/png, image/jpeg" class="form-control" name="bukti" required v-on:change="changeImage" placeholder="Name">
+										<label for="bukti"><i class=" fa fa-plus"></i></label>
+									</div>
+								</div>
+								<div class="form-group">
+									<textarea class="form-control" rows="2" name="note" placeholder="catatan"></textarea>
+								</div>
+								<hr>
+								<div class="payment-action mt-3">
+									<button type="submit" form="form-bukti" class="btn btn-success btn-submit btn-sm" style="width: 100%">
+										<i class="fa fa-save"></i> Kirim Pembayaran
+									</button>
+								</div>
+							</form>
 						</template>
 					</div>
 				</div>
@@ -94,34 +122,32 @@
 	        return {
 	        	showMethod: true,
 	        	showBayar: false,
+	        	showBukti: false,
 
 	        	bayar: false,
 	        	dataMethod: [],
 
+	        	changeMethods: false,
+	        	method_id: '',
+
 	        	dataCourses: {
 	        		price: 0,
 	        	},
-	        	paymentParameter: '',
 
 	        	formData: {
+	        		method: {},
+	        		user: {},
+	        		courses: {},
 	        		user_id: '',
 	        		method_id: '',
 	        		courses_id: '',
-	        		discount: 0,
-					payment_type: '',
-					bank: '',
-					item_details: [{
-						id: 1,
-						price: 0,
-						quantity: 1,
-						name: '',
-					}],
-					customer_details: {
-						first_name: '',
-						last_name: '',
-						email: '',
-						phone: ''
-					},
+	        		discount: '0',
+	        		total: '0',
+	        	},
+
+	        	formBukti: {
+	        		bukti: '',
+	        		note: '',
 	        	},
 	        }
 	    },
@@ -131,49 +157,63 @@
 
 	    		vm.showMethod = true;
 	    		vm.showBayar = false;
+	    		vm.showBukti = false;
 	    	},
 			setShowBayar(){
 				var vm = this;
 
 				vm.showMethod = false;
 				vm.showBayar = true;
+				vm.showBukti = false;
 				vm.bayar = true;
 			},
+			setShowBukti(){
+	    		var vm = this;
+
+	    		vm.showMethod = false;
+	    		vm.showBayar = false;
+	    		vm.showBukti = true;
+	    	},
+			change(){
+				var vm = this;
+
+				vm.changeMethods = true;
+				vm.method_id = '';
+			},
+
+			changeImage($event){
+	    		var vm = this;
+
+	    		vm.formBukti.bukti = $event.target.files[0];
+                if(typeof vm.formBukti.bukti != 'undefined'){
+                    var oFReader = new FileReader();
+                    oFReader.readAsDataURL(vm.formBukti.bukti);
+                 
+                    oFReader.onload = function(oFREvent) {
+                        $('.images').css('background-image', 'url(' + oFREvent.target.result + ')');
+                    };
+                }
+	    	},
 
 	    	methodSelected(id){
 	    		var vm = this;
 
-	    		var codePay = '';
-	    		var subPayment = '';
-	    		for(var i = 0; i < vm.dataMethod.length; i++){
-	    			if(vm.dataMethod[i].id == id){
-	    				codePay = vm.dataMethod[i].kode;
-	    				subPayment = codePay.split('-')[1];
-	    				vm.paymentParameter = codePay.split('-')[0];
-	    			}
-	    		}
-
 	    		if(!vm.bayar){
+	    			vm.method_id = id;
 	    			vm.formData = {
+	    				method: {},
+		        		user: {},
+		        		courses: {},
 		        		user_id: vm.$auth.user().id,
 		        		method_id: id,
 		        		courses_id: vm.dataCourses.id,
-		        		discount: 0,
-						payment_type: subPayment,
-						bank: subPayment,
-						item_details: [{
-							id: vm.dataCourses.id,
-							price: vm.dataCourses.price,
-							quantity: 1,
-							name: vm.dataCourses.name,
-						}],
-						customer_details: {
-							first_name: vm.$auth.user().name,
-							last_name: "-",
-							email: vm.$auth.user().email,
-							phone: "-"
-						},
+		        		discount: '0',
+		        		total: vm.dataCourses.price,
 		        	}
+	    		}else{
+	    			if(vm.changeMethods){
+		    			vm.method_id = id;
+	    			}
 	    		}
 	    	},
 	    	getMethod(){
@@ -196,6 +236,7 @@
 	    			method: 'GET',
 	    		}).then((res)=>{
 	    			vm.dataCourses = res.data.data;
+	    			vm.cekOrder(vm.dataCourses.uuid);
 	    			if(res.data.payment){
 	    				vm.$router.push({ path: `/courses/${ vm.$route.params.uuidCourses }` });
 	    			}
@@ -204,12 +245,28 @@
 	    		});
 	    	},
 
+	    	cekOrder(uuid){
+	    		var vm = this;
+
+	    		vm.$http({
+	    			url: `${ vm.apiUrl }/payment/${ uuid }/cek`,
+	    			method: 'GET',
+	    		}).then((res)=>{
+	    			if(res.data.status){
+	    				vm.formData = res.data.data;
+	    				vm.method_id = vm.formData.method_id;
+		    			vm.setShowBayar();
+	    			}
+	    		}).catch((err)=>{
+	    			// error
+	    		});
+	    	},
 	    	createOrder(){
 	    		var vm = this;
 
 	    		Aropex.btnLoad('.btn-reload', true);
 	    		vm.$http({
-	    			url: `${ vm.apiUrl }/payment/${ vm.paymentParameter }/create`,
+	    			url: `${ vm.apiUrl }/payment/order`,
 	    			method: 'POST',
 	    			data: vm.formData,
 	    		}).then((res)=>{
@@ -217,6 +274,35 @@
 	    			Aropex.btnLoad('.btn-reload', false);
 	    		}).catch((err)=>{
 	    			Aropex.btnLoad('.btn-reload', false);
+	    		});
+	    	},
+	    	changeMethod(){
+	    		var vm = this;
+
+	    		Aropex.btnLoad('.btn-simpan', true);
+	    		vm.$http({
+	    			url: `${ vm.apiUrl }/payment/${ vm.formData.uuid }/method`,
+	    			method: 'POST',
+	    			data: { method_id: vm.method_id },
+	    		}).then((res)=>{
+	    			vm.formData = res.data.data;
+	    			vm.changeMethods = false;
+	    			Aropex.btnLoad('.btn-simpan', false);
+	    		}).catch((err)=>{
+	    			Aropex.btnLoad('.btn-simpan', false);
+	    		});
+	    	},
+	    	buktiOrder(){
+	    		var vm = this;
+
+	    		var urls = `${ vm.apiUrl }/payment/${ vm.formData.uuid }/bukti`;
+
+	    		Aropex.btnLoad('.btn-submit', true);
+	    		let formData = new FormData($("#form-bukti")[0]);
+                vm.axios.post(urls, formData, {headers: {'content-type': 'multipart/form-data'}}).then((res) => {
+	    			Aropex.btnLoad('.btn-submit', false);
+	    		}).catch((err)=>{
+	    			Aropex.btnLoad('.btn-submit', false);
 	    		});
 	    	},
 	    },

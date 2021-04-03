@@ -1394,11 +1394,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   components: {
@@ -3839,28 +3834,7 @@ var render = function() {
         _vm.showList
           ? _c("div", { staticClass: "aro-restraint" }, [
               _c("div", { staticClass: "aro-restraint_title" }, [
-                _c("span", [_vm._v("Pembayaran")]),
-                _vm._v(" "),
-                _c("div", { staticClass: "button-table" }, [
-                  _c(
-                    "button",
-                    {
-                      staticClass: "btn btn-success btn-sm",
-                      attrs: { type: "button" },
-                      on: {
-                        click: function($event) {
-                          $event.preventDefault()
-                          _vm.showList = false
-                          _vm.showForm = true
-                        }
-                      }
-                    },
-                    [
-                      _c("i", { staticClass: "fa fa-plus" }),
-                      _vm._v(" Tambah\n\t\t\t\t\t")
-                    ]
-                  )
-                ])
+                _c("span", [_vm._v("Pembayaran")])
               ]),
               _vm._v(" "),
               _c(
@@ -4017,8 +3991,8 @@ var render = function() {
                       _vm._v("Success")
                     ]),
                     _vm._v(" "),
-                    _c("option", { attrs: { value: "expiret" } }, [
-                      _vm._v("Expired")
+                    _c("option", { attrs: { value: "cancle" } }, [
+                      _vm._v("Cancle")
                     ])
                   ]
                 )

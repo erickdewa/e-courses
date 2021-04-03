@@ -32,9 +32,10 @@ class CreateUserCoursesTable extends Migration
             $table->integer('discount')->default(0);
             $table->integer('total')->default(0);
 
-            $table->enum('status', ['pending', 'procces', 'success', 'expiret'])->default('pending');
+            $table->enum('status', ['pending', 'procces', 'success', 'cancel'])->default('pending');
             $table->timestamp('payment_time')->nullable();
-            $table->timestamp('payment_expired')->nullable();
+            $table->text('bukti')->nullable();
+            $table->text('note')->nullable();
 
             $table->timestamps();
         });

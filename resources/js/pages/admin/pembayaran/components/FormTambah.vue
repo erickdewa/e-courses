@@ -10,7 +10,7 @@
 								<option value="pending">Pending</option>
 								<option value="proccess">Proccess</option>
 								<option value="success">Success</option>
-								<option value="expiret">Expired</option>
+								<option value="cancle">Cancle</option>
 							</select>
 						</div>
 					</div>

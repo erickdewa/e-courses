@@ -99,36 +99,60 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
       showMethod: true,
       showBayar: false,
+      showBukti: false,
       bayar: false,
       dataMethod: [],
+      changeMethods: false,
+      method_id: '',
       dataCourses: {
         price: 0
       },
-      paymentParameter: '',
       formData: {
+        method: {},
+        user: {},
+        courses: {},
         user_id: '',
         method_id: '',
         courses_id: '',
-        discount: 0,
-        payment_type: '',
-        bank: '',
-        item_details: [{
-          id: 1,
-          price: 0,
-          quantity: 1,
-          name: ''
-        }],
-        customer_details: {
-          first_name: '',
-          last_name: '',
-          email: '',
-          phone: ''
-        }
+        discount: '0',
+        total: '0'
+      },
+      formBukti: {
+        bukti: '',
+        note: ''
       }
     };
   },
@@ -137,47 +161,58 @@ __webpack_require__.r(__webpack_exports__);
       var vm = this;
       vm.showMethod = true;
       vm.showBayar = false;
+      vm.showBukti = false;
     },
     setShowBayar: function setShowBayar() {
       var vm = this;
       vm.showMethod = false;
       vm.showBayar = true;
+      vm.showBukti = false;
       vm.bayar = true;
+    },
+    setShowBukti: function setShowBukti() {
+      var vm = this;
+      vm.showMethod = false;
+      vm.showBayar = false;
+      vm.showBukti = true;
+    },
+    change: function change() {
+      var vm = this;
+      vm.changeMethods = true;
+      vm.method_id = '';
+    },
+    changeImage: function changeImage($event) {
+      var vm = this;
+      vm.formBukti.bukti = $event.target.files[0];
+
+      if (typeof vm.formBukti.bukti != 'undefined') {
+        var oFReader = new FileReader();
+        oFReader.readAsDataURL(vm.formBukti.bukti);
+
+        oFReader.onload = function (oFREvent) {
+          $('.images').css('background-image', 'url(' + oFREvent.target.result + ')');
+        };
+      }
     },
     methodSelected: function methodSelected(id) {
       var vm = this;
-      var codePay = '';
-      var subPayment = '';
-
-      for (var i = 0; i < vm.dataMethod.length; i++) {
-        if (vm.dataMethod[i].id == id) {
-          codePay = vm.dataMethod[i].kode;
-          subPayment = codePay.split('-')[1];
-          vm.paymentParameter = codePay.split('-')[0];
-        }
-      }
 
       if (!vm.bayar) {
+        vm.method_id = id;
         vm.formData = {
+          method: {},
+          user: {},
+          courses: {},
           user_id: vm.$auth.user().id,
           method_id: id,
           courses_id: vm.dataCourses.id,
-          discount: 0,
-          payment_type: subPayment,
-          bank: subPayment,
-          item_details: [{
-            id: vm.dataCourses.id,
-            price: vm.dataCourses.price,
-            quantity: 1,
-            name: vm.dataCourses.name
-          }],
-          customer_details: {
-            first_name: vm.$auth.user().name,
-            last_name: "-",
-            email: vm.$auth.user().email,
-            phone: "-"
-          }
+          discount: '0',
+          total: vm.dataCourses.price
         };
+      } else {
+        if (vm.changeMethods) {
+          vm.method_id = id;
+        }
       }
     },
     getMethod: function getMethod() {
@@ -197,6 +232,7 @@ __webpack_require__.r(__webpack_exports__);
         method: 'GET'
       }).then(function (res) {
         vm.dataCourses = res.data.data;
+        vm.cekOrder(vm.dataCourses.uuid);
 
         if (res.data.payment) {
           vm.$router.push({
@@ -206,11 +242,25 @@ __webpack_require__.r(__webpack_exports__);
       })["catch"](function (error) {// error
       });
     },
+    cekOrder: function cekOrder(uuid) {
+      var vm = this;
+      vm.$http({
+        url: "".concat(vm.apiUrl, "/payment/").concat(uuid, "/cek"),
+        method: 'GET'
+      }).then(function (res) {
+        if (res.data.status) {
+          vm.formData = res.data.data;
+          vm.method_id = vm.formData.method_id;
+          vm.setShowBayar();
+        }
+      })["catch"](function (err) {// error
+      });
+    },
     createOrder: function createOrder() {
       var vm = this;
       Aropex.btnLoad('.btn-reload', true);
       vm.$http({
-        url: "".concat(vm.apiUrl, "/payment/").concat(vm.paymentParameter, "/create"),
+        url: "".concat(vm.apiUrl, "/payment/order"),
         method: 'POST',
         data: vm.formData
       }).then(function (res) {
@@ -218,6 +268,38 @@ __webpack_require__.r(__webpack_exports__);
         Aropex.btnLoad('.btn-reload', false);
       })["catch"](function (err) {
         Aropex.btnLoad('.btn-reload', false);
+      });
+    },
+    changeMethod: function changeMethod() {
+      var vm = this;
+      Aropex.btnLoad('.btn-simpan', true);
+      vm.$http({
+        url: "".concat(vm.apiUrl, "/payment/").concat(vm.formData.uuid, "/method"),
+        method: 'POST',
+        data: {
+          method_id: vm.method_id
+        }
+      }).then(function (res) {
+        vm.formData = res.data.data;
+        vm.changeMethods = false;
+        Aropex.btnLoad('.btn-simpan', false);
+      })["catch"](function (err) {
+        Aropex.btnLoad('.btn-simpan', false);
+      });
+    },
+    buktiOrder: function buktiOrder() {
+      var vm = this;
+      var urls = "".concat(vm.apiUrl, "/payment/").concat(vm.formData.uuid, "/bukti");
+      Aropex.btnLoad('.btn-submit', true);
+      var formData = new FormData($("#form-bukti")[0]);
+      vm.axios.post(urls, formData, {
+        headers: {
+          'content-type': 'multipart/form-data'
+        }
+      }).then(function (res) {
+        Aropex.btnLoad('.btn-submit', false);
+      })["catch"](function (err) {
+        Aropex.btnLoad('.btn-submit', false);
       });
     }
   },
@@ -265,10 +347,7 @@ var render = function() {
                           {
                             staticClass:
                               "method-item d-flex p-0 cursor-pointer",
-                            class:
-                              _vm.formData.method_id == method.id
-                                ? "active"
-                                : "",
+                            class: _vm.method_id == method.id ? "active" : "",
                             on: {
                               click: function($event) {
                                 return _vm.methodSelected(method.id)
@@ -276,7 +355,9 @@ var render = function() {
                             }
                           },
                           [
-                            _vm._m(0, true),
+                            _c("div", { staticClass: "method-item_image" }, [
+                              _c("img", { attrs: { src: method.image } })
+                            ]),
                             _vm._v(" "),
                             _c(
                               "div",
@@ -320,7 +401,18 @@ var render = function() {
                     _c("div", { staticClass: "title" }, [_vm._v("Checkout")]),
                     _vm._v(" "),
                     _c("div", { staticClass: "payment-item mt-3" }, [
-                      _vm._m(1),
+                      _c(
+                        "div",
+                        {
+                          staticClass: "payment-item_image",
+                          attrs: { align: "center" }
+                        },
+                        [
+                          _c("img", {
+                            attrs: { src: _vm.dataCourses.thumbnile }
+                          })
+                        ]
+                      ),
                       _vm._v(" "),
                       _c("div", { staticClass: "payment-item_info mt-2" }, [
                         _c("div", { staticClass: "nama" }, [
@@ -364,7 +456,7 @@ var render = function() {
                         ]
                       ),
                       _vm._v(" "),
-                      _vm._m(2),
+                      _vm._m(0),
                       _vm._v(" "),
                       _c(
                         "div",
@@ -435,24 +527,176 @@ var render = function() {
                     ),
                     _vm._v(" "),
                     _c("div", { staticClass: "order-id" }, [
-                      _vm._v("Order ID #1 (Gopay)")
-                    ]),
-                    _vm._v(" "),
-                    _c("div", { staticClass: "expired-date" }, [
-                      _vm._v("Expired 28 Mei 21:07 WIB")
+                      _vm._v(
+                        "Order ID #" +
+                          _vm._s(_vm.formData.id) +
+                          " (" +
+                          _vm._s(_vm.formData.method.nm_method) +
+                          ")"
+                      )
                     ]),
                     _vm._v(" "),
                     _c("hr"),
                     _vm._v(" "),
-                    _vm._m(3),
+                    _c("div", { staticClass: "account-bayar" }, [
+                      _c("div", { staticClass: "nama" }, [
+                        _vm._v("Account Number")
+                      ]),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "nomor" }, [
+                        _vm._v(_vm._s(_vm.formData.method.nomor))
+                      ]),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "account" }, [
+                        _vm._v(_vm._s(_vm.formData.method.nm_account))
+                      ])
+                    ]),
                     _vm._v(" "),
                     _c("hr"),
                     _vm._v(" "),
-                    _c("div", { staticClass: "how-to-pay cursor-pointer" }, [
-                      _vm._v("How to Pay?")
+                    _c(
+                      "div",
+                      {
+                        staticStyle: {
+                          display: "flex",
+                          "justify-content": "space-between"
+                        }
+                      },
+                      [
+                        _c(
+                          "div",
+                          { staticClass: "how-to-pay cursor-pointer" },
+                          [_vm._v("How to Pay?")]
+                        ),
+                        _vm._v(" "),
+                        !_vm.changeMethods
+                          ? _c(
+                              "div",
+                              {
+                                staticClass: "how-to-pay cursor-pointer",
+                                on: {
+                                  click: function($event) {
+                                    return _vm.change()
+                                  }
+                                }
+                              },
+                              [_vm._v("Change method?")]
+                            )
+                          : _vm._e()
+                      ]
+                    ),
+                    _vm._v(" "),
+                    _vm.changeMethods
+                      ? _c("div", { staticClass: "payment-action mt-3" }, [
+                          _c(
+                            "button",
+                            {
+                              staticClass: "btn btn-success btn-sm btn-simpan",
+                              staticStyle: { width: "100%" },
+                              attrs: { type: "button" },
+                              on: {
+                                click: function($event) {
+                                  return _vm.changeMethod()
+                                }
+                              }
+                            },
+                            [
+                              _c("i", { staticClass: "fa fa-save" }),
+                              _vm._v(
+                                " Simpan Method Pembayaran\n\t\t\t\t\t\t\t"
+                              )
+                            ]
+                          )
+                        ])
+                      : _vm._e(),
+                    _vm._v(" "),
+                    !_vm.changeMethods
+                      ? _c("div", { staticClass: "payment-action mt-3" }, [
+                          _c(
+                            "button",
+                            {
+                              staticClass: "btn btn-info btn-sm",
+                              staticStyle: { width: "100%" },
+                              attrs: { type: "button" },
+                              on: {
+                                click: function($event) {
+                                  return _vm.setShowBukti()
+                                }
+                              }
+                            },
+                            [
+                              _c("i", { staticClass: "fa fa-money" }),
+                              _vm._v(" Next\n\t\t\t\t\t\t\t")
+                            ]
+                          )
+                        ])
+                      : _vm._e()
+                  ]
+                : _vm._e(),
+              _vm._v(" "),
+              _vm.showBukti
+                ? [
+                    _c("div", { staticClass: "title" }, [
+                      _vm._v("Upload Bukti")
                     ]),
                     _vm._v(" "),
-                    _vm._m(4)
+                    _c(
+                      "form",
+                      {
+                        staticClass: "form",
+                        attrs: { id: "form-bukti", autocomplete: "off" },
+                        on: {
+                          submit: function($event) {
+                            $event.preventDefault()
+                            return _vm.buktiOrder()
+                          }
+                        }
+                      },
+                      [
+                        _c(
+                          "div",
+                          {
+                            staticClass: "form-group mt-3",
+                            attrs: { align: "center" }
+                          },
+                          [
+                            _c(
+                              "div",
+                              {
+                                staticClass: "image-upload-box images",
+                                staticStyle: {
+                                  width: "250px",
+                                  height: "150px",
+                                  "background-size": "cover"
+                                }
+                              },
+                              [
+                                _c("input", {
+                                  staticClass: "form-control",
+                                  attrs: {
+                                    type: "file",
+                                    id: "bukti",
+                                    accept: "image/png, image/jpeg",
+                                    name: "bukti",
+                                    required: "",
+                                    placeholder: "Name"
+                                  },
+                                  on: { change: _vm.changeImage }
+                                }),
+                                _vm._v(" "),
+                                _vm._m(1)
+                              ]
+                            )
+                          ]
+                        ),
+                        _vm._v(" "),
+                        _vm._m(2),
+                        _vm._v(" "),
+                        _c("hr"),
+                        _vm._v(" "),
+                        _vm._m(3)
+                      ]
+                    )
                   ]
                 : _vm._e()
             ],
@@ -464,24 +708,6 @@ var render = function() {
   ])
 }
 var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "method-item_image" }, [
-      _c("img", { attrs: { src: "/assets/images/avatar-1.png" } })
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c(
-      "div",
-      { staticClass: "payment-item_image", attrs: { align: "center" } },
-      [_c("img", { attrs: { src: "/assets/images/avatar-1.png" } })]
-    )
-  },
   function() {
     var _vm = this
     var _h = _vm.$createElement
@@ -498,10 +724,19 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "account-bayar" }, [
-      _c("div", { staticClass: "nama" }, [_vm._v("Account Number")]),
-      _vm._v(" "),
-      _c("div", { staticClass: "nomor" }, [_vm._v("26303847172")])
+    return _c("label", { attrs: { for: "bukti" } }, [
+      _c("i", { staticClass: " fa fa-plus" })
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "form-group" }, [
+      _c("textarea", {
+        staticClass: "form-control",
+        attrs: { rows: "2", name: "note", placeholder: "catatan" }
+      })
     ])
   },
   function() {
@@ -512,13 +747,13 @@ var staticRenderFns = [
       _c(
         "button",
         {
-          staticClass: "btn btn-success btn-sm",
+          staticClass: "btn btn-success btn-submit btn-sm",
           staticStyle: { width: "100%" },
-          attrs: { type: "button" }
+          attrs: { type: "submit", form: "form-bukti" }
         },
         [
-          _c("i", { staticClass: "fa fa-money" }),
-          _vm._v(" Cek Pembayaran\n\t\t\t\t\t\t\t")
+          _c("i", { staticClass: "fa fa-save" }),
+          _vm._v(" Kirim Pembayaran\n\t\t\t\t\t\t\t\t")
         ]
       )
     ])

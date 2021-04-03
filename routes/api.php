@@ -41,6 +41,14 @@ Route::prefix('v1')->group(function(){
 
 		    	Route::prefix('payment')->group(function(){
 		    		Route::get('/getdatas', 'PayMethodController@getDatas');
+		    		Route::get('/{courses}/cek', 'PaymentController@cekOrder');
+		    		Route::post('/order', 'PaymentController@createOrder');
+		    		Route::post('/{uuid}/method', 'PaymentController@changeMethod');
+		    		Route::post('/{uuid}/bukti', 'PaymentController@buktiOrder');
+		    	});
+
+		    	Route::prefix('pekerjaan')->group(function(){
+		    		Route::get('/getdatas', 'PekerjaanController@getDatas');
 		    	});
 
 				Route::prefix('courses')->group(function(){
@@ -59,8 +67,6 @@ Route::prefix('v1')->group(function(){
 
 			Route::group(['middleware' => ['admin']], function() {
 				Route::prefix('payment')->group(function(){
-		    		Route::post('/{type}/create', 'PaymentController@createOrder');
-					Route::post('/callback', 'PaymentController@callback');
 					Route::post('/{uuid}/status', 'UserCoursesController@changeStatus');
 		    	});
 
@@ -107,7 +113,6 @@ Route::prefix('v1')->group(function(){
 
 		    	Route::prefix('pekerjaan')->group(function(){
 		    		Route::post('/index', 'PekerjaanController@index');
-		    		Route::get('/getdatas', 'PekerjaanController@getDatas');
 		    		Route::get('/{uuid}/getdata', 'PekerjaanController@getData');
 		    		Route::post('/create', 'PekerjaanController@create');
 		    		Route::post('/{uuid}/update', 'PekerjaanController@update');
