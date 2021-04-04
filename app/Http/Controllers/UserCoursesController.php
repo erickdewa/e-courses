@@ -26,11 +26,13 @@ class UserCoursesController extends Controller
     public function getDataCoursesAll()
     {
         $myCourses = UserCourses::with('user')
-        ->where('status', 'success')
+        ->whereIn('status', ['success', 'procces'])
         ->where('user_id', JWTAuth::user()->id)
         ->pluck('courses_id')->toArray();
 
-        $data = Courses::whereIn('id', $myCourses)->get();
+        $data = Courses::with(['coursesreview' => function($q){
+            $q->where('user_id', JWTAuth::user()->id);
+        }, 'usercourses'])->whereIn('id', $myCourses)->get();
 
         return response()->json([
             'status' => true,
@@ -60,7 +62,14 @@ class UserCoursesController extends Controller
                 $a->status = '<span class="aro-label aro-success">Success</span>';
             }else if($a->status == 'pending'){
                 $a->status = '<span class="aro-label aro-info">Pending</span>';
+            }else if($a->status == 'procces'){
+                $a->status = '<span class="aro-label aro-info">Proses</span>';
+            }else if($a->status == 'cancel'){
+                $a->status = '<span class="aro-label aro-warning">Batal</span>';
             }
+
+            // rupiah
+            $a->total = number_format($a->total, 0, ",", ".");
 
             return $a;
         });

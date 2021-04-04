@@ -23,6 +23,10 @@ Route::prefix('v1')->group(function(){
 		});
 	});
 
+	Route::prefix('webconfig')->group(function(){
+		Route::get('/getdata', 'WebConfigController@getData');
+	});
+
 	Route::prefix('auth')->group(function(){
 		Route::post('/register', 'AuthController@register');
 		Route::post('/login', 'AuthController@login');
@@ -184,6 +188,11 @@ Route::prefix('v1')->group(function(){
 		    		Route::post('/{uuid}/update', 'MateriController@update');
 		    		Route::post('/{uuid}/status', 'MateriController@changeStatus');
 		    		Route::delete('/{uuid}/delete', 'MateriController@delete');
+		    	});
+
+		    	Route::prefix('webconfig')->group(function(){
+		    		Route::get('/getdata', 'WebConfigController@getData');
+		    		Route::post('/{uuid}/update', 'WebConfigController@update');
 		    	});
 			});
 		});

@@ -24,9 +24,16 @@
 				</div>
 				<div class="courses-action">
 					<template v-if="!isPay">
-						<div class="btn-join" @click="ceked(dataCourses.uuid)">
-							Ikut Kelas
-						</div>
+						<template v-if="payment">
+							<div class="btn-join" @click="$router.push('/profile')">
+								Proses Pembayaran
+							</div>
+						</template>
+						<template v-if="!payment">
+							<div class="btn-join" @click="ceked(dataCourses.uuid)">
+								Ikut Kelas
+							</div>
+						</template>
 					</template>
 					<template v-if="isPay">
 						<div class="btn-join" @click="ceked(dataCourses.uuid)">
@@ -165,6 +172,7 @@
 	        	},
 
 	        	isPay: false,
+	        	payment: '',
 	        }
 	    },
 	    methods: {
@@ -189,7 +197,7 @@
 	    			method: 'GET',
 	    		}).then((res)=>{
 	    			vm.dataCourses = res.data.data;
-	    			vm.isPay = res.data.payment;
+	    			vm.isPay = ((res.data.payment=='success')?true:false);
 	    		}).catch((error)=>{
 	    			// error
 	    		});
@@ -202,7 +210,8 @@
 	    			method: 'GET',
 	    		}).then((res)=>{
 	    			vm.dataCourses = res.data.data;
-	    			vm.isPay = res.data.payment;
+	    			vm.isPay = ((res.data.payment=='success')?true:false);
+	    			vm.payment = ((res.data.payment=='procces')?true:false);
 	    		}).catch((error)=>{
 	    			// error
 	    		});
@@ -212,6 +221,7 @@
 	    	var vm = this;
 
     		vm.isPay = false;
+    		vm.payment = false;
 	    	if(localStorage.getItem("level_id") != null){
 	    		vm.getDataCoursesAuth(vm.$route.params.uuidCourses);
 	    	}else{

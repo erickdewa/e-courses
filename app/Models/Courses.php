@@ -18,6 +18,11 @@ class Courses extends Model
         return $this->belongsTo('\App\Models\User', 'user_id', 'id');
     }
 
+    public function usercourses()
+    {
+        return $this->belongsTo('\App\Models\UserCourses', 'id', 'courses_id');
+    }
+
     public function coursestool()
     {
         return $this->hasMany('\App\Models\CoursesTool', 'courses_id', 'id');

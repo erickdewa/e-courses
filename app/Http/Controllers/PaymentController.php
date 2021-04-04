@@ -121,7 +121,8 @@ class PaymentController extends Controller
 			$data->update([
 				'bukti' => $bukti,
 				'note' => $request->note,
-				'status' => 'procces'
+				'status' => 'procces',
+				'payment_time' => date('Y-m-d H:i:s'),
 			]);
 		}else{
 			return response()->json([

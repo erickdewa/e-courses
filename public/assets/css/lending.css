@@ -162,7 +162,7 @@
 	overflow: hidden;
 	z-index: 5!important;
 }
-.courses-item .courses-type{
+.courses-type{
 	display: inline-block;
 	background: #20B2AA;
 	color: #FFFFFF;

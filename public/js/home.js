@@ -126,6 +126,7 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
     return {
       showMore: false,
       thisPage: 0,
+      dataWeb: {},
       coursesFilter: {
         search: ''
       },
@@ -156,10 +157,22 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
         vm.showMore = res.data.length > 9 ? true : false;
         vm.thisPage = res.data.data.current_page;
       })["catch"](function (error) {});
-    }, 500)
+    }, 500),
+    getWeb: function getWeb() {
+      var vm = this;
+      vm.$http({
+        url: "".concat(vm.baseUrl, "/webconfig/getdata"),
+        method: 'GET'
+      }).then(function (res) {
+        vm.dataWeb = res.data.data;
+      })["catch"](function (err) {
+        toastr.error(err.response.data.message, 'Error');
+      });
+    }
   },
   mounted: function mounted() {
     var vm = this;
+    vm.getWeb();
     vm.getCourses();
   }
 });
@@ -182,14 +195,35 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", [
-    _vm._m(0),
+    _c("div", { staticClass: "page-one" }, [
+      _c("div", { staticClass: "main-page" }, [
+        _vm._m(0),
+        _vm._v(" "),
+        _c(
+          "div",
+          { staticClass: "body-ilustration", attrs: { align: "center" } },
+          [
+            _c("img", {
+              staticStyle: { padding: "60px 0px" },
+              attrs: { width: "350", src: _vm.dataWeb.ilustration }
+            }),
+            _vm._v(" "),
+            _vm._m(1),
+            _vm._v(" "),
+            _vm._m(2),
+            _vm._v(" "),
+            _vm._m(3)
+          ]
+        )
+      ])
+    ]),
     _vm._v(" "),
     _c("div", { staticClass: "page-two" }, [
       _c("div", { staticClass: "courses-filter" }, [
         _c("div", { staticClass: "filter-search" }, [
           _c("div", { staticClass: "form-group" }, [
             _c("div", { staticClass: "input-group" }, [
-              _vm._m(1),
+              _vm._m(4),
               _vm._v(" "),
               _c("input", {
                 directives: [
@@ -220,7 +254,7 @@ var render = function() {
           ])
         ]),
         _vm._v(" "),
-        _vm._m(2)
+        _vm._m(5)
       ]),
       _vm._v(" "),
       _c(
@@ -354,78 +388,72 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "page-one" }, [
-      _c("div", { staticClass: "main-page" }, [
-        _c("div", { staticClass: "body-text" }, [
-          _c("div", { staticClass: "body-text-title" }, [
-            _c("div", [_vm._v("Automated Online Purchases")])
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "body-text-category" }, [
-            _vm._v("\n\t\t\t\t\tTRUSTED | EASY | CHEAP\n\t\t\t\t")
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "body-text-subtitle" }, [
-            _vm._v(
-              "\n\t\t\t\t\tLorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod\n\t\t\t\t\ttempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,\n\t\t\t\t\tquis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo\n\t\t\t\t\tconsequat.\n\t\t\t\t"
-            )
-          ])
-        ]),
-        _vm._v(" "),
-        _c(
-          "div",
-          { staticClass: "body-ilustration", attrs: { align: "center" } },
-          [
-            _c("img", {
-              staticStyle: { padding: "60px 0px" },
-              attrs: {
-                width: "350",
-                src: "/assets/images/ilustration/coding.png"
-              }
-            }),
-            _vm._v(" "),
-            _c(
-              "div",
-              {
-                staticClass: "sub-ilustration",
-                staticStyle: { left: "-50px", top: "-50px" }
-              },
-              [
-                _c("i", { staticClass: "fa fa-play-circle-o" }),
-                _vm._v(" "),
-                _c("span", [_vm._v("Video")])
-              ]
-            ),
-            _vm._v(" "),
-            _c(
-              "div",
-              {
-                staticClass: "sub-ilustration",
-                staticStyle: { right: "-120px", top: "100px" }
-              },
-              [
-                _c("i", { staticClass: "fa fa-paint-brush" }),
-                _vm._v(" "),
-                _c("span", [_vm._v("Soal")])
-              ]
-            ),
-            _vm._v(" "),
-            _c(
-              "div",
-              {
-                staticClass: "sub-ilustration",
-                staticStyle: { left: "-120px", bottom: "0px" }
-              },
-              [
-                _c("i", { staticClass: "fa fa-comments-o" }),
-                _vm._v(" "),
-                _c("span", [_vm._v("Chat")])
-              ]
-            )
-          ]
+    return _c("div", { staticClass: "body-text" }, [
+      _c("div", { staticClass: "body-text-title" }, [
+        _c("div", [_vm._v("Automated Online Purchases")])
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "body-text-category" }, [
+        _vm._v("\n\t\t\t\t\tTRUSTED | EASY | CHEAP\n\t\t\t\t")
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "body-text-subtitle" }, [
+        _vm._v(
+          "\n\t\t\t\t\tLorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod\n\t\t\t\t\ttempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,\n\t\t\t\t\tquis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo\n\t\t\t\t\tconsequat.\n\t\t\t\t"
         )
       ])
     ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "div",
+      {
+        staticClass: "sub-ilustration",
+        staticStyle: { left: "-50px", top: "-50px" }
+      },
+      [
+        _c("i", { staticClass: "fa fa-play-circle-o" }),
+        _vm._v(" "),
+        _c("span", [_vm._v("Video")])
+      ]
+    )
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "div",
+      {
+        staticClass: "sub-ilustration",
+        staticStyle: { right: "-120px", top: "100px" }
+      },
+      [
+        _c("i", { staticClass: "fa fa-paint-brush" }),
+        _vm._v(" "),
+        _c("span", [_vm._v("Soal")])
+      ]
+    )
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "div",
+      {
+        staticClass: "sub-ilustration",
+        staticStyle: { left: "-120px", bottom: "0px" }
+      },
+      [
+        _c("i", { staticClass: "fa fa-comments-o" }),
+        _vm._v(" "),
+        _c("span", [_vm._v("Chat")])
+      ]
+    )
   },
   function() {
     var _vm = this

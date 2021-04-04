@@ -3,7 +3,7 @@
 		<div class="main-user">
 			<nav class="navbar">
 				<div class="navbar-brand text-white cursor-pointer" @click="$router.push({ path: '/' })">
-					<span>ITHINK</span>
+					<span>{{ dataWeb.name }}</span>
 				</div>
 				<div class="btn-navbar" data-event="dropdown" data-target="#navbar-group">
 					<i class="fa fa-bars"></i>
@@ -22,10 +22,9 @@
 			<div class="page-footer">
 				<div class="row">
 					<div class="col-md-4 col-sm-4 col-12 footer-about">
-						<div class="footer-brand">ITHINK</div>
+						<div class="footer-brand">{{ dataWeb.name }}</div>
 						<div class="footer-about-text">
-							Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-							tempor incididunt ut labore et dolore magna aliqua.
+							{{ dataWeb.description }}
 						</div>
 					</div>
 					<div class="col-md-3 col-sm-4 col-6 footer-fiture">
@@ -47,22 +46,22 @@
 						</div>
 					</div>
 					<div class="col-md-2 col-sm-12 col-12 footer-social">
-						<div class="social-box social-instagram">
+						<div class="social-box social-instagram" @click="redirect(dataWeb.instagram)">
 							<i class="fa fa-instagram"></i>
 						</div>
-						<div class="social-box social-facebook">
+						<div class="social-box social-facebook" @click="redirect(dataWeb.facebook)">
 							<i class="fa fa-facebook"></i>
 						</div>
-						<div class="social-box social-twitter">
+						<div class="social-box social-twitter" @click="redirect(dataWeb.twitter)">
 							<i class="fa fa-twitter"></i>
 						</div>
-						<div class="social-box social-telegram">
+						<div class="social-box social-telegram" @click="redirect(dataWeb.telegram)">
 							<i class="fa fa-telegram"></i>
 						</div>
-						<div class="social-box social-github">
+						<div class="social-box social-github" @click="redirect(dataWeb.github)">
 							<i class="fa fa-github"></i>
 						</div>
-						<div class="social-box social-youtube">
+						<div class="social-box social-youtube" @click="redirect(dataWeb.youtube)">
 							<i class="fa fa-youtube"></i>
 						</div>
 					</div>
@@ -97,9 +96,30 @@
         },
     	data() {
 	        return {
+	        	dataWeb: {},
 	        	profile: {},
 	        	showLogin: true,
 	        }
+	    },
+	    methods: {
+	    	getWeb(){
+				var vm = this;
+
+				vm.$http({
+	    			url: `${ vm.baseUrl }/webconfig/getdata`,
+	    			method: 'GET',
+	    		}).then((res)=>{
+	    			vm.dataWeb = res.data.data;
+	    		}).catch((err)=>{
+	    			toastr.error(err.response.data.message, 'Error');
+	    		});
+			},
+
+			redirect(url){
+				var vm = this;
+
+				window.open(url, '_blank');
+			},
 	    },
 	    mounted(){
 	    	var vm = this;
@@ -108,6 +128,7 @@
 				Aropex.event(this, true);
 			});
 
+	    	vm.getWeb();
 	    	if(localStorage.getItem("level_id") != null){
 		    	vm.$http({
 		    		url: `${ vm.apiUrl }/profile/getdata`,

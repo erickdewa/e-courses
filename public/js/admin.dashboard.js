@@ -1540,6 +1540,10 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -1548,6 +1552,8 @@ __webpack_require__.r(__webpack_exports__);
         courses: {
           name: ''
         },
+        discount: 0,
+        total: 0,
         method: {
           nm_method: ''
         },
@@ -1565,12 +1571,14 @@ __webpack_require__.r(__webpack_exports__);
         method: 'GET'
       }).then(function (res) {
         vm.formData = res.data.data;
+        vm.select2();
       })["catch"](function (err) {
         toastr.error(err.response.data.message, 'Error');
       });
     },
     select2: function select2() {
       var vm = this;
+      $(".status-select").val(vm.formData.status).trigger("change");
       $(".status-select").select2({
         placeholder: "Pilih",
         width: '100%'
@@ -1590,13 +1598,16 @@ __webpack_require__.r(__webpack_exports__);
       })["catch"](function (err) {
         toastr.error(err.response.data.message, 'Error');
       });
+    },
+    redirect: function redirect(url) {
+      var vm = this;
+      window.location.href = "http://localhost:8000/".concat(url);
     }
   },
   mounted: function mounted() {
     var vm = this;
     vm.formData.uuid = vm.$parent.thisUuid;
     vm.getData(vm.formData.uuid);
-    vm.select2();
   }
 });
 
@@ -3941,6 +3952,26 @@ var render = function() {
       [
         _c("div", { staticClass: "form-body" }, [
           _c("div", { staticClass: "row" }, [
+            _c(
+              "div",
+              { staticClass: "col-md-12", attrs: { align: "center" } },
+              [
+                _c("label", [_vm._v("Bukti Pembayaran")]),
+                _vm._v(" "),
+                _c("div", {
+                  style:
+                    "background-image: url(" +
+                    _vm.formData.bukti +
+                    "); background-size: cover; width: 500px; height: 300px; margin-bottom: 25px; cursor: pointer",
+                  on: {
+                    click: function($event) {
+                      return _vm.redirect(_vm.formData.bukti)
+                    }
+                  }
+                })
+              ]
+            ),
+            _vm._v(" "),
             _c("div", { staticClass: "col-md-12" }, [
               _c("div", { staticClass: "form-group" }, [
                 _c("label", [_vm._v("Status")]),
@@ -4120,25 +4151,29 @@ var render = function() {
                     {
                       name: "model",
                       rawName: "v-model",
-                      value: _vm.formData.diskon,
-                      expression: "formData.diskon"
+                      value: _vm.formData.discount.rupiah(),
+                      expression: "formData.discount.rupiah()"
                     }
                   ],
                   staticClass: "form-control",
                   attrs: {
                     type: "text",
-                    name: "diskon",
+                    name: "discount",
                     required: "",
                     disabled: "",
                     placeholder: "Diskon"
                   },
-                  domProps: { value: _vm.formData.diskon },
+                  domProps: { value: _vm.formData.discount.rupiah() },
                   on: {
                     input: function($event) {
                       if ($event.target.composing) {
                         return
                       }
-                      _vm.$set(_vm.formData, "diskon", $event.target.value)
+                      _vm.$set(
+                        _vm.formData.discount,
+                        "rupiah()",
+                        $event.target.value
+                      )
                     }
                   }
                 })
@@ -4154,8 +4189,8 @@ var render = function() {
                     {
                       name: "model",
                       rawName: "v-model",
-                      value: _vm.formData.total,
-                      expression: "formData.total"
+                      value: _vm.formData.total.rupiah(),
+                      expression: "formData.total.rupiah()"
                     }
                   ],
                   staticClass: "form-control",
@@ -4166,20 +4201,24 @@ var render = function() {
                     disabled: "",
                     placeholder: "Total"
                   },
-                  domProps: { value: _vm.formData.total },
+                  domProps: { value: _vm.formData.total.rupiah() },
                   on: {
                     input: function($event) {
                       if ($event.target.composing) {
                         return
                       }
-                      _vm.$set(_vm.formData, "total", $event.target.value)
+                      _vm.$set(
+                        _vm.formData.total,
+                        "rupiah()",
+                        $event.target.value
+                      )
                     }
                   }
                 })
               ])
             ]),
             _vm._v(" "),
-            _c("div", { staticClass: "col-md-6" }, [
+            _c("div", { staticClass: "col-md-12" }, [
               _c("div", { staticClass: "form-group" }, [
                 _c("label", [_vm._v("Payment Time")]),
                 _vm._v(" "),
@@ -4217,38 +4256,34 @@ var render = function() {
               ])
             ]),
             _vm._v(" "),
-            _c("div", { staticClass: "col-md-6" }, [
+            _c("div", { staticClass: "col-md-12" }, [
               _c("div", { staticClass: "form-group" }, [
-                _c("label", [_vm._v("Payment Expired")]),
+                _c("label", [_vm._v("Catatan")]),
                 _vm._v(" "),
-                _c("input", {
+                _c("textarea", {
                   directives: [
                     {
                       name: "model",
                       rawName: "v-model",
-                      value: _vm.formData.payment_expired,
-                      expression: "formData.payment_expired"
+                      value: _vm.formData.note,
+                      expression: "formData.note"
                     }
                   ],
                   staticClass: "form-control",
                   attrs: {
-                    type: "text",
-                    name: "payment_expired",
+                    rows: "3",
+                    name: "note",
                     required: "",
                     disabled: "",
                     placeholder: "Payment Expired"
                   },
-                  domProps: { value: _vm.formData.payment_expired },
+                  domProps: { value: _vm.formData.note },
                   on: {
                     input: function($event) {
                       if ($event.target.composing) {
                         return
                       }
-                      _vm.$set(
-                        _vm.formData,
-                        "payment_expired",
-                        $event.target.value
-                      )
+                      _vm.$set(_vm.formData, "note", $event.target.value)
                     }
                   }
                 })

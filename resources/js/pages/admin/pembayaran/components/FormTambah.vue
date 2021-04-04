@@ -3,6 +3,10 @@
 		<form class="form" id="FormTambah" enctype="multipart/form-data" @submit.prevent="simpanData(formData.uuid)" autocomplete="off">
 			<div class="form-body">
 				<div class="row">
+					<div class="col-md-12" align="center">
+						<label>Bukti Pembayaran</label>
+						<div :style="`background-image: url(${ formData.bukti }); background-size: cover; width: 500px; height: 300px; margin-bottom: 25px; cursor: pointer`" @click="redirect(formData.bukti)"></div>
+					</div>
 					<div class="col-md-12">
 						<div class="form-group">
 							<label>Status</label>
@@ -36,25 +40,25 @@
 					<div class="col-md-6">
 						<div class="form-group">
 							<label>Diskon</label>
-							<input type="text" class="form-control" name="diskon" required disabled v-model="formData.diskon" placeholder="Diskon">
+							<input type="text" class="form-control" name="discount" required disabled v-model="formData.discount.rupiah()" placeholder="Diskon">
 						</div>
 					</div>
 					<div class="col-md-6">
 						<div class="form-group">
 							<label>Total</label>
-							<input type="text" class="form-control" name="total" required disabled v-model="formData.total" placeholder="Total">
+							<input type="text" class="form-control" name="total" required disabled v-model="formData.total.rupiah()" placeholder="Total">
 						</div>
 					</div>
-					<div class="col-md-6">
+					<div class="col-md-12">
 						<div class="form-group">
 							<label>Payment Time</label>
 							<input type="text" class="form-control" name="payment_time" required disabled v-model="formData.payment_time" placeholder="Payment Time">
 						</div>
 					</div>
-					<div class="col-md-6">
+					<div class="col-md-12">
 						<div class="form-group">
-							<label>Payment Expired</label>
-							<input type="text" class="form-control" name="payment_expired" required disabled v-model="formData.payment_expired" placeholder="Payment Expired">
+							<label>Catatan</label>
+							<textarea rows="3" class="form-control" name="note" required disabled v-model="formData.note" placeholder="Payment Expired"></textarea>
 						</div>
 					</div>
 				</div>
@@ -72,6 +76,8 @@
 	        		courses: {
 	        			name: '',
 	        		},
+	        		discount: 0,
+	        		total: 0,
 	        		method: {
 	        			nm_method: '',
 	        		},
@@ -90,6 +96,7 @@
 	    			method: 'GET',
 	    		}).then((res)=>{
 	    			vm.formData = res.data.data;
+	    			vm.select2();
 	    		}).catch((err)=>{
 	    			toastr.error(err.response.data.message, 'Error');
 	    		})
@@ -98,6 +105,7 @@
 	    	select2(){
 	    		var vm = this;
 
+	    		$(".status-select").val(vm.formData.status).trigger("change");
 	    		$(".status-select").select2({
                     placeholder: "Pilih",
                     width: '100%'
@@ -119,13 +127,18 @@
 	    			toastr.error(err.response.data.message, 'Error');
 	    		})
 	    	},
+
+	    	redirect(url){
+	    		var vm = this;
+
+	    		window.location.href = `http://localhost:8000/${ url }`;
+	    	},
 	    },
 	    mounted(){
 	    	var vm = this;
 
     		vm.formData.uuid = vm.$parent.thisUuid;
     		vm.getData(vm.formData.uuid);
-    		vm.select2();
 	    }
     }
 </script>

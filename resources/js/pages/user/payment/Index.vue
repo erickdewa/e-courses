@@ -4,7 +4,7 @@
 			<div class="row">
 				<div class="col-md-8">
 					<div class="payment-box default-box">
-						<div class="title">Payment Method</div>
+						<div class="title">Metode Pembayaran</div>
 						<div class="method-list mt-3">
 							<div class="row">
 								<template v-for="method in dataMethod">
@@ -89,6 +89,20 @@
 								</button>
 							</div>
 						</template>
+						<template v-if="showSuccess">
+							<div align="center">
+								<img width="100" height="100" src="/assets/images/icon/success.png">
+							</div>
+							<div class="mt-3">
+								<div style="font-size: 16px; font-weight: 600; text-align: center;">Pembayaran Berhasil</div>
+								<div style="font-size: 12px; text-align: center;">Pembayaran kursus "<span style="font-weight: 600">{{ formData.courses.name }}"</span> sedang ditinjau!</div>
+							</div>
+							<div class="payment-action mt-5">
+								<button type="button" class="btn btn-info btn-sm" style="width: 100%" @click="$router.push('/')">
+									<i class="fa fa-money"></i> Kembali
+								</button>
+							</div>
+						</template>
 						<template v-if="showBukti">
 							<div class="title">Upload Bukti</div>
 							<form id="form-bukti" class="form" @submit.prevent="buktiOrder()" autocomplete="off">
@@ -123,6 +137,7 @@
 	        	showMethod: true,
 	        	showBayar: false,
 	        	showBukti: false,
+	        	showSuccess: false,
 
 	        	bayar: false,
 	        	dataMethod: [],
@@ -158,6 +173,7 @@
 	    		vm.showMethod = true;
 	    		vm.showBayar = false;
 	    		vm.showBukti = false;
+	    		vm.showSuccess = false;
 	    	},
 			setShowBayar(){
 				var vm = this;
@@ -166,6 +182,7 @@
 				vm.showBayar = true;
 				vm.showBukti = false;
 				vm.bayar = true;
+				vm.showSuccess = false;
 			},
 			setShowBukti(){
 	    		var vm = this;
@@ -173,7 +190,17 @@
 	    		vm.showMethod = false;
 	    		vm.showBayar = false;
 	    		vm.showBukti = true;
+	    		vm.showSuccess = false;
 	    	},
+	    	setShowSuccess(){
+	    		var vm = this;
+
+	    		vm.showMethod = false;
+	    		vm.showBayar = false;
+	    		vm.showBukti = false;
+	    		vm.showSuccess = true;
+	    	},
+
 			change(){
 				var vm = this;
 
@@ -231,14 +258,15 @@
 	    	getCourses(){
 	    		var vm = this;
 
+	    		var status = ['none', 'cancel', 'pending'];
 	    		vm.$http({
 	    			url: `${ vm.apiUrl }/courses/${ vm.$route.params.uuidCourses }/auth`,
 	    			method: 'GET',
 	    		}).then((res)=>{
 	    			vm.dataCourses = res.data.data;
 	    			vm.cekOrder(vm.dataCourses.uuid);
-	    			if(res.data.payment){
-	    				vm.$router.push({ path: `/courses/${ vm.$route.params.uuidCourses }` });
+	    			if(!status.includes(res.data.payment)){
+	    				vm.$router.push({ path: `/profile` });
 	    			}
 	    		}).catch((error)=>{
 	    			// error
@@ -301,6 +329,7 @@
 	    		let formData = new FormData($("#form-bukti")[0]);
                 vm.axios.post(urls, formData, {headers: {'content-type': 'multipart/form-data'}}).then((res) => {
 	    			Aropex.btnLoad('.btn-submit', false);
+	    			vm.setShowSuccess();
 	    		}).catch((err)=>{
 	    			Aropex.btnLoad('.btn-submit', false);
 	    		});

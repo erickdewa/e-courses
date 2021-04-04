@@ -127,12 +127,27 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
       showMethod: true,
       showBayar: false,
       showBukti: false,
+      showSuccess: false,
       bayar: false,
       dataMethod: [],
       changeMethods: false,
@@ -162,6 +177,7 @@ __webpack_require__.r(__webpack_exports__);
       vm.showMethod = true;
       vm.showBayar = false;
       vm.showBukti = false;
+      vm.showSuccess = false;
     },
     setShowBayar: function setShowBayar() {
       var vm = this;
@@ -169,12 +185,21 @@ __webpack_require__.r(__webpack_exports__);
       vm.showBayar = true;
       vm.showBukti = false;
       vm.bayar = true;
+      vm.showSuccess = false;
     },
     setShowBukti: function setShowBukti() {
       var vm = this;
       vm.showMethod = false;
       vm.showBayar = false;
       vm.showBukti = true;
+      vm.showSuccess = false;
+    },
+    setShowSuccess: function setShowSuccess() {
+      var vm = this;
+      vm.showMethod = false;
+      vm.showBayar = false;
+      vm.showBukti = false;
+      vm.showSuccess = true;
     },
     change: function change() {
       var vm = this;
@@ -227,6 +252,7 @@ __webpack_require__.r(__webpack_exports__);
     },
     getCourses: function getCourses() {
       var vm = this;
+      var status = ['none', 'cancel', 'pending'];
       vm.$http({
         url: "".concat(vm.apiUrl, "/courses/").concat(vm.$route.params.uuidCourses, "/auth"),
         method: 'GET'
@@ -234,9 +260,9 @@ __webpack_require__.r(__webpack_exports__);
         vm.dataCourses = res.data.data;
         vm.cekOrder(vm.dataCourses.uuid);
 
-        if (res.data.payment) {
+        if (!status.includes(res.data.payment)) {
           vm.$router.push({
-            path: "/courses/".concat(vm.$route.params.uuidCourses)
+            path: "/profile"
           });
         }
       })["catch"](function (error) {// error
@@ -298,6 +324,7 @@ __webpack_require__.r(__webpack_exports__);
         }
       }).then(function (res) {
         Aropex.btnLoad('.btn-submit', false);
+        vm.setShowSuccess();
       })["catch"](function (err) {
         Aropex.btnLoad('.btn-submit', false);
       });
@@ -332,7 +359,7 @@ var render = function() {
       _c("div", { staticClass: "row" }, [
         _c("div", { staticClass: "col-md-8" }, [
           _c("div", { staticClass: "payment-box default-box" }, [
-            _c("div", { staticClass: "title" }, [_vm._v("Payment Method")]),
+            _c("div", { staticClass: "title" }, [_vm._v("Metode Pembayaran")]),
             _vm._v(" "),
             _c("div", { staticClass: "method-list mt-3" }, [
               _c(
@@ -634,6 +661,65 @@ var render = function() {
                   ]
                 : _vm._e(),
               _vm._v(" "),
+              _vm.showSuccess
+                ? [
+                    _vm._m(1),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "mt-3" }, [
+                      _c(
+                        "div",
+                        {
+                          staticStyle: {
+                            "font-size": "16px",
+                            "font-weight": "600",
+                            "text-align": "center"
+                          }
+                        },
+                        [_vm._v("Pembayaran Berhasil")]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "div",
+                        {
+                          staticStyle: {
+                            "font-size": "12px",
+                            "text-align": "center"
+                          }
+                        },
+                        [
+                          _vm._v('Pembayaran kursus "'),
+                          _c(
+                            "span",
+                            { staticStyle: { "font-weight": "600" } },
+                            [_vm._v(_vm._s(_vm.formData.courses.name) + '"')]
+                          ),
+                          _vm._v(" sedang ditinjau!")
+                        ]
+                      )
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "payment-action mt-5" }, [
+                      _c(
+                        "button",
+                        {
+                          staticClass: "btn btn-info btn-sm",
+                          staticStyle: { width: "100%" },
+                          attrs: { type: "button" },
+                          on: {
+                            click: function($event) {
+                              return _vm.$router.push("/")
+                            }
+                          }
+                        },
+                        [
+                          _c("i", { staticClass: "fa fa-money" }),
+                          _vm._v(" Kembali\n\t\t\t\t\t\t\t")
+                        ]
+                      )
+                    ])
+                  ]
+                : _vm._e(),
+              _vm._v(" "),
               _vm.showBukti
                 ? [
                     _c("div", { staticClass: "title" }, [
@@ -684,17 +770,17 @@ var render = function() {
                                   on: { change: _vm.changeImage }
                                 }),
                                 _vm._v(" "),
-                                _vm._m(1)
+                                _vm._m(2)
                               ]
                             )
                           ]
                         ),
                         _vm._v(" "),
-                        _vm._m(2),
+                        _vm._m(3),
                         _vm._v(" "),
                         _c("hr"),
                         _vm._v(" "),
-                        _vm._m(3)
+                        _vm._m(4)
                       ]
                     )
                   ]
@@ -718,6 +804,20 @@ var staticRenderFns = [
       _c("div", { staticClass: "price", attrs: { align: "right" } }, [
         _vm._v("Rp. 0")
       ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { attrs: { align: "center" } }, [
+      _c("img", {
+        attrs: {
+          width: "100",
+          height: "100",
+          src: "/assets/images/icon/success.png"
+        }
+      })
     ])
   },
   function() {

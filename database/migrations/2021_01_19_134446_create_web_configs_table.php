@@ -15,6 +15,19 @@ class CreateWebConfigsTable extends Migration
     {
         Schema::create('web_configs', function (Blueprint $table) {
             $table->id();
+            $table->uuid('uuid')->unique();
+
+            $table->string('name');
+            $table->string('description');
+            $table->string('ilustration');
+
+            $table->string('facebook')->nullable();
+            $table->string('twitter')->nullable();
+            $table->string('instagram')->nullable();
+            $table->string('telegram')->nullable();
+            $table->string('github')->nullable();
+            $table->string('youtube')->nullable();
+
             $table->timestamps();
         });
     }

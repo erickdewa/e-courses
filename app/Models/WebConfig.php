@@ -10,6 +10,6 @@ class WebConfig extends Model
     use Uuid;
 
     protected $fillable = [
-    	'uuid', 'name'
+    	'uuid', 'name', 'description', 'ilustration', 'facebook', 'twitter', 'instagram', 'telegram', 'github', 'youtube'
     ];
 }

@@ -18,7 +18,7 @@ class CoursesController extends Controller
         $data = Courses::with('user')
         ->where(function($q) use ($request){
             $q->where('name', 'like', '%'.$request->search.'%');
-        })->paginate(9);
+        })->has('materigroup')->paginate(9);
         $length = Courses::get()->count();
 
         return response()->json([
@@ -35,7 +35,7 @@ class CoursesController extends Controller
         $data = Courses::findByUuid($uuid);
         $payment = UserCourses::where('courses_id', $data->id)
         ->where('user_id', JWTAuth::user()->id)
-        ->whereIn('status', ['success', 'procces'])->first();
+        ->where('status', '!=', 'cancel')->first();
 
         if(isset($payment)){
             $data = Courses::with(['materigroup' => function($query){
@@ -78,7 +78,7 @@ class CoursesController extends Controller
         return response()->json([
             'status' => true,
             'data' => $data,
-            'payment' => ((isset($payment))?true:false),
+            'payment' => ((isset($payment))?$payment->status:'none'),
             'message' => 'Data berhasil diambil'
         ]);
     }
@@ -103,7 +103,7 @@ class CoursesController extends Controller
         return response()->json([
             'status' => true,
             'data' => $data,
-            'payment' => false,
+            'payment' => 'none',
             'message' => 'Data berhasil diambil'
         ]);
     }

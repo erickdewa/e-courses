@@ -2,7 +2,7 @@
 	<div>
 		<div id="aro-sidebar" class="aro-sidebar">
 			<div class="aro-sidebar--brand">
-				<div class="aro-sidebar--brand_text">AROPEX</div>
+				<div class="aro-sidebar--brand_text">{{ dataWeb.name }}</div>
 			</div>
 			<div class="aro-sidebar--menu" id="scroll-sidebar">
 				<ul class="aro-sidebar--menu_ul">
@@ -76,7 +76,7 @@
 		</div>
 		<div class="aro-footer">
 			<div class="aro-footer_text">
-				&copy; Aropex
+				&copy; {{ dataWeb.name }}
 			</div>
 			<div class="aro-footer_social">
 				<div class="aro-footer_social_btn"><i class="fa fa-facebook"></i></div>
@@ -95,6 +95,7 @@
     export default {
     	data() {
 	        return {
+	        	dataWeb: {},
 	        	dataMenu: [
 	        		{ title: 'Dashboard', icon: 'fa-th-large', name: 'admin.dashboard', path: '/admin/dashboard', haveChild: false },
 	        		{ title: 'Kursus', icon: 'fa-book', name: 'admin.kursus', path: '/admin/kursus', haveChild: false },
@@ -141,10 +142,24 @@
                     }
                 });
 			},
+
+			getWeb(){
+				var vm = this;
+
+				vm.$http({
+	    			url: `${ vm.baseUrl }/webconfig/getdata`,
+	    			method: 'GET',
+	    		}).then((res)=>{
+	    			vm.dataWeb = res.data.data;
+	    		}).catch((err)=>{
+	    			toastr.error(err.response.data.message, 'Error');
+	    		});
+			},
 	    },
 	    mounted(){
 	    	var vm = this;
 	    	
+	    	vm.getWeb();
 	    	setTimeout(function() {
 				postscribe('#script', `<script src="${vm.defaultUrl}/js/index.js"><\/script>`);
 			}, 1000);

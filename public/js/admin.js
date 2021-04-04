@@ -107,6 +107,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
+      dataWeb: {},
       dataMenu: [{
         title: 'Dashboard',
         icon: 'fa-th-large',
@@ -200,10 +201,22 @@ __webpack_require__.r(__webpack_exports__);
           });
         }
       });
+    },
+    getWeb: function getWeb() {
+      var vm = this;
+      vm.$http({
+        url: "".concat(vm.baseUrl, "/webconfig/getdata"),
+        method: 'GET'
+      }).then(function (res) {
+        vm.dataWeb = res.data.data;
+      })["catch"](function (err) {
+        toastr.error(err.response.data.message, 'Error');
+      });
     }
   },
   mounted: function mounted() {
     var vm = this;
+    vm.getWeb();
     setTimeout(function () {
       postscribe__WEBPACK_IMPORTED_MODULE_0___default()('#script', "<script src=\"".concat(vm.defaultUrl, "/js/index.js\"></script>"));
     }, 1000);
@@ -505,7 +518,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -515,15 +527,34 @@ __webpack_require__.r(__webpack_exports__);
   },
   data: function data() {
     return {
+      dataWeb: {},
       profile: {},
       showLogin: true
     };
+  },
+  methods: {
+    getWeb: function getWeb() {
+      var vm = this;
+      vm.$http({
+        url: "".concat(vm.baseUrl, "/webconfig/getdata"),
+        method: 'GET'
+      }).then(function (res) {
+        vm.dataWeb = res.data.data;
+      })["catch"](function (err) {
+        toastr.error(err.response.data.message, 'Error');
+      });
+    },
+    redirect: function redirect(url) {
+      var vm = this;
+      window.open(url, '_blank');
+    }
   },
   mounted: function mounted() {
     var vm = this;
     $('.btn-modal').on('click', function () {
       Aropex.event(this, true);
     });
+    vm.getWeb();
 
     if (localStorage.getItem("level_id") != null) {
       vm.$http({
@@ -566,7 +597,11 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c("div", [
     _c("div", { staticClass: "aro-sidebar", attrs: { id: "aro-sidebar" } }, [
-      _vm._m(0),
+      _c("div", { staticClass: "aro-sidebar--brand" }, [
+        _c("div", { staticClass: "aro-sidebar--brand_text" }, [
+          _vm._v(_vm._s(_vm.dataWeb.name))
+        ])
+      ]),
       _vm._v(" "),
       _c(
         "div",
@@ -661,12 +696,12 @@ var render = function() {
     _c("div", { staticClass: "aro-main" }, [
       _c("div", { staticClass: "aro-top-menu" }, [
         _c("div", { staticClass: "top-menu" }, [
-          _vm._m(1),
+          _vm._m(0),
           _vm._v(" "),
           _c("div", { staticClass: "aro-top-menu_rigth" }, [
-            _vm._m(2),
+            _vm._m(1),
             _vm._v(" "),
-            _vm._m(3),
+            _vm._m(2),
             _vm._v(" "),
             _c(
               "div",
@@ -675,7 +710,7 @@ var render = function() {
                 attrs: { id: "profile-top-dropdown" }
               },
               [
-                _vm._m(4),
+                _vm._m(3),
                 _vm._v(" "),
                 _c("div", { staticClass: "aro-profile-button" }, [
                   _c(
@@ -694,7 +729,7 @@ var render = function() {
                     ]
                   ),
                   _vm._v(" "),
-                  _vm._m(5)
+                  _vm._m(4)
                 ])
               ]
             )
@@ -705,18 +740,16 @@ var render = function() {
       _c("div", { staticClass: "aro-content" }, [_c("router-view")], 1)
     ]),
     _vm._v(" "),
-    _vm._m(6)
+    _c("div", { staticClass: "aro-footer" }, [
+      _c("div", { staticClass: "aro-footer_text" }, [
+        _vm._v("\n\t\t\t© " + _vm._s(_vm.dataWeb.name) + "\n\t\t")
+      ]),
+      _vm._v(" "),
+      _vm._m(5)
+    ])
   ])
 }
 var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "aro-sidebar--brand" }, [
-      _c("div", { staticClass: "aro-sidebar--brand_text" }, [_vm._v("AROPEX")])
-    ])
-  },
   function() {
     var _vm = this
     var _h = _vm.$createElement
@@ -802,35 +835,29 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "aro-footer" }, [
-      _c("div", { staticClass: "aro-footer_text" }, [
-        _vm._v("\n\t\t\t© Aropex\n\t\t")
+    return _c("div", { staticClass: "aro-footer_social" }, [
+      _c("div", { staticClass: "aro-footer_social_btn" }, [
+        _c("i", { staticClass: "fa fa-facebook" })
       ]),
       _vm._v(" "),
-      _c("div", { staticClass: "aro-footer_social" }, [
-        _c("div", { staticClass: "aro-footer_social_btn" }, [
-          _c("i", { staticClass: "fa fa-facebook" })
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "aro-footer_social_btn" }, [
-          _c("i", { staticClass: "fa fa-instagram" })
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "aro-footer_social_btn" }, [
-          _c("i", { staticClass: "fa fa-twitter" })
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "aro-footer_social_btn" }, [
-          _c("i", { staticClass: "fa fa-linkedin" })
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "aro-footer_social_btn" }, [
-          _c("i", { staticClass: "fa fa-github" })
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "aro-footer_social_btn" }, [
-          _c("i", { staticClass: "fa fa-feed" })
-        ])
+      _c("div", { staticClass: "aro-footer_social_btn" }, [
+        _c("i", { staticClass: "fa fa-instagram" })
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "aro-footer_social_btn" }, [
+        _c("i", { staticClass: "fa fa-twitter" })
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "aro-footer_social_btn" }, [
+        _c("i", { staticClass: "fa fa-linkedin" })
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "aro-footer_social_btn" }, [
+        _c("i", { staticClass: "fa fa-github" })
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "aro-footer_social_btn" }, [
+        _c("i", { staticClass: "fa fa-feed" })
       ])
     ])
   }
@@ -1295,7 +1322,7 @@ var render = function() {
                 }
               }
             },
-            [_c("span", [_vm._v("ITHINK")])]
+            [_c("span", [_vm._v(_vm._s(_vm.dataWeb.name))])]
           ),
           _vm._v(" "),
           _vm._m(0),
@@ -1364,9 +1391,117 @@ var render = function() {
         _vm._v(" "),
         _c("router-view"),
         _vm._v(" "),
-        _vm._m(4),
+        _c("div", { staticClass: "page-footer" }, [
+          _c("div", { staticClass: "row" }, [
+            _c(
+              "div",
+              { staticClass: "col-md-4 col-sm-4 col-12 footer-about" },
+              [
+                _c("div", { staticClass: "footer-brand" }, [
+                  _vm._v(_vm._s(_vm.dataWeb.name))
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "footer-about-text" }, [
+                  _vm._v(
+                    "\n\t\t\t\t\t\t" +
+                      _vm._s(_vm.dataWeb.description) +
+                      "\n\t\t\t\t\t"
+                  )
+                ])
+              ]
+            ),
+            _vm._v(" "),
+            _vm._m(4),
+            _vm._v(" "),
+            _vm._m(5),
+            _vm._v(" "),
+            _c(
+              "div",
+              { staticClass: "col-md-2 col-sm-12 col-12 footer-social" },
+              [
+                _c(
+                  "div",
+                  {
+                    staticClass: "social-box social-instagram",
+                    on: {
+                      click: function($event) {
+                        return _vm.redirect(_vm.dataWeb.instagram)
+                      }
+                    }
+                  },
+                  [_c("i", { staticClass: "fa fa-instagram" })]
+                ),
+                _vm._v(" "),
+                _c(
+                  "div",
+                  {
+                    staticClass: "social-box social-facebook",
+                    on: {
+                      click: function($event) {
+                        return _vm.redirect(_vm.dataWeb.facebook)
+                      }
+                    }
+                  },
+                  [_c("i", { staticClass: "fa fa-facebook" })]
+                ),
+                _vm._v(" "),
+                _c(
+                  "div",
+                  {
+                    staticClass: "social-box social-twitter",
+                    on: {
+                      click: function($event) {
+                        return _vm.redirect(_vm.dataWeb.twitter)
+                      }
+                    }
+                  },
+                  [_c("i", { staticClass: "fa fa-twitter" })]
+                ),
+                _vm._v(" "),
+                _c(
+                  "div",
+                  {
+                    staticClass: "social-box social-telegram",
+                    on: {
+                      click: function($event) {
+                        return _vm.redirect(_vm.dataWeb.telegram)
+                      }
+                    }
+                  },
+                  [_c("i", { staticClass: "fa fa-telegram" })]
+                ),
+                _vm._v(" "),
+                _c(
+                  "div",
+                  {
+                    staticClass: "social-box social-github",
+                    on: {
+                      click: function($event) {
+                        return _vm.redirect(_vm.dataWeb.github)
+                      }
+                    }
+                  },
+                  [_c("i", { staticClass: "fa fa-github" })]
+                ),
+                _vm._v(" "),
+                _c(
+                  "div",
+                  {
+                    staticClass: "social-box social-youtube",
+                    on: {
+                      click: function($event) {
+                        return _vm.redirect(_vm.dataWeb.youtube)
+                      }
+                    }
+                  },
+                  [_c("i", { staticClass: "fa fa-youtube" })]
+                )
+              ]
+            )
+          ])
+        ]),
         _vm._v(" "),
-        _vm._m(5)
+        _vm._m(6)
       ],
       1
     ),
@@ -1442,77 +1577,45 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "page-footer" }, [
-      _c("div", { staticClass: "row" }, [
-        _c("div", { staticClass: "col-md-4 col-sm-4 col-12 footer-about" }, [
-          _c("div", { staticClass: "footer-brand" }, [_vm._v("ITHINK")]),
-          _vm._v(" "),
-          _c("div", { staticClass: "footer-about-text" }, [
-            _vm._v(
-              "\n\t\t\t\t\t\tLorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod\n\t\t\t\t\t\ttempor incididunt ut labore et dolore magna aliqua.\n\t\t\t\t\t"
-            )
-          ])
-        ]),
+    return _c("div", { staticClass: "col-md-3 col-sm-4 col-6 footer-fiture" }, [
+      _c("div", { staticClass: "footer-head" }, [_vm._v("INFORMATION")]),
+      _vm._v(" "),
+      _c("div", { staticClass: "footer-items" }, [
+        _c("div", { staticClass: "footer-item" }, [_vm._v("Fitures")]),
         _vm._v(" "),
-        _c("div", { staticClass: "col-md-3 col-sm-4 col-6 footer-fiture" }, [
-          _c("div", { staticClass: "footer-head" }, [_vm._v("INFORMATION")]),
-          _vm._v(" "),
-          _c("div", { staticClass: "footer-items" }, [
-            _c("div", { staticClass: "footer-item" }, [_vm._v("Fitures")]),
-            _vm._v(" "),
-            _c("div", { staticClass: "footer-item" }, [_vm._v("Store")]),
-            _vm._v(" "),
-            _c("div", { staticClass: "footer-item" }, [_vm._v("Careers")]),
-            _vm._v(" "),
-            _c("div", { staticClass: "footer-item" }, [_vm._v("Disclaimer")]),
-            _vm._v(" "),
-            _c("div", { staticClass: "footer-item" }, [
-              _vm._v("Terms & Conditions")
-            ])
-          ])
-        ]),
+        _c("div", { staticClass: "footer-item" }, [_vm._v("Store")]),
         _vm._v(" "),
-        _c("div", { staticClass: "col-md-3 col-sm-4 col-6 footer-contact" }, [
-          _c("div", { staticClass: "footer-head" }, [_vm._v("CONTACT")]),
-          _vm._v(" "),
-          _c("div", { staticClass: "footer-items" }, [
-            _c("div", { staticClass: "footer-item" }, [
-              _vm._v("Contact Support")
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "footer-item" }, [_vm._v("Feedback")]),
-            _vm._v(" "),
-            _c("div", { staticClass: "footer-item" }, [_vm._v("Faq")])
-          ])
-        ]),
+        _c("div", { staticClass: "footer-item" }, [_vm._v("Careers")]),
         _vm._v(" "),
-        _c("div", { staticClass: "col-md-2 col-sm-12 col-12 footer-social" }, [
-          _c("div", { staticClass: "social-box social-instagram" }, [
-            _c("i", { staticClass: "fa fa-instagram" })
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "social-box social-facebook" }, [
-            _c("i", { staticClass: "fa fa-facebook" })
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "social-box social-twitter" }, [
-            _c("i", { staticClass: "fa fa-twitter" })
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "social-box social-telegram" }, [
-            _c("i", { staticClass: "fa fa-telegram" })
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "social-box social-github" }, [
-            _c("i", { staticClass: "fa fa-github" })
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "social-box social-youtube" }, [
-            _c("i", { staticClass: "fa fa-youtube" })
-          ])
+        _c("div", { staticClass: "footer-item" }, [_vm._v("Disclaimer")]),
+        _vm._v(" "),
+        _c("div", { staticClass: "footer-item" }, [
+          _vm._v("Terms & Conditions")
         ])
       ])
     ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "div",
+      { staticClass: "col-md-3 col-sm-4 col-6 footer-contact" },
+      [
+        _c("div", { staticClass: "footer-head" }, [_vm._v("CONTACT")]),
+        _vm._v(" "),
+        _c("div", { staticClass: "footer-items" }, [
+          _c("div", { staticClass: "footer-item" }, [
+            _vm._v("Contact Support")
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "footer-item" }, [_vm._v("Feedback")]),
+          _vm._v(" "),
+          _c("div", { staticClass: "footer-item" }, [_vm._v("Faq")])
+        ])
+      ]
+    )
   },
   function() {
     var _vm = this

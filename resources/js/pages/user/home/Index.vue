@@ -17,7 +17,7 @@
 					</div>
 				</div>
 				<div class="body-ilustration" align="center">
-					<img style="padding: 60px 0px" width="350" src="/assets/images/ilustration/coding.png">
+					<img style="padding: 60px 0px" width="350" :src="dataWeb.ilustration">
 					<div class="sub-ilustration" style="left: -50px; top: -50px">
 						<i class="fa fa-play-circle-o"></i>
 						<span>Video</span>
@@ -105,6 +105,7 @@
 	        	showMore: false,
 	        	thisPage: 0,
 
+	        	dataWeb: {},
 	        	coursesFilter: {
 	        		search: '',
 	        	},
@@ -137,10 +138,24 @@
 
 	    		});
 	    	}, 500),
+
+	    	getWeb(){
+				var vm = this;
+
+				vm.$http({
+	    			url: `${ vm.baseUrl }/webconfig/getdata`,
+	    			method: 'GET',
+	    		}).then((res)=>{
+	    			vm.dataWeb = res.data.data;
+	    		}).catch((err)=>{
+	    			toastr.error(err.response.data.message, 'Error');
+	    		});
+			},
 	    },
 	    mounted(){
 	    	var vm = this;
 
+	    	vm.getWeb();
 	    	vm.getCourses();
 	    }
 	}

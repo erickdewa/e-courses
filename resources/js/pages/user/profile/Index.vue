@@ -44,8 +44,32 @@
 			<div class="courses-profile-list">
 				<div class="courses-list my-3" align="center">
 					<div v-for="data in dataCourses" class="courses-item-shedow cursor-pointer d-inline-block m-3">
-						<div class="courses-item card" :style="`background-image: url(${ data.thumbnile })`">
-							<router-link :to="`/courses/play/${ data.uuid }`">
+						<template v-if="data.usercourses.status == 'success'">
+							<div class="courses-item card" :style="`background-image: url(${ data.thumbnile })`">
+								<router-link :to="`/courses/play/${ data.uuid }`">
+									<div class="courses-item-information">
+										<div class="title">{{ data.name }}</div>
+										<div class="desc">{{ data.subname }}</div>
+									</div>
+									<div class="courses-item-fiture">
+										<div class="fiture" title="Sertifikat">
+											<i class="fa fa-book"></i>
+										</div>
+										<div class="fiture" title="Community">
+											<i class="fa fa-comments-o"></i>
+										</div>
+										<div class="fiture" title="Top Courses">
+											<i class="fa fa-fire"></i>
+										</div>
+									</div>
+								</router-link>
+								<div v-if="data.coursesreview.length==0" class="courses-type" @click="$refs.preview.showReview(data.id)">
+									<i class="fa fa-star"></i>
+								</div>
+							</div>
+						</template>
+						<template v-if="data.usercourses.status == 'procces'">
+							<div class="courses-item card" :style="`background-image: url(${ data.thumbnile })`">
 								<div class="courses-item-information">
 									<div class="title">{{ data.name }}</div>
 									<div class="desc">{{ data.subname }}</div>
@@ -61,11 +85,11 @@
 										<i class="fa fa-fire"></i>
 									</div>
 								</div>
-							</router-link>
-							<div class="courses-type" @click="$refs.preview.showReview(data.id)">
-								<i class="fa fa-star"></i>
+								<div class="courses-type bg-warning">
+									Proses Pembayaran
+								</div>
 							</div>
-						</div>
+						</template>
 					</div>
 					<div v-if="dataCourses.length == 0" class="notfound">
 						<span>Coursus tidak ditemukan</span>
