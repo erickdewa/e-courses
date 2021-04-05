@@ -26,7 +26,7 @@ class MateriGroupController extends Controller
         $data = MateriGroup::where('courses_id', $courses->id)
         ->where(function($query) use ($request){
             $query->where('nm_materi', 'like', '%'.$request->search.'%');
-        })->orderBy('id', 'desc')->paginate($per);
+        })->orderBy('id', 'asc')->paginate($per);
 
         $data->map(function($a){
             $btnEdit = '<button class="btn btn-clean btn-icon btn-icon-md edit" data-uuid="'.$a->uuid.'"><i class="fa fa-edit text-warning"></i></button>';

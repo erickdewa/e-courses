@@ -71,6 +71,8 @@ __webpack_require__.r(__webpack_exports__);
       var vm = this;
       vm.showList = true;
       vm.showForm = false;
+      vm.thisUuid = '';
+      vm.isEdit = false;
     },
     setShowForm: function setShowForm() {
       var vm = this;
@@ -94,14 +96,28 @@ __webpack_require__.r(__webpack_exports__);
     },
     deleteData: function deleteData(uuid) {
       var vm = this;
-      vm.$http({
-        url: "".concat(vm.apiUrl, "/pekerjaan/").concat(uuid, "/delete"),
-        method: 'DELETE'
-      }).then(function (res) {
-        vm.$refs.table.reload();
-        toastr.success(res.data.message, 'Success');
-      })["catch"](function (err) {
-        toastr.error(err.response.data.message, 'Error');
+      swal({
+        title: "Apakah anda yakin?",
+        text: "Data yang dihapus tidak dapat dikembalikan.",
+        type: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#DD6B55",
+        confirmButtonText: "Yes!",
+        cancelButtonText: "No",
+        closeOnConfirm: false,
+        closeOnCancel: false
+      }).then(function (isConfirm) {
+        if (isConfirm) {
+          vm.$http({
+            url: "".concat(vm.apiUrl, "/pekerjaan/").concat(uuid, "/delete"),
+            method: 'DELETE'
+          }).then(function (res) {
+            vm.$refs.table.reload();
+            toastr.success(res.data.message, 'Success');
+          })["catch"](function (err) {
+            toastr.error(err.response.data.message, 'Error');
+          });
+        }
       });
     }
   },
@@ -233,8 +249,7 @@ var render = function() {
                       on: {
                         click: function($event) {
                           $event.preventDefault()
-                          _vm.showList = false
-                          _vm.showForm = true
+                          return _vm.setShowForm()
                         }
                       }
                     },
@@ -282,8 +297,7 @@ var render = function() {
                       on: {
                         click: function($event) {
                           $event.preventDefault()
-                          _vm.showList = true
-                          _vm.showForm = false
+                          return _vm.setShowList()
                         }
                       }
                     },

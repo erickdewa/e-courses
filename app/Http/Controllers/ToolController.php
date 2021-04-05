@@ -101,7 +101,7 @@ class ToolController extends Controller
             'nm_tool' => 'required|string',
             'description' => 'required|string',
             'link' => 'required|string',
-            'image' => 'required|image',
+            'image' => 'image',
         ]);
 
         if ($validator->fails()) {
@@ -112,7 +112,6 @@ class ToolController extends Controller
         }
 
         $data = tool::findByUuid($uuid);
-
         if(isset($request->image)) {
             $nama_image = 'tool_'.time().'.'.$request->image->getClientOriginalExtension();
             $request->image->move(public_path('img/tool'), $nama_image);
@@ -123,6 +122,8 @@ class ToolController extends Controller
                 }
             }
             $image = '/img/tool/'.$nama_image;
+        }else{
+            $image = $data->image;
         }
 
         $data->update([

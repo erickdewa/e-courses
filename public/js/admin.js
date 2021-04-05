@@ -103,6 +103,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
@@ -144,10 +145,6 @@ __webpack_require__.r(__webpack_exports__);
           title: 'Pekerjaan',
           name: 'admin.master.pekerjaan',
           path: '/admin/master/pekerjaan'
-        }, {
-          title: 'Kategori',
-          name: 'admin.master.kategori',
-          path: '/admin/master/kategori'
         }, {
           title: 'Skill',
           name: 'admin.master.skill',
@@ -515,9 +512,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -544,19 +538,8 @@ __webpack_require__.r(__webpack_exports__);
         toastr.error(err.response.data.message, 'Error');
       });
     },
-    redirect: function redirect(url) {
+    getProfile: function getProfile() {
       var vm = this;
-      window.open(url, '_blank');
-    }
-  },
-  mounted: function mounted() {
-    var vm = this;
-    $('.btn-modal').on('click', function () {
-      Aropex.event(this, true);
-    });
-    vm.getWeb();
-
-    if (localStorage.getItem("level_id") != null) {
       vm.$http({
         url: "".concat(vm.apiUrl, "/profile/getdata"),
         method: 'GET'
@@ -572,6 +555,21 @@ __webpack_require__.r(__webpack_exports__);
           });
         }
       });
+    },
+    redirect: function redirect(url) {
+      var vm = this;
+      window.open(url, '_blank');
+    }
+  },
+  mounted: function mounted() {
+    var vm = this;
+    $('.btn-modal').on('click', function () {
+      Aropex.event(this, true);
+    });
+    vm.getWeb();
+
+    if (localStorage.getItem("level_id") != null) {
+      vm.getProfile();
     }
 
     ;
@@ -699,9 +697,9 @@ var render = function() {
           _vm._m(0),
           _vm._v(" "),
           _c("div", { staticClass: "aro-top-menu_rigth" }, [
-            _vm._m(1),
+            _c("div", { staticClass: "aro-info-top" }),
             _vm._v(" "),
-            _vm._m(2),
+            _vm._m(1),
             _vm._v(" "),
             _c(
               "div",
@@ -710,9 +708,11 @@ var render = function() {
                 attrs: { id: "profile-top-dropdown" }
               },
               [
-                _vm._m(3),
+                _vm._m(2),
                 _vm._v(" "),
                 _c("div", { staticClass: "aro-profile-button" }, [
+                  _c("div"),
+                  _vm._v(" "),
                   _c(
                     "div",
                     {
@@ -727,9 +727,7 @@ var render = function() {
                       _c("i", { staticClass: "fa fa-sign-out" }),
                       _vm._v(" Logout")
                     ]
-                  ),
-                  _vm._v(" "),
-                  _vm._m(4)
+                  )
                 ])
               ]
             )
@@ -745,7 +743,7 @@ var render = function() {
         _vm._v("\n\t\t\t© " + _vm._s(_vm.dataWeb.name) + "\n\t\t")
       ]),
       _vm._v(" "),
-      _vm._m(5)
+      _vm._m(3)
     ])
   ])
 }
@@ -763,32 +761,6 @@ var staticRenderFns = [
         },
         [_c("i", { staticClass: "fa fa-bars" })]
       )
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "aro-info-top" }, [
-      _c("div", { staticClass: "top-icon" }, [
-        _c("i", { staticClass: "fa fa-search" })
-      ]),
-      _vm._v(" "),
-      _c("div", { staticClass: "top-icon" }, [
-        _c("i", { staticClass: "fa fa-snowflake-o" })
-      ]),
-      _vm._v(" "),
-      _c("div", { staticClass: "top-icon" }, [
-        _c("span", [_vm._v("12")]),
-        _vm._v(" "),
-        _c("i", { staticClass: "fa fa-commenting-o" })
-      ]),
-      _vm._v(" "),
-      _c("div", { staticClass: "top-icon" }, [
-        _c("span", [_vm._v("1")]),
-        _vm._v(" "),
-        _c("i", { staticClass: "fa fa-bell-o" })
-      ])
     ])
   },
   function() {
@@ -820,15 +792,6 @@ var staticRenderFns = [
       _c("div", { staticClass: "profile-dropdown-name" }, [
         _vm._v("Erick Dewa Pranata")
       ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "btn btn-info btn-sm" }, [
-      _c("i", { staticClass: "fa fa-user" }),
-      _vm._v(" Profile")
     ])
   },
   function() {
@@ -1338,12 +1301,6 @@ var render = function() {
                   staticStyle: { display: "flex" }
                 },
                 [
-                  _vm._m(1),
-                  _vm._v(" "),
-                  _vm._m(2),
-                  _vm._v(" "),
-                  _vm._m(3),
-                  _vm._v(" "),
                   !_vm.$auth.check()
                     ? _c(
                         "li",
@@ -1411,9 +1368,9 @@ var render = function() {
               ]
             ),
             _vm._v(" "),
-            _vm._m(4),
+            _vm._m(1),
             _vm._v(" "),
-            _vm._m(5),
+            _vm._m(2),
             _vm._v(" "),
             _c(
               "div",
@@ -1501,7 +1458,7 @@ var render = function() {
           ])
         ]),
         _vm._v(" "),
-        _vm._m(6)
+        _vm._m(3)
       ],
       1
     ),
@@ -1548,30 +1505,6 @@ var staticRenderFns = [
       },
       [_c("i", { staticClass: "fa fa-bars" })]
     )
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("li", { staticClass: "navbar-item" }, [
-      _c("a", { attrs: { href: "javascript:void(0)" } }, [_vm._v("Menu")])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("li", { staticClass: "navbar-item" }, [
-      _c("a", { attrs: { href: "javascript:void(0)" } }, [_vm._v("Menu")])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("li", { staticClass: "navbar-item" }, [
-      _c("a", { attrs: { href: "javascript:void(0)" } }, [_vm._v("Menu")])
-    ])
   },
   function() {
     var _vm = this

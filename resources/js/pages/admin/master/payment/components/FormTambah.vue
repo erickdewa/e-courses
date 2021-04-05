@@ -5,8 +5,8 @@
 				<div class="row">
 					<div class="col-md-12">
 						<div class="form-group" align="center">
-							<div class="image-upload-box images" style=" width: 300px; height: 200px; background-size: cover;">
-								<input type="file" id="image" accept="image/png, image/jpeg" class="form-control" name="image" required v-on:change="changeImage" placeholder="Name">
+							<div class="image-upload-box images" :style="`background-image: url(${formData.image}); background-size: cover; background-position: center center; width: 350px; height: 200px`">
+								<input type="file" id="image" accept="image/png, image/jpeg" class="form-control" name="image" v-on:change="changeImage" placeholder="Name">
 								<label for="image"><i class=" fa fa-plus"></i></label>
 							</div>
 						</div>
@@ -66,6 +66,7 @@
                  
                     oFReader.onload = function(oFREvent) {
                         $('.images').css('background-image', 'url(' + oFREvent.target.result + ')');
+                        $('.images').css({'background-size': 'cover', 'background-position': 'center center'});
                     };
                 }
 	    	},

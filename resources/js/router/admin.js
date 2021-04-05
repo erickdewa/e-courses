@@ -55,15 +55,6 @@ const routesAdmin =  [
 		            auth: true
 		        },
 		        children: [
-		        	{
-				        name: 'admin.master.kategori',
-				        path: '/admin/master/kategori',
-				        component: () => import(/* webpackChunkName: "admin.master.kategori" */ '../pages/admin/master/kategori/Index'),
-				        meta: {
-				            title: `Kategori | ${process.env.MIX_APP_NAME}`,
-				            auth: true
-				        }
-				    },
 				    {
 				        name: 'admin.master.payment',
 				        path: '/admin/master/payment',

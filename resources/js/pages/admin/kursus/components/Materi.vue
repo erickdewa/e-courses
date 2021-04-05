@@ -4,14 +4,7 @@
 			<div class="aro-restraint" v-if="showForm">
 				<div class="aro-restraint_title">
 					<span>{{ title }}</span>
-					<div class="button-table">
-						<button v-if="showTambah" type="button" class="btn btn-info btn-sm" @click.prevent="setShowList()">
-							<i class="fa fa-reply-all"></i> Kembali
-						</button>
-						<button v-if="showPreview" type="button" class="btn btn-info btn-sm" @click.prevent="setShowTambah()">
-							<i class="fa fa-reply-all"></i> Kembali
-						</button>
-					</div>
+					<div class="button-table"></div>
 				</div>
 				<div class="aro-restraint_body">
 					<transition v-if="showTambah" enter-active-class="animated fadeIn">
@@ -20,8 +13,8 @@
 								<div class="row">
 									<div class="col-md-12">
 										<div class="form-group" align="center">
-											<div class="image-upload-box images" :style="`background-image: url(${formData.thumbnail}); background-size: cover; width: 350px; height: 200px`">
-												<input type="file" id="image" accept="image/png, image/jpeg" class="form-control" name="thumbnail" required v-on:change="changeImage" placeholder="Name">
+											<div class="image-upload-box images" :style="`background-image: url(${formData.thumbnail}); background-size: contain; background-position: center center; width: 350px; height: 200px`">
+												<input type="file" id="image" accept="image/png, image/jpeg" class="form-control" name="thumbnail" v-on:change="changeImage" placeholder="Name">
 												<label for="image"><i class=" fa fa-plus"></i></label>
 											</div>
 										</div>
@@ -38,7 +31,7 @@
 											<div class="input-group d-flex" style="padding: 2px">
 												<input type="text" class="form-control" name="video" required @input="showPreviewVideo()" v-model="formData.video" placeholder="Link Video">
 												<div class="input-group-append">
-													<span class="input-group-text" id="preview" @click="setShowVideo()">
+													<span class="input-group-text" id="preview">
 														<i class="fa fa-link"></i>
 													</span>
 												</div>
@@ -55,38 +48,14 @@
 							</div>
 							<hr>
 							<div class="form-action" align="right">
+								<button type="button" class="btn btn-info btn-sm" @click.prevent="setShowList()">
+									<i class="fa fa-times"></i> Tutup
+								</button>
 								<button type="submit" form="FormTambah" class="btn btn-sm btn-success btn-submit">
 									<i class="fa fa-save"></i> Simpan
 								</button>
 							</div>
 						</form>
-					</transition>
-					<transition v-if="showPreview" enter-active-class="animated fadeIn">
-						<div align="center">
-							<div class="courses-video-box">
-								<div class="video-player">
-									<div id="aro-video" :data-video="formData.video"></div>
-								</div>
-								<div class="video-control">
-									<div class="btn-control">
-										<div class="btn btn-circle btn-info btn-play">
-											<i class="fa fa-play"></i>
-										</div>
-										<div class="btn btn-circle btn-info btn-pause" style="display: none;">
-											<i class="fa fa-pause"></i>
-										</div>
-									</div>
-									<div class="range-duration">
-										<input type="range" class="duration" value="0">
-									</div>
-									<div class="number-duration">
-										<span class="current-time">00:00</span>
-										<span>/</span>
-										<span class="duration-time">00:00</span>
-									</div>
-								</div>
-							</div>
-						</div>
 					</transition>
 				</div>
 			</div>
@@ -106,7 +75,7 @@
 					</div>
 				</div>
 				<div class="aro-restraint_body">
-					<AdminTable v-if="showList" id="table" ref="table" classx="table table-rowed" :urls="`/materi/${materiGroupUuid}/index`" :callbacks="callback()" :columns="columns"></AdminTable>
+					<AdminTable v-if="showList" id="tableMateri" ref="tableMateri" classx="table table-rowed" :urls="`/materi/${materiGroupUuid}/index`" :callbacks="callback()" :columns="columns"></AdminTable>
 				</div>
 			</div>
 		</transition>
@@ -123,8 +92,6 @@
 
 	        	title: 'Tambah Materi',
 	        	showTambah: true,
-	        	showPreview: false,
-	        	player: '',
 
 	        	columns: [
 	        		{ name: 'Nama Materi', data: 'nm_materi' },
@@ -154,8 +121,8 @@
 	    		vm.showForm = false;
 
 	    		setTimeout(function(){
-	    			vm.$refs.table.reload();
-	    		}, 200);
+	    			vm.$refs.tableMateri.reload();
+	    		}, 500);
 	    	},
 	    	setShowForm(){
 	    		var vm = this;
@@ -168,7 +135,6 @@
 
 	    		vm.title = 'Tambah Materi';
 	    		vm.showTambah = true;
-	        	vm.showPreview = false;
 
 	        	vm.formData = {
 	        		uuid: '',
@@ -176,38 +142,25 @@
 	        		nm_materi: '',
 					description: '-',
 	        	};
-
-	        	if(vm.player != ''){
-	        		if(typeof vm.player != 'undefined'){
-		        		vm.player.stopVideo();
-	        		}
-	        	}
-	    	},
-	    	setShowVideo(){
-	    		var vm = this;
-
-	    		vm.title = 'Preview Video';
-	    		vm.showTambah = false;
-	        	vm.showPreview = true;
-	    		vm.player = Aropex.video('aro-video', 'https://img.rawpixel.com/s3fs-private/rawpixel_images/website_content/rm21-background-tong-058.jpg?w=800&dpr=1&fit=default&crop=default&q=65&vib=3&con=3&usm=15&bg=F4F4F3&ixlib=js-2.2.1&s=710a6fed5b1923da8d5f95191839ef8a');
 	    	},
 
 	    	callback(){
 	    		var vm = this;
 
 	    		setTimeout(function(){
-		    		$('#table').on('click', '.edit', function(e){
+		    		$('#tableMateri').on('click', '.edit', function(e){
 	                    var uuid = $(this).data('uuid');
+	                    vm.showForm = false;
 	                    vm.getData(uuid);
 	                    vm.setShowForm();
 	                });
 
-	                $('#table').on('click', '.hapus', function(e){
+	                $('#tableMateri').on('click', '.hapus', function(e){
 	                    var uuid = $(this).data('uuid');
 	                    vm.deleteData(uuid);
 	                });
 
-	                $('#table').on('click', '.switch', function(e){
+	                $('#tableMateri').on('click', '.switch', function(e){
 	                    var uuid = $(this).data('uuid');
 	                    var is_preview = $(this).data('is_preview');
 	                    vm.changeStatus(uuid, ((is_preview=='Y')?'N':'Y'));
@@ -230,7 +183,7 @@
 	    		}, 1000);
 	    	}, 500),
 
-	    	getData(uuid){
+	    	getData: _.debounce(function(uuid){
 	    		var vm = this;
 
 	    		vm.$http({
@@ -241,7 +194,7 @@
 	    		}).catch((err)=>{
 	    			toastr.error(err.response.data.message, 'Error');
 	    		})
-	    	},
+	    	}, 1000),
 
 	    	changeImage($event){
 	    		var vm = this;
@@ -253,7 +206,7 @@
                  
                     oFReader.onload = function(oFREvent) {
                         $('.images').css('background-image', 'url(' + oFREvent.target.result + ')');
-                        $('.images').css('background-size', 'cover');
+                        $('.images').css({'background-size': 'contain', 'background-position': 'center center'});
                     };
                 }
 	    	},
@@ -287,7 +240,7 @@
 	    			data: { is_preview: status },
 	    			method: 'POST',
 	    		}).then((res)=>{
-	    			vm.$refs.table.reload();
+	    			vm.$refs.tableMateri.reload();
 	    		}).catch((err)=>{
 	    			toastr.error(err.response.data.message, 'Error');
 	    		})
@@ -296,15 +249,29 @@
 	    	deleteData(uuid){
 	    		var vm = this;
 
-	    		vm.$http({
-	    			url: `${ vm.apiUrl }/materi/${ uuid }/delete`,
-	    			method: 'DELETE',
-	    		}).then((res)=>{
-	    			vm.$refs.table.reload();
-	    			toastr.success(res.data.message, 'Success');
-	    		}).catch((err)=>{
-	    			toastr.error(err.response.data.message, 'Error');
-	    		})
+	    		swal({
+					title: "Apakah anda yakin?",
+					text: "Data yang dihapus tidak dapat dikembalikan.",
+					type: "warning",
+					showCancelButton: true,
+					confirmButtonColor: "#DD6B55",
+					confirmButtonText: "Yes!",
+					cancelButtonText: "No",
+					closeOnConfirm: false,
+					closeOnCancel: false,
+				}).then((isConfirm)=>{
+					if(isConfirm){
+			    		vm.$http({
+			    			url: `${ vm.apiUrl }/materi/${ uuid }/delete`,
+			    			method: 'DELETE',
+			    		}).then((res)=>{
+			    			vm.$refs.tableMateri.reload();
+			    			toastr.success(res.data.message, 'Success');
+			    		}).catch((err)=>{
+			    			toastr.error(err.response.data.message, 'Error');
+			    		})
+			    	}
+			    });
 	    	}
     	},
     	mounted(){

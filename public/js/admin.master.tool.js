@@ -57,7 +57,7 @@ __webpack_require__.r(__webpack_exports__);
       showForm: false,
       columns: [{
         name: 'Nama',
-        data: 'name'
+        data: 'nm_tool'
       }, {
         name: 'Aksi',
         data: 'action'
@@ -71,6 +71,8 @@ __webpack_require__.r(__webpack_exports__);
       var vm = this;
       vm.showList = true;
       vm.showForm = false;
+      vm.isEdit = false;
+      vm.thisUuid = '';
     },
     setShowForm: function setShowForm() {
       var vm = this;
@@ -94,14 +96,28 @@ __webpack_require__.r(__webpack_exports__);
     },
     deleteData: function deleteData(uuid) {
       var vm = this;
-      vm.$http({
-        url: "".concat(vm.apiUrl, "/tool/").concat(uuid, "/delete"),
-        method: 'DELETE'
-      }).then(function (res) {
-        vm.$refs.table.reload();
-        toastr.success(res.data.message, 'Success');
-      })["catch"](function (err) {
-        toastr.error(err.response.data.message, 'Error');
+      swal({
+        title: "Apakah anda yakin?",
+        text: "Data yang dihapus tidak dapat dikembalikan.",
+        type: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#DD6B55",
+        confirmButtonText: "Yes!",
+        cancelButtonText: "No",
+        closeOnConfirm: false,
+        closeOnCancel: false
+      }).then(function (isConfirm) {
+        if (isConfirm) {
+          vm.$http({
+            url: "".concat(vm.apiUrl, "/tool/").concat(uuid, "/delete"),
+            method: 'DELETE'
+          }).then(function (res) {
+            vm.$refs.table.reload();
+            toastr.success(res.data.message, 'Success');
+          })["catch"](function (err) {
+            toastr.error(err.response.data.message, 'Error');
+          });
+        }
       });
     }
   },
@@ -186,6 +202,10 @@ __webpack_require__.r(__webpack_exports__);
 
         oFReader.onload = function (oFREvent) {
           $('.images').css('background-image', 'url(' + oFREvent.target.result + ')');
+          $('.images').css({
+            'background-size': 'cover',
+            'background-position': 'center center'
+          });
         };
       }
     },
@@ -197,6 +217,7 @@ __webpack_require__.r(__webpack_exports__);
         urls = "".concat(vm.apiUrl, "/tool/").concat(uuid, "/update");
       }
 
+      Aropex.btnLoad('.btn-submit', true);
       var formData = new FormData($("#FormTambah")[0]);
       vm.axios.post(urls, formData, {
         headers: {
@@ -204,10 +225,10 @@ __webpack_require__.r(__webpack_exports__);
         }
       }).then(function (res) {
         vm.$parent.setShowList();
-        $('.btn-submit').prop('disabled', false);
+        Aropex.btnLoad('.btn-submit', false);
         toastr.success(res.data.message, 'Success');
       })["catch"](function (err) {
-        $('.btn-submit').prop('disabled', false);
+        Aropex.btnLoad('.btn-submit', false);
         toastr.error(err.response.data.message, 'Error');
       });
     },
@@ -268,8 +289,7 @@ var render = function() {
                       on: {
                         click: function($event) {
                           $event.preventDefault()
-                          _vm.showList = false
-                          _vm.showForm = true
+                          return _vm.setShowForm()
                         }
                       }
                     },
@@ -317,8 +337,7 @@ var render = function() {
                       on: {
                         click: function($event) {
                           $event.preventDefault()
-                          _vm.showList = true
-                          _vm.showForm = false
+                          return _vm.setShowList()
                         }
                       }
                     },
@@ -397,6 +416,10 @@ var render = function() {
                   _c("div", { staticClass: "image-upload-box images" }, [
                     _c("input", {
                       staticClass: "form-control",
+                      style:
+                        "background-image: url(" +
+                        _vm.formData.image +
+                        "); background-size: cover; background-position: center center;",
                       attrs: {
                         type: "file",
                         id: "image",
@@ -465,7 +488,7 @@ var render = function() {
                     type: "text",
                     name: "link",
                     required: "",
-                    placeholder: "Name"
+                    placeholder: "Link"
                   },
                   domProps: { value: _vm.formData.link },
                   on: {

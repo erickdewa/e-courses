@@ -2,44 +2,60 @@
 	<div>
 		<div class="space"></div>
 		<div class="courses-page">
-			<div class="courses-information-fly">
-				<div class="courses-thumbnail">
-					<img :src="dataCourses.thumbnile">
-				</div>
-				<div class="courses-price">Rp. {{ dataCourses.price.rupiah() }}</div>
-				<div class="courses-materi">
-					<div class="title">Kursus Materi :</div>
-					<ul class="materi-group">
-						<template v-for="materigroup in dataCourses.materigroup">
-							<li v-for="materi in materigroup.materi" class="materi-item">
-								<span>{{ materi.nm_materi }}</span>
-								<i class="fa fa-check"></i>
+			<div class="fly">
+				<div class="courses-information-box">
+					<div class="courses-thumbnail">
+						<img :src="dataCourses.thumbnile">
+					</div>
+					<div class="courses-price">Rp. {{ dataCourses.price.rupiah() }}</div>
+					<div class="courses-materi">
+						<div class="title">Kursus Materi :</div>
+						<ul class="materi-group">
+							<template v-for="materigroup in dataCourses.materigroup">
+								<li v-for="materi in materigroup.materi" class="materi-item">
+									<span>{{ materi.nm_materi }}</span>
+									<i class="fa fa-check"></i>
+								</li>
+							</template>
+							<li class="materi-item">
+								<span>{{ dataCourses.count_materi }} Kursus {{ ((isPay)?'Lainnya':'Terkunci') }}</span>
+								<i class="fa" v-bind:class="((isPay))?'fa-check':'fa-lock'"></i>
 							</li>
+						</ul>
+					</div>
+					<div class="courses-action">
+						<template v-if="!isPay">
+							<template v-if="payment">
+								<div class="btn-join" @click="$router.push('/profile')">
+									Proses Pembayaran
+								</div>
+							</template>
+							<template v-if="!payment">
+								<div class="btn-join" @click="ceked(dataCourses.uuid)">
+									Ikut Kelas
+								</div>
+							</template>
 						</template>
-						<li class="materi-item">
-							<span>{{ dataCourses.count_materi }} Kursus {{ ((isPay)?'Lainnya':'Terkunci') }}</span>
-							<i class="fa" v-bind:class="((isPay))?'fa-check':'fa-lock'"></i>
-						</li>
-					</ul>
-				</div>
-				<div class="courses-action">
-					<template v-if="!isPay">
-						<template v-if="payment">
-							<div class="btn-join" @click="$router.push('/profile')">
-								Proses Pembayaran
-							</div>
-						</template>
-						<template v-if="!payment">
+						<template v-if="isPay">
 							<div class="btn-join" @click="ceked(dataCourses.uuid)">
-								Ikut Kelas
+								Tonton Sekarang
 							</div>
 						</template>
-					</template>
-					<template v-if="isPay">
-						<div class="btn-join" @click="ceked(dataCourses.uuid)">
-							Tonton Sekarang
+					</div>
+				</div>
+				<div class="courses-tool-box d-none d-md-block">
+					<div class="title">
+						Tools
+					</div>
+					<div v-for="coursesTool in dataCourses.coursestool" class="box-tool">
+						<div class="tool-image">
+							<img :src="coursesTool.tool.image">
 						</div>
-					</template>
+						<div class="tool-info">
+							<div class="tool-nama">{{ coursesTool.tool.nm_tool }}</div>
+							<div class="tool-download" @click="window.open(coursesTool.tool.link, '_blank');">Download</div>
+						</div>
+					</div>
 				</div>
 			</div>
 			<div class="courses-information">
@@ -79,7 +95,7 @@
 						</div>
 					</div>
 				</div>
-				<div class="courses-tool">
+				<div class="courses-tool d-block d-md-none">
 					<div class="title">
 						Tools
 					</div>
@@ -110,7 +126,7 @@
 						</div>
 					</div>
 				</div>
-				<div class="courses-comment">
+				<div class="courses-comment" v-if="dataCourses.coursesreview.length > 0">
 					<div class="title">Everyone's reviews</div>
 					<div class="carousel slide" data-ride="carousel">
 						<div class="carousel-inner">

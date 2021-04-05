@@ -61,6 +61,22 @@
 		</transition>
 
 		<transition enter-active-class="animated fadeIn">
+			<div class="aro-restraint" v-if="showSkill">
+				<div class="aro-restraint_title">
+					<span>Courses Skill</span>
+					<div class="button-table">
+						<button type="button" class="btn btn-info btn-sm" @click.prevent="setShowList()">
+							<i class="fa fa-reply-all"></i> Kembali
+						</button>
+					</div>
+				</div>
+				<div class="aro-restraint_body">
+					<Skill></Skill>
+				</div>
+			</div>
+		</transition>
+
+		<transition enter-active-class="animated fadeIn">
 			<div class="aro-restraint" v-if="showReview">
 				<div class="aro-restraint_title">
 					<span>Courses Review</span>
@@ -83,11 +99,12 @@
 	import MateriGroup from './components/MateriGroup'
 	import Materi from './components/Materi'
 	import Tools from './components/Tools'
+	import Skill from './components/Skill'
 	import Learn from './components/Learn'
 	import Review from './components/Review'
     export default {
     	components: {
-            FormTambah, MateriGroup, Materi, Tools, Review, Learn
+            FormTambah, MateriGroup, Materi, Tools, Skill, Review, Learn
         },
     	data() {
 	        return {
@@ -97,6 +114,7 @@
 	        	showGroupMateri: false,
 	        	showMateri: false,
 	        	showTools: false,
+	        	showSkill: false,
 	        	showReview: false,
 	        	showLearn: false,
 
@@ -123,6 +141,7 @@
 				vm.showGroupMateri = false;
 				vm.showMateri = false;
 				vm.showTools = false;
+				vm.showSkill = false;
 				vm.showReview = false;
 				vm.showLearn = false;
 	    	},
@@ -134,6 +153,7 @@
 				vm.showGroupMateri = false;
 				vm.showMateri = false;
 				vm.showTools = false;
+				vm.showSkill = false;
 				vm.showReview = false;
 				vm.showLearn = false;
 	    	},
@@ -145,6 +165,7 @@
 				vm.showGroupMateri = false;
 				vm.showMateri = true;
 				vm.showTools = false;
+				vm.showSkill = false;
 				vm.showReview = false;
 				vm.showLearn = false;
 	    	},
@@ -156,6 +177,7 @@
 				vm.showGroupMateri = false;
 				vm.showMateri = false;
 				vm.showTools = true;
+				vm.showSkill = false;
 				vm.showReview = false;
 				vm.showLearn = false;
 	    	},
@@ -167,7 +189,20 @@
 				vm.showGroupMateri = false;
 				vm.showMateri = false;
 				vm.showTools = false;
+				vm.showSkill = false;
 				vm.showReview = true;
+				vm.showLearn = false;
+	    	},
+	    	setShowSkill(){
+	    		var vm = this;
+
+	    		vm.showList = false;
+				vm.showForm = false;
+				vm.showGroupMateri = false;
+				vm.showMateri = false;
+				vm.showTools = false;
+				vm.showSkill = true;
+				vm.showReview = false;
 				vm.showLearn = false;
 	    	},
 	    	setShowLearn(){
@@ -178,6 +213,7 @@
 				vm.showGroupMateri = false;
 				vm.showMateri = false;
 				vm.showTools = false;
+				vm.showSkill = false;
 				vm.showReview = false;
 				vm.showLearn = true;
 	    	},
@@ -208,6 +244,14 @@
 	                    vm.setShowTools();
 	                });
 
+	                $('#table').on('click', '.skill', function(e){
+	                	var uuid = $(this).data('uuid');
+	                    var id = $(this).data('id');
+	                    vm.thisUuid = uuid;
+	                    vm.thisId = id;
+	                    vm.setShowSkill();
+	                });
+
 	                $('#table').on('click', '.review', function(e){
 	                	var uuid = $(this).data('uuid');
 	                    var id = $(this).data('id');
@@ -229,15 +273,29 @@
 	    	deleteData(uuid){
 	    		var vm = this;
 
-	    		vm.$http({
-	    			url: `${ vm.apiUrl }/courses/${ uuid }/delete`,
-	    			method: 'DELETE',
-	    		}).then((res)=>{
-	    			vm.$refs.table.reload();
-	    			toastr.success(res.data.message, 'Success');
-	    		}).catch((err)=>{
-	    			toastr.error(err.response.data.message, 'Error');
-	    		})
+	    		swal({
+					title: "Apakah anda yakin?",
+					text: "Data yang dihapus tidak dapat dikembalikan.",
+					type: "warning",
+					showCancelButton: true,
+					confirmButtonColor: "#DD6B55",
+					confirmButtonText: "Yes!",
+					cancelButtonText: "No",
+					closeOnConfirm: false,
+					closeOnCancel: false,
+				}).then((isConfirm)=>{
+					if(isConfirm){
+			    		vm.$http({
+			    			url: `${ vm.apiUrl }/courses/${ uuid }/delete`,
+			    			method: 'DELETE',
+			    		}).then((res)=>{
+			    			vm.$refs.table.reload();
+			    			toastr.success(res.data.message, 'Success');
+			    		}).catch((err)=>{
+			    			toastr.error(err.response.data.message, 'Error');
+			    		});
+			    	}
+			    });
 	    	}
 	    },
 	    mounted(){

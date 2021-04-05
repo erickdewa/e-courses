@@ -4,8 +4,8 @@
 			<div class="form-body">
 				<div class="row">
 					<div class="col-md-10">
-						<select class="form-control tools-select" name="tool" required v-model="formData.tool" placeholder="Tools">
-							<option v-for="tool in dataTools" :value="tool.id">{{ tool.nm_tool }}</option>
+						<select class="form-control skills-select" name="tool" required v-model="formData.skill" placeholder="Tools">
+							<option v-for="skill in dataSkills" :value="skill.id">{{ skill.nm_skill }}</option>
 						</select>
 					</div>
 					<div class="col-md-2">
@@ -21,11 +21,11 @@
 								<i class="fa fa-times text-light"></i>
 							</div>
 							<div class="tools-image">
-								<img :src="selected.tool.image">
+								<img :src="selected.skill.image">
 							</div>
 							<div class="tools-info">
-								<div class="name">{{ selected.tool.nm_tool }}</div>
-								<div class="website cursor-pointer" @click="redirect(selected.tool.link)">{{ selected.tool.link }}</div>
+								<div class="name">{{ selected.skill.nm_skill }}</div>
+								<div class="website cursor-pointer" @click="redirect(selected.skill.link)">Link</div>
 							</div>
 						</div>
 					</div>
@@ -41,10 +41,10 @@
 	        return {
 	        	formData: {
 	        		courses_id: '',
-	        		tool_id: '',
+	        		skill_id: '',
 	        	},
 
-	        	dataTools: [],
+	        	dataSkills: [],
 	        	dataSelected: [],
 	        }
 	    },
@@ -53,7 +53,7 @@
 	    		var vm = this;
 
 	    		vm.$http({
-	    			url: `${ vm.apiUrl }/courses/tool/${ vm.$parent.thisUuid }/getdata`,
+	    			url: `${ vm.apiUrl }/courses/skill/${ vm.$parent.thisUuid }/getdata`,
 	    			method: "GET",
 	    		}).then((res) => {
 	    			vm.select2();
@@ -69,7 +69,7 @@
 	    		Aropex.btnLoad('.btn-submit', true);
 	    		vm.formData.courses_id = vm.$parent.thisId;
 	    		vm.$http({
-	    			url: `${ vm.apiUrl }/courses/tool/create`,
+	    			url: `${ vm.apiUrl }/courses/skill/create`,
 	    			data: vm.formData,
 	    			method: "POST",
 	    		}).then((res) => {
@@ -86,7 +86,7 @@
 	    		var vm = this;
 
 	    		vm.$http({
-	    			url: `${ vm.apiUrl }/courses/tool/${ uuid }/delete`,
+	    			url: `${ vm.apiUrl }/courses/skill/${ uuid }/delete`,
 	    			method: "DELETE",
 	    		}).then((res) => {
 	    			vm.getData();
@@ -100,16 +100,16 @@
 	    		var vm = this;
 
 	    		vm.$http({
-	    			url: `${ vm.apiUrl }/courses/tool/${ vm.$parent.thisUuid }/gettool`,
+	    			url: `${ vm.apiUrl }/courses/skill/${ vm.$parent.thisUuid }/getskill`,
 	    			method: "GET",
 	    		}).then((res) => {
-	    			vm.dataTools = res.data.data;
+	    			vm.dataSkills = res.data.data;
 
-		    		$(".tools-select").select2({
+		    		$(".skills-select").select2({
 	                    placeholder: "Pilih",
 	                    width: '100%'
-	                }).val(vm.formData.tool_id).on('change', function(val) {
-	                    vm.formData.tool_id = $(this).val();
+	                }).val(vm.formData.skill_id).on('change', function(val) {
+	                    vm.formData.skill_id = $(this).val();
 	                });
 	    		}).catch((err)=>{
 	    			toastr.error(err.response.data.message, 'Error');
@@ -119,7 +119,7 @@
 	    	redirect(url){
 	    		var vm = this;
 
-	    		window.open(`https://${ url }`, '_blank');
+	    		window.open(url, '_blank');
 	    	},
 	    },
 	    mounted(){

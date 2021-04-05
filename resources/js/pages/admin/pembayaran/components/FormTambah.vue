@@ -5,7 +5,7 @@
 				<div class="row">
 					<div class="col-md-12" align="center">
 						<label>Bukti Pembayaran</label>
-						<div :style="`background-image: url(${ formData.bukti }); background-size: cover; width: 500px; height: 300px; margin-bottom: 25px; cursor: pointer`" @click="redirect(formData.bukti)"></div>
+						<div :style="`background-image: url(${ formData.bukti }); background-size: cover; background-position: center center; width: 500px; height: 300px; margin-bottom: 25px; cursor: pointer`" @click="redirect(formData.bukti)"></div>
 					</div>
 					<div class="col-md-12">
 						<div class="form-group">
@@ -15,6 +15,7 @@
 								<option value="proccess">Proccess</option>
 								<option value="success">Success</option>
 								<option value="cancle">Cancle</option>
+								<option value="ended">Ended</option>
 							</select>
 						</div>
 					</div>
@@ -49,10 +50,16 @@
 							<input type="text" class="form-control" name="total" required disabled v-model="formData.total.rupiah()" placeholder="Total">
 						</div>
 					</div>
-					<div class="col-md-12">
+					<div class="col-md-6">
 						<div class="form-group">
 							<label>Payment Time</label>
 							<input type="text" class="form-control" name="payment_time" required disabled v-model="formData.payment_time" placeholder="Payment Time">
+						</div>
+					</div>
+					<div class="col-md-6">
+						<div class="form-group">
+							<label>Time Ended</label>
+							<input type="text" class="form-control" name="time_ended" required disabled v-model="formData.time_ended" placeholder="Time Ended">
 						</div>
 					</div>
 					<div class="col-md-12">

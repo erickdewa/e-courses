@@ -40,7 +40,7 @@
 					</div>
 					<div class="aro-top-menu_rigth">
 						<div class="aro-info-top">
-							<div class="top-icon">
+							<!-- <div class="top-icon">
 								<i class="fa fa-search"></i>
 							</div>
 							<div class="top-icon">
@@ -53,7 +53,7 @@
 							<div class="top-icon">
 								<span>1</span>
 								<i class="fa fa-bell-o"></i>
-							</div>
+							</div> -->
 						</div>
 						<div class="aro-profile-top dropdown" data-event="dropdown" data-target="#profile-top-dropdown">
 							<img class="aro-profile-top-img" src="/assets/images/avatar-1.png">
@@ -63,8 +63,9 @@
 								<div class="profile-dropdown-name">Erick Dewa Pranata</div>
 							</div>
 							<div class="aro-profile-button">
+								<div></div>
 								<div class="btn btn-warning btn-sm" @click="logout()"><i class="fa fa-sign-out"></i> Logout</div>
-								<div class="btn btn-info btn-sm"><i class="fa fa-user"></i> Profile</div>
+								<!-- <div class="btn btn-info btn-sm"><i class="fa fa-user"></i> Profile</div> -->
 							</div>
 						</div>
 					</div>
@@ -104,7 +105,6 @@
 	        			{ title: 'Level', name: 'admin.master.level', path: '/admin/master/level' },
 	        			{ title: 'Payment', name: 'admin.master.payment', path: '/admin/master/payment' },
 	        			{ title: 'Pekerjaan', name: 'admin.master.pekerjaan', path: '/admin/master/pekerjaan' },
-	        			{ title: 'Kategori', name: 'admin.master.kategori', path: '/admin/master/kategori' },
 	        			{ title: 'Skill', name: 'admin.master.skill', path: '/admin/master/skill' },
 	        			{ title: 'Tool', name: 'admin.master.tool', path: '/admin/master/tool' },
 	        		]},

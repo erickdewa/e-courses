@@ -33,29 +33,32 @@
 	background: #FFFFFF;
 	width: 100%;
 }
-.courses-page .courses-information-fly{
-	position: absolute;
-	display: inline-block;
-	background: #FFFFFF;
-	padding: 10px;
+.fly{
 	width: 28%;
 	left: 10%;
 	top: 200px;
+	position: absolute;
+}
+.courses-page .courses-information-box{
+	display: inline-block;
+	background: #FFFFFF;
+	padding: 10px;
+	width: 100%;
 	border-radius: 15px;
 	box-shadow: 0px 0px 60px -5px rgba(75,74,239,0.2);
 }
-.courses-information-fly .courses-thumbnail{
+.courses-information-box .courses-thumbnail{
 	background: #20B2AA; 
 	width: 100%;
 	height: 200px;
 	border-radius: 15px;
 	overflow: hidden;
 }
-.courses-information-fly .courses-thumbnail img{
+.courses-information-box .courses-thumbnail img{
 	width: 100%;
 	height: 200px;
 }
-.courses-information-fly .courses-price{
+.courses-information-box .courses-price{
 	padding: 10px 0px;
 	text-align: left;
 	font-size: 25px;
@@ -321,15 +324,21 @@
 	cursor: pointer;
 }
 
-.courses-tool{
+.courses-tool-box{
 	background: #FFFFFF;
-	position: absolute;
-	left: 10%;
-	width: 28%;
+	width: 100%;
+	margin-top: 50px;
 	padding: 15px 5px;
 	border-radius: 15px;
 	box-shadow: 0px 0px 60px -5px rgba(75,74,239,0.2);
 }
+.courses-tool{
+	background: #FFFFFF;
+	padding: 15px 5px;
+	border-radius: 15px;
+	box-shadow: 0px 0px 60px -5px rgba(75,74,239,0.2);
+}
+.courses-tool-box .title,
 .courses-tool .title{
 	padding: 0px 15px;
 	font-size: 18px;
@@ -412,7 +421,7 @@
 		letter-spacing: 1px;
 	}
 
-	.courses-page .courses-information-fly{
+	.courses-page .courses-information-box{
 		position: fixed;
 		top: auto;
 	    bottom: 0px;
@@ -421,11 +430,11 @@
 	    z-index: 999;
 	    border-radius: 15px 15px 0px 0px;
 	}
-	.courses-information-fly .courses-thumbnail,
+	.courses-information-box .courses-thumbnail,
 	.courses-materi{
 		display: none;
 	}
-	.courses-information-fly .courses-price{
+	.courses-information-box .courses-price{
 		padding: 10px 20px;
 	}
 	.courses-action .btn-join{
@@ -442,8 +451,6 @@
 
 	.courses-tool{
 		position: relative;
-		top: auto;
-		left: auto;
 		width: 100%;
 	}
 }
@@ -494,7 +501,7 @@
 		letter-spacing: 1px;
 	}
 
-	.courses-page .courses-information-fly{
+	.courses-page .courses-information-box{
 		width: 40%;
 		max-width: 35%;
 		left: 3%;
@@ -506,8 +513,6 @@
 	}
 	.courses-tool{
 		position: relative;
-		top: auto;
-		left: auto;
 		width: 100%;
 	}
 	.box-tool{

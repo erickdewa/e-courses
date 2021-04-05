@@ -152,15 +152,29 @@
 	    	deleteData(uuid){
 	    		var vm = this;
 
-	    		vm.$http({
-	    			url: `${ vm.apiUrl }/materigroup/${ uuid }/delete`,
-	    			method: 'DELETE',
-	    		}).then((res)=>{
-	    			vm.$refs.table.reload();
-	    			toastr.success(res.data.message, 'Success');
-	    		}).catch((err)=>{
-	    			toastr.error(err.response.data.message, 'Error');
-	    		})
+	    		swal({
+					title: "Apakah anda yakin?",
+					text: "Data yang dihapus tidak dapat dikembalikan.",
+					type: "warning",
+					showCancelButton: true,
+					confirmButtonColor: "#DD6B55",
+					confirmButtonText: "Yes!",
+					cancelButtonText: "No",
+					closeOnConfirm: false,
+					closeOnCancel: false,
+				}).then((isConfirm)=>{
+					if(isConfirm){
+			    		vm.$http({
+			    			url: `${ vm.apiUrl }/materigroup/${ uuid }/delete`,
+			    			method: 'DELETE',
+			    		}).then((res)=>{
+			    			vm.$refs.table.reload();
+			    			toastr.success(res.data.message, 'Success');
+			    		}).catch((err)=>{
+			    			toastr.error(err.response.data.message, 'Error');
+			    		})
+			    	}
+			    });
 	    	}
 	    },
 	    mounted(){

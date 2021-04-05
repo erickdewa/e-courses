@@ -26,7 +26,7 @@ class MateriController extends Controller
         $data = Materi::where('materigroup_id', $materigroup->id)
         ->where(function($query) use ($request){
             $query->where('nm_materi', 'like', '%'.$request->search.'%');
-        })->orderBy('id', 'desc')->paginate($per);
+        })->orderBy('id', 'asc')->paginate($per);
 
         $data->map(function($a){
             $btnEdit = '<button class="btn btn-clean btn-icon btn-icon-md edit" data-uuid="'.$a->uuid.'"><i class="fa fa-edit text-warning"></i></button>';
@@ -114,7 +114,7 @@ class MateriController extends Controller
     	$validator = Validator::make($request->all(), [
             'materigroup_id' => 'required|integer',
             'nm_materi' => 'required|string',
-            'thumbnail' => 'required|image',
+            'thumbnail' => 'image',
             'video' => 'required|string',
             'description' => 'nullable|string',
         ]);
@@ -137,6 +137,8 @@ class MateriController extends Controller
                 }
             }
             $thumbnail = '/img/courses/thumbnail/'.$nama_thumbnail;
+        }else{
+            $thumbnail = $data->thumbnail;
         }
 
         $data->update([

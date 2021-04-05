@@ -119,8 +119,6 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
 //
 //
 //
-//
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -128,12 +126,18 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
       thisPage: 0,
       dataWeb: {},
       coursesFilter: {
-        search: ''
+        search: '',
+        skill_id: ''
       },
       dataCourses: []
     };
   },
   methods: {
+    clickSkill: function clickSkill(id) {
+      var vm = this;
+      vm.coursesFilter.skill_id = id;
+      vm.getCourses();
+    },
     getCourses: _.debounce(function () {
       var page = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : null;
       var vm = this;
@@ -158,6 +162,17 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
         vm.thisPage = res.data.data.current_page;
       })["catch"](function (error) {});
     }, 500),
+    getSkill: function getSkill() {
+      var vm = this;
+      vm.$http({
+        url: "".concat(vm.baseUrl, "/skill/getdatas"),
+        method: 'GET'
+      }).then(function (res) {
+        vm.dataSkill = res.data.data;
+      })["catch"](function (err) {
+        toastr.error(err.response.data.message, 'Error');
+      });
+    },
     getWeb: function getWeb() {
       var vm = this;
       vm.$http({
@@ -173,6 +188,7 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
   mounted: function mounted() {
     var vm = this;
     vm.getWeb();
+    vm.getSkill();
     vm.getCourses();
   }
 });
@@ -254,7 +270,50 @@ var render = function() {
           ])
         ]),
         _vm._v(" "),
-        _vm._m(5)
+        _c("div", { staticClass: "filter-category" }, [
+          _c("div", { staticClass: "title" }, [
+            _vm._v("\n\t\t\t\t\tBy Kategori : \n\t\t\t\t")
+          ]),
+          _vm._v(" "),
+          _c(
+            "div",
+            { staticClass: "category-group" },
+            [
+              _c(
+                "div",
+                {
+                  staticClass: "category-item",
+                  on: {
+                    click: function($event) {
+                      return _vm.clickSkill("")
+                    }
+                  }
+                },
+                [_vm._v("All")]
+              ),
+              _vm._v(" "),
+              _vm._l(_vm.dataSkill, function(skill, index) {
+                return index < 10
+                  ? [
+                      _c(
+                        "div",
+                        {
+                          staticClass: "category-item",
+                          on: {
+                            click: function($event) {
+                              return _vm.clickSkill(skill.id)
+                            }
+                          }
+                        },
+                        [_vm._v(_vm._s(skill.nm_skill))]
+                      )
+                    ]
+                  : _vm._e()
+              })
+            ],
+            2
+          )
+        ])
       ]),
       _vm._v(" "),
       _c(
@@ -390,7 +449,7 @@ var staticRenderFns = [
     var _c = _vm._self._c || _h
     return _c("div", { staticClass: "body-text" }, [
       _c("div", { staticClass: "body-text-title" }, [
-        _c("div", [_vm._v("Automated Online Purchases")])
+        _c("div", [_vm._v("Kursus Video Online")])
       ]),
       _vm._v(" "),
       _c("div", { staticClass: "body-text-category" }, [
@@ -461,30 +520,6 @@ var staticRenderFns = [
     var _c = _vm._self._c || _h
     return _c("span", { staticClass: "input-icon" }, [
       _c("i", { staticClass: "fa fa-search" })
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "filter-category" }, [
-      _c("div", { staticClass: "title" }, [
-        _vm._v("\n\t\t\t\t\tBy Kategori : \n\t\t\t\t")
-      ]),
-      _vm._v(" "),
-      _c("div", { staticClass: "category-group" }, [
-        _c("div", { staticClass: "category-item" }, [_vm._v("Masak")]),
-        _vm._v(" "),
-        _c("div", { staticClass: "category-item" }, [_vm._v("Akutansi")]),
-        _vm._v(" "),
-        _c("div", { staticClass: "category-item" }, [_vm._v("Mentoring")]),
-        _vm._v(" "),
-        _c("div", { staticClass: "category-item" }, [_vm._v("Back-end")]),
-        _vm._v(" "),
-        _c("div", { staticClass: "category-item" }, [_vm._v("Cyber Scurity")]),
-        _vm._v(" "),
-        _c("div", { staticClass: "category-item" }, [_vm._v("Cryptocurrency")])
-      ])
     ])
   }
 ]

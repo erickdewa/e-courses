@@ -11,7 +11,10 @@ class UserCoursesController extends Controller
 {
     // Page user courses player
     public function getDataCoursesPlayer($uuid)
-    {
+    {   
+        // check active courses
+        $this->cekStatus();
+
         $data = UserCourses::with('user')
         ->where('uuid', $uuid)->first();
 
@@ -24,7 +27,10 @@ class UserCoursesController extends Controller
 
     // Page user courses player all
     public function getDataCoursesAll()
-    {
+    {   
+        // check active courses
+        $this->cekStatus();
+
         $myCourses = UserCourses::with('user')
         ->whereIn('status', ['success', 'procces'])
         ->where('user_id', JWTAuth::user()->id)
@@ -91,11 +97,41 @@ class UserCoursesController extends Controller
 
     public function changeStatus(Request $request, $uuid)
     {   
-        $request->payment_expired = (($request->status == 'expired')?date('Y-m-d H:i:s'):null);
         $data = UserCourses::findByUuid($uuid);
+        $courses = Courses::find($data->courses_id);
+        if($request->status == 'success'){
+            if($courses->access == 'annual'){
+                $request->time_ended = date('Y-m-d', strtotime('+365 days'));
+            }else if($courses->access == 'month'){
+                $request->time_ended = date('Y-m-d', strtotime('+30 days'));
+            }else if($courses->access == 'weekly'){
+                $request->time_ended = date('Y-m-d', strtotime('+7 days'));
+            }else{
+                $request->time_ended = null;
+            }
+        }else if($request->status == 'ended'){
+            $request->time_ended = date('Y-m-d');
+        }else{
+            $request->time_ended = null;
+        }
+
         $data->update([
             'status' => $request->status,
-            'payment_expired' => $request->payment_expired,
+            'time_ended' => $request->time_ended,
         ]);
+    }
+
+    public function cekStatus()
+    {
+        $date = date('Y-m-d');
+        $data = UserCourses::where('status', 'success')->get();
+        foreach ($data as $key => $value) {
+            if(str_replace('-', '', $date) >= str_replace('-', '', $value->time_ended)){
+                $datas = UserCourses::findByUuid($value->uuid);
+                $datas->update([
+                    'status' => 'ended',
+                ]);
+            }
+        }
     }
 }

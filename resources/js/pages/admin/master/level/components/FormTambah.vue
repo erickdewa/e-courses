@@ -45,17 +45,17 @@
 	    			urls = `${ vm.apiUrl }/level/${ uuid }/update`;
 	    		}
 
-	    		$('.btn-submit').prop('disabled', true);
+	    		Aropex.btnLoad('.btn-submit', true);
 	    		vm.$http({
 	    			url: urls,
 	    			data: vm.formData,
 	    			method: 'POST',
 	    		}).then((res)=>{
 	    			vm.$parent.setShowList();
-	    			$('.btn-submit').prop('disabled', false);
+	    			Aropex.btnLoad('.btn-submit', false);
 	    			toastr.success(res.data.message, 'Success');
 	    		}).catch((err)=>{
-	    			$('.btn-submit').prop('disabled', false);
+	    			Aropex.btnLoad('.btn-submit', false);
 	    			toastr.error(err.response.data.message, 'Error');
 	    		});
 	    	},

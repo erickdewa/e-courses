@@ -4,7 +4,7 @@
 			<div class="main-page">
 				<div class="body-text">
 					<div class="body-text-title">
-						<div>Automated Online Purchases</div>
+						<div>Kursus Video Online</div>
 					</div>
 					<div class="body-text-category">
 						TRUSTED | EASY | CHEAP
@@ -50,12 +50,10 @@
 						By Kategori : 
 					</div>
 					<div class="category-group">
-						<div class="category-item">Masak</div>
-						<div class="category-item">Akutansi</div>
-						<div class="category-item">Mentoring</div>
-						<div class="category-item">Back-end</div>
-						<div class="category-item">Cyber Scurity</div>
-						<div class="category-item">Cryptocurrency</div>
+						<div class="category-item" @click="clickSkill('')">All</div>
+						<template v-for="(skill, index) in dataSkill" v-if="index < 10">
+							<div class="category-item" @click="clickSkill(skill.id)">{{ skill.nm_skill }}</div>
+						</template>
 					</div>
 				</div>
 			</div>
@@ -108,12 +106,20 @@
 	        	dataWeb: {},
 	        	coursesFilter: {
 	        		search: '',
+	        		skill_id: '',
 	        	},
 
 	        	dataCourses: [],
 	        }
 	    },
 	    methods: {
+	    	clickSkill(id){
+	    		var vm = this;
+
+	    		vm.coursesFilter.skill_id = id;
+	    		vm.getCourses();
+	    	},
+
 	    	getCourses: _.debounce(function(page=null){
 	    		var vm = this;
 
@@ -139,6 +145,18 @@
 	    		});
 	    	}, 500),
 
+	    	getSkill(){
+	    		var vm = this;
+
+	    		vm.$http({
+	    			url: `${ vm.baseUrl }/skill/getdatas`,
+	    			method: 'GET',
+	    		}).then((res)=>{
+	    			vm.dataSkill = res.data.data;
+	    		}).catch((err)=>{
+	    			toastr.error(err.response.data.message, 'Error');
+	    		});
+	    	},
 	    	getWeb(){
 				var vm = this;
 
@@ -156,6 +174,7 @@
 	    	var vm = this;
 
 	    	vm.getWeb();
+	    	vm.getSkill();
 	    	vm.getCourses();
 	    }
 	}

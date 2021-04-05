@@ -171,6 +171,22 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -309,46 +325,118 @@ var render = function() {
     _c("div", { staticClass: "space" }),
     _vm._v(" "),
     _c("div", { staticClass: "courses-page" }, [
-      _c("div", { staticClass: "courses-information-fly" }, [
-        _c("div", { staticClass: "courses-thumbnail" }, [
-          _c("img", { attrs: { src: _vm.dataCourses.thumbnile } })
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "courses-price" }, [
-          _vm._v("Rp. " + _vm._s(_vm.dataCourses.price.rupiah()))
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "courses-materi" }, [
-          _c("div", { staticClass: "title" }, [_vm._v("Kursus Materi :")]),
+      _c("div", { staticClass: "fly" }, [
+        _c("div", { staticClass: "courses-information-box" }, [
+          _c("div", { staticClass: "courses-thumbnail" }, [
+            _c("img", { attrs: { src: _vm.dataCourses.thumbnile } })
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "courses-price" }, [
+            _vm._v("Rp. " + _vm._s(_vm.dataCourses.price.rupiah()))
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "courses-materi" }, [
+            _c("div", { staticClass: "title" }, [_vm._v("Kursus Materi :")]),
+            _vm._v(" "),
+            _c(
+              "ul",
+              { staticClass: "materi-group" },
+              [
+                _vm._l(_vm.dataCourses.materigroup, function(materigroup) {
+                  return _vm._l(materigroup.materi, function(materi) {
+                    return _c("li", { staticClass: "materi-item" }, [
+                      _c("span", [_vm._v(_vm._s(materi.nm_materi))]),
+                      _vm._v(" "),
+                      _c("i", { staticClass: "fa fa-check" })
+                    ])
+                  })
+                }),
+                _vm._v(" "),
+                _c("li", { staticClass: "materi-item" }, [
+                  _c("span", [
+                    _vm._v(
+                      _vm._s(_vm.dataCourses.count_materi) +
+                        " Kursus " +
+                        _vm._s(_vm.isPay ? "Lainnya" : "Terkunci")
+                    )
+                  ]),
+                  _vm._v(" "),
+                  _c("i", {
+                    staticClass: "fa",
+                    class: _vm.isPay ? "fa-check" : "fa-lock"
+                  })
+                ])
+              ],
+              2
+            )
+          ]),
           _vm._v(" "),
           _c(
-            "ul",
-            { staticClass: "materi-group" },
+            "div",
+            { staticClass: "courses-action" },
             [
-              _vm._l(_vm.dataCourses.materigroup, function(materigroup) {
-                return _vm._l(materigroup.materi, function(materi) {
-                  return _c("li", { staticClass: "materi-item" }, [
-                    _c("span", [_vm._v(_vm._s(materi.nm_materi))]),
+              !_vm.isPay
+                ? [
+                    _vm.payment
+                      ? [
+                          _c(
+                            "div",
+                            {
+                              staticClass: "btn-join",
+                              on: {
+                                click: function($event) {
+                                  return _vm.$router.push("/profile")
+                                }
+                              }
+                            },
+                            [
+                              _vm._v(
+                                "\n\t\t\t\t\t\t\t\tProses Pembayaran\n\t\t\t\t\t\t\t"
+                              )
+                            ]
+                          )
+                        ]
+                      : _vm._e(),
                     _vm._v(" "),
-                    _c("i", { staticClass: "fa fa-check" })
-                  ])
-                })
-              }),
+                    !_vm.payment
+                      ? [
+                          _c(
+                            "div",
+                            {
+                              staticClass: "btn-join",
+                              on: {
+                                click: function($event) {
+                                  return _vm.ceked(_vm.dataCourses.uuid)
+                                }
+                              }
+                            },
+                            [
+                              _vm._v(
+                                "\n\t\t\t\t\t\t\t\tIkut Kelas\n\t\t\t\t\t\t\t"
+                              )
+                            ]
+                          )
+                        ]
+                      : _vm._e()
+                  ]
+                : _vm._e(),
               _vm._v(" "),
-              _c("li", { staticClass: "materi-item" }, [
-                _c("span", [
-                  _vm._v(
-                    _vm._s(_vm.dataCourses.count_materi) +
-                      " Kursus " +
-                      _vm._s(_vm.isPay ? "Lainnya" : "Terkunci")
-                  )
-                ]),
-                _vm._v(" "),
-                _c("i", {
-                  staticClass: "fa",
-                  class: _vm.isPay ? "fa-check" : "fa-lock"
-                })
-              ])
+              _vm.isPay
+                ? [
+                    _c(
+                      "div",
+                      {
+                        staticClass: "btn-join",
+                        on: {
+                          click: function($event) {
+                            return _vm.ceked(_vm.dataCourses.uuid)
+                          }
+                        }
+                      },
+                      [_vm._v("\n\t\t\t\t\t\t\tTonton Sekarang\n\t\t\t\t\t\t")]
+                    )
+                  ]
+                : _vm._e()
             ],
             2
           )
@@ -356,66 +444,41 @@ var render = function() {
         _vm._v(" "),
         _c(
           "div",
-          { staticClass: "courses-action" },
+          { staticClass: "courses-tool-box d-none d-md-block" },
           [
-            !_vm.isPay
-              ? [
-                  _vm.payment
-                    ? [
-                        _c(
-                          "div",
-                          {
-                            staticClass: "btn-join",
-                            on: {
-                              click: function($event) {
-                                return _vm.$router.push("/profile")
-                              }
-                            }
-                          },
-                          [
-                            _vm._v(
-                              "\n\t\t\t\t\t\t\tProses Pembayaran\n\t\t\t\t\t\t"
-                            )
-                          ]
-                        )
-                      ]
-                    : _vm._e(),
-                  _vm._v(" "),
-                  !_vm.payment
-                    ? [
-                        _c(
-                          "div",
-                          {
-                            staticClass: "btn-join",
-                            on: {
-                              click: function($event) {
-                                return _vm.ceked(_vm.dataCourses.uuid)
-                              }
-                            }
-                          },
-                          [_vm._v("\n\t\t\t\t\t\t\tIkut Kelas\n\t\t\t\t\t\t")]
-                        )
-                      ]
-                    : _vm._e()
-                ]
-              : _vm._e(),
+            _c("div", { staticClass: "title" }, [
+              _vm._v("\n\t\t\t\t\tTools\n\t\t\t\t")
+            ]),
             _vm._v(" "),
-            _vm.isPay
-              ? [
+            _vm._l(_vm.dataCourses.coursestool, function(coursesTool) {
+              return _c("div", { staticClass: "box-tool" }, [
+                _c("div", { staticClass: "tool-image" }, [
+                  _c("img", { attrs: { src: coursesTool.tool.image } })
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "tool-info" }, [
+                  _c("div", { staticClass: "tool-nama" }, [
+                    _vm._v(_vm._s(coursesTool.tool.nm_tool))
+                  ]),
+                  _vm._v(" "),
                   _c(
                     "div",
                     {
-                      staticClass: "btn-join",
+                      staticClass: "tool-download",
                       on: {
                         click: function($event) {
-                          return _vm.ceked(_vm.dataCourses.uuid)
+                          return _vm.window.open(
+                            coursesTool.tool.link,
+                            "_blank"
+                          )
                         }
                       }
                     },
-                    [_vm._v("\n\t\t\t\t\t\tTonton Sekarang\n\t\t\t\t\t")]
+                    [_vm._v("Download")]
                   )
-                ]
-              : _vm._e()
+                ])
+              ])
+            })
           ],
           2
         )
@@ -552,7 +615,7 @@ var render = function() {
         _vm._v(" "),
         _c(
           "div",
-          { staticClass: "courses-tool" },
+          { staticClass: "courses-tool d-block d-md-none" },
           [
             _c("div", { staticClass: "title" }, [
               _vm._v("\n\t\t\t\t\tTools\n\t\t\t\t")
@@ -613,167 +676,199 @@ var render = function() {
           ])
         ]),
         _vm._v(" "),
-        _c("div", { staticClass: "courses-comment" }, [
-          _c("div", { staticClass: "title" }, [_vm._v("Everyone's reviews")]),
-          _vm._v(" "),
-          _c(
-            "div",
-            {
-              staticClass: "carousel slide",
-              attrs: { "data-ride": "carousel" }
-            },
-            [
+        _vm.dataCourses.coursesreview.length > 0
+          ? _c("div", { staticClass: "courses-comment" }, [
+              _c("div", { staticClass: "title" }, [
+                _vm._v("Everyone's reviews")
+              ]),
+              _vm._v(" "),
               _c(
                 "div",
-                { staticClass: "carousel-inner" },
+                {
+                  staticClass: "carousel slide",
+                  attrs: { "data-ride": "carousel" }
+                },
                 [
-                  _vm._l(_vm.dataCourses.coursesreview, function(review) {
-                    return [
-                      _c(
-                        "div",
-                        { staticClass: "comment-item carousel-item active" },
-                        [
-                          _c("div", { staticClass: "comment-box" }, [
-                            _c("div", { staticClass: "comment-info" }, [
-                              _c("div", { staticClass: "comment-image" }, [
-                                _c("img", {
-                                  attrs: { src: review.user.profile.image }
-                                })
-                              ]),
-                              _vm._v(" "),
-                              _c("div", { staticClass: "comment-nama" }, [
-                                _vm._v(_vm._s(review.user.name))
-                              ]),
-                              _vm._v(" "),
-                              _c("div", { staticClass: "comment-date" }, [
-                                _vm._v(_vm._s(review.tanggal))
-                              ])
-                            ]),
-                            _vm._v(" "),
-                            _c("div", { staticClass: "comment-side" }, [
-                              _c("div", { staticClass: "side-top" }, [
-                                _c("div", { staticClass: "comment-rating" }, [
-                                  _c("div", { staticClass: "rating-group" }, [
-                                    _c("input", {
-                                      staticClass:
-                                        "rating__input rating__input--none",
-                                      attrs: {
-                                        checked: "",
-                                        name: "rating2",
-                                        id: "rating2-0",
-                                        value: "0",
-                                        type: "radio",
-                                        disabled: ""
-                                      },
-                                      domProps: {
-                                        checked: review.rate == 0 ? true : false
-                                      }
-                                    }),
-                                    _vm._v(" "),
-                                    _vm._m(6, true),
-                                    _vm._v(" "),
-                                    _c("input", {
-                                      staticClass: "rating__input",
-                                      attrs: {
-                                        name: "rating2",
-                                        id: "rating2-10",
-                                        value: "1",
-                                        type: "radio",
-                                        disabled: ""
-                                      },
-                                      domProps: {
-                                        checked: review.rate == 1 ? true : false
-                                      }
-                                    }),
-                                    _vm._v(" "),
-                                    _vm._m(7, true),
-                                    _vm._v(" "),
-                                    _c("input", {
-                                      staticClass: "rating__input",
-                                      attrs: {
-                                        name: "rating2",
-                                        id: "rating2-20",
-                                        value: "2",
-                                        type: "radio",
-                                        disabled: ""
-                                      },
-                                      domProps: {
-                                        checked: review.rate == 2 ? true : false
-                                      }
-                                    }),
-                                    _vm._v(" "),
-                                    _vm._m(8, true),
-                                    _vm._v(" "),
-                                    _c("input", {
-                                      staticClass: "rating__input",
-                                      attrs: {
-                                        name: "rating2",
-                                        id: "rating2-30",
-                                        value: "3",
-                                        type: "radio",
-                                        disabled: ""
-                                      },
-                                      domProps: {
-                                        checked: review.rate == 3 ? true : false
-                                      }
-                                    }),
-                                    _vm._v(" "),
-                                    _vm._m(9, true),
-                                    _vm._v(" "),
-                                    _c("input", {
-                                      staticClass: "rating__input",
-                                      attrs: {
-                                        name: "rating2",
-                                        id: "rating2-40",
-                                        value: "4",
-                                        type: "radio",
-                                        disabled: ""
-                                      },
-                                      domProps: {
-                                        checked: review.rate == 4 ? true : false
-                                      }
-                                    }),
-                                    _vm._v(" "),
-                                    _vm._m(10, true),
-                                    _vm._v(" "),
-                                    _c("input", {
-                                      staticClass: "rating__input",
-                                      attrs: {
-                                        name: "rating2",
-                                        id: "rating2-50",
-                                        value: "5",
-                                        type: "radio",
-                                        disabled: ""
-                                      },
-                                      domProps: {
-                                        checked: review.rate == 5 ? true : false
-                                      }
+                  _c(
+                    "div",
+                    { staticClass: "carousel-inner" },
+                    [
+                      _vm._l(_vm.dataCourses.coursesreview, function(review) {
+                        return [
+                          _c(
+                            "div",
+                            {
+                              staticClass: "comment-item carousel-item active"
+                            },
+                            [
+                              _c("div", { staticClass: "comment-box" }, [
+                                _c("div", { staticClass: "comment-info" }, [
+                                  _c("div", { staticClass: "comment-image" }, [
+                                    _c("img", {
+                                      attrs: { src: review.user.profile.image }
                                     })
                                   ]),
                                   _vm._v(" "),
-                                  _vm._m(11, true)
+                                  _c("div", { staticClass: "comment-nama" }, [
+                                    _vm._v(_vm._s(review.user.name))
+                                  ]),
+                                  _vm._v(" "),
+                                  _c("div", { staticClass: "comment-date" }, [
+                                    _vm._v(_vm._s(review.tanggal))
+                                  ])
+                                ]),
+                                _vm._v(" "),
+                                _c("div", { staticClass: "comment-side" }, [
+                                  _c("div", { staticClass: "side-top" }, [
+                                    _c(
+                                      "div",
+                                      { staticClass: "comment-rating" },
+                                      [
+                                        _c(
+                                          "div",
+                                          { staticClass: "rating-group" },
+                                          [
+                                            _c("input", {
+                                              staticClass:
+                                                "rating__input rating__input--none",
+                                              attrs: {
+                                                checked: "",
+                                                name: "rating2",
+                                                id: "rating2-0",
+                                                value: "0",
+                                                type: "radio",
+                                                disabled: ""
+                                              },
+                                              domProps: {
+                                                checked:
+                                                  review.rate == 0
+                                                    ? true
+                                                    : false
+                                              }
+                                            }),
+                                            _vm._v(" "),
+                                            _vm._m(6, true),
+                                            _vm._v(" "),
+                                            _c("input", {
+                                              staticClass: "rating__input",
+                                              attrs: {
+                                                name: "rating2",
+                                                id: "rating2-10",
+                                                value: "1",
+                                                type: "radio",
+                                                disabled: ""
+                                              },
+                                              domProps: {
+                                                checked:
+                                                  review.rate == 1
+                                                    ? true
+                                                    : false
+                                              }
+                                            }),
+                                            _vm._v(" "),
+                                            _vm._m(7, true),
+                                            _vm._v(" "),
+                                            _c("input", {
+                                              staticClass: "rating__input",
+                                              attrs: {
+                                                name: "rating2",
+                                                id: "rating2-20",
+                                                value: "2",
+                                                type: "radio",
+                                                disabled: ""
+                                              },
+                                              domProps: {
+                                                checked:
+                                                  review.rate == 2
+                                                    ? true
+                                                    : false
+                                              }
+                                            }),
+                                            _vm._v(" "),
+                                            _vm._m(8, true),
+                                            _vm._v(" "),
+                                            _c("input", {
+                                              staticClass: "rating__input",
+                                              attrs: {
+                                                name: "rating2",
+                                                id: "rating2-30",
+                                                value: "3",
+                                                type: "radio",
+                                                disabled: ""
+                                              },
+                                              domProps: {
+                                                checked:
+                                                  review.rate == 3
+                                                    ? true
+                                                    : false
+                                              }
+                                            }),
+                                            _vm._v(" "),
+                                            _vm._m(9, true),
+                                            _vm._v(" "),
+                                            _c("input", {
+                                              staticClass: "rating__input",
+                                              attrs: {
+                                                name: "rating2",
+                                                id: "rating2-40",
+                                                value: "4",
+                                                type: "radio",
+                                                disabled: ""
+                                              },
+                                              domProps: {
+                                                checked:
+                                                  review.rate == 4
+                                                    ? true
+                                                    : false
+                                              }
+                                            }),
+                                            _vm._v(" "),
+                                            _vm._m(10, true),
+                                            _vm._v(" "),
+                                            _c("input", {
+                                              staticClass: "rating__input",
+                                              attrs: {
+                                                name: "rating2",
+                                                id: "rating2-50",
+                                                value: "5",
+                                                type: "radio",
+                                                disabled: ""
+                                              },
+                                              domProps: {
+                                                checked:
+                                                  review.rate == 5
+                                                    ? true
+                                                    : false
+                                              }
+                                            })
+                                          ]
+                                        ),
+                                        _vm._v(" "),
+                                        _vm._m(11, true)
+                                      ]
+                                    )
+                                  ]),
+                                  _vm._v(" "),
+                                  _c("div", { staticClass: "side-bottom" }, [
+                                    _vm._v(
+                                      "\n\t\t\t\t\t\t\t\t\t\t\t" +
+                                        _vm._s(review.description) +
+                                        "\n\t\t\t\t\t\t\t\t\t\t"
+                                    )
+                                  ])
                                 ])
-                              ]),
-                              _vm._v(" "),
-                              _c("div", { staticClass: "side-bottom" }, [
-                                _vm._v(
-                                  "\n\t\t\t\t\t\t\t\t\t\t\t" +
-                                    _vm._s(review.description) +
-                                    "\n\t\t\t\t\t\t\t\t\t\t"
-                                )
                               ])
-                            ])
-                          ])
+                            ]
+                          )
                         ]
-                      )
-                    ]
-                  })
-                ],
-                2
+                      })
+                    ],
+                    2
+                  )
+                ]
               )
-            ]
-          )
-        ])
+            ])
+          : _vm._e()
       ])
     ])
   ])

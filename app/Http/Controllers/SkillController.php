@@ -102,7 +102,7 @@ class SkillController extends Controller
             'nm_skill' => 'required|string',
             'description' => 'required|string',
             'link' => 'required|string',
-            'image' => 'required|image',
+            'image' => 'image',
         ]);
 
         if ($validator->fails()) {
@@ -113,7 +113,6 @@ class SkillController extends Controller
         }
 
         $data = Skill::findByUuid($uuid);
-
         if(isset($request->image)) {
             $nama_image = 'skill_'.time().'.'.$request->image->getClientOriginalExtension();
             $request->image->move(public_path('img/skill'), $nama_image);
@@ -124,6 +123,8 @@ class SkillController extends Controller
                 }
             }
             $image = '/img/skill/'.$nama_image;
+        }else{
+            $image = $data->image;
         }
 
         $data->update([

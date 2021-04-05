@@ -115,10 +115,10 @@
 					profession: '',
 					bio: '',
 					description: '',
-					facebook: '',
-					instagram: '',
-					twitter: '',
-					github: '',
+					facebook: 'https://facebook.com/',
+					instagram: 'https://instagram.com/',
+					twitter: 'https://twitter.com/',
+					github: 'https://github.com/',
 	        	},
 
 	        	dataPekerjaan: [],
@@ -153,6 +153,7 @@
                 vm.axios.post(urls, formData, {headers: {'content-type': 'multipart/form-data'}}).then((res) => {
                 	vm.$router.push({ path: '/profile' });
 	    			Aropex.btnLoad('.btn-submit', false);
+	    			vm.$parent.getProfile();
 	    			toastr.success(res.data.message, 'Success');
 	    		}).catch((err)=>{
 	    			Aropex.btnLoad('.btn-submit', false);

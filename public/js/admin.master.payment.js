@@ -74,6 +74,8 @@ __webpack_require__.r(__webpack_exports__);
       var vm = this;
       vm.showList = true;
       vm.showForm = false;
+      vm.isEdit = false;
+      vm.thisUuid = '';
     },
     setShowForm: function setShowForm() {
       var vm = this;
@@ -112,14 +114,28 @@ __webpack_require__.r(__webpack_exports__);
     },
     deleteData: function deleteData(uuid) {
       var vm = this;
-      vm.$http({
-        url: "".concat(vm.apiUrl, "/payment/").concat(uuid, "/delete"),
-        method: 'DELETE'
-      }).then(function (res) {
-        vm.$refs.table.reload();
-        toastr.success(res.data.message, 'Success');
-      })["catch"](function (err) {
-        toastr.error(err.response.data.message, 'Error');
+      swal({
+        title: "Apakah anda yakin?",
+        text: "Data yang dihapus tidak dapat dikembalikan.",
+        type: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#DD6B55",
+        confirmButtonText: "Yes!",
+        cancelButtonText: "No",
+        closeOnConfirm: false,
+        closeOnCancel: false
+      }).then(function (isConfirm) {
+        if (isConfirm) {
+          vm.$http({
+            url: "".concat(vm.apiUrl, "/payment/").concat(uuid, "/delete"),
+            method: 'DELETE'
+          }).then(function (res) {
+            vm.$refs.table.reload();
+            toastr.success(res.data.message, 'Success');
+          })["catch"](function (err) {
+            toastr.error(err.response.data.message, 'Error');
+          });
+        }
       });
     }
   },
@@ -204,6 +220,10 @@ __webpack_require__.r(__webpack_exports__);
 
         oFReader.onload = function (oFREvent) {
           $('.images').css('background-image', 'url(' + oFREvent.target.result + ')');
+          $('.images').css({
+            'background-size': 'cover',
+            'background-position': 'center center'
+          });
         };
       }
     },
@@ -287,8 +307,7 @@ var render = function() {
                       on: {
                         click: function($event) {
                           $event.preventDefault()
-                          _vm.showList = false
-                          _vm.showForm = true
+                          return _vm.setShowForm()
                         }
                       }
                     },
@@ -336,8 +355,7 @@ var render = function() {
                       on: {
                         click: function($event) {
                           $event.preventDefault()
-                          _vm.showList = true
-                          _vm.showForm = false
+                          return _vm.setShowList()
                         }
                       }
                     },
@@ -417,11 +435,10 @@ var render = function() {
                     "div",
                     {
                       staticClass: "image-upload-box images",
-                      staticStyle: {
-                        width: "300px",
-                        height: "200px",
-                        "background-size": "cover"
-                      }
+                      style:
+                        "background-image: url(" +
+                        _vm.formData.image +
+                        "); background-size: cover; background-position: center center; width: 350px; height: 200px"
                     },
                     [
                       _c("input", {
@@ -431,7 +448,6 @@ var render = function() {
                           id: "image",
                           accept: "image/png, image/jpeg",
                           name: "image",
-                          required: "",
                           placeholder: "Name"
                         },
                         on: { change: _vm.changeImage }

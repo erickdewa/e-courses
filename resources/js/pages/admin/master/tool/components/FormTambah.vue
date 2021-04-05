@@ -6,7 +6,7 @@
 					<div class="col-md-12">
 						<div class="form-group" align="center">
 							<div class="image-upload-box images">
-								<input type="file" id="image" accept="image/png, image/jpeg" class="form-control" name="image" required v-on:change="changeImage" placeholder="Name">
+								<input type="file" id="image" :style="`background-image: url(${formData.image}); background-size: cover; background-position: center center;`" accept="image/png, image/jpeg" class="form-control" name="image" required v-on:change="changeImage" placeholder="Name">
 								<label for="image"><i class=" fa fa-plus"></i></label>
 							</div>
 						</div>
@@ -20,7 +20,7 @@
 					<div class="col-md-6">
 						<div class="form-group">
 							<label>Link</label>
-							<input type="text" class="form-control" name="link" required v-model="formData.link" placeholder="Name">
+							<input type="text" class="form-control" name="link" required v-model="formData.link" placeholder="Link">
 						</div>
 					</div>
 					<div class="col-md-12">
@@ -66,6 +66,7 @@
                  
                     oFReader.onload = function(oFREvent) {
                         $('.images').css('background-image', 'url(' + oFREvent.target.result + ')');
+                        $('.images').css({'background-size': 'cover', 'background-position': 'center center'});
                     };
                 }
 	    	},
@@ -77,13 +78,14 @@
 	    			urls = `${ vm.apiUrl }/tool/${ uuid }/update`;
 	    		}
 
+	    		Aropex.btnLoad('.btn-submit', true);
 	    		let formData = new FormData($("#FormTambah")[0]);
                 vm.axios.post(urls, formData, {headers: {'content-type': 'multipart/form-data'}}).then((res) => {
 	    			vm.$parent.setShowList();
-	    			$('.btn-submit').prop('disabled', false);
+	    			Aropex.btnLoad('.btn-submit', false);
 	    			toastr.success(res.data.message, 'Success');
 	    		}).catch((err)=>{
-	    			$('.btn-submit').prop('disabled', false);
+	    			Aropex.btnLoad('.btn-submit', false);
 	    			toastr.error(err.response.data.message, 'Error');
 	    		});
 	    	},

@@ -125,10 +125,10 @@ __webpack_require__.r(__webpack_exports__);
         profession: '',
         bio: '',
         description: '',
-        facebook: '',
-        instagram: '',
-        twitter: '',
-        github: ''
+        facebook: 'https://facebook.com/',
+        instagram: 'https://instagram.com/',
+        twitter: 'https://twitter.com/',
+        github: 'https://github.com/'
       },
       dataPekerjaan: []
     };
@@ -167,6 +167,7 @@ __webpack_require__.r(__webpack_exports__);
           path: '/profile'
         });
         Aropex.btnLoad('.btn-submit', false);
+        vm.$parent.getProfile();
         toastr.success(res.data.message, 'Success');
       })["catch"](function (err) {
         Aropex.btnLoad('.btn-submit', false);

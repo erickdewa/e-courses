@@ -23,6 +23,10 @@ Route::prefix('v1')->group(function(){
 		});
 	});
 
+	Route::prefix('skill')->group(function(){
+		Route::get('/getdatas', 'SkillController@getDatas');
+	});
+
 	Route::prefix('webconfig')->group(function(){
 		Route::get('/getdata', 'WebConfigController@getData');
 	});
@@ -93,6 +97,7 @@ Route::prefix('v1')->group(function(){
 		    	Route::prefix('tool')->group(function(){
 		    		Route::post('/index', 'ToolController@index');
 		    		Route::get('/getdatas', 'ToolController@getDatas');
+		    		Route::get('/{uuid}/getdata', 'ToolController@getData');
 		    		Route::post('/create', 'ToolController@create');
 		    		Route::post('/{uuid}/update', 'ToolController@update');
 		    		Route::delete('/{uuid}/delete', 'ToolController@delete');
@@ -101,6 +106,7 @@ Route::prefix('v1')->group(function(){
 		    	Route::prefix('skill')->group(function(){
 		    		Route::post('/index', 'SkillController@index');
 		    		Route::get('/getdatas', 'SkillController@getDatas');
+		    		Route::get('/{uuid}/getdata', 'SkillController@getData');
 		    		Route::post('/create', 'SkillController@create');
 		    		Route::post('/{uuid}/update', 'SkillController@update');
 		    		Route::delete('/{uuid}/delete', 'SkillController@delete');
@@ -155,6 +161,13 @@ Route::prefix('v1')->group(function(){
 			    		Route::get('/{uuid}/getdata', 'CoursesToolController@getData');
 			    		Route::post('/create', 'CoursesToolController@create');
 			    		Route::delete('/{uuid}/delete', 'CoursesToolController@delete');
+			    	});
+
+			    	Route::prefix('skill')->group(function(){
+		    			Route::get('/{uuid}/getskill', 'CoursesSkillController@getDataSkill');
+			    		Route::get('/{uuid}/getdata', 'CoursesSkillController@getData');
+			    		Route::post('/create', 'CoursesSkillController@create');
+			    		Route::delete('/{uuid}/delete', 'CoursesSkillController@delete');
 			    	});
 
 			    	Route::prefix('learn')->group(function(){

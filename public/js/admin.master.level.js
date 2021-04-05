@@ -71,6 +71,8 @@ __webpack_require__.r(__webpack_exports__);
       var vm = this;
       vm.showList = true;
       vm.showForm = false;
+      vm.isEdit = false;
+      vm.thisUuid = '';
     },
     setShowForm: function setShowForm() {
       var vm = this;
@@ -94,14 +96,28 @@ __webpack_require__.r(__webpack_exports__);
     },
     deleteData: function deleteData(uuid) {
       var vm = this;
-      vm.$http({
-        url: "".concat(vm.apiUrl, "/level/").concat(uuid, "/delete"),
-        method: 'DELETE'
-      }).then(function (res) {
-        vm.$refs.table.reload();
-        toastr.success(res.data.message, 'Success');
-      })["catch"](function (err) {
-        toastr.error(err.response.data.message, 'Error');
+      swal({
+        title: "Apakah anda yakin?",
+        text: "Data yang dihapus tidak dapat dikembalikan.",
+        type: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#DD6B55",
+        confirmButtonText: "Yes!",
+        cancelButtonText: "No",
+        closeOnConfirm: false,
+        closeOnCancel: false
+      }).then(function (isConfirm) {
+        if (isConfirm) {
+          vm.$http({
+            url: "".concat(vm.apiUrl, "/level/").concat(uuid, "/delete"),
+            method: 'DELETE'
+          }).then(function (res) {
+            vm.$refs.table.reload();
+            toastr.success(res.data.message, 'Success');
+          })["catch"](function (err) {
+            toastr.error(err.response.data.message, 'Error');
+          });
+        }
       });
     }
   },
@@ -165,17 +181,17 @@ __webpack_require__.r(__webpack_exports__);
         urls = "".concat(vm.apiUrl, "/level/").concat(uuid, "/update");
       }
 
-      $('.btn-submit').prop('disabled', true);
+      Aropex.btnLoad('.btn-submit', true);
       vm.$http({
         url: urls,
         data: vm.formData,
         method: 'POST'
       }).then(function (res) {
         vm.$parent.setShowList();
-        $('.btn-submit').prop('disabled', false);
+        Aropex.btnLoad('.btn-submit', false);
         toastr.success(res.data.message, 'Success');
       })["catch"](function (err) {
-        $('.btn-submit').prop('disabled', false);
+        Aropex.btnLoad('.btn-submit', false);
         toastr.error(err.response.data.message, 'Error');
       });
     },
@@ -236,8 +252,7 @@ var render = function() {
                       on: {
                         click: function($event) {
                           $event.preventDefault()
-                          _vm.showList = false
-                          _vm.showForm = true
+                          return _vm.setShowForm()
                         }
                       }
                     },
@@ -285,8 +300,7 @@ var render = function() {
                       on: {
                         click: function($event) {
                           $event.preventDefault()
-                          _vm.showList = true
-                          _vm.showForm = false
+                          return _vm.setShowList()
                         }
                       }
                     },

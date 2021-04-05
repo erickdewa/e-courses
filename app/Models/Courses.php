@@ -28,6 +28,11 @@ class Courses extends Model
         return $this->hasMany('\App\Models\CoursesTool', 'courses_id', 'id');
     }
 
+    public function coursesskill()
+    {
+        return $this->hasMany('\App\Models\CoursesSkill', 'courses_id', 'id');
+    }
+
     public function coursesreview()
     {
         return $this->hasMany('\App\Models\CoursesReview', 'courses_id', 'id');

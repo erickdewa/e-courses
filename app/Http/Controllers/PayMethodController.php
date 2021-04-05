@@ -102,7 +102,7 @@ class PayMethodController extends Controller
             'nm_method' => 'required|string',
             'nomor' => 'required|string',
             'nm_account' => 'required|string',
-            'image' => 'required|image',
+            'image' => 'image',
         ]);
 
         if ($validator->fails()) {
@@ -124,6 +124,8 @@ class PayMethodController extends Controller
                 }
             }
             $image = '/img/method/'.$nama_image;
+        }else{
+            $image = $data->image;
         }
 
         $data->update([

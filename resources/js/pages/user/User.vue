@@ -10,9 +10,6 @@
 				</div>
 				<div class="navbar-group" id="navbar-group">
 					<ul class="navbar-items" style="display: flex;">
-						<li class="navbar-item"><a href="javascript:void(0)">Menu</a></li>
-						<li class="navbar-item"><a href="javascript:void(0)">Menu</a></li>
-						<li class="navbar-item"><a href="javascript:void(0)">Menu</a></li>
 						<li v-if="!$auth.check()" class="navbar-item special-login btn-modal" data-event="modal" data-target="#modal-login" data-modal="true"><a href="javascript:void(0)">Login</a></li>
 						<li v-if="$auth.check()" class="navbar-item special-profile" @click="((!$route.path.includes('profile'))?$router.push({ path: '/profile' }):'')"><a href="javascript:void(0)">{{ $auth.user().name }}</a></li>
 					</ul>
@@ -114,6 +111,25 @@
 	    			toastr.error(err.response.data.message, 'Error');
 	    		});
 			},
+			getProfile(){
+				var vm = this;
+
+				vm.$http({
+		    		url: `${ vm.apiUrl }/profile/getdata`,
+		    		method: 'GET',
+		    	}).then((res) => {
+		    		vm.profile = res.data.data;
+		    	}).catch((error) => {
+		    		if(!vm.$route.path.includes('profile')){
+						swal({
+							title: "Lengkapi Profile?",
+							text: "Oop, anda belum melengkapi profile!",
+							icon: "warning",
+							button: "Ok",
+						});
+		    		}
+		    	});
+			},
 
 			redirect(url){
 				var vm = this;
@@ -130,21 +146,7 @@
 
 	    	vm.getWeb();
 	    	if(localStorage.getItem("level_id") != null){
-		    	vm.$http({
-		    		url: `${ vm.apiUrl }/profile/getdata`,
-		    		method: 'GET',
-		    	}).then((res) => {
-		    		vm.profile = res.data.data;
-		    	}).catch((error) => {
-		    		if(!vm.$route.path.includes('profile')){
-						swal({
-							title: "Lengkapi Profile?",
-							text: "Oop, anda belum melengkapi profile!",
-							icon: "warning",
-							button: "Ok",
-						});
-		    		}
-		    	});
+		    	vm.getProfile();
 		    };
 	    },
     }

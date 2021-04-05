@@ -14,11 +14,21 @@ class CoursesController extends Controller
 {   
     // Page user home
     public function getDataUser(Request $request)
-    {
-        $data = Courses::with('user')
-        ->where(function($q) use ($request){
-            $q->where('name', 'like', '%'.$request->search.'%');
-        })->has('materigroup')->paginate(9);
+    {   
+        if($request->skill_id == ''){
+            $data = Courses::with('user', 'coursesskill')
+            ->where(function($q) use ($request){
+                $q->where('name', 'like', '%'.$request->search.'%');
+            })->has('materigroup')->paginate(9);
+        }else{
+            $data = Courses::with('user', 'coursesskill')
+            ->whereHas('coursesskill', function($q) use ($request){
+                $q->where('skill_id', $request->skill_id);
+            })->where(function($q) use ($request){
+                $q->where('name', 'like', '%'.$request->search.'%');
+            })->has('materigroup')->paginate(9);
+        }
+
         $length = Courses::get()->count();
 
         return response()->json([
@@ -56,9 +66,13 @@ class CoursesController extends Controller
 
         // Hitung Rating
         $review = CoursesReview::where('courses_id', $data->id)->get();
-        $sum = $review->sum('rate');
-        $count = $review->count();
-        $data->rating = $sum/$count;
+        if(count($review) > 0){
+            $sum = $review->sum('rate');
+            $count = $review->count();
+            $data->rating = $sum/$count;
+        }else{
+            $data->rating = 0;
+        }
 
         $materiGroup = MateriGroup::where('courses_id', $data->id)
         ->pluck('id')->toArray();
@@ -122,9 +136,10 @@ class CoursesController extends Controller
             $btnEdit = '<button class="btn btn-clean btn-icon btn-icon-md edit" title="Edit" data-id="'.$a->id.'" data-uuid="'.$a->uuid.'"><i class="fa fa-edit text-warning"></i></button>';
             $btnHapus = '<button class="btn btn-clean btn-icon btn-icon-md hapus" title="Hapus" data-id="'.$a->id.'" data-uuid="'.$a->uuid.'"><i class="fa fa-trash text-danger"></i></button>';
             $btnTools = '<button class="btn btn-clean btn-icon btn-icon-md tools" title="Tools" data-id="'.$a->id.'" data-uuid="'.$a->uuid.'"><i class="fa fa-cogs text-info"></i></button>';
+            $btnSkill = '<button class="btn btn-clean btn-icon btn-icon-md skill" title="Skill" data-id="'.$a->id.'" data-uuid="'.$a->uuid.'"><i class="fa fa-tasks text-info"></i></button>';
             $btnReview = '<button class="btn btn-clean btn-icon btn-icon-md review" title="Review" data-id="'.$a->id.'" data-uuid="'.$a->uuid.'"><i class="fa fa-star-o text-success"></i></button>';
             $btnBook = '<button class="btn btn-clean btn-icon btn-icon-md learn" title="Learn" data-id="'.$a->id.'" data-uuid="'.$a->uuid.'"><i class="fa fa-book text-success"></i></button>';
-            $a->action = $btnEdit.$btnHapus.$btnTools.$btnReview.$btnBook;
+            $a->action = $btnEdit.$btnHapus.$btnTools.$btnSkill.$btnReview.$btnBook;
 
             return $a;
         });

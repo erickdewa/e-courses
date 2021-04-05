@@ -5,7 +5,7 @@
 				<div class="aro-restraint_title">
 					<span>Tambah Skill</span>
 					<div class="button-table">
-						<button type="button" class="btn btn-success btn-sm" @click.prevent="showList = false; showForm = true">
+						<button type="button" class="btn btn-success btn-sm" @click.prevent="setShowForm()">
 							<i class="fa fa-plus"></i> Tambah
 						</button>
 					</div>
@@ -21,7 +21,7 @@
 				<div class="aro-restraint_title">
 					<span>Skill</span>
 					<div class="button-table">
-						<button type="button" class="btn btn-info btn-sm" @click.prevent="showList = true; showForm = false">
+						<button type="button" class="btn btn-info btn-sm" @click.prevent="setShowList()">
 							<i class="fa fa-reply-all"></i> Kembali
 						</button>
 					</div>
@@ -62,6 +62,8 @@
 
 	    		vm.showList = true;
 				vm.showForm = false;
+				vm.isEdit = false;
+				vm.thisUuid = '';
 	    	},
 	    	setShowForm(){
 	    		var vm = this;
@@ -114,7 +116,7 @@
                 var app = this;
                 var el = $(element).parents('tr');
 
-                var table = "<tr class='details' style='background: #FFFFFF'><td colspan='5' align='center'><table width='100%'><tr><td>test</td></tr></table></td></tr>";
+                var table = "<tr class='details' style='background: #FFFFFF'><td colspan='5' align='center'><table width='100%'><tr><td>"+app.dataDetail.description+"</td></tr></table></td></tr>";
 
                 if(!el.next().hasClass('details')){
                     if($('tr').hasClass('details')){
@@ -136,15 +138,29 @@
 	    	deleteData(uuid){
 	    		var vm = this;
 
-	    		vm.$http({
-	    			url: `${ vm.apiUrl }/skill/${ uuid }/delete`,
-	    			method: 'DELETE',
-	    		}).then((res)=>{
-	    			vm.$refs.table.reload();
-	    			toastr.success(res.data.message, 'Success');
-	    		}).catch((err)=>{
-	    			toastr.error(err.response.data.message, 'Error');
-	    		})
+	    		swal({
+					title: "Apakah anda yakin?",
+					text: "Data yang dihapus tidak dapat dikembalikan.",
+					type: "warning",
+					showCancelButton: true,
+					confirmButtonColor: "#DD6B55",
+					confirmButtonText: "Yes!",
+					cancelButtonText: "No",
+					closeOnConfirm: false,
+					closeOnCancel: false,
+				}).then((isConfirm)=>{
+					if(isConfirm){
+			    		vm.$http({
+			    			url: `${ vm.apiUrl }/skill/${ uuid }/delete`,
+			    			method: 'DELETE',
+			    		}).then((res)=>{
+			    			vm.$refs.table.reload();
+			    			toastr.success(res.data.message, 'Success');
+			    		}).catch((err)=>{
+			    			toastr.error(err.response.data.message, 'Error');
+			    		});
+			    	}
+			    });
 	    	}
 	    },
 	    mounted(){

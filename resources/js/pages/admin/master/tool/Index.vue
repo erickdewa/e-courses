@@ -5,7 +5,7 @@
 				<div class="aro-restraint_title">
 					<span>Tambah Tool</span>
 					<div class="button-table">
-						<button type="button" class="btn btn-success btn-sm" @click.prevent="showList = false; showForm = true">
+						<button type="button" class="btn btn-success btn-sm" @click.prevent="setShowForm()">
 							<i class="fa fa-plus"></i> Tambah
 						</button>
 					</div>
@@ -21,7 +21,7 @@
 				<div class="aro-restraint_title">
 					<span>Tool</span>
 					<div class="button-table">
-						<button type="button" class="btn btn-info btn-sm" @click.prevent="showList = true; showForm = false">
+						<button type="button" class="btn btn-info btn-sm" @click.prevent="setShowList()">
 							<i class="fa fa-reply-all"></i> Kembali
 						</button>
 					</div>
@@ -46,7 +46,7 @@
 	        	showForm: false,
 
 	        	columns: [
-	        		{ name: 'Nama', data: 'name' },
+	        		{ name: 'Nama', data: 'nm_tool' },
 	        		{ name: 'Aksi', data: 'action' },
 	        	],
 
@@ -60,6 +60,8 @@
 
 	    		vm.showList = true;
 				vm.showForm = false;
+				vm.isEdit = false;
+				vm.thisUuid = '';
 	    	},
 	    	setShowForm(){
 	    		var vm = this;
@@ -88,15 +90,29 @@
 	    	deleteData(uuid){
 	    		var vm = this;
 
-	    		vm.$http({
-	    			url: `${ vm.apiUrl }/tool/${ uuid }/delete`,
-	    			method: 'DELETE',
-	    		}).then((res)=>{
-	    			vm.$refs.table.reload();
-	    			toastr.success(res.data.message, 'Success');
-	    		}).catch((err)=>{
-	    			toastr.error(err.response.data.message, 'Error');
-	    		})
+	    		swal({
+					title: "Apakah anda yakin?",
+					text: "Data yang dihapus tidak dapat dikembalikan.",
+					type: "warning",
+					showCancelButton: true,
+					confirmButtonColor: "#DD6B55",
+					confirmButtonText: "Yes!",
+					cancelButtonText: "No",
+					closeOnConfirm: false,
+					closeOnCancel: false,
+				}).then((isConfirm)=>{
+					if(isConfirm){
+			    		vm.$http({
+			    			url: `${ vm.apiUrl }/tool/${ uuid }/delete`,
+			    			method: 'DELETE',
+			    		}).then((res)=>{
+			    			vm.$refs.table.reload();
+			    			toastr.success(res.data.message, 'Success');
+			    		}).catch((err)=>{
+			    			toastr.error(err.response.data.message, 'Error');
+			    		})
+			    	}
+			    });
 	    	}
 	    },
 	    mounted(){
