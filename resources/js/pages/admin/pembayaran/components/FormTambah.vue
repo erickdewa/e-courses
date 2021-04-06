@@ -12,7 +12,7 @@
 							<label>Status</label>
 							<select class="form-control status-select" name="status" v-model="formData.status" placeholder="Status">
 								<option value="pending">Pending</option>
-								<option value="proccess">Proccess</option>
+								<option value="procces">Proccess</option>
 								<option value="success">Success</option>
 								<option value="cancle">Cancle</option>
 								<option value="ended">Ended</option>
@@ -65,7 +65,7 @@
 					<div class="col-md-12">
 						<div class="form-group">
 							<label>Catatan</label>
-							<textarea rows="3" class="form-control" name="note" required disabled v-model="formData.note" placeholder="Payment Expired"></textarea>
+							<textarea rows="3" class="form-control" name="note" required disabled v-model="formData.note" placeholder="Catatan"></textarea>
 						</div>
 					</div>
 				</div>
@@ -138,7 +138,7 @@
 	    	redirect(url){
 	    		var vm = this;
 
-	    		window.location.href = `http://localhost:8000/${ url }`;
+	    		window.open(`http://localhost:8000${ url }`, '_blank');
 	    	},
 	    },
 	    mounted(){

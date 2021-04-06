@@ -1806,7 +1806,7 @@ __webpack_require__.r(__webpack_exports__);
     },
     redirect: function redirect(url) {
       var vm = this;
-      window.location.href = "http://localhost:8000/".concat(url);
+      window.open("http://localhost:8000".concat(url), '_blank');
     }
   },
   mounted: function mounted() {
@@ -4375,7 +4375,7 @@ var render = function() {
                       _vm._v("Pending")
                     ]),
                     _vm._v(" "),
-                    _c("option", { attrs: { value: "proccess" } }, [
+                    _c("option", { attrs: { value: "procces" } }, [
                       _vm._v("Proccess")
                     ]),
                     _vm._v(" "),
@@ -4674,7 +4674,7 @@ var render = function() {
                     name: "note",
                     required: "",
                     disabled: "",
-                    placeholder: "Payment Expired"
+                    placeholder: "Catatan"
                   },
                   domProps: { value: _vm.formData.note },
                   on: {

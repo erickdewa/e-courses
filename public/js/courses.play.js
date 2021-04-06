@@ -61,6 +61,17 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -103,6 +114,11 @@ __webpack_require__.r(__webpack_exports__);
       setTimeout(function () {
         vm.show = true;
       }, 100);
+      setTimeout(function () {
+        $('.tabbed-head').on('click', function () {
+          Aropex.event(this, false);
+        });
+      }, 1000);
     },
     setCookie: function setCookie() {
       var thumbnail = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : null;
@@ -129,9 +145,11 @@ __webpack_require__.r(__webpack_exports__);
   },
   mounted: function mounted() {
     var vm = this;
-    $('.tabbed-head').on('click', function () {
-      Aropex.event(this, false);
-    });
+    setTimeout(function () {
+      $('.tabbed-head').on('click', function () {
+        Aropex.event(this, false);
+      });
+    }, 1000);
     vm.getDataCoursesAuth(vm.$route.params.uuidCourses);
   }
 });
@@ -207,7 +225,7 @@ __webpack_require__.r(__webpack_exports__);
         if (vm.change) {
           vm.player.loadVideoById(vm.videoId);
         }
-      }, 1500);
+      }, 1000);
     }
   },
   mounted: function mounted() {
@@ -374,7 +392,7 @@ var render = function() {
                                                 "courses-description",
                                               domProps: {
                                                 innerHTML: _vm._s(
-                                                  _vm.dataCourses.description
+                                                  materi.description
                                                 )
                                               }
                                             }),
@@ -433,11 +451,79 @@ var render = function() {
                                           "div",
                                           {
                                             staticClass: "tabbed-card",
-                                            attrs: { id: "card-comment" }
+                                            attrs: { id: "card-tentang" }
                                           },
                                           [
-                                            _vm._v(
-                                              "\n\t\t\t\t\t\t\t\t\tcomment\n\t\t\t\t\t\t\t\t"
+                                            _c(
+                                              "div",
+                                              { staticClass: "courses-title" },
+                                              [
+                                                _vm._v(
+                                                  "\n\t\t\t\t\t\t\t\t\t\tKursus: " +
+                                                    _vm._s(
+                                                      _vm.dataCourses.name
+                                                    ) +
+                                                    "\n\t\t\t\t\t\t\t\t\t"
+                                                )
+                                              ]
+                                            ),
+                                            _vm._v(" "),
+                                            _c("div", {
+                                              staticClass:
+                                                "courses-description",
+                                              domProps: {
+                                                innerHTML: _vm._s(
+                                                  _vm.dataCourses.description
+                                                )
+                                              }
+                                            }),
+                                            _vm._v(" "),
+                                            _c(
+                                              "div",
+                                              {
+                                                staticClass: "courses-created"
+                                              },
+                                              [
+                                                _c(
+                                                  "div",
+                                                  { staticClass: "label" },
+                                                  [
+                                                    _c(
+                                                      "div",
+                                                      { staticClass: "title" },
+                                                      [_vm._v("Creator")]
+                                                    ),
+                                                    _vm._v(
+                                                      ": " +
+                                                        _vm._s(
+                                                          _vm.dataCourses.user
+                                                            .name
+                                                        ) +
+                                                        "\n\t\t\t\t\t\t\t\t\t\t"
+                                                    )
+                                                  ]
+                                                ),
+                                                _vm._v(" "),
+                                                _c(
+                                                  "div",
+                                                  { staticClass: "label" },
+                                                  [
+                                                    _c(
+                                                      "div",
+                                                      { staticClass: "title" },
+                                                      [_vm._v("Created At")]
+                                                    ),
+                                                    _vm._v(
+                                                      ": " +
+                                                        _vm._s(
+                                                          _vm.dataCourses
+                                                            .tanggal
+                                                        ) +
+                                                        "\n\t\t\t\t\t\t\t\t\t\t"
+                                                    )
+                                                  ]
+                                                )
+                                              ]
                                             )
                                           ]
                                         )
@@ -485,9 +571,13 @@ var staticRenderFns = [
           "li",
           {
             staticClass: "li-header tabbed-head",
-            attrs: { "data-event": "tabbed", "data-target": "#card-comment" }
+            attrs: { "data-event": "tabbed", "data-target": "#card-tentang" }
           },
-          [_c("div", { staticClass: "header-title" }, [_vm._v("Comment")])]
+          [
+            _c("div", { staticClass: "header-title" }, [
+              _vm._v("Tentang Kursus")
+            ])
+          ]
         )
       ])
     ])

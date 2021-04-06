@@ -181,6 +181,9 @@
     	data() {
 	        return {
 	        	dataCourses: {
+	        		coursesreview: [],
+	        		courseslearn: [],
+	        		coursestool: [],
 	        		price: '0',
 	        		user: {
 	        			name: '',

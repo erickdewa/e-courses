@@ -59,7 +59,7 @@
 			    	if(vm.change){
 			    		vm.player.loadVideoById(vm.videoId);
 			    	}
-		    	}, 1500);
+		    	}, 1000);
 	    	},
 	    },
 	    mounted(){

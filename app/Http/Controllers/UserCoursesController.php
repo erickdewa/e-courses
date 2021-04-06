@@ -126,11 +126,13 @@ class UserCoursesController extends Controller
         $date = date('Y-m-d');
         $data = UserCourses::where('status', 'success')->get();
         foreach ($data as $key => $value) {
-            if(str_replace('-', '', $date) >= str_replace('-', '', $value->time_ended)){
-                $datas = UserCourses::findByUuid($value->uuid);
-                $datas->update([
-                    'status' => 'ended',
-                ]);
+            if(isset($value->time_ended)){
+                if(str_replace('-', '', $date) >= str_replace('-', '', $value->time_ended)){
+                    $datas = UserCourses::findByUuid($value->uuid);
+                    $datas->update([
+                        'status' => 'ended',
+                    ]);
+                }
             }
         }
     }

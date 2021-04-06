@@ -12,8 +12,8 @@
 										<li class="li-header tabbed-head active" data-event="tabbed" data-target="#card-information">
 											<div class="header-title">Information</div>
 										</li>
-										<li class="li-header tabbed-head" data-event="tabbed" data-target="#card-comment">
-											<div class="header-title">Comment</div>
+										<li class="li-header tabbed-head" data-event="tabbed" data-target="#card-tentang">
+											<div class="header-title">Tentang Kursus</div>
 										</li>
 									</ul>
 								</div>
@@ -21,6 +21,20 @@
 									<div id="card-information" class="tabbed-card active">
 										<div class="courses-title">
 											Bagian {{ i+=1 }}: Intro - {{ materi.nm_materi }}
+										</div>
+										<div class="courses-description" v-html="materi.description"></div>
+										<div class="courses-created">
+											<div class="label">
+												<div class="title">Creator</div>: {{ dataCourses.user.name }}
+											</div>
+											<div class="label">
+												<div class="title">Created At</div>: {{ dataCourses.tanggal }}
+											</div>
+										</div>
+									</div>
+									<div id="card-tentang" class="tabbed-card">
+										<div class="courses-title">
+											Kursus: {{ dataCourses.name }}
 										</div>
 										<div class="courses-description" v-html="dataCourses.description"></div>
 										<div class="courses-created">
@@ -31,9 +45,6 @@
 												<div class="title">Created At</div>: {{ dataCourses.tanggal }}
 											</div>
 										</div>
-									</div>
-									<div id="card-comment" class="tabbed-card">
-										comment
 									</div>
 								</div>
 							</div>
@@ -91,9 +102,16 @@
 	    		vm.getCookie();
 	    		vm.change = true;
 	    		vm.show = false;
+	    		
 	    		setTimeout(function(){
 	    			vm.show = true;
 	    		}, 100);
+
+	    		setTimeout(function(){
+			    	$('.tabbed-head').on('click', function(){
+						Aropex.event(this, false);
+					})
+		    	}, 1000);
 	    	},
 	    	setCookie(thumbnail = null, materiGroupUuid = null, materiUuid = null){
 	    		var vm = this;
@@ -119,9 +137,11 @@
 	    mounted(){
 	    	var vm = this;
 
-	    	$('.tabbed-head').on('click', function(){
-				Aropex.event(this, false);
-			})
+	    	setTimeout(function(){
+		    	$('.tabbed-head').on('click', function(){
+					Aropex.event(this, false);
+				})
+	    	}, 1000);
 
 	    	vm.getDataCoursesAuth(vm.$route.params.uuidCourses);
 	    }

@@ -20,7 +20,12 @@
 											</div>
 										</div>
 									</div>
-								</template>						
+								</template>
+								<div v-if="dataMethod.length == 0" class="col-12" align="center">
+									<div class="notfound" style="margin-top: 25px;">
+										<span>Metode pembayaran tidak tersedia</span>
+									</div>				
+								</div>
 							</div>
 						</div>
 					</div>
@@ -41,14 +46,14 @@
 							</div>
 							<hr>
 							<div class="payment-sum">
-								<div class="d-flex justify-content-between my-2">
+								<!-- <div class="d-flex justify-content-between my-2">
 									<div class="note"></div>
 									<div class="price" align="right">Rp. {{ dataCourses.price.rupiah() }}</div>
 								</div>
 								<div class="d-flex justify-content-between my-2">
 									<div class="note">Diskon</div>
 									<div class="price" align="right">Rp. 0</div>
-								</div>
+								</div> -->
 								<div class="d-flex justify-content-between my-2">
 									<div class="note">Total</div>
 									<div class="price" align="right">Rp. {{ dataCourses.price.rupiah() }}</div>
@@ -75,7 +80,7 @@
 							</div>
 							<hr>
 							<div style="display: flex; justify-content: space-between;">
-								<div class="how-to-pay cursor-pointer">How to Pay?</div>
+								<div class="how-to-pay cursor-pointer"></div>
 								<div v-if="!changeMethods" class="how-to-pay cursor-pointer" @click="change()">Change method?</div>
 							</div>
 							<div v-if="changeMethods" class="payment-action mt-3">
@@ -98,8 +103,8 @@
 								<div style="font-size: 12px; text-align: center;">Pembayaran kursus "<span style="font-weight: 600">{{ formData.courses.name }}"</span> sedang ditinjau!</div>
 							</div>
 							<div class="payment-action mt-5">
-								<button type="button" class="btn btn-info btn-sm" style="width: 100%" @click="$router.push('/')">
-									<i class="fa fa-money"></i> Kembali
+								<button type="button" class="btn btn-info btn-sm" style="width: 100%" @click="$router.push('/profile')">
+									<i class="fa fa-check"></i> Kembali
 								</button>
 							</div>
 						</template>
@@ -298,6 +303,7 @@
 	    			method: 'POST',
 	    			data: vm.formData,
 	    		}).then((res)=>{
+	    			vm.formData = res.data.data;
 	    			vm.setShowBayar();
 	    			Aropex.btnLoad('.btn-reload', false);
 	    		}).catch((err)=>{

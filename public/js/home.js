@@ -113,12 +113,6 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
 //
 //
 //
-//
-//
-//
-//
-//
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -129,7 +123,8 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
         search: '',
         skill_id: ''
       },
-      dataCourses: []
+      dataCourses: [],
+      dataSkill: []
     };
   },
   methods: {
@@ -350,24 +345,6 @@ var render = function() {
                         ]),
                         _vm._v(" "),
                         _c("div", { staticClass: "courses-item-fiture" }, [
-                          _c(
-                            "div",
-                            {
-                              staticClass: "fiture",
-                              attrs: { title: "Sertifikat" }
-                            },
-                            [_c("i", { staticClass: "fa fa-book" })]
-                          ),
-                          _vm._v(" "),
-                          _c(
-                            "div",
-                            {
-                              staticClass: "fiture",
-                              attrs: { title: "Community" }
-                            },
-                            [_c("i", { staticClass: "fa fa-comments-o" })]
-                          ),
-                          _vm._v(" "),
                           _c(
                             "div",
                             {

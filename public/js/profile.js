@@ -102,18 +102,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   components: {
@@ -451,28 +439,6 @@ var render = function() {
                                         "div",
                                         {
                                           staticClass: "fiture",
-                                          attrs: { title: "Sertifikat" }
-                                        },
-                                        [_c("i", { staticClass: "fa fa-book" })]
-                                      ),
-                                      _vm._v(" "),
-                                      _c(
-                                        "div",
-                                        {
-                                          staticClass: "fiture",
-                                          attrs: { title: "Community" }
-                                        },
-                                        [
-                                          _c("i", {
-                                            staticClass: "fa fa-comments-o"
-                                          })
-                                        ]
-                                      ),
-                                      _vm._v(" "),
-                                      _c(
-                                        "div",
-                                        {
-                                          staticClass: "fiture",
                                           attrs: { title: "Top Courses" }
                                         },
                                         [_c("i", { staticClass: "fa fa-fire" })]
@@ -535,7 +501,7 @@ var render = function() {
                                 { staticClass: "courses-type bg-warning" },
                                 [
                                   _vm._v(
-                                    "\n\t\t\t\t\t\t\t\tProses Pembayaran\n\t\t\t\t\t\t\t"
+                                    "\n\t\t\t\t\t\t\t\tProses\n\t\t\t\t\t\t\t"
                                   )
                                 ]
                               )
@@ -578,14 +544,6 @@ var staticRenderFns = [
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c("div", { staticClass: "courses-item-fiture" }, [
-      _c("div", { staticClass: "fiture", attrs: { title: "Sertifikat" } }, [
-        _c("i", { staticClass: "fa fa-book" })
-      ]),
-      _vm._v(" "),
-      _c("div", { staticClass: "fiture", attrs: { title: "Community" } }, [
-        _c("i", { staticClass: "fa fa-comments-o" })
-      ]),
-      _vm._v(" "),
       _c("div", { staticClass: "fiture", attrs: { title: "Top Courses" } }, [
         _c("i", { staticClass: "fa fa-fire" })
       ])

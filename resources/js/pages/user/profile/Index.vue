@@ -52,12 +52,6 @@
 										<div class="desc">{{ data.subname }}</div>
 									</div>
 									<div class="courses-item-fiture">
-										<div class="fiture" title="Sertifikat">
-											<i class="fa fa-book"></i>
-										</div>
-										<div class="fiture" title="Community">
-											<i class="fa fa-comments-o"></i>
-										</div>
 										<div class="fiture" title="Top Courses">
 											<i class="fa fa-fire"></i>
 										</div>
@@ -75,18 +69,12 @@
 									<div class="desc">{{ data.subname }}</div>
 								</div>
 								<div class="courses-item-fiture">
-									<div class="fiture" title="Sertifikat">
-										<i class="fa fa-book"></i>
-									</div>
-									<div class="fiture" title="Community">
-										<i class="fa fa-comments-o"></i>
-									</div>
 									<div class="fiture" title="Top Courses">
 										<i class="fa fa-fire"></i>
 									</div>
 								</div>
 								<div class="courses-type bg-warning">
-									Proses Pembayaran
+									Proses
 								</div>
 							</div>
 						</template>

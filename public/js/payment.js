@@ -141,6 +141,11 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -290,6 +295,7 @@ __webpack_require__.r(__webpack_exports__);
         method: 'POST',
         data: vm.formData
       }).then(function (res) {
+        vm.formData = res.data.data;
         vm.setShowBayar();
         Aropex.btnLoad('.btn-reload', false);
       })["catch"](function (err) {
@@ -410,7 +416,15 @@ var render = function() {
                         )
                       ])
                     ]
-                  })
+                  }),
+                  _vm._v(" "),
+                  _vm.dataMethod.length == 0
+                    ? _c(
+                        "div",
+                        { staticClass: "col-12", attrs: { align: "center" } },
+                        [_vm._m(0)]
+                      )
+                    : _vm._e()
                 ],
                 2
               )
@@ -465,26 +479,6 @@ var render = function() {
                     _c("hr"),
                     _vm._v(" "),
                     _c("div", { staticClass: "payment-sum" }, [
-                      _c(
-                        "div",
-                        { staticClass: "d-flex justify-content-between my-2" },
-                        [
-                          _c("div", { staticClass: "note" }),
-                          _vm._v(" "),
-                          _c(
-                            "div",
-                            { staticClass: "price", attrs: { align: "right" } },
-                            [
-                              _vm._v(
-                                "Rp. " + _vm._s(_vm.dataCourses.price.rupiah())
-                              )
-                            ]
-                          )
-                        ]
-                      ),
-                      _vm._v(" "),
-                      _vm._m(0),
-                      _vm._v(" "),
                       _c(
                         "div",
                         { staticClass: "d-flex justify-content-between my-2" },
@@ -590,11 +584,7 @@ var render = function() {
                         }
                       },
                       [
-                        _c(
-                          "div",
-                          { staticClass: "how-to-pay cursor-pointer" },
-                          [_vm._v("How to Pay?")]
-                        ),
+                        _c("div", { staticClass: "how-to-pay cursor-pointer" }),
                         _vm._v(" "),
                         !_vm.changeMethods
                           ? _c(
@@ -707,12 +697,12 @@ var render = function() {
                           attrs: { type: "button" },
                           on: {
                             click: function($event) {
-                              return _vm.$router.push("/")
+                              return _vm.$router.push("/profile")
                             }
                           }
                         },
                         [
-                          _c("i", { staticClass: "fa fa-money" }),
+                          _c("i", { staticClass: "fa fa-check" }),
                           _vm._v(" Kembali\n\t\t\t\t\t\t\t")
                         ]
                       )
@@ -798,13 +788,11 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "d-flex justify-content-between my-2" }, [
-      _c("div", { staticClass: "note" }, [_vm._v("Diskon")]),
-      _vm._v(" "),
-      _c("div", { staticClass: "price", attrs: { align: "right" } }, [
-        _vm._v("Rp. 0")
-      ])
-    ])
+    return _c(
+      "div",
+      { staticClass: "notfound", staticStyle: { "margin-top": "25px" } },
+      [_c("span", [_vm._v("Metode pembayaran tidak tersedia")])]
+    )
   },
   function() {
     var _vm = this

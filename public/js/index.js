@@ -104,7 +104,10 @@ $(document).ready(function (e) {
           if (t.children(c).length == 0) {
             t.append('<div class="video-thumb"></div>');
             $(c).css({
-              'background-image': 'url(' + thumb + ')'
+              'background-image': 'url(' + thumb + ')',
+              'background-repeat': 'no-repeat',
+              'background-size': 'cover',
+              'background-position': 'center center'
             });
           }
         } else if (status == 'hide') {
@@ -454,9 +457,6 @@ $(document).ready(function (e) {
   });
   $('.dropdown').on('click', function () {
     Aropex.event(this, true);
-  });
-  $('.tabbed-head').on('click', function () {
-    Aropex.event(this, false);
   });
   $(window).scroll(function () {
     var scroll = $(window).scrollTop();

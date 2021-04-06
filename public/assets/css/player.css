@@ -426,24 +426,29 @@ input[type="range"]::-moz-range-thumb {
 .courses-play-body{
 	border-bottom: 1px solid #E8E9EB;
 }
+#card-tentang,
 #card-information{
 	padding: 15px;
 }
+#card-tentang .courses-title,
 #card-information .courses-title{
 	color: #000000;
 	font-size: 18px;
 	font-weight: 600;
 }
+#card-tentang .courses-description,
 #card-information .courses-description{
 	margin-top: 15px;
 	font-size: 15px;
 	font-weight: 400;
 }
+#card-tentang .courses-created,
 #card-information .courses-created{
 	margin: 15px;
 	font-size: 15px;
 	font-weight: 400;
 }
+#card-tentang .courses-created .title,
 #card-information .courses-created .title{
 	display: inline-block;
 	width: 125px;

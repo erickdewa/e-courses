@@ -67,12 +67,6 @@
 								<div class="desc">{{ courses.user.name }}</div>
 							</div>
 							<div class="courses-item-fiture">
-								<div class="fiture" title="Sertifikat">
-									<i class="fa fa-book"></i>
-								</div>
-								<div class="fiture" title="Community">
-									<i class="fa fa-comments-o"></i>
-								</div>
 								<div class="fiture" title="Top Courses">
 									<i class="fa fa-fire"></i>
 								</div>
@@ -84,8 +78,8 @@
 					</router-link>
 				</div>
 				<div v-if="dataCourses.length == 0" class="notfound">
-						<span>Coursus tidak ditemukan</span>
-					</div>
+					<span>Coursus tidak ditemukan</span>
+				</div>
 			</div>
 			<div class="courses-more" v-show="showMore">
 				<button type="button" class="btn btn-sm bg-default" @click="getCourses(thisPage+1)">
@@ -110,6 +104,7 @@
 	        	},
 
 	        	dataCourses: [],
+	        	dataSkill: [],
 	        }
 	    },
 	    methods: {
