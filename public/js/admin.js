@@ -522,7 +522,9 @@ __webpack_require__.r(__webpack_exports__);
   data: function data() {
     return {
       dataWeb: {},
-      profile: {},
+      profile: {
+        nm_full: ''
+      },
       showLogin: true
     };
   },
@@ -926,9 +928,7 @@ var render = function() {
                   }
                 })
               ])
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "forgot" }, [_vm._v("Lupa Password?")])
+            ])
           ]),
           _vm._v(" "),
           _c("div", { staticClass: "form-footer", attrs: { align: "right" } }, [

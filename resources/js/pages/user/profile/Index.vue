@@ -6,7 +6,7 @@
 				<img :src="$parent.profile.image">
 			</div>
 			<div class="profile-infomation">
-				<div class="profile-nama">{{ $parent.profile.nm_full }}</div>
+				<div class="profile-nama">{{ (($parent.profile.nm_full=='')?$auth.user().username:'') }}</div>
 				<div class="profile-alamat">{{ $parent.profile.address }}</div>
 				<div class="profile-bio">{{ $parent.profile.bio }}</div>
 			</div>

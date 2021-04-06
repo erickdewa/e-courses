@@ -280,7 +280,13 @@ var render = function() {
         _vm._v(" "),
         _c("div", { staticClass: "profile-infomation" }, [
           _c("div", { staticClass: "profile-nama" }, [
-            _vm._v(_vm._s(_vm.$parent.profile.nm_full))
+            _vm._v(
+              _vm._s(
+                _vm.$parent.profile.nm_full == ""
+                  ? _vm.$auth.user().username
+                  : ""
+              )
+            )
           ]),
           _vm._v(" "),
           _c("div", { staticClass: "profile-alamat" }, [

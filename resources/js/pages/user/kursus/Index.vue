@@ -17,7 +17,7 @@
 									<i class="fa fa-check"></i>
 								</li>
 							</template>
-							<li class="materi-item">
+							<li v-if="dataCourses.count_materi != 0" class="materi-item">
 								<span>{{ dataCourses.count_materi }} Kursus {{ ((isPay)?'Lainnya':'Terkunci') }}</span>
 								<i class="fa" v-bind:class="((isPay))?'fa-check':'fa-lock'"></i>
 							</li>

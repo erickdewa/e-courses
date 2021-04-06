@@ -23,7 +23,7 @@
 							<input type="password" name="password" required v-model="formData.password" placeholder="Password">
 						</div>
 					</div>
-					<div class="forgot">Lupa Password?</div>
+					<!-- <div class="forgot">Lupa Password?</div> -->
 				</div>
 				<div class="form-footer" align="right">
 					<button type="button" class="btn btn-sm btn-info" @click="$parent.showLogin = false">

@@ -94,7 +94,9 @@
     	data() {
 	        return {
 	        	dataWeb: {},
-	        	profile: {},
+	        	profile: {
+	        		nm_full: '',
+	        	},
 	        	showLogin: true,
 	        }
 	    },

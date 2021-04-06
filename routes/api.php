@@ -78,6 +78,10 @@ Route::prefix('v1')->group(function(){
 					Route::post('/{uuid}/status', 'UserCoursesController@changeStatus');
 		    	});
 
+		    	Route::prefix('dashboard')->group(function(){
+					Route::get('/getdata', 'DashboardController@getData');
+		    	});
+
 		    	Route::prefix('user')->group(function(){
 		    		Route::post('/index', 'UserController@index');
 		    		Route::get('/{uuid}/getdata', 'UserController@getData');

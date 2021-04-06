@@ -25,7 +25,7 @@
 							</div>
 						</div>
 						<div class="forgot">
-							<a href="">Lupa Passord ?</a>
+							<!-- <a href="">Lupa Passord ?</a> -->
 						</div>
 						<button type="submit" form="form-login-one" class="btn btn-info btn-md btn-login">
 							<i class="fa fa-sign-in"></i> MASUK

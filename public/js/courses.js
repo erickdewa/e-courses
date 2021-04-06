@@ -355,20 +355,22 @@ var render = function() {
                   })
                 }),
                 _vm._v(" "),
-                _c("li", { staticClass: "materi-item" }, [
-                  _c("span", [
-                    _vm._v(
-                      _vm._s(_vm.dataCourses.count_materi) +
-                        " Kursus " +
-                        _vm._s(_vm.isPay ? "Lainnya" : "Terkunci")
-                    )
-                  ]),
-                  _vm._v(" "),
-                  _c("i", {
-                    staticClass: "fa",
-                    class: _vm.isPay ? "fa-check" : "fa-lock"
-                  })
-                ])
+                _vm.dataCourses.count_materi != 0
+                  ? _c("li", { staticClass: "materi-item" }, [
+                      _c("span", [
+                        _vm._v(
+                          _vm._s(_vm.dataCourses.count_materi) +
+                            " Kursus " +
+                            _vm._s(_vm.isPay ? "Lainnya" : "Terkunci")
+                        )
+                      ]),
+                      _vm._v(" "),
+                      _c("i", {
+                        staticClass: "fa",
+                        class: _vm.isPay ? "fa-check" : "fa-lock"
+                      })
+                    ])
+                  : _vm._e()
               ],
               2
             )
