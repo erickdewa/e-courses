@@ -10,7 +10,7 @@
 				</div>
 				<div class="navbar-group" id="navbar-group">
 					<ul class="navbar-items" style="display: flex;">
-						<li v-if="!$auth.check()" class="navbar-item special-login btn-modal" data-event="modal" data-target="#modal-login" data-modal="true"><a href="javascript:void(0)">Login</a></li>
+						<li v-if="!$auth.check()" class="navbar-item special-login btn-modal" data-event="modal" data-target="#modal-login" data-modal="true" @click="setShowLogin()"><a href="javascript:void(0)">Login</a></li>
 						<li v-if="$auth.check()" class="navbar-item special-profile" @click="((!$route.path.includes('profile'))?$router.push({ path: '/profile' }):'')"><a href="javascript:void(0)">{{ $auth.user().name }}</a></li>
 					</ul>
 				</div>
@@ -76,7 +76,8 @@
 				<div class="modal-content">
 					<div class="login-modal">
 						<Login v-if="showLogin"></Login>
-						<Register v-if="!showLogin"></Register>
+						<Register v-if="showRegister"></Register>
+						<Reset v-if="showReset"></Reset>
 					</div>
 				</div>
 			</div>
@@ -87,9 +88,10 @@
 <script>
 	import Login from '../auth/user/Login'
 	import Register from '../auth/user/Register'
+	import Reset from '../auth/user/Reset'
     export default {
     	components: {
-            Login, Register
+            Login, Register, Reset
         },
     	data() {
 	        return {
@@ -98,9 +100,32 @@
 	        		nm_full: '',
 	        	},
 	        	showLogin: true,
+	        	showRegister: false,
+	        	showReset: false,
 	        }
 	    },
 	    methods: {
+	    	setShowLogin(){
+	    		var vm = this;
+
+	    		vm.showLogin = true;
+	    		vm.showRegister = false;
+	    		vm.showReset = false;
+	    	},
+	    	setShowRegister(){
+	    		var vm = this;
+
+	    		vm.showLogin = false;
+	    		vm.showRegister = true;
+	    		vm.showReset = false;
+	    	},
+	    	setShowReset(){
+	    		var vm = this;
+
+	    		vm.showLogin = false;
+	    		vm.showRegister = false;
+	    		vm.showReset = true;
+	    	},
 	    	getWeb(){
 				var vm = this;
 
@@ -122,14 +147,7 @@
 		    	}).then((res) => {
 		    		vm.profile = res.data.data;
 		    	}).catch((error) => {
-		    		if(!vm.$route.path.includes('profile')){
-						swal({
-							title: "Lengkapi Profile?",
-							text: "Oop, anda belum melengkapi profile!",
-							icon: "warning",
-							button: "Ok",
-						});
-		    		}
+		    		// error
 		    	});
 			},
 

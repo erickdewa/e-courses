@@ -23,5 +23,7 @@
     "/js/payment.js": "/js/payment.js",
     "/js/profile.js": "/js/profile.js",
     "/js/profile.edit.js": "/js/profile.edit.js",
-    "/js/vendors~admin.js": "/js/vendors~admin.js"
+    "/js/vendors~admin.js": "/js/vendors~admin.js",
+    "/js/auth.js": "/js/auth.js",
+    "/js/auth.reset.js": "/js/auth.reset.js"
 }

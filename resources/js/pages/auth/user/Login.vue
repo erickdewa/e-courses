@@ -23,10 +23,10 @@
 							<input type="password" name="password" required v-model="formData.password" placeholder="Password">
 						</div>
 					</div>
-					<!-- <div class="forgot">Lupa Password?</div> -->
+					<div class="forgot"@click="$parent.setShowReset()">Lupa Password?</div>
 				</div>
 				<div class="form-footer" align="right">
-					<button type="button" class="btn btn-sm btn-info" @click="$parent.showLogin = false">
+					<button type="button" class="btn btn-sm btn-info" @click="$parent.setShowRegister()">
 						<i class="fa fa-user-plus"></i> Daftar
 					</button>
 					<button type="submit" form="form-login" class="btn btn-sm btn-success btn-user-login">

@@ -59,7 +59,8 @@
 .aro-check-group{
 	width: 100%;
 }
-.btn-login{
+.btn-login,
+.btn-register{
 	letter-spacing: 1px;
 	border-radius: 20px;
 	padding: 3px 20px;

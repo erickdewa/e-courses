@@ -63,7 +63,7 @@
 							</div>
 						</template>
 						<template v-if="data.usercourses.status == 'procces'">
-							<div class="courses-item card" :style="`background-image: url(${ data.thumbnile })`">
+							<div title="Menunggu konfirmasi pembayaran" @click="warnPayment()" class="courses-item card" :style="`background-image: url(${ data.thumbnile })`">
 								<div class="courses-item-information">
 									<div class="title">{{ data.name }}</div>
 									<div class="desc">{{ data.subname }}</div>
@@ -134,6 +134,11 @@
                     }
                 });
 			},
+			warnPayment: _.debounce(function(){
+				var vm = this;
+
+				toastr.warning('Menunggu konfirmasi pembayaran', 'Warning');
+			}, 1500),
 	    },
 	    mounted(){
 	    	var vm = this;

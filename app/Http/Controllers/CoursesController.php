@@ -64,6 +64,14 @@ class CoursesController extends Controller
             ->has('materigroup')->where('uuid', $uuid)->first();
         }
 
+        // courses
+        $data->materigroup->map(function($a){
+            $a->sum_materi_active = count($a->materi);
+            $a->sum_materi = Materi::where('materigroup_id', $a->id)->get()->count();
+
+            return $a;
+        });
+
         // Hitung Rating
         $review = CoursesReview::where('courses_id', $data->id)->get();
         if(count($review) > 0){

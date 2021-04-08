@@ -256,16 +256,16 @@ __webpack_require__.r(__webpack_exports__);
       vm.showReview = false;
       vm.showLearn = false;
     },
-    setShowMateri: function setShowMateri() {
+    setShowMateri: function setShowMateri(status, tag) {
       var vm = this;
-      vm.showList = false;
-      vm.showForm = false;
-      vm.showGroupMateri = false;
-      vm.showMateri = true;
-      vm.showTools = false;
-      vm.showSkill = false;
-      vm.showReview = false;
-      vm.showLearn = false;
+
+      if (status == 'show') {
+        vm.showMateri = true;
+        vm.$refs.refmateri.reload();
+        vm.$refs.refmateri.tag = tag;
+      } else {
+        vm.showMateri = false;
+      }
     },
     setShowTools: function setShowTools() {
       var vm = this;
@@ -826,11 +826,11 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['materiGroupUuid', 'materiGroupId'],
   data: function data() {
     return {
+      tag: '',
       showList: true,
       showForm: false,
       title: 'Tambah Materi',
@@ -854,6 +854,12 @@ __webpack_require__.r(__webpack_exports__);
     };
   },
   methods: {
+    reload: function reload() {
+      var vm = this;
+      setTimeout(function () {
+        vm.$refs.tableMateri.reload();
+      }, 500);
+    },
     setShowback: function setShowback() {
       var vm = this;
       vm.$parent.setShowForm();
@@ -869,6 +875,7 @@ __webpack_require__.r(__webpack_exports__);
     },
     setShowForm: function setShowForm() {
       var vm = this;
+      vm.showList = false;
       vm.showForm = true;
       vm.setShowTambah();
     },
@@ -1128,9 +1135,10 @@ __webpack_require__.r(__webpack_exports__);
         $('#table').on('click', '.detail', function (e) {
           var id = $(this).data('id');
           var uuid = $(this).data('uuid');
+          var tag = $(this).data('tag');
           vm.$parent.materiGroupId = id;
           vm.$parent.materiGroupUuid = uuid;
-          vm.$parent.setShowMateri();
+          vm.$parent.setShowMateri('show', tag);
         });
       }, 200);
     },
@@ -2338,6 +2346,7 @@ var render = function() {
             "div",
             [
               _c("Materi", {
+                ref: "refmateri",
                 attrs: {
                   materiGroupUuid: _vm.materiGroupUuid,
                   materiGroupId: _vm.materiGroupId
@@ -3018,9 +3027,29 @@ var render = function() {
         _vm.showForm
           ? _c("div", { staticClass: "aro-restraint" }, [
               _c("div", { staticClass: "aro-restraint_title" }, [
-                _c("span", [_vm._v(_vm._s(_vm.title))]),
+                _c("span", [
+                  _vm._v(_vm._s(_vm.title) + " #" + _vm._s(_vm.tag))
+                ]),
                 _vm._v(" "),
-                _c("div", { staticClass: "button-table" })
+                _c("div", { staticClass: "button-table" }, [
+                  _c(
+                    "button",
+                    {
+                      staticClass: "btn btn-info btn-sm",
+                      attrs: { type: "button" },
+                      on: {
+                        click: function($event) {
+                          $event.preventDefault()
+                          return _vm.setShowList()
+                        }
+                      }
+                    },
+                    [
+                      _c("i", { staticClass: "fa fa-times" }),
+                      _vm._v(" Tutup\n\t\t\t\t\t")
+                    ]
+                  )
+                ])
               ]),
               _vm._v(" "),
               _c(
@@ -3260,23 +3289,7 @@ var render = function() {
                                   attrs: { align: "right" }
                                 },
                                 [
-                                  _c(
-                                    "button",
-                                    {
-                                      staticClass: "btn btn-info btn-sm",
-                                      attrs: { type: "button" },
-                                      on: {
-                                        click: function($event) {
-                                          $event.preventDefault()
-                                          return _vm.setShowList()
-                                        }
-                                      }
-                                    },
-                                    [
-                                      _c("i", { staticClass: "fa fa-times" }),
-                                      _vm._v(" Tutup\n\t\t\t\t\t\t\t")
-                                    ]
-                                  ),
+                                  _c("div"),
                                   _vm._v(" "),
                                   _c(
                                     "button",
@@ -3311,7 +3324,7 @@ var render = function() {
         _vm.showList
           ? _c("div", { staticClass: "aro-restraint" }, [
               _c("div", { staticClass: "aro-restraint_title" }, [
-                _c("span", [_vm._v("Materi")]),
+                _c("span", [_vm._v("Materi #" + _vm._s(_vm.tag))]),
                 _vm._v(" "),
                 _c("div", { staticClass: "button-table" }, [
                   !_vm.showForm
@@ -3330,26 +3343,6 @@ var render = function() {
                         [
                           _c("i", { staticClass: "fa fa-plus" }),
                           _vm._v(" Tambah\n\t\t\t\t\t")
-                        ]
-                      )
-                    : _vm._e(),
-                  _vm._v(" "),
-                  !_vm.showForm
-                    ? _c(
-                        "button",
-                        {
-                          staticClass: "btn btn-info btn-sm",
-                          attrs: { type: "button" },
-                          on: {
-                            click: function($event) {
-                              $event.preventDefault()
-                              return _vm.setShowback()
-                            }
-                          }
-                        },
-                        [
-                          _c("i", { staticClass: "fa fa-reply-all" }),
-                          _vm._v(" Kembali\n\t\t\t\t\t")
                         ]
                       )
                     : _vm._e()

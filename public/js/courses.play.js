@@ -713,7 +713,13 @@ var render = function() {
                 )
               ]),
               _vm._v(" "),
-              _c("div", { staticClass: "subtext" }, [_vm._v("5/10")])
+              _c("div", { staticClass: "subtext" }, [
+                _vm._v(
+                  _vm._s(materigroup.sum_materi) +
+                    "/" +
+                    _vm._s(materigroup.sum_materi_active)
+                )
+              ])
             ]),
             _vm._v(" "),
             _vm._m(0, true)
@@ -793,7 +799,7 @@ var staticRenderFns = [
     var _c = _vm._self._c || _h
     return _c("div", { staticClass: "subtext" }, [
       _c("i", { staticClass: "fa fa-play-circle-o" }),
-      _vm._v(" 15 minute")
+      _vm._v(" Play")
     ])
   }
 ]

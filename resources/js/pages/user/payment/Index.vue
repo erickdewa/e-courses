@@ -106,6 +106,9 @@
 								<button type="button" class="btn btn-info btn-sm" style="width: 100%" @click="$router.push('/profile')">
 									<i class="fa fa-check"></i> Kembali
 								</button>
+								<button type="button" class="btn btn-success btn-sm" style="width: 100%; padding-top: 10px" @click="cetakBukti()">
+									<i class="fa fa-file-pdf-o"></i> Cetak
+								</button>
 							</div>
 						</template>
 						<template v-if="showBukti">
@@ -339,6 +342,24 @@
 	    		}).catch((err)=>{
 	    			Aropex.btnLoad('.btn-submit', false);
 	    		});
+	    	},
+
+	    	cetakBukti(){
+	    		var vm = this;
+
+	    		Aropex.btnLoad('.btn-cetak', true);
+	    		vm.$http({
+                    url: `${ vm.defaultUrl }/laporan/struk/${ vm.formData.uuid }/cetak`,
+                    method: 'GET',
+                }).then((res)=>{
+                    Aropex.btnLoad('.btn-cetak', false);
+                    window.open(`${ vm.defaultUrl }/laporan/struk/${ vm.formData.uuid }/cetak`, '_blank');
+                    toastr.success('Data berhasil di download', 'Success');
+                }).catch((error)=>{
+                	Aropex.btnLoad('.btn-cetak', false);
+                    toastr.error(error.response.data.message, 'Error');
+                });
+
 	    	},
 	    },
 	    mounted(){

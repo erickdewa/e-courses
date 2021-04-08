@@ -12,6 +12,12 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
+Route::prefix('laporan')->group(function(){
+	Route::prefix('struk')->group(function(){
+		Route::get('/{uuid}/cetak', 'ExportPdfController@cetakStruk');
+	});
+});
+
 
 Route::get('/{any}', function() {
 	return view('Index');

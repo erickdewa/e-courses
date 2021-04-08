@@ -51,6 +51,7 @@ class AuthController extends Controller
     		'username' => 'required|string',
 			'email' => 'required|string',
 			'password' => 'required|string|min:8',
+            'level_id' => 'required|string',
         ]);
 
         if($validator->fails()) {
@@ -75,7 +76,7 @@ class AuthController extends Controller
 			'email' => $request->email,
 			'password' => bcrypt($request->password),
 			'confirm' => 'Yes',
-			'level_id' => '2',
+			'level_id' => $request->level_id,
 		]);
 
 		return response()->json([
@@ -121,5 +122,64 @@ class AuthController extends Controller
         	'status' => false,
         	'message' => 'Suatu error terjadi.',
         ], 401);
+    }
+
+    public function cekEmail(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'email' => 'required|string',
+        ]);
+
+        if($validator->fails()) {
+            return response()->json([
+                'status'=> false,
+                'message'=> $validator->messages()->first(),
+            ], 400);
+        }
+
+        $data = User::where('email', $request->email)->first();
+        if(isset($data)){
+            return response()->json([
+                'status' => true,
+                'message' => 'Data ditemukan',
+            ]);
+        }else{
+            return response()->json([
+                'status' => false,
+                'message' => 'Akun tidak ditemukan',
+            ], 404);
+        }
+    }
+
+    public function resetPassword(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'email' => 'required|string',
+            'password' => 'required|string|min:8',
+        ]);
+
+        if($validator->fails()) {
+            return response()->json([
+                'status'=> false,
+                'message'=> $validator->messages()->first(),
+            ], 400);
+        }
+
+        $data = User::where('email', $request->email)->first();
+        if(isset($data)){
+            $data->update([
+                'password' => bcrypt($request->password),
+            ]);
+
+            return response()->json([
+                'status' => true,
+                'message' => 'Password berhasil diubah',
+            ]);
+        }else{
+            return response()->json([
+                'status' => false,
+                'message' => 'Akun tidak ditemukan',
+            ], 404);
+        }
     }
 }

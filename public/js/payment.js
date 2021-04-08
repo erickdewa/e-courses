@@ -146,6 +146,9 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -333,6 +336,21 @@ __webpack_require__.r(__webpack_exports__);
         vm.setShowSuccess();
       })["catch"](function (err) {
         Aropex.btnLoad('.btn-submit', false);
+      });
+    },
+    cetakBukti: function cetakBukti() {
+      var vm = this;
+      Aropex.btnLoad('.btn-cetak', true);
+      vm.$http({
+        url: "".concat(vm.defaultUrl, "/laporan/struk/").concat(vm.formData.uuid, "/cetak"),
+        method: 'GET'
+      }).then(function (res) {
+        Aropex.btnLoad('.btn-cetak', false);
+        window.open("".concat(vm.defaultUrl, "/laporan/struk/").concat(vm.formData.uuid, "/cetak"), '_blank');
+        toastr.success('Data berhasil di download', 'Success');
+      })["catch"](function (error) {
+        Aropex.btnLoad('.btn-cetak', false);
+        toastr.error(error.response.data.message, 'Error');
       });
     }
   },
@@ -704,6 +722,24 @@ var render = function() {
                         [
                           _c("i", { staticClass: "fa fa-check" }),
                           _vm._v(" Kembali\n\t\t\t\t\t\t\t")
+                        ]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "button",
+                        {
+                          staticClass: "btn btn-success btn-sm",
+                          staticStyle: { width: "100%", "padding-top": "10px" },
+                          attrs: { type: "button" },
+                          on: {
+                            click: function($event) {
+                              return _vm.cetakBukti()
+                            }
+                          }
+                        },
+                        [
+                          _c("i", { staticClass: "fa fa-file-pdf-o" }),
+                          _vm._v(" Cetak\n\t\t\t\t\t\t\t")
                         ]
                       )
                     ])

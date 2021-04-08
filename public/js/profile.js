@@ -141,7 +141,11 @@ __webpack_require__.r(__webpack_exports__);
           });
         }
       });
-    }
+    },
+    warnPayment: _.debounce(function () {
+      var vm = this;
+      toastr.warning('Menunggu konfirmasi pembayaran', 'Warning');
+    }, 1500)
   },
   mounted: function mounted() {
     var vm = this;
@@ -483,7 +487,15 @@ var render = function() {
                             {
                               staticClass: "courses-item card",
                               style:
-                                "background-image: url(" + data.thumbnile + ")"
+                                "background-image: url(" + data.thumbnile + ")",
+                              attrs: {
+                                title: "Menunggu konfirmasi pembayaran"
+                              },
+                              on: {
+                                click: function($event) {
+                                  return _vm.warnPayment()
+                                }
+                              }
                             },
                             [
                               _c(

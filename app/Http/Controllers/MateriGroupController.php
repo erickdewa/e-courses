@@ -29,9 +29,9 @@ class MateriGroupController extends Controller
         })->orderBy('id', 'asc')->paginate($per);
 
         $data->map(function($a){
-            $btnEdit = '<button class="btn btn-clean btn-icon btn-icon-md edit" data-uuid="'.$a->uuid.'"><i class="fa fa-edit text-warning"></i></button>';
-            $btnHapus = '<button class="btn btn-clean btn-icon btn-icon-md hapus" data-uuid="'.$a->uuid.'"><i class="fa fa-trash text-danger"></i></button>';
-            $btnDetail = '<button class="btn btn-clean btn-icon btn-icon-md detail" data-id="'.$a->id.'" data-uuid="'.$a->uuid.'"><i class="fa fa-eye text-info"></i></button>';
+            $btnEdit = '<button class="btn btn-clean btn-icon btn-icon-md edit" data-tag="'.$a->nm_materi.'" data-uuid="'.$a->uuid.'"><i class="fa fa-edit text-warning"></i></button>';
+            $btnHapus = '<button class="btn btn-clean btn-icon btn-icon-md hapus" data-tag="'.$a->nm_materi.'" data-uuid="'.$a->uuid.'"><i class="fa fa-trash text-danger"></i></button>';
+            $btnDetail = '<button class="btn btn-clean btn-icon btn-icon-md detail" data-id="'.$a->id.'" data-tag="'.$a->nm_materi.'" data-uuid="'.$a->uuid.'"><i class="fa fa-eye text-info"></i></button>';
             $a->action = $btnEdit.$btnHapus.$btnDetail;
 
             return $a;

@@ -104,9 +104,10 @@
 	                $('#table').on('click', '.detail', function(e){
 	                    var id = $(this).data('id');
 	                    var uuid = $(this).data('uuid');
+	                    var tag = $(this).data('tag');
 	                    vm.$parent.materiGroupId = id;
 						vm.$parent.materiGroupUuid = uuid;
-	                    vm.$parent.setShowMateri();
+	                    vm.$parent.setShowMateri('show', tag);
 	                });
 	    		}, 200);
 	    	},

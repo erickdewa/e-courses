@@ -5,7 +5,7 @@
 				<div class="item-materigroup">
 					<div class="text-group">
 						<div class="text">Bagian {{ i+=1 }}: {{ materigroup.nm_materi }}</div>
-						<div class="subtext">5/10</div>
+						<div class="subtext">{{ materigroup.sum_materi }}/{{ materigroup.sum_materi_active }}</div>
 					</div>
 					<div class="icon-drop">
 						<i class="fa fa-angle-down"></i>
@@ -17,7 +17,7 @@
 							<div class="item-materi">
 								<div class="text-group">
 									<div class="text">{{ j+=1 }}. {{ materi.nm_materi }}</div>
-									<div class="subtext"><i class="fa fa-play-circle-o"></i> 15 minute</div>
+									<div class="subtext"><i class="fa fa-play-circle-o"></i> Play</div>
 								</div>
 							</div>
 						</li>

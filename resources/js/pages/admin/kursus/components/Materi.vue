@@ -3,8 +3,12 @@
 		<transition enter-active-class="animated fadeIn">
 			<div class="aro-restraint" v-if="showForm">
 				<div class="aro-restraint_title">
-					<span>{{ title }}</span>
-					<div class="button-table"></div>
+					<span>{{ title }} #{{ tag }}</span>
+					<div class="button-table">
+						<button type="button" class="btn btn-info btn-sm" @click.prevent="setShowList()">
+							<i class="fa fa-times"></i> Tutup
+						</button>
+					</div>
 				</div>
 				<div class="aro-restraint_body">
 					<transition v-if="showTambah" enter-active-class="animated fadeIn">
@@ -48,9 +52,7 @@
 							</div>
 							<hr>
 							<div class="form-action" align="right">
-								<button type="button" class="btn btn-info btn-sm" @click.prevent="setShowList()">
-									<i class="fa fa-times"></i> Tutup
-								</button>
+								<div></div>
 								<button type="submit" form="FormTambah" class="btn btn-sm btn-success btn-submit">
 									<i class="fa fa-save"></i> Simpan
 								</button>
@@ -64,13 +66,10 @@
 		<transition enter-active-class="animated fadeIn">
 			<div class="aro-restraint" v-if="showList">
 				<div class="aro-restraint_title">
-					<span>Materi</span>
+					<span>Materi #{{ tag }}</span>
 					<div class="button-table">
 						<button v-if="!showForm" type="button" class="btn btn-success btn-sm" @click.prevent="setShowForm()">
 							<i class="fa fa-plus"></i> Tambah
-						</button>
-						<button v-if="!showForm" type="button" class="btn btn-info btn-sm" @click.prevent="setShowback()">
-							<i class="fa fa-reply-all"></i> Kembali
 						</button>
 					</div>
 				</div>
@@ -87,6 +86,7 @@
     	props: ['materiGroupUuid', 'materiGroupId'],
     	data() {
 	        return {
+	        	tag: '',
 	        	showList: true,
 	        	showForm: false,
 
@@ -108,6 +108,13 @@
 	        }
 	    },
 	    methods: {
+	    	reload(){
+	    		var vm = this;
+
+	    		setTimeout(function(){
+	    			vm.$refs.tableMateri.reload();
+	    		}, 500);
+	    	},
 	    	setShowback(){
 	    		var vm = this;
 
@@ -127,6 +134,7 @@
 	    	setShowForm(){
 	    		var vm = this;
 
+	    		vm.showList = false;
 	    		vm.showForm = true;
 	    		vm.setShowTambah();
 	    	},

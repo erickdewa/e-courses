@@ -37,7 +37,7 @@
 		</div>
 			
 		<div v-if="showMateri">
-			<Materi :materiGroupUuid="materiGroupUuid" :materiGroupId="materiGroupId"></Materi>
+			<Materi ref="refmateri" :materiGroupUuid="materiGroupUuid" :materiGroupId="materiGroupId"></Materi>
 		</div>
 
 		<div v-if="showLearn">
@@ -157,17 +157,16 @@
 				vm.showReview = false;
 				vm.showLearn = false;
 	    	},
-	    	setShowMateri(){
+	    	setShowMateri(status, tag){
 	    		var vm = this;
 
-	    		vm.showList = false;
-				vm.showForm = false;
-				vm.showGroupMateri = false;
-				vm.showMateri = true;
-				vm.showTools = false;
-				vm.showSkill = false;
-				vm.showReview = false;
-				vm.showLearn = false;
+	    		if(status == 'show'){
+					vm.showMateri = true;
+					vm.$refs.refmateri.reload();
+					vm.$refs.refmateri.tag = tag;
+	    		}else{
+	    			vm.showMateri = false;
+	    		}
 	    	},
 	    	setShowTools(){
 	    		var vm = this;
